@@ -1,1 +1,3 @@
-# SC2002_Group3
+# Fastfood Ordering Management System (FOMS)
+
+FDAB Group 3.
