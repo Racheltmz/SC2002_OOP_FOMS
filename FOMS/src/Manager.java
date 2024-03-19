@@ -6,7 +6,10 @@ public class Manager extends Staff  {
 
     /* STAFF MANAGEMENT PURPOSES */
     public void displayStaffList(Company company, String branchId, Staff.Roles auth) {
-        company.getStaffList("branch", branchId, auth);
+        Staff[] staffByBranch = company.getStaffList("branch", branchId, auth);
+        for (int i = 0; i<staffByBranch.length; i++) {
+            staffByBranch[i].getStaff();
+        }
     }
 
     /* MENU ITEM PURPOSES */

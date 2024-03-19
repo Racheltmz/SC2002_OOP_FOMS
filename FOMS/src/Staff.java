@@ -64,7 +64,7 @@ public class Staff {
 
     public void getStaff() {
         System.out.println(this.staffID + ' ' + this.name + ' ' + this.role + ' ' +
-                this.gender + ' ' + this.age + ' ' + this.branch + ' ' + this.password);
+                this.gender + ' ' + this.age + ' ' + this.branch);
     }
     public boolean login()
     {
