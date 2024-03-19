@@ -10,7 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
-public class Main {
+public class FOMSApp {
     public static void main(String[] args) throws IOException {
         // Try block to check for exceptions
         try {
