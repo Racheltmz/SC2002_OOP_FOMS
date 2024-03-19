@@ -1,1 +1,5 @@
+# Backup files for UML
 foms.vpp.bak_*
+
+# Java files
+.idea
