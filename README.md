@@ -25,4 +25,4 @@ Group No.: Group 3
 
 ## Modifications to UML
 
-If you realise that changes have to be made to the UML diagram, indicate the changes under a table in the [UML Design](#https://docs.google.com/document/d/1yI5BSaeG4VT24lCIhb6iy4oPa-R3GJikkPxK5FKEVwY/edit) docs. Then on our weekly meetings, we'll add all changes into the UML in the `main` branch.
+If you realise that changes have to be made to the UML diagram, indicate the changes under a table in the [UML Design](https://docs.google.com/document/d/1yI5BSaeG4VT24lCIhb6iy4oPa-R3GJikkPxK5FKEVwY/edit) docs. Then on our weekly meetings, we'll add all changes into the UML in the `main` branch.
