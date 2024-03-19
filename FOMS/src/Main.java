@@ -37,10 +37,22 @@ public class Main {
                 String staffId = row.getCell(1).toString();
                 String name = row.getCell(0).toString();
                 char role = row.getCell(2).toString().charAt(0);
+                Staff.Roles roleCat = Staff.Roles.STAFF;
+                switch (role) {
+                    case 'S':
+                        roleCat = Staff.Roles.STAFF;
+                        break;
+                    case 'M':
+                        roleCat = Staff.Roles.MANAGER;
+                        break;
+                    case 'A':
+                        roleCat = Staff.Roles.ADMIN;
+                        break;
+                }
                 char gender = row.getCell(3).toString().charAt(0);
                 int age = (int) row.getCell(4).getNumericCellValue();
                 String branch = row.getCell(5).toString();
-                Staff staff = new Staff(staffId, name, role, gender, age, branch);
+                Staff staff = new Staff(staffId, name, roleCat, gender, age, branch);
                 staff.getStaff();
                 // Append new staff
                 staffList.add(staff);

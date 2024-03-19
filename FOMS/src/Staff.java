@@ -1,12 +1,13 @@
 public class Staff {
+    public enum Roles { STAFF, MANAGER, ADMIN }
     private String staffID;
     private String name;
-    private char role;
+    private Roles role;
     private char gender;
     private int age;
     private String branch;
     private String password;
-    public Staff(String staffID, String name, char role, char gender, int age, String branch) {
+    public Staff(String staffID, String name, Roles role, char gender, int age, String branch) {
         this.staffID = staffID;
         this.name = name;
         this.role = role;
