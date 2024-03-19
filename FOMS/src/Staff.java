@@ -39,6 +39,14 @@ public class Staff {
         this.role = role;
     }
 
+    public char getGender() {
+        return gender;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
     public String getBranch()
     {
         return this.branch;
