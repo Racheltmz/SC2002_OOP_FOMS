@@ -12,7 +12,7 @@ public class Manager extends Staff  {
     public void displayStaffList(Company company, String branchId, Staff.Roles auth) {
         ArrayList<Staff> staffByBranch = company.getStaffList("branch", branchId, auth);
         for (int i = 0; i<staffByBranch.size(); i++) {
-            staffByBranch.get(i).getStaff();
+            staffByBranch.get(i).displayStaffDetails();
         }
     }
 

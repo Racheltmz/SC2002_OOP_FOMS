@@ -4,14 +4,16 @@ import Authorisation.AuthoriseAdmin;
 import Authorisation.AuthoriseManager;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Company {
     private ArrayList<Staff> staffList;
-    // private ArrayList<Branch> branches TODO: COMMENT OUT ONCE BRANCH CLASS IS ADDED
+    private ArrayList<Branch> branches;
     // private ArrayList<Payment> paymentList; TODO: COMMENT OUT ONCE PAYMENT CLASS IS ADDED
 
-    // TODO: UPDATE ONCE BRANCH AND PAYMENT CLASSES ARE ADDED
-    // Constructor for Management.Company class
+    // Constructor for Company class
+    public Company() {}
+
     public Company(ArrayList<Staff> staffList) {
         this.staffList = staffList;
     }
@@ -19,6 +21,17 @@ public class Company {
     /* STAFF PURPOSES */
     public ArrayList<Staff> getStaffList() {
         return this.staffList;
+    }
+
+    public Staff getStaff(String staffId) {
+        // Return staff object if it can be found
+        for (int i=0; i < this.staffList.size(); i++) {
+            Staff curStaff = this.staffList.get(i);
+            if (Objects.equals(curStaff.getStaffID(), staffId))
+                return curStaff;
+        }
+        // Return null if staff cannot be found
+        return null;
     }
 
     // Filter list of staff members for strings (only branch field)
@@ -101,19 +114,19 @@ public class Company {
 
     /* BRANCHES PURPOSES */
     // Get branches (to display for customers)
-//    public ArrayList<Branch> getBranches() {
-//        return this.branches;
-//    }
+    public ArrayList<Management.Branch> getBranches() {
+        return this.branches;
+    }
 
     // Add branch (admin purposes)
-//    public void addBranch(Branch branch, Employee.Staff.Roles auth) {
-//        AuthoriseAdmin authAdmin = new AuthoriseAdmin();
-//        if (authAdmin.authorise(auth))
-//            this.branches.add(branch);
-//    }
+    public void addBranch(Management.Branch branch, Staff.Roles auth) {
+        AuthoriseAdmin authAdmin = new AuthoriseAdmin();
+        if (authAdmin.authorise(auth))
+            this.branches.add(branch);
+    }
 
-//    // Remove branch (admin purposes)
-//    public void deleteBranch(String branchName, Employee.Staff.Roles auth) {
+    // Remove branch (admin purposes)
+//    public void deleteBranch(String branchName, Staff.Roles auth) {
 //        AuthoriseAdmin authAdmin = new AuthoriseAdmin();
 //        if (authAdmin.authorise(auth))
 //            this.branches.remove(this.branches.indexOf(branchName));

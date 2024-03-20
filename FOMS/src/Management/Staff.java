@@ -3,7 +3,8 @@ package Management;
 import java.util.Scanner;
 
 public class Staff {
-    public enum Roles { STAFF, MANAGER, ADMIN }
+    public enum Roles { STAFF, MANAGER, ADMIN}
+
     private String staffID;
     private String name;
     private String password;
@@ -22,23 +23,19 @@ public class Staff {
         this.password = "password";
     }
 
-    public String getStaffID()
-    {
+    public String getStaffID() {
         return this.staffID;
     }
 
-    public void setStaffID(String staffID)
-    {
+    public void setStaffID(String staffID) {
         this.staffID = staffID;
     }
 
-    public Roles getRole()
-    {
+    public Roles getRole() {
         return this.role;
     }
 
-    public void setRole(Roles role)
-    {
+    public void setRole(Roles role) {
         this.role = role;
     }
 
@@ -50,226 +47,29 @@ public class Staff {
         return age;
     }
 
-    public String getBranch()
-    {
+    public String getBranch() {
         return this.branch;
     }
 
-    public void setBranch(String branch)
-    {
+    public void setBranch(String branch) {
         this.branch = branch;
     }
 
-    protected void setPassword(String password)
-    {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public void getStaff() 
-    {
+    public void displayStaffDetails() {
         System.out.println(this.staffID + ' ' + this.name + ' ' + this.role + ' ' +
                 this.gender + ' ' + this.age + ' ' + this.branch);
     }
 
-    public boolean login(Scanner sc) 
-    {
-        boolean loggedIn = false;
-        System.out.print("Enter staffID: ");
-        String inputStaffID = sc.nextLine();
-        while (!"Quit".equalsIgnoreCase(inputStaffID)) 
-        {
-            System.out.print("Enter password: ");
-            String inputPassword = sc.nextLine().trim();
-            if (verifyPassword(inputPassword) && verifyStaffID(inputStaffID)) 
-            {
-                System.out.println("Logged in!");
-                loggedIn = true;
-                break;
-            } 
+    // pending for order & status class
+    protected void setStatus(String orderStatus) {
 
-            else 
-            {
-                System.out.println("Incorrect staffID and/or password, please try again.");
-                System.out.print("Enter staffID: ");
-                inputStaffID = sc.nextLine().trim();
-                continue;
-            }
-        }
-        return loggedIn;
-    }
-
-    protected boolean verifyPassword(String password) 
-    {
-        return password.equals(this.password);
-    }
-
-    protected boolean verifyStaffID(String staffID)
-    {
-        return staffID.equals(this.staffID);
-    }
-
-    protected void setStatus(String orderStatus) //pending for order & status class
-    {
-
-    }
-
-    public static void main(String[] args) 
-    {
-        //example of how it works (this will be moved to main later)
-        try (Scanner sc = new Scanner(System.in)) 
-        {
-            System.out.println("Please select option (5 to quit): ");
-            System.out.println("1. Customer\n2. Staff\n3. Branch Manager\n4. Admin");
-            int choice = sc.nextInt();
-            switch (choice) 
-            {
-                case 1:
-                    // Customer interface
-                    break;
-                case 2:
-                    // Staff interface
-                    Staff kumar = new Staff("kumarB", "kumar Blackmore", Roles.STAFF, 'M', 32, "NTU");
-                    System.out.println("Welcome to the FOMS Login System. Please select option (3 to quit): ");
-                    System.out.println("1. Login");
-                    System.out.println("2. Change password");
-                    int option = sc.nextInt();
-                    sc.nextLine(); // Consume newline character
-                    while (option >= 1) 
-                    {
-                        if (option == 1) 
-                        {
-                            kumar.login(sc);
-                            break;
-                        } 
-                        else if (option == 2) 
-                        {
-                            if (kumar.login(sc)) 
-                            {
-                                System.out.print("Please enter new password: ");
-                                String newpassword = sc.nextLine().trim();
-                                while (newpassword.isEmpty()) 
-                                {
-                                    System.out.println("Password change unsuccessful, please try again.");
-                                    System.out.print("Please enter new password: ");
-                                    newpassword = sc.nextLine().trim();
-                                }
-                                kumar.setPassword(newpassword);
-                                System.out.println("Password successfully changed!");
-                            }
-                        } 
-                        else if (option == 3)
-                        {
-                            break;
-                        }
-                        else if (option != 3) 
-                        {
-                            System.out.print("Invalid choice, please re-enter: ");
-                        }
-                        System.out.println("Welcome to the FOMS Login System. Please select option (3 to quit): ");
-                        System.out.println("1. Login");
-                        System.out.println("2. Change password");
-                        option = sc.nextInt();
-                        sc.nextLine();
-                    }
-                    break; 
-                case 3:
-                    //Branch Manager login - TO UNCOMMENT WHEN BRANCH IS IMPLEMENTED
-                    /* Manager kumar = new Manager("kumarB", "kumar Blackmore", Roles.STAFF, 'M', 32, "NTU");
-                    System.out.println("Welcome to the FOMS Login System. Please select option (3 to quit): ");
-                    System.out.println("1. Login");
-                    System.out.println("2. Change password");
-                    int option = sc.nextInt();
-                    sc.nextLine(); // Consume newline character
-                    while (option >= 1) 
-                    {
-                        if (option == 1) 
-                        {
-                            kumar.login(sc);
-                            break;
-                        } 
-                        else if (option == 2) 
-                        {
-                            if (kumar.login(sc)) 
-                            {
-                                System.out.print("Please enter new password: ");
-                                String newpassword = sc.nextLine().trim();
-                                while (newpassword.isEmpty()) 
-                                {
-                                    System.out.println("Password change unsuccessful, please try again.");
-                                    System.out.print("Please enter new password: ");
-                                    newpassword = sc.nextLine().trim();
-                                }
-                                kumar.setPassword(newpassword);
-                                System.out.println("Password successfully changed!");
-                            }
-                        } 
-                        else if (option == 3)
-                        {
-                            break;
-                        }
-                        else if (option != 3) 
-                        {
-                            System.out.print("Invalid choice, please re-enter: ");
-                        }
-                        System.out.println("Welcome to the FOMS Login System. Please select option (3 to quit): ");
-                        System.out.println("1. Login");
-                        System.out.println("2. Change password");
-                        option = sc.nextInt();
-                        sc.nextLine();
-                    } */
-                    break;
-                case 4:
-                    //Admin login
-                    /* Staff kumar = new Staff("kumarB", "kumar Blackmore", Roles.STAFF, 'M', 32, "NTU");
-                    System.out.println("Welcome to the FOMS Login System. Please select option (3 to quit): ");
-                    System.out.println("1. Login");
-                    System.out.println("2. Change password");
-                    int option = sc.nextInt();
-                    sc.nextLine(); // Consume newline character
-                    while (option >= 1) 
-                    {
-                        if (option == 1) 
-                        {
-                            kumar.login(sc);
-                            break;
-                        } 
-                        else if (option == 2) 
-                        {
-                            if (kumar.login(sc)) 
-                            {
-                                System.out.print("Please enter new password: ");
-                                String newpassword = sc.nextLine().trim();
-                                while (newpassword.isEmpty()) 
-                                {
-                                    System.out.println("Password change unsuccessful, please try again.");
-                                    System.out.print("Please enter new password: ");
-                                    newpassword = sc.nextLine().trim();
-                                }
-                                kumar.setPassword(newpassword);
-                                System.out.println("Password successfully changed!");
-                            }
-                        } 
-                        else if (option == 3)
-                        {
-                            break;
-                        }
-                        else if (option != 3) 
-                        {
-                            System.out.print("Invalid choice, please re-enter: ");
-                        }
-                        System.out.println("Welcome to the FOMS Login System. Please select option (3 to quit): ");
-                        System.out.println("1. Login");
-                        System.out.println("2. Change password");
-                        option = sc.nextInt();
-                        sc.nextLine();
-                    } */
-                    break;
-                case 5:
-                    break;
-                default:
-                    System.out.print("Invalid choice, please re-enter: ");
-                    choice = sc.nextInt();
-            }
-        }
     }
 }
