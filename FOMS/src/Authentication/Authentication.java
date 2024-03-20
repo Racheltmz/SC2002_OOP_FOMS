@@ -7,7 +7,6 @@ import java.util.Scanner;
 // Handles login and password
 public class Authentication {
     public Staff login(Scanner sc, Company company) {
-        boolean isLoggedIn = false;
         Staff staff;
         while (true) {
             System.out.print("Enter staffID: ");
@@ -21,7 +20,6 @@ public class Authentication {
                     System.out.println("Incorrect password, please try again.");
                     break;
                 };
-                isLoggedIn = true;
                 System.out.println("Logged in!");
                 return staff;
             } else {
