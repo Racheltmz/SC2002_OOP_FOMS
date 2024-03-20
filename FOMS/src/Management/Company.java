@@ -1,6 +1,7 @@
+package Management;
+
 import Authorisation.AuthoriseAdmin;
 import Authorisation.AuthoriseManager;
-import Employee.Staff;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ public class Company {
     // private ArrayList<Payment> paymentList; TODO: COMMENT OUT ONCE PAYMENT CLASS IS ADDED
 
     // TODO: UPDATE ONCE BRANCH AND PAYMENT CLASSES ARE ADDED
-    // Constructor for Company class
+    // Constructor for Management.Company class
     public Company(ArrayList<Staff> staffList) {
         this.staffList = staffList;
     }

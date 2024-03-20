@@ -1,3 +1,6 @@
+package Authorisation;
+import Management.Staff;
+
 public class AuthoriseManager implements AuthorisationInterface {
     public boolean authorise(Staff.Roles role) {
         if (role == Staff.Roles.MANAGER) {

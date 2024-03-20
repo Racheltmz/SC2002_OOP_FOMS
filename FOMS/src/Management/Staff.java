@@ -1,4 +1,4 @@
-package Employee;
+package Management;
 
 import java.util.Scanner;
 public class Staff {
