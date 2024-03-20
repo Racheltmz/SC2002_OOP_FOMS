@@ -50,7 +50,7 @@ public class Staff {
         this.branch = branch;
     }
 
-    public void setPassword(String password)
+    protected void setPassword(String password)
     {
         this.password = password;
     }
