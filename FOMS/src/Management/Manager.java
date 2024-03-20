@@ -1,3 +1,7 @@
+package Employee;
+
+import java.util.ArrayList;
+
 public class Manager extends Staff  {
     // Constructor
     public Manager(String staffID, String name, Roles role, char gender, int age, String branch) {
@@ -6,9 +10,9 @@ public class Manager extends Staff  {
 
     /* STAFF MANAGEMENT PURPOSES */
     public void displayStaffList(Company company, String branchId, Staff.Roles auth) {
-        Staff[] staffByBranch = company.getStaffList("branch", branchId, auth);
-        for (int i = 0; i<staffByBranch.length; i++) {
-            staffByBranch[i].getStaff();
+        ArrayList<Staff> staffByBranch = company.getStaffList("branch", branchId, auth);
+        for (int i = 0; i<staffByBranch.size(); i++) {
+            staffByBranch.get(i).getStaff();
         }
     }
 

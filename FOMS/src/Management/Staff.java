@@ -1,3 +1,5 @@
+package Employee;
+
 import java.util.Scanner;
 public class Staff {
     public enum Roles { STAFF, MANAGER, ADMIN }
