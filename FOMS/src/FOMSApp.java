@@ -1,5 +1,6 @@
 // Import
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 import Authentication.Authentication;
@@ -12,6 +13,9 @@ import Management.Company;
 import Management.Manager;
 import Management.Staff;
 import Management.Staff.Roles;
+
+import static Authentication.Authentication.changePassword;
+import static Authentication.Authentication.login;
 
 // Main app file
 public class FOMSApp {
@@ -32,7 +36,6 @@ public class FOMSApp {
                 break;
             case 2:
                 /* STAFF INTERFACE */
-                Authentication auth = new Authentication();
                 ActiveStaff activeStaff = new ActiveStaff();
                 ActiveManager activeManager = new ActiveManager();
                 ActiveAdmin activeAdmin = new ActiveAdmin();
@@ -53,16 +56,20 @@ public class FOMSApp {
                         staffChoice = sc.nextInt();
                         sc.nextLine(); // Consume newline character
                         if (staffChoice == 1) {
-                            staff = auth.login(sc, company);
-                            // Set active staff
-                            if (staff != null) {
-                                if (staff.getRole() == Roles.STAFF) {
-                                    activeStaff.setActiveStaff(staff);
-                                } else if (staff.getRole() == Roles.MANAGER) {
-                                    activeManager.setActiveStaff((Manager) staff);
-                                } else if (staff.getRole() == Roles.ADMIN) {
-                                    activeAdmin.setActiveStaff((Admin) staff);
+                            try {
+                                staff = login(sc, company);
+                                // Set active staff
+                                if (staff != null) {
+                                    if (staff.getRole() == Roles.STAFF) {
+                                        activeStaff.setActiveStaff(staff);
+                                    } else if (staff.getRole() == Roles.MANAGER) {
+                                        activeManager.setActiveStaff((Manager) staff);
+                                    } else if (staff.getRole() == Roles.ADMIN) {
+                                        activeAdmin.setActiveStaff((Admin) staff);
+                                    }
                                 }
+                            } catch (NoSuchAlgorithmException e) {
+                                System.out.println("Algorithm doesn't exist.");
                             }
                         } else {
                             System.exit(0);
@@ -78,7 +85,7 @@ public class FOMSApp {
                             switch (staffChoice) {
                                 case 1:
                                     if (activeStaff.getActiveStaff() != null)
-                                        auth.changePassword(sc, activeStaff.getActiveStaff());
+                                        changePassword(sc, activeStaff.getActiveStaff());
                                     else
                                         System.out.println("Please login first.");
                                     break;
@@ -102,7 +109,7 @@ public class FOMSApp {
                                     break;
                                 case 2:
                                     if (activeManager.getActiveStaff() != null)
-                                        auth.changePassword(sc, activeManager.getActiveStaff());
+                                        changePassword(sc, activeManager.getActiveStaff());
                                     else
                                         System.out.println("Please login first.");
                                     break;
@@ -123,7 +130,7 @@ public class FOMSApp {
                             switch (staffChoice) {
                                 case 1:
                                     if (activeAdmin.getActiveStaff() != null)
-                                        auth.changePassword(sc, activeAdmin.getActiveStaff());
+                                        changePassword(sc, activeAdmin.getActiveStaff());
                                     else
                                         System.out.println("Please login first.");
                                     break;

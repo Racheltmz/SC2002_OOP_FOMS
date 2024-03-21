@@ -1,5 +1,7 @@
 package Management;
 
+import static Authentication.Hashing.genHash;
+
 public class Staff {
     public enum Roles { STAFF, MANAGER, ADMIN}
 
@@ -18,7 +20,7 @@ public class Staff {
         this.gender = gender;
         this.age = age;
         this.branch = branch;
-        this.password = "password";
+        this.password = genHash("password");
     }
 
     public String getStaffID() {

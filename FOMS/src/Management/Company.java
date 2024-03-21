@@ -2,6 +2,7 @@ package Management;
 
 import Authorisation.AuthoriseAdmin;
 import Authorisation.AuthoriseManager;
+import Management.Staff.Roles;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -36,7 +37,7 @@ public class Company {
     }
 
     // Filter list of staff members for strings (only branch field)
-    public ArrayList<Staff> getStaffList(String filter, String filterVal, Staff.Roles auth) {
+    public ArrayList<Staff> getStaffList(String filter, String filterVal, Roles auth) {
         // Initialise new staff list
         ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
         // Authorise staff else return empty list
@@ -56,7 +57,7 @@ public class Company {
     }
 
     // Filter list of staff members for roles enum (only role field)
-    public ArrayList<Staff> getStaffList(String filter, Staff.Roles filterVal, Staff.Roles auth) {
+    public ArrayList<Staff> getStaffList(String filter, Roles filterVal, Roles auth) {
         // Initialise new staff list
         ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
         // Authorise staff else return empty list
@@ -74,7 +75,7 @@ public class Company {
     }
 
     // Filter list of staff members for character (only gender field)
-    public ArrayList<Staff> getStaffList(String filter, char filterVal, Staff.Roles auth) {
+    public ArrayList<Staff> getStaffList(String filter, char filterVal, Roles auth) {
         // Initialise new staff list
         ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
         // Authorise staff else return empty list
@@ -92,7 +93,7 @@ public class Company {
     }
 
     // Filter list of staff members for integer (only age field)
-    public ArrayList<Staff> getStaffList(String filter, int filterVal, Staff.Roles auth) {
+    public ArrayList<Staff> getStaffList(String filter, int filterVal, Roles auth) {
         // Initialise new staff list
         ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
         // Authorise staff else return empty list
@@ -109,8 +110,8 @@ public class Company {
         return filteredStaff;
     }
 
-    public int getNumManagers(Staff.Roles auth) {
-        ArrayList<Staff> managerList = getStaffList("role", Staff.Roles.MANAGER, auth);
+    public int getNumManagers(Roles auth) {
+        ArrayList<Staff> managerList = getStaffList("role", Roles.MANAGER, auth);
         return managerList.size();
     }
 
@@ -128,14 +129,14 @@ public class Company {
     }
 
     // Add branch (admin purposes)
-    public void addBranch(Branch branch, Staff.Roles auth) {
+    public void addBranch(Branch branch, Roles auth) {
         AuthoriseAdmin authAdmin = new AuthoriseAdmin();
         if (authAdmin.authorise(auth))
             this.branches.add(branch);
     }
 
     // Remove branch (admin purposes)
-//    public void deleteBranch(String branchName, Staff.Roles auth) {
+//    public void deleteBranch(String branchName, Roles auth) {
 //        AuthoriseAdmin authAdmin = new AuthoriseAdmin();
 //        if (authAdmin.authorise(auth))
 //            this.branches.remove(this.branches.indexOf(branchName));
