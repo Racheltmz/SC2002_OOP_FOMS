@@ -18,7 +18,7 @@ public class Initialisation {
     /* LOAD STAFF LIST ON INITIALISATION */
     public Company initialiseCompany() {
         ArrayList<Staff> staffList = initialiseStaffRecords();
-         ArrayList<Branch> branchList = initialiseBranchRecords();
+        ArrayList<Branch> branchList = initialiseBranchRecords();
         return new Company(staffList, branchList);
     }
 
