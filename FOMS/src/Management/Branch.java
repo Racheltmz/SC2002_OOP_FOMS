@@ -8,7 +8,7 @@ public class Branch {
     public int staffQuota;
     public int managerQuota;
 
-    public Branch(String name, int staffQuota, String location) {
+    public Branch(String name, String location, int staffQuota) {
         this.setBranchName(name);
         this.setLocation(location);
         this.setStaffQuota(staffQuota); // IMPORTANT: ensure in main that (1 <= staffQuota <= 15) as this will affect
@@ -61,7 +61,7 @@ public class Branch {
             System.out.print("Enter branch location: ");
             String location = sc.next();
             location += sc.nextLine();
-            Branch branch = new Branch(name, quota, location);
+            Branch branch = new Branch(name, location, quota);
             System.out.printf(
                     "New branch created. Its details are:\nName: %s\nStaff quota: %d\nManager Quota: %d\nLocation: %s\n",
                     name, quota, branch.getManagerQuota(), location);

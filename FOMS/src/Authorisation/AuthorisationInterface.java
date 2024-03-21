@@ -1,6 +1,6 @@
 package Authorisation;
-import Management.Staff;
+import Management.Staff.Roles;
 
 interface AuthorisationInterface {
-    public boolean authorise(Staff.Roles role);
+    boolean authorise(Roles role);
 }

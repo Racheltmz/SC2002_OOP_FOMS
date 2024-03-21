@@ -1,89 +1,28 @@
 // Import
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import Authentication.Authentication;
+import Authentication.ActiveAdmin;
+import Authentication.ActiveManager;
 import Authentication.ActiveStaff;
+import Initialisation.Initialisation;
 import Management.Admin;
 import Management.Company;
 import Management.Manager;
 import Management.Staff;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
+import Management.Staff.Roles;
 
+// Main app file
 public class FOMSApp {
     public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
+
         // Initialise company
-        Company company;
-        // Initialise a list
-        ArrayList<Staff> staffList = new ArrayList<Staff>();
-        /* LOAD STAFF LIST ON INITIALISATION */
-        try {
-            // Reading file from local directory
-            FileInputStream file = new FileInputStream(new File("./data/staff_list.xlsx"));
-
-            // Create Workbook instance holding reference to
-            // .xlsx file
-            XSSFWorkbook workbook = new XSSFWorkbook(file);
-
-            // Get first/desired sheet from the workbook
-            XSSFSheet sheet = workbook.getSheetAt(0);
-
-            // Iterate all rows
-            for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
-                Row row = sheet.getRow(i);
-                // Get values from rows
-                String staffId = row.getCell(1).toString();
-                String name = row.getCell(0).toString();
-                char role = row.getCell(2).toString().charAt(0);
-                char gender = row.getCell(3).toString().charAt(0);
-                int age = (int) row.getCell(4).getNumericCellValue();
-                String branch = row.getCell(5).toString();
-                Staff.Roles roleCat = null;
-
-                // Add new staff
-                switch (role) {
-                    case 'S':
-                        roleCat = Staff.Roles.STAFF;
-                        Staff staff = new Staff(staffId, name, roleCat, gender, age, branch);
-                        staffList.add(staff);
-                        break;
-                    case 'M':
-                        roleCat = Staff.Roles.MANAGER;
-                        Manager manager = new Manager(staffId, name, roleCat, gender, age, branch);
-                        staffList.add(manager);
-                        break;
-                    case 'A':
-                        roleCat = Staff.Roles.ADMIN;
-                        Admin admin = new Admin(staffId, name, roleCat, gender, age, branch);
-                        staffList.add(admin);
-                        break;
-                }
-            }
-            // Closing workbook and file output streams
-            workbook.close();
-            file.close();
-        }
-
-        // Catch block to handle exceptions
-        catch (NullPointerException nullPointerException) {
-            System.out.println("Record was not inserted as it has an empty cell.");
-        }
-        catch (Exception e) {
-            // Display the exception along with line number
-            // using printStackTrace() method
-            e.printStackTrace();
-        }
-
-        // Create company
-        company = new Company(staffList);
+        Initialisation init = new Initialisation();
+        Company company = init.initialiseCompany();
 
         /* FOMS INTERFACE */
-        Scanner sc = new Scanner(System.in);
         System.out.println("Please select option (3 to quit): ");
         System.out.println("1. Customer\n2. Staff");
         int choice = sc.nextInt();
@@ -95,6 +34,8 @@ public class FOMSApp {
                 /* STAFF INTERFACE */
                 Authentication auth = new Authentication();
                 ActiveStaff activeStaff = new ActiveStaff();
+                ActiveManager activeManager = new ActiveManager();
+                ActiveAdmin activeAdmin = new ActiveAdmin();
                 Staff staff;
 
                 // Iterate until user successfully logs in
@@ -104,7 +45,9 @@ public class FOMSApp {
 
                 do {
                     // Login
-                    if (activeStaff.getActiveStaff() == null) {
+                    if (activeStaff.getActiveStaff() == null
+                            && activeManager.getActiveStaff() == null
+                            && activeAdmin.getActiveStaff() == null) {
                         System.out.println("\nPlease select option (2 to quit): ");
                         System.out.println("1. Login");
                         staffChoice = sc.nextInt();
@@ -112,81 +55,85 @@ public class FOMSApp {
                         if (staffChoice == 1) {
                             staff = auth.login(sc, company);
                             // Set active staff
-                            if (staff != null)
-                                activeStaff.setActiveStaff(staff);
+                            if (staff != null) {
+                                if (staff.getRole() == Roles.STAFF) {
+                                    activeStaff.setActiveStaff(staff);
+                                } else if (staff.getRole() == Roles.MANAGER) {
+                                    activeManager.setActiveStaff((Manager) staff);
+                                } else if (staff.getRole() == Roles.ADMIN) {
+                                    activeAdmin.setActiveStaff((Admin) staff);
+                                }
+                            }
                         } else {
                             System.exit(0);
                         }
                     } else {
-                        // Display options based on the active staff's role
-                        Staff.Roles activeRole = activeStaff.getActiveStaff().getRole();
-                        System.out.printf("\nStaffID: %s\tRole: %s\n", activeStaff.getActiveStaff().getStaffID(), activeRole);
+                        // TODO: EDIT CHOICES AND IMPLEMENTATION (too much repetition)
+                        if (activeStaff.getActiveStaff() != null) {
+                            System.out.printf("\nStaffID: %s\tRole: %s\n", activeStaff.getActiveStaff().getStaffID(), Roles.STAFF);
+                            System.out.println("Please select option (3 to quit): ");
+                            System.out.println("1. Change Password\n2. Logout");
+                            staffChoice = sc.nextInt();
+                            sc.nextLine(); // Consume newline character
+                            switch (staffChoice) {
+                                case 1:
+                                    if (activeStaff.getActiveStaff() != null)
+                                        auth.changePassword(sc, activeStaff.getActiveStaff());
+                                    else
+                                        System.out.println("Please login first.");
+                                    break;
+                                case 2:
+                                    activeStaff.logout();
+                                    break;
+                                default:
+                                    System.out.print("Invalid choice, please re-enter: ");
+                                    break;
+                            }
+                        } else if (activeManager.getActiveStaff() != null) {
+                            System.out.printf("\nStaffID: %s\tRole: %s\n", activeManager.getActiveStaff().getStaffID(), Roles.MANAGER);
+                            System.out.println("Please select option (3 to quit): ");
+                            System.out.println("1. Display Staff List\n2. Change Password\n3. Logout");
+                            staffChoice = sc.nextInt();
+                            sc.nextLine(); // Consume newline character
+                            switch (staffChoice) {
+                                case 1:
+                                    activeManager.getActiveStaff().displayStaffList(company,
+                                            Roles.MANAGER);
+                                    break;
+                                case 2:
+                                    if (activeManager.getActiveStaff() != null)
+                                        auth.changePassword(sc, activeManager.getActiveStaff());
+                                    else
+                                        System.out.println("Please login first.");
+                                    break;
+                                case 3:
+                                    activeManager.logout();
+                                    break;
+                                default:
+                                    System.out.print("Invalid choice, please re-enter: ");
+                                    break;
+                            }
 
-                        switch (activeRole) {
-                            // TODO: EDIT CHOICES AND IMPLEMENTATION (too much repetition)
-                            case STAFF:
-                                System.out.println("Please select option (3 to quit): ");
-                                System.out.println("1. Change Password\n2. Logout");
-                                staffChoice = sc.nextInt();
-                                sc.nextLine(); // Consume newline character
-                                switch (staffChoice) {
-                                    case 1:
-                                        if (activeStaff.getActiveStaff() != null)
-                                            auth.changePassword(sc, activeStaff.getActiveStaff());
-                                        else
-                                            System.out.println("Please login first.");
-                                        break;
-                                    case 2:
-                                        activeStaff.logout();
-                                        break;
-                                    default:
-                                        System.out.print("Invalid choice, please re-enter: ");
-                                        break;
-                                }
-                                break;
-                            case MANAGER:
-                                System.out.println("Please select option (3 to quit): ");
-                                System.out.println("1. Change Password\n2. Logout");
-                                staffChoice = sc.nextInt();
-                                sc.nextLine(); // Consume newline character
-                                switch (staffChoice) {
-                                    case 1:
-                                        if (activeStaff.getActiveStaff() != null)
-                                            auth.changePassword(sc, activeStaff.getActiveStaff());
-                                        else
-                                            System.out.println("Please login first.");
-                                        break;
-                                    case 2:
-//                                        activeStaff.displayStaffList();
-//                                        break;
-//                                        case 3:
-                                        activeStaff.logout();
-                                        break;
-                                    default:
-                                        System.out.print("Invalid choice, please re-enter: ");
-                                        break;
-                                }
-                                break;
-                            case ADMIN:
-                                System.out.println("Please select option (3 to quit): ");
-                                System.out.println("1. Change Password\n2. Logout");
-                                staffChoice = sc.nextInt();
-                                sc.nextLine(); // Consume newline character
-                                switch (staffChoice) {
-                                    case 1:
-                                        if (activeStaff.getActiveStaff() != null)
-                                            auth.changePassword(sc, activeStaff.getActiveStaff());
-                                        else
-                                            System.out.println("Please login first.");
-                                        break;
-                                    case 2:
-                                        activeStaff.logout();
-                                        break;
-                                    default:
-                                        System.out.print("Invalid choice, please re-enter: ");
-                                        break;
-                                }
-                                break;
+                        } else if (activeAdmin.getActiveStaff() != null) {
+                            System.out.printf("\nStaffID: %s\tRole: %s\n", activeAdmin.getActiveStaff().getStaffID(), Roles.ADMIN);
+                            System.out.println("Please select option (3 to quit): ");
+                            System.out.println("1. Change Password\n2. Logout");
+                            staffChoice = sc.nextInt();
+                            sc.nextLine(); // Consume newline character
+                            switch (staffChoice) {
+                                case 1:
+                                    if (activeAdmin.getActiveStaff() != null)
+                                        auth.changePassword(sc, activeAdmin.getActiveStaff());
+                                    else
+                                        System.out.println("Please login first.");
+                                    break;
+                                case 2:
+                                    activeAdmin.logout();
+                                    break;
+                                default:
+                                    System.out.print("Invalid choice, please re-enter: ");
+                                    break;
+                            }
                         }
                     }
                 } while (staffChoice != -1);
@@ -199,4 +146,3 @@ public class FOMSApp {
         }
     }
 }
-

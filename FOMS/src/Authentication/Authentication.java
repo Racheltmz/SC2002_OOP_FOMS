@@ -4,15 +4,15 @@ import Management.Company;
 import Management.Staff;
 
 import java.util.Scanner;
+
 // Handles login and password
 public class Authentication {
     public Staff login(Scanner sc, Company company) {
-        Staff staff;
         while (true) {
             System.out.print("Enter staffID: ");
             String inputStaffID = sc.nextLine();
             // Get staff by id
-            staff = company.getStaff(inputStaffID);
+            Staff staff = company.getStaff(inputStaffID);
             if (staff != null) {
                 System.out.print("Enter password: ");
                 String inputPassword = sc.nextLine().trim();

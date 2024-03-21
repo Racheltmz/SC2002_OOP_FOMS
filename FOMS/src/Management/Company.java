@@ -14,8 +14,9 @@ public class Company {
     // Constructor for Company class
     public Company() {}
 
-    public Company(ArrayList<Staff> staffList) {
+    public Company(ArrayList<Staff> staffList, ArrayList<Branch> branches) {
         this.staffList = staffList;
+        this.branches = branches;
     }
 
     /* STAFF PURPOSES */
@@ -41,11 +42,12 @@ public class Company {
         // Authorise staff else return empty list
         AuthoriseAdmin authAdmin = new AuthoriseAdmin();
         AuthoriseManager authManager = new AuthoriseManager();
-        if (authAdmin.authorise(auth) || authManager.authorise(auth)) {
+        boolean isAuth = authManager.authorise(auth) || authAdmin.authorise(auth);
+        if (isAuth) {
             // Check if the filter is "branch", else it returns an empty array
-            if (filter == "branch") {
+            if (Objects.equals(filter, "branch")) {
                 for (int i = 0; i < this.staffList.size(); i++) {
-                    if (this.staffList.get(i).getBranch() == filterVal)
+                    if (Objects.equals(this.staffList.get(i).getBranch(), filterVal))
                         filteredStaff.add(this.staffList.get(i));
                 }
             }
@@ -114,12 +116,19 @@ public class Company {
 
     /* BRANCHES PURPOSES */
     // Get branches (to display for customers)
-    public ArrayList<Management.Branch> getBranches() {
+    public ArrayList<Branch> getBranches() {
         return this.branches;
     }
 
+    public void displayBranches() {
+        System.out.println("Branches (enter the number): ");
+        for (int i=0; i<this.branches.size(); i++) {
+            System.out.printf("%d. %s\n", i+1, this.branches.get(i).getBranchName());
+        }
+    }
+
     // Add branch (admin purposes)
-    public void addBranch(Management.Branch branch, Staff.Roles auth) {
+    public void addBranch(Branch branch, Staff.Roles auth) {
         AuthoriseAdmin authAdmin = new AuthoriseAdmin();
         if (authAdmin.authorise(auth))
             this.branches.add(branch);
