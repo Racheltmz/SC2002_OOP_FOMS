@@ -1,4 +1,4 @@
-package Management.ActiveUsers;
+package Authentication.ActiveUsers;
 
 import Authentication.Authentication;
 import Authentication.StaffPermissions;

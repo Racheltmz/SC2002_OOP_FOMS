@@ -1,17 +1,17 @@
-package Management.ActiveUsers;
+package Authentication.ActiveUsers;
 
 import Authentication.Authentication;
+import Management.Admin;
 import Management.Company;
-import Management.Manager;
 
-public class ActiveManager extends ActiveUser {
-    private Manager activeStaff;
+public class ActiveAdmin extends ActiveUser {
+    private Admin activeStaff;
 
-    public Manager getActiveStaff() {
+    public Admin getActiveStaff() {
         return activeStaff;
     }
 
-    public void setActiveStaff(Manager activeStaff) {
+    public void setActiveStaff(Admin activeStaff) {
         this.activeStaff = activeStaff;
     }
 

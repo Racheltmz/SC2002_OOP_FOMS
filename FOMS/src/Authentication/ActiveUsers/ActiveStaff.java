@@ -1,4 +1,4 @@
-package Management.ActiveUsers;
+package Authentication.ActiveUsers;
 
 import java.util.Scanner;
 

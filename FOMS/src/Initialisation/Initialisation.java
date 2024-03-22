@@ -16,7 +16,7 @@ import java.util.ArrayList;
 // Initialisation tasks
 public class Initialisation {
     /* LOAD STAFF LIST ON INITIALISATION */
-    public Company initialiseCompany() {
+    public static Company initialiseCompany() {
         ArrayList<Staff> staffList = initialiseStaffRecords();
         ArrayList<Branch> branchList = initialiseBranchRecords();
         return new Company(staffList, branchList);

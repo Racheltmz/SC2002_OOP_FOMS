@@ -1,18 +1,18 @@
-
 // Import
 import java.io.IOException;
 import java.util.Scanner;
 
 import Authentication.Authentication;
-import Initialisation.Initialisation;
 import Management.Admin;
 import Management.Company;
 import Management.Manager;
 import Management.Staff;
-import Management.ActiveUsers.ActiveAdmin;
-import Management.ActiveUsers.ActiveManager;
-import Management.ActiveUsers.ActiveStaff;
+import Authentication.ActiveUsers.ActiveAdmin;
+import Authentication.ActiveUsers.ActiveManager;
+import Authentication.ActiveUsers.ActiveStaff;
 import Management.Staff.Roles;
+
+import static Initialisation.Initialisation.initialiseCompany;
 
 // Main app file
 public class FOMSApp {
@@ -20,8 +20,7 @@ public class FOMSApp {
         Scanner sc = new Scanner(System.in);
 
         // Initialise company
-        Initialisation init = new Initialisation();
-        Company company = init.initialiseCompany();
+        Company company = initialiseCompany();
 
         /* FOMS INTERFACE */
         System.out.println("Please select option (3 to quit): ");
