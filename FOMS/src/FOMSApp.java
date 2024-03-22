@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
-import Authentication.Authentication;
-import Authentication.ActiveUsers.*;
-import Initialisation.Initialisation;
+import Authorisation.ActiveUsers.*;
 import Management.Admin;
 import Management.Company;
 import Management.Manager;
@@ -18,6 +16,7 @@ import static Initialisation.Initialisation.initialiseCompany;
 
 // Main app file
 public class FOMSApp {
+
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
 
@@ -28,6 +27,7 @@ public class FOMSApp {
         System.out.println("Please select option (3 to quit): ");
         System.out.println("1. Customer\n2. Staff");
         int choice = sc.nextInt();
+
         switch (choice) {
             case 1:
                 /* CUSTOMER INTERFACE */
@@ -55,7 +55,7 @@ public class FOMSApp {
                         sc.nextLine(); // Consume newline character
                         if (staffChoice == 1) {
                             try {
-                                staff = login(company);
+                                staff = login(sc, company);
                                 // Set active staff
                                 if (staff != null) {
                                     if (staff.getRole() == Roles.STAFF) {
@@ -66,26 +66,23 @@ public class FOMSApp {
                                         activeAdmin.setActiveStaff((Admin) staff);
                                     }
                                 }
-                            } catch (NoSuchAlgorithmException e) {
+                            }
+                            catch (NoSuchAlgorithmException e) {
                                 System.out.println("Unable to find algorithm.");
                             }
-                        } else {
-                            System.exit(0);
                         }
                     } else {
                         if (activeStaff.getActiveStaff() != null) {
-                            activeStaff.processMenu(company);
+                            activeStaff.processMenu(sc, company);
                         } else if (activeManager.getActiveStaff() != null) {
-                            activeManager.processMenu(company);
+                            activeManager.processMenu(sc, company);
                         } else if (activeAdmin.getActiveStaff() != null) {
-                            activeAdmin.processMenu(company);
+                            activeAdmin.processMenu(sc, company);
                         }
                     }
-                } while (staffChoice != -1);
-                sc.close();
+                } while (staffChoice != 2);
                 break;
             case 3:
-                sc.close();
                 break;
             default:
                 System.out.print("Invalid choice, please re-enter: ");
