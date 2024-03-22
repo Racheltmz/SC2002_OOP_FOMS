@@ -1,3 +1,4 @@
+
 // Import
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -47,8 +48,7 @@ public class FOMSApp {
                     // Login
                     if (activeStaff.getActiveStaff() == null
                             && activeManager.getActiveStaff() == null
-                            && activeAdmin.getActiveStaff() == null) 
-                    {
+                            && activeAdmin.getActiveStaff() == null) {
                         System.out.println("\nPlease select option (2 to quit): ");
                         System.out.println("1. Login");
                         staffChoice = sc.nextInt();
@@ -61,32 +61,23 @@ public class FOMSApp {
                                     if (staff.getRole() == Roles.STAFF) {
                                         activeStaff.setActiveStaff(staff);
                                     } else if (staff.getRole() == Roles.MANAGER) {
-                                        activeManager.setActiveStaff((Manager)staff);
+                                        activeManager.setActiveStaff((Manager) staff);
                                     } else if (staff.getRole() == Roles.ADMIN) {
-                                        activeAdmin.setActiveStaff((Admin)staff);
+                                        activeAdmin.setActiveStaff((Admin) staff);
                                     }
                                 }
                             } catch (NoSuchAlgorithmException e) {
                                 System.out.println("Unable to find algorithm.");
                             }
-                        } 
-                        else 
-                        {
+                        } else {
                             System.exit(0);
                         }
-                    } 
-                    else 
-                    {
-                        if (activeStaff.getActiveStaff() != null) 
-                        {
+                    } else {
+                        if (activeStaff.getActiveStaff() != null) {
                             activeStaff.processMenu(company);
-                        } 
-                        else if (activeManager.getActiveStaff() != null) 
-                        {
+                        } else if (activeManager.getActiveStaff() != null) {
                             activeManager.processMenu(company);
-                        } 
-                        else if (activeAdmin.getActiveStaff() != null) 
-                        {
+                        } else if (activeAdmin.getActiveStaff() != null) {
                             activeAdmin.processMenu(company);
                         }
                     }

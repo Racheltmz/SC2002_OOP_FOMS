@@ -1,10 +1,9 @@
 package Authentication.ActiveUsers;
 
-import Authentication.Authentication;
 import Management.Company;
 import Management.Manager;
 
-public class ActiveManager extends ActiveUser {
+public class ActiveManager implements ActiveUserInterface {
     private Manager activeStaff;
 
     public Manager getActiveStaff() {
@@ -19,8 +18,7 @@ public class ActiveManager extends ActiveUser {
         setActiveStaff(null);
     }
 
-    public void processMenu(Company company, Authentication auth)
-    {
-        
+    public void processMenu(Company company) {
+        System.out.println("TBC");
     }
 }
