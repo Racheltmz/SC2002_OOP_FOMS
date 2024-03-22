@@ -12,25 +12,26 @@ public class Manager extends Staff  {
 
     /* STAFF MANAGEMENT PURPOSES */
     public void displayStaffList(Company company, Staff.Roles auth) {
-        Scanner sc = new Scanner(System.in);
-        // Display branches
-        company.displayBranches();
-        // Get branches
-        ArrayList<Branch> branches = company.getBranches();
-        // Handle invalid branch names by checking if index out of bounds
-        while (true) {
-            try {
-                // Get user's selection
-                System.out.println("Select Branch: ");
-                int branchIndex = sc.nextInt();
-                // Display branches
-                ArrayList<Staff> staffByBranch = company.getStaffList("branch", branches.get(branchIndex-1).getBranchName(), auth);
-                for (int i = 0; i < staffByBranch.size(); i++) {
-                    staffByBranch.get(i).displayStaffDetails();
+        try (Scanner sc = new Scanner(System.in)) {
+            // Display branches
+            company.displayBranches();
+            // Get branches
+            ArrayList<Branch> branches = company.getBranches();
+            // Handle invalid branch names by checking if index out of bounds
+            while (true) {
+                try {
+                    // Get user's selection
+                    System.out.println("Select Branch: ");
+                    int branchIndex = sc.nextInt();
+                    // Display branches
+                    ArrayList<Staff> staffByBranch = company.getStaffList("branch", branches.get(branchIndex-1).getBranchName(), auth);
+                    for (int i = 0; i < staffByBranch.size(); i++) {
+                        staffByBranch.get(i).displayStaffDetails();
+                    }
+                    break;
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Invalid value, please enter again.");
                 }
-                break;
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Invalid value, please enter again.");
             }
         }
     }
