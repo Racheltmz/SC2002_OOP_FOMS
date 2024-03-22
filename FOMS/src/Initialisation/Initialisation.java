@@ -17,9 +17,9 @@ import java.util.ArrayList;
 // Initialisation tasks
 public class Initialisation {
     /* LOAD STAFF LIST ON INITIALISATION */
-    public Company initialiseCompany() {
+    public static Company initialiseCompany() {
         ArrayList<Staff> staffList = initialiseStaffRecords();
-         ArrayList<Branch> branchList = initialiseBranchRecords();
+        ArrayList<Branch> branchList = initialiseBranchRecords();
         return new Company(staffList, branchList);
     }
 
@@ -46,7 +46,7 @@ public class Initialisation {
         return sheet;
     }
 
-    public ArrayList<Staff> initialiseStaffRecords() {
+    public static ArrayList<Staff> initialiseStaffRecords() {
         // Initialise a list
         ArrayList<Staff> staffList = new ArrayList<Staff>();
         XSSFSheet sheet = getSheet("./data/staff_list.xlsx");
@@ -89,7 +89,7 @@ public class Initialisation {
         return staffList;
     }
 
-    public ArrayList<Branch> initialiseBranchRecords() {
+    public static ArrayList<Branch> initialiseBranchRecords() {
         // Initialise a list
         ArrayList<Branch> branchList = new ArrayList<Branch>();
         XSSFSheet sheet = getSheet("./data/branch_list.xlsx");
