@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/FOMS/lib/commons-collections4-4.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FOMS/lib/poi-ooxml-4.1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FOMS/lib/xmlbeans-3.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FOMS/lib/commons-compress-1.18.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FOMS/lib/poi-ooxml-schemas-4.1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FOMS/lib/poi-4.1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
