@@ -13,18 +13,12 @@ public class Company {
     // private ArrayList<Payment> paymentList; TODO: COMMENT OUT ONCE PAYMENT CLASS IS ADDED
 
     // Constructor for Company class
-    public Company() {}
-
     public Company(ArrayList<Staff> staffList, ArrayList<Branch> branches) {
         this.staffList = staffList;
         this.branches = branches;
     }
 
     /* STAFF PURPOSES */
-    public ArrayList<Staff> getStaffList() {
-        return this.staffList;
-    }
-
     public Staff getStaff(String staffId) {
         // Return staff object if it can be found
         for (int i=0; i < this.staffList.size(); i++) {
@@ -64,7 +58,7 @@ public class Company {
         AuthoriseAdmin authAdmin = new AuthoriseAdmin();
         if (authAdmin.authorise(auth)) {
             // Check if the filter is "role", else it returns an empty array
-            if (filter == "role") {
+            if (Objects.equals(filter, "role")) {
                 for (int i = 0; i < this.staffList.size(); i++) {
                     if (this.staffList.get(i).getRole() == filterVal)
                         filteredStaff.add(this.staffList.get(i));
@@ -82,7 +76,7 @@ public class Company {
         AuthoriseAdmin authAdmin = new AuthoriseAdmin();
         if (authAdmin.authorise(auth)) {
             // Check if the filter is "gender", else it returns an empty array
-            if (filter == "gender") {
+            if (Objects.equals(filter, "gender")) {
                 for (int i = 0; i < this.staffList.size(); i++) {
                     if (this.staffList.get(i).getGender() == filterVal)
                         filteredStaff.add(this.staffList.get(i));
@@ -100,7 +94,7 @@ public class Company {
         AuthoriseAdmin authAdmin = new AuthoriseAdmin();
         if (authAdmin.authorise(auth)) {
             // Check if the filter is "age", else it returns an empty array
-            if (filter == "age") {
+            if (Objects.equals(filter, "age")) {
                 for (int i = 0; i < this.staffList.size(); i++) {
                     if (this.staffList.get(i).getAge() == filterVal)
                         filteredStaff.add(this.staffList.get(i));

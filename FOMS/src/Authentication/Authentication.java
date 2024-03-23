@@ -17,20 +17,21 @@ public class Authentication {
             // Get staff by id
             Staff staff = company.getStaff(inputStaffID);
             if (staff != null) {
-                System.out.print("Enter password: ");
-                String inputPassword = sc.nextLine().trim();
-                String securePassword = genHash(inputPassword);
-                if (!verifyPassword(staff, securePassword)) {
-                    System.out.println("Incorrect password, please try again.");
-                    break;
+                while (true) {
+                    System.out.print("Enter password: ");
+                    String inputPassword = sc.nextLine().trim();
+                    String securePassword = genHash(inputPassword);
+                    if (!verifyPassword(staff, securePassword)) {
+                        System.out.println("Incorrect password, please try again.");
+                    } else {
+                        System.out.println("Logged in!");
+                        return staff;
+                    }
                 }
-                System.out.println("Logged in!");
-                return staff;
             } else {
                 System.out.println("Invalid staffID, please try again.");
             }
         }
-        return null;
     }
 
     protected static boolean verifyPassword(Staff staff, String password) {

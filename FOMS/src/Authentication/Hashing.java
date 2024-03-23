@@ -3,9 +3,8 @@ package Authentication;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+// Hash password
 public class Hashing {
-    public Hashing() {}
-
     public static String genHash(String passwordToHash) {
         String generatedPassword = null;
         try {

@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public interface ActiveUserInterface {
     // public void displayRoleInfo()
-    public Staff getActiveStaff();
-    public void logout();
-    public void processMenu(Scanner sc, Company company);
+    Staff getActiveStaff();
+    void logout();
+    void processMenu(Scanner sc, Company company);
 }

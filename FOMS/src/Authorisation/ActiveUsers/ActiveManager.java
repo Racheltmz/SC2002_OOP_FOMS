@@ -34,10 +34,7 @@ public class ActiveManager implements ActiveUserInterface {
                 this.getActiveStaff().displayStaffList(sc, company, Roles.MANAGER);
                 break;
             case 2:
-                if (this.getActiveStaff() != null)
-                    changePassword(sc, this.getActiveStaff());
-                else
-                    System.out.println("Please login first.");
+                changePassword(sc, this.getActiveStaff());
                 break;
             case 3:
                 this.logout();

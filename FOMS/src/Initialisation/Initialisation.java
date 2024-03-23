@@ -95,7 +95,6 @@ public class Initialisation {
         XSSFSheet sheet = getSheet("./data/branch_list.xlsx");
         try {
             // Iterate all rows
-            System.out.println(sheet.getLastRowNum());
             for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
                 Row row = sheet.getRow(i);
                 // Get values from rows
