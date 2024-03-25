@@ -3,7 +3,7 @@ package Authentication;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-// Hash password
+// Hash password for security purposes
 public class Hashing {
     public static String genHash(String passwordToHash) {
         String generatedPassword = null;

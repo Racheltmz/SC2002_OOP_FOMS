@@ -1,6 +1,9 @@
 package Order;
+
+import java.util.ArrayList;
+
 public class OrderQueue {
-    private Order[] orders;
+    private ArrayList<Order> orders;
     private int front;
     private int rear;
     private int size;
@@ -8,10 +11,14 @@ public class OrderQueue {
 
     public OrderQueue(int capacity){
         this.capacity = capacity;
-        this.orders = new Order[capacity];
+        this.orders = new ArrayList<Order>();
         this.front = 0;
         this.rear = -1;
         this.size = 0;
+    }
+
+    public ArrayList<Order> getOrders() {
+        return this.orders;
     }
 
     public void addOrder(Order order){
@@ -20,7 +27,7 @@ public class OrderQueue {
             return;
         }
         rear = (rear + 1) % capacity;
-        orders[rear] = order;
+        this.orders.set(rear, order);
         size++;
     }
 
@@ -30,8 +37,8 @@ public class OrderQueue {
             return null;
         }
 
-        Order removedOrder = orders[front];
-        orders[front] = null;
+        Order removedOrder = this.orders.get(front);
+        this.orders.set(front, null);
         front = (front + 1) % capacity;
         size--;
         return removedOrder;

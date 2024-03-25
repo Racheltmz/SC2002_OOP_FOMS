@@ -1,10 +1,13 @@
 package Management;
 
+import Order.Order;
+import Order.OrderQueue;
+import java.util.ArrayList;
+
 import static Authentication.Hashing.genHash;
 
 public class Staff {
     public enum Roles { STAFF, MANAGER, ADMIN}
-
     private String staffID;
     private String name;
     private String password;
@@ -63,13 +66,15 @@ public class Staff {
         this.password = password;
     }
 
+    // Display staff details
     public void displayStaffDetails() {
         System.out.println(this.staffID + ' ' + this.name + ' ' + this.role + ' ' +
                 this.gender + ' ' + this.age + ' ' + this.branch);
     }
 
-    // pending for order & status class
-    protected void setStatus(String orderStatus) {
+    // Test Case 9 and 12: Update order status to ready to pickup
+    protected void setOrderStatus(OrderQueue queue) {
+        ArrayList<Order> orders = queue.getOrders();
 
     }
 }

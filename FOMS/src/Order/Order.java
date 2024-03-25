@@ -27,6 +27,15 @@ public class Order {
         orderMap.put(orderID, this);
     }
 
+    public String getStatus(){
+        return status;
+    }
+
+    protected String setStatus(Status status){
+        this.status = status.toString();
+        return this.status;
+    }
+
     public void pay(String paymentMethod){
         setStatus(Status.READY);
     }
@@ -41,7 +50,7 @@ public class Order {
         for (String customization : customisation){
             System.out.println("- " + customization);
         }
-        if (takeaway == true){
+        if (takeaway){
             System.out.println("You chose to takeaway");
         }
         else{
@@ -65,15 +74,6 @@ public class Order {
         System.out.println("Order processed successfully.");
     }
 
-    public String getStatus(){
-        return status;
-    }
-
-    protected String setStatus(Status status){
-        this.status = status.toString();
-        return this.status;
-    }
-
     public void collectOrder(){
         if (getStatus().equals(Status.READY.toString())){
             setStatus(Status.COMPLETED);
@@ -88,17 +88,5 @@ public class Order {
         // Test Case 21: Process an order with items
         Order orderWithItems = new Order("456", "Branch B", new Item[]{new Item("Pizza")}, new String[]{}, false, "Card");
         orderWithItems.processOrder(); // This should process the order successfully
-    }
-}
-
-// TODO: delete when item class is made
-class Item {
-    private String name;
-
-    public Item(String name) {
-        this.name = name;
-    }
-    public String getName() {
-        return name;
     }
 }

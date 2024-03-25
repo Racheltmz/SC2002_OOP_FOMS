@@ -10,6 +10,13 @@ import static Authentication.Hashing.genHash;
 
 // Handles login and password
 public class Authentication {
+
+    // Verify if the password matches
+    protected static boolean verifyPassword(Staff staff, String password) {
+        return password.equals(staff.getPassword());
+    }
+
+    // Login for Test Case 9, 11, 24
     public static Staff login(Scanner sc, Company company) throws NoSuchAlgorithmException {
         while (true) {
             System.out.print("Enter staffID: ");
@@ -34,15 +41,13 @@ public class Authentication {
         }
     }
 
-    protected static boolean verifyPassword(Staff staff, String password) {
-        return password.equals(staff.getPassword());
-    }
-
+    // Change password for Test Case 25
     public static void changePassword(Scanner sc, Staff staff) {
         System.out.print("Please enter new password: ");
         String newpassword = sc.nextLine().trim();
-        while (newpassword.isEmpty()) {
-            System.out.println("Password change unsuccessful, please try again.");
+        // Check if user entered a password or if they entered the same password as they had in the past
+        while (newpassword.isEmpty() || verifyPassword(staff, genHash(newpassword))) {
+            System.out.println("Password change unsuccessful, please try again. Ensure that it differs from your previous password.");
             System.out.print("Please enter new password: ");
             newpassword = sc.nextLine().trim();
         }

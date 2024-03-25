@@ -3,14 +3,16 @@ package Management;
 import Authorisation.AuthoriseAdmin;
 import Authorisation.AuthoriseManager;
 import Management.Staff.Roles;
+import Payment.Payment;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+// Information about the company such as staff, branch, payment list
 public class Company {
     private ArrayList<Staff> staffList;
     private ArrayList<Branch> branches;
-    // private ArrayList<Payment> paymentList; TODO: COMMENT OUT ONCE PAYMENT CLASS IS ADDED
+    private ArrayList<Payment> paymentList;
 
     // Constructor for Company class
     public Company(ArrayList<Staff> staffList, ArrayList<Branch> branches) {
@@ -21,7 +23,7 @@ public class Company {
     /* STAFF PURPOSES */
     public Staff getStaff(String staffId) {
         // Return staff object if it can be found
-        for (int i=0; i < this.staffList.size(); i++) {
+        for (int i = 0; i < this.staffList.size(); i++) {
             Staff curStaff = this.staffList.get(i);
             if (Objects.equals(curStaff.getStaffID(), staffId))
                 return curStaff;
@@ -117,8 +119,8 @@ public class Company {
 
     public void displayBranches() {
         System.out.println("Branches (enter the number): ");
-        for (int i=0; i<this.branches.size(); i++) {
-            System.out.printf("%d. %s\n", i+1, this.branches.get(i).getBranchName());
+        for (int i = 0; i < this.branches.size(); i++) {
+            System.out.printf("%d. %s\n", i + 1, this.branches.get(i).getBranchName());
         }
     }
 
@@ -130,14 +132,20 @@ public class Company {
     }
 
     // Remove branch (admin purposes)
-//    public void deleteBranch(String branchName, Roles auth) {
-//        AuthoriseAdmin authAdmin = new AuthoriseAdmin();
-//        if (authAdmin.authorise(auth))
-//            this.branches.remove(this.branches.indexOf(branchName));
-//    }
+    // public void deleteBranch(String branchName, Roles auth) {
+    //     AuthoriseAdmin authAdmin = new AuthoriseAdmin();
+    //     if (authAdmin.authorise(auth))
+    //         this.branches.remove(this.branches.indexOf(branchName));
+    // }
 
     /* PAYMENT PURPOSES */
-//    public ArrayList<Payment> getPaymentList() {
-//        return this.paymentList;
-//    }
+    // Get all payment method objects
+    public ArrayList<Payment> getPaymentList() {
+        return this.paymentList;
+    }
+
+    // Add payment method object
+    public void addPaymentMtd(Payment payment) {
+        this.paymentList.add(payment);
+    }
 }

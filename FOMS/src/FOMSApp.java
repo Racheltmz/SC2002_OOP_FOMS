@@ -24,6 +24,10 @@ public class FOMSApp {
         Company company = initialiseCompany();
 
         /* FOMS INTERFACE */
+        System.out.println("==================================");
+        System.out.println("|         Welcome to FOMS!       |");
+        System.out.println("|         By FDAB Group 3        |");
+        System.out.println("==================================");
         System.out.println("Please select option (3 to quit): ");
         System.out.println("1. Customer\n2. Staff");
         int choice = sc.nextInt();
@@ -41,7 +45,7 @@ public class FOMSApp {
 
                 // Iterate until user successfully logs in
                 int staffChoice = 0;
-                System.out.println("\nWelcome to the FOMS Login System.");
+                System.out.println("\nFOMS Login System.");
                 sc.nextLine(); // Consume newline character
 
                 do {

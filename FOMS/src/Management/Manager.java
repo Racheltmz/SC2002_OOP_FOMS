@@ -10,7 +10,8 @@ public class Manager extends Staff  {
     }
 
     /* STAFF MANAGEMENT PURPOSES */
-    public void displayStaffList(Scanner sc, Company company, Staff.Roles auth) {
+    // Display staff list by branch Test Case 11
+    public void displayStaffList(Scanner sc, Company company, Roles auth) {
         // Display branches
         company.displayBranches();
         // Get branches
