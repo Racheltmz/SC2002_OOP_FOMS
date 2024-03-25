@@ -11,6 +11,8 @@ import Authentication.ActiveUsers.ActiveAdmin;
 import Authentication.ActiveUsers.ActiveManager;
 import Authentication.ActiveUsers.ActiveStaff;
 import Management.Staff.Roles;
+import Order.Order;
+import Order.OrderQueue;
 
 import static Initialisation.Initialisation.initialiseCompany;
 
@@ -56,13 +58,49 @@ public class FOMSApp {
                         if (staffChoice == 1) {
                             staff = auth.login(company);
                             // Set active staff
-                            if (staff != null) {
+                            if (staff != null) 
+                            {
                                 if (staff.getRole() == Roles.STAFF) {
                                     activeStaff.setActiveStaff(staff);
                                 } else if (staff.getRole() == Roles.MANAGER) {
                                     activeManager.setActiveStaff((Manager)staff);
                                 } else if (staff.getRole() == Roles.ADMIN) {
                                     activeAdmin.setActiveStaff((Admin)staff);
+                                }
+                                System.out.println("Please select option (4 to quit): ");
+                                System.out.print("1. Display new orders\n2. View details of a particular order\n3. Process order\n");
+                                int opt = sc.nextInt();
+                                sc.nextLine();
+                                OrderQueue oq = new OrderQueue(10);
+                                switch (opt)
+                                {
+                                    case 1:
+                                        //TODO: RETRIEVE ORDERQUEUE FROM CUSTOMER INTERFACE WHEN CUSTOMER CLASS IS IMPLEMENTED
+                                        //just for example, placeholder below
+                                        oq.displayOrders(staff.getBranch());
+                                        break;
+                                    case 2: //view details based on orderID
+                                        System.out.println("Enter orderID: ");
+                                        String orderid = sc.nextLine();
+                                        for (Order order : oq.orders)
+                                        {
+                                            if (order.getOrderID() == orderid)
+                                            {
+                                                System.out.println(Order.getOrderById(orderid));       
+                                            }   
+                                        }
+                                        break;
+                                    case 3:
+                                        System.out.println("Enter orderID: ");
+                                        String order_id = sc.nextLine();
+                                        for (Order order : oq.orders)
+                                        {
+                                            if (order.getOrderID() == order_id)
+                                            {
+                                                order.processOrder(order_id); 
+                                            }   
+                                        }
+                                        break;
                                 }
                             }
                         } 
