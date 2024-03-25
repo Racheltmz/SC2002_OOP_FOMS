@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 public class Menu {
@@ -24,11 +22,7 @@ public class Menu {
 
         Item menuItem = items.get(menuId - 1);
         if (menuItem.isOrdered()) {
-            System.out.println("This item has already been ordered and is in the cart.");
-        } else {
-            menuItem.assign(customerId);
-            numOrderedItems++;
-            System.out.println("Seat " + menuId + " is assigned to customer " + customerId);
+            System.out.println("One more of the" + menuId + "is added to the order. ");
         }
     }
 
