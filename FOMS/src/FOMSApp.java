@@ -3,14 +3,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
-public class Main {
+public class FOMSApp {
     public static void main(String[] args) throws IOException {
         // Try block to check for exceptions
         try {
@@ -24,9 +23,6 @@ public class Main {
 
             // Get first/desired sheet from the workbook
             XSSFSheet sheet = workbook.getSheetAt(0);
-
-            // Iterate through each rows one by one
-            Iterator<Row> rowIterator = sheet.iterator();
 
             // Initialise a list
             List<Staff> staffList = new ArrayList<Staff>();
@@ -57,7 +53,8 @@ public class Main {
                 // Append new staff
                 staffList.add(staff);
             }
-            // Closing file output streams
+            // Closing workbook and file output streams
+            workbook.close();
             file.close();
         }
 
