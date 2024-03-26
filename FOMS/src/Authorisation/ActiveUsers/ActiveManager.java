@@ -32,6 +32,7 @@ public class ActiveManager implements ActiveUserInterface {
         System.out.println("1. Display Staff List\n2. Display new orders\n3. View details of a particular order\n4. Process order\n5. Change Password\n6. Logout");
         int staffChoice = sc.nextInt();
         sc.nextLine(); // Consume newline character
+        String orderID;
         switch (staffChoice) {
             case 1:
                 this.getActiveStaff().displayStaffList(sc, company, Roles.MANAGER);
@@ -43,7 +44,7 @@ public class ActiveManager implements ActiveUserInterface {
                 break;
             case 3: // view details based on orderID
                 System.out.println("Enter orderID: ");
-                String orderID = sc.nextLine();
+                orderID = sc.nextLine();
                 for (Order order : queue.getOrders()) {
                     if (Objects.equals(order.getOrderID(), orderID)) {
                         System.out.println(Order.getOrderById(orderID));
@@ -52,7 +53,7 @@ public class ActiveManager implements ActiveUserInterface {
                 break;
             case 4:
                 System.out.println("Enter orderID: ");
-                String orderID = sc.nextLine();
+                orderID = sc.nextLine();
                 for (Order order : queue.getOrders()) {
                     if (Objects.equals(order.getOrderID(), orderID)) {
                         order.processOrder(orderID);
