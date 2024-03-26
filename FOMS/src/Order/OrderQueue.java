@@ -5,11 +5,9 @@ import java.util.ArrayList;
 public class OrderQueue {
     private ArrayList<Order> orders;
     private int size;
-    private int capacity;
 
     // Instantiate Order Queue
-    public OrderQueue(int capacity) {
-        this.capacity = capacity;
+    public OrderQueue() {
         this.orders = new ArrayList<Order>();
         this.size = 0;
     }
@@ -21,10 +19,6 @@ public class OrderQueue {
 
     // Add order
     public void addOrder(Order order) {
-        if (this.size == this.capacity) {
-            System.out.println("Order queue is full. Cannot add order.");
-            return;
-        }
         orders.add(order);
         this.size++;
     }

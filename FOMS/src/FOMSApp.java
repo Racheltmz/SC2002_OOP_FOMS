@@ -24,7 +24,7 @@ public class FOMSApp {
 
         // Initialise company and order queue
         Company company = initialiseCompany();
-        OrderQueue orderQueue = new OrderQueue(10);
+        OrderQueue orderQueue = new OrderQueue();
 
         /* FOMS INTERFACE */
         System.out.println("==================================");
