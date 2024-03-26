@@ -46,8 +46,8 @@ public class Branch {
         this.location = location;
     }
 
-    public static void main(String[] args) {
-        // example of how creating branch works
+    public Branch createBranch()
+    {
         try (Scanner sc = new Scanner(System.in)) {
             System.out.print("Enter branch name: ");
             String name = sc.nextLine();
@@ -62,9 +62,8 @@ public class Branch {
             String location = sc.next();
             location += sc.nextLine();
             Branch branch = new Branch(name, location, quota);
-            System.out.printf(
-                    "New branch created. Its details are:\nName: %s\nStaff quota: %d\nManager Quota: %d\nLocation: %s\n",
-                    name, quota, branch.getManagerQuota(), location);
+            System.out.printf("New branch created. Its details are:\nName: %s\nStaff quota: %d\nManager Quota: %d\nLocation: %s\n", name, quota, branch.getManagerQuota(), location);
+            return branch;
         }
     }
 }
