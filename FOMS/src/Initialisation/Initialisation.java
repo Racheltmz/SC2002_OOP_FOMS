@@ -5,6 +5,7 @@ import Management.Branch;
 import Management.Admin;
 import Management.Manager;
 import Management.Staff;
+import Payment.Payment;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -20,9 +21,11 @@ public class Initialisation {
     public static Company initialiseCompany() {
         ArrayList<Staff> staffList = initialiseStaffRecords();
         ArrayList<Branch> branchList = initialiseBranchRecords();
-        return new Company(staffList, branchList);
+        ArrayList<Payment> paymentList = initialisePaymentRecords();
+        return new Company(staffList, branchList, paymentList);
     }
 
+    // Get Excel spreadsheet by filename
     public static XSSFSheet getSheet(String filePath) {
         XSSFSheet sheet = null;
         try {
@@ -46,6 +49,7 @@ public class Initialisation {
         return sheet;
     }
 
+    // Initialise staff records
     public static ArrayList<Staff> initialiseStaffRecords() {
         // Initialise a list
         ArrayList<Staff> staffList = new ArrayList<Staff>();
@@ -89,6 +93,7 @@ public class Initialisation {
         return staffList;
     }
 
+    // Initialise branch records
     public static ArrayList<Branch> initialiseBranchRecords() {
         // Initialise a list
         ArrayList<Branch> branchList = new ArrayList<Branch>();
@@ -111,5 +116,15 @@ public class Initialisation {
             System.out.println("Record was not inserted as it has an empty cell.");
         }
         return branchList;
+    }
+
+    // Initialise payment records (card and online)
+    public static ArrayList<Payment> initialisePaymentRecords() {
+        ArrayList<Payment> paymentList = new ArrayList<Payment>();
+        Payment card = new Payment("Credit/Debit Card");
+        Payment online = new Payment("Online");
+        paymentList.add(card);
+        paymentList.add(online);
+        return paymentList;
     }
 }

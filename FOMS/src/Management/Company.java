@@ -15,9 +15,10 @@ public class Company {
     private ArrayList<Payment> paymentList;
 
     // Constructor for Company class
-    public Company(ArrayList<Staff> staffList, ArrayList<Branch> branches) {
+    public Company(ArrayList<Staff> staffList, ArrayList<Branch> branches, ArrayList<Payment> paymentList) {
         this.staffList = staffList;
         this.branches = branches;
+        this.paymentList = paymentList;
     }
 
     /* STAFF PURPOSES */
