@@ -22,6 +22,7 @@ public class Company {
     }
 
     /* STAFF PURPOSES */
+    // Get staff based on staff ID
     public Staff getStaff(String staffId) {
         // Return staff object if it can be found
         for (int i = 0; i < this.staffList.size(); i++) {
@@ -32,6 +33,15 @@ public class Company {
         // Return null if staff cannot be found
         return null;
     }
+
+    // Add staff
+    public void addStaff(Staff staff, Roles auth) {
+        AuthoriseAdmin authAdmin = new AuthoriseAdmin();
+        if (authAdmin.authorise(auth))
+            this.staffList.add(staff);
+    }
+
+    // TODO: Remove staff
 
     // Filter list of staff members for strings (only branch field)
     public ArrayList<Staff> getStaffList(String filter, String filterVal, Roles auth) {
@@ -107,6 +117,7 @@ public class Company {
         return filteredStaff;
     }
 
+    // Get number of managers to check quota
     public int getNumManagers(Roles auth) {
         ArrayList<Staff> managerList = getStaffList("role", Roles.MANAGER, auth);
         return managerList.size();
@@ -132,21 +143,30 @@ public class Company {
             this.branches.add(branch);
     }
 
-    // Remove branch (admin purposes)
-    // public void deleteBranch(String branchName, Roles auth) {
+    // TODO: Remove branch (admin purposes)
+    // public void rmvBranch(String branchName, Roles auth) {
     //     AuthoriseAdmin authAdmin = new AuthoriseAdmin();
     //     if (authAdmin.authorise(auth))
     //         this.branches.remove(this.branches.indexOf(branchName));
     // }
 
     /* PAYMENT PURPOSES */
-    // Get all payment method objects
+    // Get all payment methods
     public ArrayList<Payment> getPaymentList() {
         return this.paymentList;
     }
 
-    // Add payment method object
-    public void addPaymentMtd(Payment payment) {
-        this.paymentList.add(payment);
+    // Add payment method
+    public void addPaymentMtd(Payment payment, Roles auth) {
+        AuthoriseAdmin authAdmin = new AuthoriseAdmin();
+        if (authAdmin.authorise(auth))
+            this.paymentList.add(payment);
     }
+
+    // TODO: Remove payment method
+    // public void rmvPaymentMtd(String paymentMtd, Roles auth) {
+    //     AuthoriseAdmin authAdmin = new AuthoriseAdmin();
+    //     if (authAdmin.authorise(auth))
+    //         this.paymentList.remove(this.paymentList.indexOf(paymentMtd));
+    // }
 }
