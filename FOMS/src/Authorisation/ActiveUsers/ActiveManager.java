@@ -3,6 +3,7 @@ package Authorisation.ActiveUsers;
 import Management.Company;
 import Management.Manager;
 import Management.Staff.Roles;
+import Order.OrderQueue;
 
 import java.util.Scanner;
 
@@ -23,7 +24,7 @@ public class ActiveManager implements ActiveUserInterface {
         setActiveStaff(null);
     }
 
-    public void processMenu(Scanner sc, Company company) {
+    public void processMenu(Scanner sc, Company company, OrderQueue queue) {
         System.out.printf("\nStaffID: %s\tRole: %s\n", this.getActiveStaff().getStaffID(), Roles.MANAGER);
         System.out.println("Please select option (3 to quit): ");
         System.out.println("1. Display Staff List\n2. Change Password\n3. Logout");

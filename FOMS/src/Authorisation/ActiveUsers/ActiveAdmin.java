@@ -3,6 +3,7 @@ package Authorisation.ActiveUsers;
 import Management.Admin;
 import Management.Company;
 import Management.Staff.Roles;
+import Order.OrderQueue;
 
 import static Authentication.Authentication.changePassword;
 
@@ -23,7 +24,7 @@ public class ActiveAdmin implements ActiveUserInterface {
         setActiveStaff(null);
     }
 
-    public void processMenu(Scanner sc, Company company) {
+    public void processMenu(Scanner sc, Company company, OrderQueue queue) {
         System.out.printf("\nStaffID: %s\tRole: %s\n", this.getActiveStaff().getStaffID(), Roles.ADMIN);
         System.out.println("Please select option (3 to quit): ");
         System.out.println("1. Change Password\n2. Logout");

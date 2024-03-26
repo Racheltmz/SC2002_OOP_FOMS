@@ -10,7 +10,6 @@ import Management.Company;
 import Management.Manager;
 import Management.Staff;
 import Management.Staff.Roles;
-import Order.Order;
 import Order.OrderQueue;
 
 import static Authentication.Authentication.login;
@@ -22,8 +21,9 @@ public class FOMSApp {
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
 
-        // Initialise company
+        // Initialise company and order queue
         Company company = initialiseCompany();
+        OrderQueue orderQueue = new OrderQueue(10);
 
         /* FOMS INTERFACE */
         System.out.println("==================================");
@@ -79,11 +79,11 @@ public class FOMSApp {
                         }
                     } else {
                         if (activeStaff.getActiveStaff() != null) {
-                            activeStaff.processMenu(sc, company);
+                            activeStaff.processMenu(sc, company, orderQueue);
                         } else if (activeManager.getActiveStaff() != null) {
-                            activeManager.processMenu(sc, company);
+                            activeManager.processMenu(sc, company, orderQueue);
                         } else if (activeAdmin.getActiveStaff() != null) {
-                            activeAdmin.processMenu(sc, company);
+                            activeAdmin.processMenu(sc, company, orderQueue);
                         }
                     }
                 } while (staffChoice != 2);
