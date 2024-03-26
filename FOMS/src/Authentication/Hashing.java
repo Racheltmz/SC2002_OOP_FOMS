@@ -17,7 +17,7 @@ public class Hashing {
             }
             generatedPassword = sb.toString();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            System.out.println("Hashing Algorithm Not Found.");
         }
         return generatedPassword;
     }

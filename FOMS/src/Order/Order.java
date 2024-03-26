@@ -1,41 +1,57 @@
 package Order;
 
-import java.util.HashMap;
-import java.util.Map;
-
+// Information about order
 public class Order {
-    public enum Status {
-        NEW, READY, COMPLETED, CANCELLED
-    }
-
-    private static Map<String, Order> orderMap = new HashMap<>();
+    public enum Status { NEW, READY, COMPLETED, CANCELLED }
 
     private String orderID;
     private String branch;
     private Item[] items;
     private String[] customisation;
     private boolean takeaway;
-    private String status;
+    private Status status;
     private String paymentMethod;
 
-    public Order(String orderID, String branch, Item[] items, String[] customisation, boolean takeaway,
-            String paymentMethod) {
+    public Order(String orderID, String branch, Item[] items, String[] customisation, boolean takeaway, String paymentMethod) {
         this.orderID = orderID;
         this.branch = branch;
         this.items = items;
         this.customisation = customisation;
         this.takeaway = takeaway;
-        this.status = setStatus(Status.NEW);
+        this.status = Status.NEW;
         this.paymentMethod = paymentMethod;
-        orderMap.put(orderID, this);
     }
 
-    public void pay(String paymentMethod) {
+    // Getters and Setters
+    public String getOrderID() {
+        return this.orderID;
+    }
+
+    public String getBranch() {
+        return this.branch;
+    }
+
+    public Item[] getItems() {
+        return this.items;
+    }
+
+    public Status getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    /* Details for customers */
+    // Customer makes payment
+   public void pay(String paymentMethod) {
         this.setStatus(Status.NEW);
     }
 
+    // Receipt information
     public void printReceipt() {
-        System.out.println("Your order ID is " + orderID);
+        System.out.println("Your order ID is " + this.orderID);
         System.out.println("Your order is: ");
         for (Item item : this.items) {
             System.out.println("- " + item.getName());
@@ -44,7 +60,7 @@ public class Order {
         for (String customization : this.customisation) {
             System.out.println("- " + customization);
         }
-        if (this.takeaway == true) {
+        if (this.takeaway) {
             System.out.println("You chose to takeaway");
         } else {
             System.out.println("You chose to dine in");
@@ -52,54 +68,23 @@ public class Order {
         System.out.println("Thank you for shopping at " + branch);
     }
 
-    public static Order getOrderById(String orderID) {
-        return orderMap.get(orderID);
-    }
-
-    public void processOrder(String orderID) {
-        Order order = getOrderById(orderID);
-        if (order.items == null || order.items.length == 0) {
-            System.out.println("Error: Cannot process order without selecting any items.");
-            return;
+    // Print order details
+    public void printOrderDetails() {
+        System.out.println("Your order ID is " + this.orderID);
+        System.out.println("Items:");
+        for (Item item : this.items) {
+            System.out.println("- " + item.getName());
         }
-
-        // Process the order if items are selected
-        order.setStatus(Status.READY);
-        System.out.println("Order processed successfully.");
-    }
-
-    public String getStatus() {
-        return this.status.toString();
-    }
-
-    protected String setStatus(Status status) {
-        this.status = status.toString();
-        return this.status;
-    }
-
-    public String getBranch() {
-        return this.branch;
-    }
-
-    public String getOrderID() {
-        return this.orderID;
-    }
-
-    public void collectOrder() {
-        if (this.getStatus().equals(Status.READY.toString())) {
-            this.setStatus(Status.COMPLETED);
+        System.out.println("Customisations: ");
+        for (String customization : this.customisation) {
+            System.out.println("- " + customization);
         }
-    }
-
-    public static void main(String[] args) {
-        // Test Case 20: Attempt to process an order without selecting any items
-        Order orderWithoutItems = new Order("789", "Branch C", new Item[] {}, new String[] {}, false, "Cash");
-        orderWithoutItems.processOrder("789"); // This should display the error message
-
-        // Test Case 21: Process an order with items
-        Order orderWithItems = new Order("456", "Branch B", new Item[] { new Item("Pizza") }, new String[] {}, false,
-                "Card");
-        orderWithItems.processOrder("456"); // This should process the order successfully
+        System.out.print("Takeaway or Dine In: ");
+        if (this.takeaway) {
+            System.out.println("Takeaway");
+        } else {
+            System.out.println("Dine In");
+        }
     }
 }
 

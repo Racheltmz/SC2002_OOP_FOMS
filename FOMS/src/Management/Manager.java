@@ -1,7 +1,10 @@
 package Management;
 
+import Initialisation.InputScanner;
+
 import java.util.ArrayList;
-import java.util.Scanner;
+
+import static Initialisation.InputScanner.getInstance;
 
 public class Manager extends Staff  {
     // Constructor
@@ -11,7 +14,8 @@ public class Manager extends Staff  {
 
     /* STAFF MANAGEMENT PURPOSES */
     // Display staff list by branch Test Case 11
-    public void displayStaffList(Scanner sc, Company company, Roles auth) {
+    public void displayStaffList(Company company, Roles auth) {
+        InputScanner sc = getInstance();
         // Display branches
         company.displayBranches();
         // Get branches
@@ -24,8 +28,8 @@ public class Manager extends Staff  {
                 int branchIndex = sc.nextInt();
                 // Display branches
                 ArrayList<Staff> staffByBranch = company.getStaffList("branch", branches.get(branchIndex-1).getBranchName(), auth);
-                for (int i = 0; i < staffByBranch.size(); i++) {
-                    staffByBranch.get(i).displayStaffDetails();
+                for (Staff byBranch : staffByBranch) {
+                    byBranch.getStaffDetails();
                 }
                 break;
             } catch (IndexOutOfBoundsException e) {

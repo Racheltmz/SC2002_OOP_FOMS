@@ -1,15 +1,11 @@
 package Authorisation;
 
-import java.util.Objects;
-import java.util.Scanner;
-
+import Initialisation.InputScanner;
 import Management.Company;
 import Management.Staff;
-import Management.Staff.Roles;
-import Order.Order;
 import Order.OrderQueue;
 
-import static Authentication.Authentication.changePassword;
+import static Initialisation.InputScanner.getInstance;
 
 // Keep track of the staff that is logged in
 public class ActiveStaff implements ActiveUserInterface {
@@ -23,50 +19,36 @@ public class ActiveStaff implements ActiveUserInterface {
         this.activeStaff = activeStaff;
     }
 
-    public void showOptions(Scanner sc, Company company, OrderQueue queue) {
-        System.out.printf("\nStaffID: %s\tRole: %s\n", this.getActiveStaff().getStaffID(), Roles.STAFF);
+    public void logout() {
+        setActiveStaff(null);
+    }
+
+    public void showOptions(Company company, OrderQueue queue) {
+        InputScanner sc = getInstance();
         System.out.println("Please select option (3 to quit): ");
         System.out.println(
-                "1. Display new orders\n2. View details of a particular order\n3. Process order\n4. Change Password\n5. Logout");
+                "1. Display new orders\n2. View details of an order\n3. Set Order as Ready\n4. Change Password\n5. Logout");
         int staffChoice = sc.nextInt();
         sc.nextLine(); // Consume newline character
         switch (staffChoice) {
             case 1:
-                // TODO: RETRIEVE ORDERQUEUE FROM CUSTOMER INTERFACE WHEN CUSTOMER CLASS IS IMPLEMENTED
-                // just for example, placeholder below
-                queue.displayOrders(this.activeStaff.getBranch());
+                this.getActiveStaff().getNewOrders(this.activeStaff.getBranch(), queue);
                 break;
-            case 2: // view details based on orderID
-                System.out.println("Enter orderID: ");
-                String orderid = sc.nextLine();
-                for (Order order : queue.getOrders()) {
-                    if (Objects.equals(order.getOrderID(), orderid)) {
-                        System.out.println(Order.getOrderById(orderid));
-                    }
-                }
+            case 2:
+                this.getActiveStaff().getOrderDetails(queue);
                 break;
             case 3:
-                System.out.println("Enter orderID: ");
-                String order_id = sc.nextLine();
-                for (Order order : queue.getOrders()) {
-                    if (Objects.equals(order.getOrderID(), order_id)) {
-                        order.processOrder(order_id);
-                    }
-                }
+                this.getActiveStaff().setOrderReady(queue);
                 break;
             case 4:
-                changePassword(sc, this.getActiveStaff());
+                this.getActiveStaff().changePassword(this.getActiveStaff());
                 break;
             case 5:
                 this.logout();
                 break;
             default:
-                System.out.print("Invalid choice, please re-enter: ");
+                System.out.println("Invalid choice, please re-enter: ");
                 break;
         }
-    }
-
-    public void logout() {
-        setActiveStaff(null);
     }
 }

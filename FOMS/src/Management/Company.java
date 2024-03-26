@@ -34,13 +34,17 @@ public class Company {
         return null;
     }
 
-    // Add staff
+    // Add staff (admin purposes)
     public void addStaff(Staff staff, Roles auth) {
         if (authoriseAdmin(auth))
             this.staffList.add(staff);
     }
 
-    // TODO: Remove staff
+    // Remove staff (admin purposes) (TO CHECK)
+    public void rmvStaff(String staffID, Roles auth) {
+         if (authoriseAdmin(auth))
+             this.staffList.remove(this.getStaff(staffID));
+    }
 
     // Filter list of staff members for strings (only branch field)
     public ArrayList<Staff> getStaffList(String filter, String filterVal, Roles auth) {
@@ -123,6 +127,19 @@ public class Company {
         return this.branches;
     }
 
+    // Get branch based on branch name
+    public Branch getBranchByName(String name) {
+        // Return staff object if it can be found
+        for (int i = 0; i < this.branches.size(); i++) {
+            Branch branch = this.branches.get(i);
+            if (Objects.equals(branch.getBranchName(), name))
+                return branch;
+        }
+        // Return null if branch cannot be found
+        return null;
+    }
+
+    // Display branches
     public void displayBranches() {
         System.out.println("Branches (enter the number): ");
         for (int i = 0; i < this.branches.size(); i++) {
@@ -136,12 +153,11 @@ public class Company {
             this.branches.add(branch);
     }
 
-    // TODO: Remove branch (admin purposes)
-    // public void rmvBranch(String branchName, Roles auth) {
-    //     AuthoriseAdmin authAdmin = new AuthoriseAdmin();
-    //     if (authAdmin.authorise(auth))
-    //         this.branches.remove(this.branches.indexOf(branchName));
-    // }
+    // Remove branch (admin purposes)
+     public void rmvBranch(String branchName, Roles auth) {
+         if (authoriseAdmin(auth))
+             this.branches.remove(this.getBranchByName(branchName));
+     }
 
     /* PAYMENT PURPOSES */
     // Get all payment methods
@@ -149,16 +165,27 @@ public class Company {
         return this.paymentList;
     }
 
-    // Add payment method
+    // Get payment based on payment method
+    public Payment getPaymentMtd(String method) {
+        // Return payment object if it can be found
+        for (int i = 0; i < this.paymentList.size(); i++) {
+            Payment payment = this.paymentList.get(i);
+            if (Objects.equals(payment.getPaymentMethod(), method))
+                return payment;
+        }
+        // Return null if payment cannot be found
+        return null;
+    }
+
+    // Add payment method (admin purposes)
     public void addPaymentMtd(Payment payment, Roles auth) {
         if (authoriseAdmin(auth))
             this.paymentList.add(payment);
     }
 
-    // TODO: Remove payment method
-    // public void rmvPaymentMtd(String paymentMtd, Roles auth) {
-    //     AuthoriseAdmin authAdmin = new AuthoriseAdmin();
-    //     if (authAdmin.authorise(auth))
-    //         this.paymentList.remove(this.paymentList.indexOf(paymentMtd));
-    // }
+    // Remove payment method (admin purposes)
+     public void rmvPaymentMtd(String paymentMtd, Roles auth) {
+         if (authoriseAdmin(auth))
+             this.paymentList.remove(this.getPaymentMtd(paymentMtd));
+     }
 }
