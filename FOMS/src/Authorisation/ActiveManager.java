@@ -1,4 +1,4 @@
-package Authorisation.ActiveUsers;
+package Authorisation;
 
 import Management.Company;
 import Management.Manager;
@@ -22,11 +22,7 @@ public class ActiveManager implements ActiveUserInterface {
         this.activeStaff = activeStaff;
     }
 
-    public void logout() {
-        setActiveStaff(null);
-    }
-
-    public void processMenu(Scanner sc, Company company, OrderQueue queue) {
+    public void showOptions(Scanner sc, Company company, OrderQueue queue) {
         System.out.printf("\nStaffID: %s\tRole: %s\n", this.getActiveStaff().getStaffID(), Roles.MANAGER);
         System.out.println("Please select option (3 to quit): ");
         System.out.println("1. Display Staff List\n2. Display new orders\n3. View details of a particular order\n4. Process order\n5. Change Password\n6. Logout");
@@ -70,5 +66,9 @@ public class ActiveManager implements ActiveUserInterface {
                 System.out.print("Invalid choice, please re-enter: ");
                 break;
         }
+    }
+
+    public void logout() {
+        setActiveStaff(null);
     }
 }

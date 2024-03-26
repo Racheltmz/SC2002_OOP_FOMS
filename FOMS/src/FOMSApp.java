@@ -3,7 +3,9 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
-import Authorisation.ActiveUsers.*;
+import Authorisation.ActiveAdmin;
+import Authorisation.ActiveManager;
+import Authorisation.ActiveStaff;
 import Management.Admin;
 import Management.Company;
 import Management.Manager;
@@ -78,11 +80,11 @@ public class FOMSApp {
                         }
                     } else {
                         if (activeStaff.getActiveStaff() != null) {
-                            activeStaff.processMenu(sc, company, orderQueue);
+                            activeStaff.showOptions(sc, company, orderQueue);
                         } else if (activeManager.getActiveStaff() != null) {
-                            activeManager.processMenu(sc, company, orderQueue);
+                            activeManager.showOptions(sc, company, orderQueue);
                         } else if (activeAdmin.getActiveStaff() != null) {
-                            activeAdmin.processMenu(sc, company, orderQueue);
+                            activeAdmin.showOptions(sc, company, orderQueue);
                         }
                     }
                 } while (staffChoice != 2);

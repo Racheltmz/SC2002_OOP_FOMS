@@ -1,12 +1,12 @@
 package Management;
 
-import Authorisation.AuthoriseAdmin;
-import Authorisation.AuthoriseManager;
 import Management.Staff.Roles;
 import Payment.Payment;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+import static Authorisation.Authorisation.*;
 
 // Information about the company such as staff, branch, payment list
 public class Company {
@@ -36,8 +36,7 @@ public class Company {
 
     // Add staff
     public void addStaff(Staff staff, Roles auth) {
-        AuthoriseAdmin authAdmin = new AuthoriseAdmin();
-        if (authAdmin.authorise(auth))
+        if (authoriseAdmin(auth))
             this.staffList.add(staff);
     }
 
@@ -48,9 +47,7 @@ public class Company {
         // Initialise new staff list
         ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
         // Authorise staff else return empty list
-        AuthoriseAdmin authAdmin = new AuthoriseAdmin();
-        AuthoriseManager authManager = new AuthoriseManager();
-        boolean isAuth = authManager.authorise(auth) || authAdmin.authorise(auth);
+        boolean isAuth = authoriseManager(auth) || authoriseAdmin(auth);
         if (isAuth) {
             // Check if the filter is "branch", else it returns an empty array
             if (Objects.equals(filter, "branch")) {
@@ -68,8 +65,7 @@ public class Company {
         // Initialise new staff list
         ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
         // Authorise staff else return empty list
-        AuthoriseAdmin authAdmin = new AuthoriseAdmin();
-        if (authAdmin.authorise(auth)) {
+        if (authoriseAdmin(auth)) {
             // Check if the filter is "role", else it returns an empty array
             if (Objects.equals(filter, "role")) {
                 for (int i = 0; i < this.staffList.size(); i++) {
@@ -86,8 +82,7 @@ public class Company {
         // Initialise new staff list
         ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
         // Authorise staff else return empty list
-        AuthoriseAdmin authAdmin = new AuthoriseAdmin();
-        if (authAdmin.authorise(auth)) {
+        if (authoriseAdmin(auth)) {
             // Check if the filter is "gender", else it returns an empty array
             if (Objects.equals(filter, "gender")) {
                 for (int i = 0; i < this.staffList.size(); i++) {
@@ -104,8 +99,7 @@ public class Company {
         // Initialise new staff list
         ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
         // Authorise staff else return empty list
-        AuthoriseAdmin authAdmin = new AuthoriseAdmin();
-        if (authAdmin.authorise(auth)) {
+        if (authoriseAdmin(auth)) {
             // Check if the filter is "age", else it returns an empty array
             if (Objects.equals(filter, "age")) {
                 for (int i = 0; i < this.staffList.size(); i++) {
@@ -138,8 +132,7 @@ public class Company {
 
     // Add branch (admin purposes)
     public void addBranch(Branch branch, Roles auth) {
-        AuthoriseAdmin authAdmin = new AuthoriseAdmin();
-        if (authAdmin.authorise(auth))
+        if (authoriseAdmin(auth))
             this.branches.add(branch);
     }
 
@@ -158,8 +151,7 @@ public class Company {
 
     // Add payment method
     public void addPaymentMtd(Payment payment, Roles auth) {
-        AuthoriseAdmin authAdmin = new AuthoriseAdmin();
-        if (authAdmin.authorise(auth))
+        if (authoriseAdmin(auth))
             this.paymentList.add(payment);
     }
 

@@ -1,4 +1,4 @@
-package Authorisation.ActiveUsers;
+package Authorisation;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -23,11 +23,7 @@ public class ActiveStaff implements ActiveUserInterface {
         this.activeStaff = activeStaff;
     }
 
-    public void logout() {
-        setActiveStaff(null);
-    }
-
-    public void processMenu(Scanner sc, Company company, OrderQueue queue) {
+    public void showOptions(Scanner sc, Company company, OrderQueue queue) {
         System.out.printf("\nStaffID: %s\tRole: %s\n", this.getActiveStaff().getStaffID(), Roles.STAFF);
         System.out.println("Please select option (3 to quit): ");
         System.out.println(
@@ -68,5 +64,9 @@ public class ActiveStaff implements ActiveUserInterface {
                 System.out.print("Invalid choice, please re-enter: ");
                 break;
         }
+    }
+
+    public void logout() {
+        setActiveStaff(null);
     }
 }
