@@ -79,7 +79,7 @@ public class FOMSApp {
                 double price = row.getCell(1).getNumericCellValue();
                 String branchCode = row.getCell(2).toString(); // Get the branch code as a string
 
-                Menu.Branch branch = null;
+                final Menu.Branch branch = null;
 
                 // Check the value of branchCode using equalsIgnoreCase method
                 if (branchCode.equalsIgnoreCase("NTU")) {
@@ -93,7 +93,8 @@ public class FOMSApp {
 
             String category = row.getCell(3).toString();
             // Creating Menu object
-            Menu menu = new Menu(name, price, branch, category);
+            Menu menu = new Menu( name,category, price, branchCode, category);
+            menu.getMenuId();
             menuList.add(menu);
         
 
