@@ -1,10 +1,5 @@
-import java.util.HashMap;
-import java.util.Map;
-
 public class Order {
     public enum Status{NEW, READY, COMPLETED, CANCELLED}
-
-    private static Map<String, Order> orderMap = new HashMap<>();
 
     private String orderID;
     private String branch;
@@ -22,8 +17,6 @@ public class Order {
         this.takeaway = takeaway;
         this.status = setStatus(Status.NEW);
         this.paymentMethod = paymentMethod;
-
-        orderMap.put(orderID, this);
     }
 
     public void pay(String paymentMethod){
@@ -49,8 +42,8 @@ public class Order {
         System.out.println("Thank you for shopping at " + branch);
     }
 
-    public static Order getOrderById(String orderID) {
-        return orderMap.get(orderID);
+    public void getOrderById(String orderID) {
+        
     }
 
     public void processOrder() {
@@ -77,16 +70,6 @@ public class Order {
         if (getStatus().equals(Status.READY.toString())){
             setStatus(Status.COMPLETED);
         }
-    }
-
-    public static void main(String[] args) {
-        // Test Case 20: Attempt to process an order without selecting any items
-        Order orderWithoutItems = new Order("789", "Branch C", new Item[]{}, new String[]{}, false, "Cash");
-        orderWithoutItems.processOrder(); // This should display the error message
-
-        // Test Case 21: Process an order with items
-        Order orderWithItems = new Order("456", "Branch B", new Item[]{new Item("Pizza")}, new String[]{}, false, "Card");
-        orderWithItems.processOrder(); // This should process the order successfully
     }
 }
 

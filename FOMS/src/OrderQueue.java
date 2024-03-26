@@ -34,6 +34,5 @@ public class OrderQueue {
         front = (front + 1) % capacity;
         size--;
         return removedOrder;
-        
     }
 }
