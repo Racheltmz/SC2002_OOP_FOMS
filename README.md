@@ -26,3 +26,12 @@ Group No.: Group 3
 ## Modifications to UML
 
 If you realise that changes have to be made to the UML diagram, indicate the changes under a table in the [UML Design](https://docs.google.com/document/d/1yI5BSaeG4VT24lCIhb6iy4oPa-R3GJikkPxK5FKEVwY/edit) docs. Then on our weekly meetings, we'll add all changes into the UML in the `main` branch.
+
+## Load libraries in VSC
+
+1. Enter the FOMS folder
+
+2. You should have all these libraries under the .idea folder. ![Libraries](imgs/image.png)
+![Libraries2](imgs/image2.png)
+
+3. Ensure all these libraries are under Java Projects > Referenced Libraries ![Libraries3](imgs/image3.png)
