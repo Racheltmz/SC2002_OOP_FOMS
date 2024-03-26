@@ -10,6 +10,8 @@ import Management.Company;
 import Management.Manager;
 import Management.Staff;
 import Management.Staff.Roles;
+import Order.Order;
+import Order.OrderQueue;
 
 import static Authentication.Authentication.login;
 import static Initialisation.Initialisation.initialiseCompany;
