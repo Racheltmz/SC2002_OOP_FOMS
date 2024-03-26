@@ -13,7 +13,7 @@ public class ActiveAdmin implements ActiveUserInterface {
     private Admin activeStaff;
 
     public Admin getActiveStaff() {
-        return activeStaff;
+        return this.activeStaff;
     }
 
     public void setActiveStaff(Admin activeStaff) {
@@ -21,7 +21,7 @@ public class ActiveAdmin implements ActiveUserInterface {
     }
 
     public void showOptions(Scanner sc, Company company, OrderQueue queue) {
-        System.out.printf("\nStaffID: %s\tRole: %s\n", this.getActiveStaff().getStaffID(), Roles.ADMIN);
+        System.out.printf("\nStaffID: %s\tRole: %s\n\n", this.getActiveStaff().getStaffID(), Roles.ADMIN);
         System.out.println("Please select option (3 to quit): ");
         System.out.println("1. Change Password\n2. Logout");
         int staffChoice = sc.nextInt();

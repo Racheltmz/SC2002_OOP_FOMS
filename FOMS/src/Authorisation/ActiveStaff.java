@@ -24,7 +24,7 @@ public class ActiveStaff implements ActiveUserInterface {
     }
 
     public void showOptions(Scanner sc, Company company, OrderQueue queue) {
-        System.out.printf("\nStaffID: %s\tRole: %s\n", this.getActiveStaff().getStaffID(), Roles.STAFF);
+        System.out.printf("\nStaffID: %s\nRole: %s\n\n", this.getActiveStaff().getStaffID(), Roles.STAFF);
         System.out.println("Please select option (3 to quit): ");
         System.out.println(
                 "1. Display new orders\n2. View details of a particular order\n3. Process order\n4. Change Password\n5. Logout");
@@ -37,22 +37,24 @@ public class ActiveStaff implements ActiveUserInterface {
                 queue.displayOrders(this.activeStaff.getBranch());
                 break;
             case 2: // view details based on orderID
-                System.out.println("Enter orderID: ");
+                System.out.print("Enter orderID: ");
                 String orderid = sc.nextLine();
                 for (Order order : queue.getOrders()) {
                     if (Objects.equals(order.getOrderID(), orderid)) {
                         System.out.println(Order.getOrderById(orderid));
                     }
                 }
+                System.out.println("Order does not exist.");
                 break;
             case 3:
-                System.out.println("Enter orderID: ");
+                System.out.print("Enter orderID: ");
                 String order_id = sc.nextLine();
                 for (Order order : queue.getOrders()) {
                     if (Objects.equals(order.getOrderID(), order_id)) {
                         order.processOrder(order_id);
                     }
                 }
+                System.out.println("Order does not exist.");
                 break;
             case 4:
                 changePassword(sc, this.getActiveStaff());

@@ -44,12 +44,12 @@ public class Authentication {
     // Change password for Test Case 25
     public static void changePassword(Scanner sc, Staff staff) {
         System.out.print("Please enter new password: ");
-        String newpassword = sc.nextLine().trim();
+        String newpassword = sc.next();
         // Check if user entered a password or if they entered the same password as they had in the past
         while (newpassword.isEmpty() || verifyPassword(staff, genHash(newpassword))) {
             System.out.println("Password change unsuccessful, please try again. Ensure that it differs from your previous password.");
             System.out.print("Please enter new password: ");
-            newpassword = sc.nextLine().trim();
+            newpassword = sc.next();
         }
         staff.setPassword(genHash(newpassword));
         System.out.println("Password successfully changed!");

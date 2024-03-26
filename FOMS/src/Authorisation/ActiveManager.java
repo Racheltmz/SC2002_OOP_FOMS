@@ -23,7 +23,7 @@ public class ActiveManager implements ActiveUserInterface {
     }
 
     public void showOptions(Scanner sc, Company company, OrderQueue queue) {
-        System.out.printf("\nStaffID: %s\tRole: %s\n", this.getActiveStaff().getStaffID(), Roles.MANAGER);
+        System.out.printf("\nStaffID: %s\nRole: %s\n\n", this.getActiveStaff().getStaffID(), Roles.MANAGER);
         System.out.println("Please select option (3 to quit): ");
         System.out.println("1. Display Staff List\n2. Display new orders\n3. View details of a particular order\n4. Process order\n5. Change Password\n6. Logout");
         int staffChoice = sc.nextInt();
@@ -39,13 +39,14 @@ public class ActiveManager implements ActiveUserInterface {
                 queue.displayOrders(this.activeStaff.getBranch());
                 break;
             case 3: // view details based on orderID
-                System.out.println("Enter orderID: ");
-                orderID = sc.nextLine();
+                System.out.print("Enter orderID: ");
+                orderID = sc.next();
                 for (Order order : queue.getOrders()) {
                     if (Objects.equals(order.getOrderID(), orderID)) {
                         System.out.println(Order.getOrderById(orderID));
                     }
                 }
+                System.out.println("Order does not exist.");
                 break;
             case 4:
                 System.out.println("Enter orderID: ");

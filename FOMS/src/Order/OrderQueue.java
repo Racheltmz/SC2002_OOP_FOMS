@@ -19,7 +19,7 @@ public class OrderQueue {
 
     // Add order
     public void addOrder(Order order) {
-        orders.add(order);
+        this.orders.add(order);
         this.size++;
     }
 
