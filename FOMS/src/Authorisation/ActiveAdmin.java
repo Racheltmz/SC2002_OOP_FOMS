@@ -12,7 +12,7 @@ public class ActiveAdmin implements ActiveUserInterface {
     private Admin activeStaff;
 
     public Admin getActiveStaff() {
-        return activeStaff;
+        return this.activeStaff;
     }
 
     public void setActiveStaff(Admin activeStaff) {

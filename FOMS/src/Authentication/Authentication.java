@@ -47,14 +47,14 @@ public class Authentication {
     public static void setNewPassword(Staff staff) {
         InputScanner sc = getInstance();
         System.out.print("\nPlease enter new password: ");
-        String setNewPassword = sc.next();
+        String newPassword = sc.next();
         // Check if user entered a password or if they entered the same password as they had in the past
-        while (setNewPassword.isEmpty() || verifyPassword(staff, genHash(setNewPassword))) {
+        while (newPassword.isEmpty() || verifyPassword(staff, genHash(newPassword))) {
             System.out.println("Password change unsuccessful, please try again. Ensure that it differs from your previous password.");
             System.out.print("Please enter new password: ");
-            setNewPassword = sc.next();
+            newPassword = sc.next();
         }
-        staff.setPassword(genHash(setNewPassword));
+        staff.setPassword(genHash(newPassword));
         System.out.println("Password successfully changed!");
     }
 }
