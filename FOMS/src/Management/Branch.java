@@ -1,7 +1,5 @@
 package Management;
 
-import java.util.Scanner;
-
 public class Branch {
     public String name;
     public String location;
