@@ -6,6 +6,7 @@ import Authorisation.AuthoriseManager;
 import java.util.ArrayList;
 
 public class Company {
+    // private PaymentMethod paymentMethod;
     private ArrayList<Staff> staffList;
     // private ArrayList<Branch> branches TODO: COMMENT OUT ONCE BRANCH CLASS IS ADDED
     // private ArrayList<Payment> paymentList; TODO: COMMENT OUT ONCE PAYMENT CLASS IS ADDED
@@ -123,4 +124,22 @@ public class Company {
 //    public ArrayList<Payment> getPaymentList() {
 //        return this.paymentList;
 //    }
+
+// private PaymentMethod addOption(String method){
+// switch(method){
+//     case "Credit/Debit Card":
+//         return new CreditDebit();
+//     case "PayPal":
+//         return new PayPal();
+//     default:
+//         throw new IllegalArgumentException("Unsupported payment method: " + method);
+// }
+
+// protected void removeOption(String method){
+//     if (paymentMethod != null && paymentMethod.getClass().getSimpleName().equals(method)){
+//         paymentMethod = null;
+//     }
+//}
+
 }
+
