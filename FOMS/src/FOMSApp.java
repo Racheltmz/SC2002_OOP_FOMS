@@ -10,19 +10,23 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
 public class FOMSApp {
+    /**
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         // Try block to check for exceptions
         try {
 
             // Reading file from local directory
-            FileInputStream file = new FileInputStream(new File("./data/staff_list.xlsx"));
+            FileInputStream staffFile = new FileInputStream(new File("./data/staff_list.xlsx"));
 
             // Create Workbook instance holding reference to
             // .xlsx file
-            XSSFWorkbook workbook = new XSSFWorkbook(file);
+            XSSFWorkbook staffWorkbook = new XSSFWorkbook(staffFile);
 
             // Get first/desired sheet from the workbook
-            XSSFSheet sheet = workbook.getSheetAt(0);
+            XSSFSheet sheet = staffWorkbook.getSheetAt(0);
 
             // Initialise a list
             List<Staff> staffList = new ArrayList<Staff>();
@@ -54,9 +58,53 @@ public class FOMSApp {
                 staffList.add(staff);
             }
             // Closing workbook and file output streams
-            workbook.close();
-            file.close();
-        }
+            staffWorkbook.close();
+            staffFile.close();
+
+            // Reading menu list file from local directory
+            FileInputStream menuFile = new FileInputStream(new File("./data/menu_list.xlsx"));
+            // Create Workbook instance holding reference to .xlsx file
+            XSSFWorkbook menuWorkbook = new XSSFWorkbook(menuFile);
+            // Get the first/desired sheet from the workbook
+            XSSFSheet menuSheet = menuWorkbook.getSheetAt(0);
+
+            // Initialise a list for menu items
+            List<Menu> menuList = new ArrayList<>();
+
+                    // Iterate through menu list rows
+            for (int i = 1; i < menuSheet.getPhysicalNumberOfRows(); i++) {
+                Row row = menuSheet.getRow(i);
+                // Extracting menu details from the row
+                String name = row.getCell(0).toString();
+                double price = row.getCell(1).getNumericCellValue();
+                String branchCode = row.getCell(2).toString(); // Get the branch code as a string
+
+                Menu.Branch branch = null;
+
+                // Check the value of branchCode using equalsIgnoreCase method
+                if (branchCode.equalsIgnoreCase("NTU")) {
+                    System.out.println ("NTU menu");
+                } else if (branchCode.equalsIgnoreCase("JE")) {
+                    System.out.println ("NTU menu");
+                } else if (branchCode.equalsIgnoreCase("JP")) {
+                    System.out.println ("NTU menu");
+                }
+            
+
+            String category = row.getCell(3).toString();
+            // Creating Menu object
+            Menu menu = new Menu(name, price, branch, category);
+            menuList.add(menu);
+        
+
+            // Closing menu workbook and file streams
+            menuWorkbook.close();
+            menuFile.close();
+
+                        }
+                    }
+
+
 
         // Catch block to handle exceptions
         catch (NullPointerException nullPointerException) {
