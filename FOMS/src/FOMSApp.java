@@ -106,7 +106,7 @@ public class FOMSApp {
                                         activeAdmin.showOptions(company, orderQueue);
                                     }
                                 } catch (InputMismatchException inputMismatchException) {
-                                    System.out.println("Please enter a valid integer only.\n");
+                                    System.out.println("Please choose a valid option.\n");
                                     sc.nextLine();
                                 }
                             }
