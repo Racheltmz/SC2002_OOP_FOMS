@@ -85,17 +85,17 @@ public class FOMSApp {
                 if (branchCode.equalsIgnoreCase("NTU")) {
                     System.out.println ("NTU menu");
                 } else if (branchCode.equalsIgnoreCase("JE")) {
-                    System.out.println ("NTU menu");
+                    System.out.println ("JE menu");
                 } else if (branchCode.equalsIgnoreCase("JP")) {
-                    System.out.println ("NTU menu");
+                    System.out.println ("JP menu");
                 }
             
 
             String category = row.getCell(3).toString();
             // Creating Menu object
-            Menu menu = new Menu( name,category, price, branchCode, category);
-            menu.getMenuId();
-            menuList.add(menu);
+            // Menu menu = new Menu();
+            // menu.getMenuiId();
+            // menuList.add(menu);
         
 
             // Closing menu workbook and file streams

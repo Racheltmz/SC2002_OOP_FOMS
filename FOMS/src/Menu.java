@@ -191,7 +191,7 @@ public class Menu {
         if (selectedItem != null) {
             if (selectedItem.isOrdered()) {
                 // removing item from the order
-                selectedItem.removeOrderedItem(); // Assuming this method removes the item from the order
+                selectedItem.removeOrderedItem(); 
                 System.out.println("Item " + selectedItem.getName() + " removed from the order.");
             } else {
                 System.out.println("Item " + selectedItem.getName() + " is not in the order.");
