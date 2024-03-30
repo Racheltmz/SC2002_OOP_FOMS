@@ -1,12 +1,17 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Company {
     private Staff[] staffList;
+    private Item[] menuList;
     // private Branch[] branches TODO: COMMENT OUT ONCE BRANCH CLASS IS ADDED
     // private Payment[] paymentList; TODO: COMMENT OUT ONCE PAYMENT CLASS IS ADDED
 
     // TODO: UPDATE ONCE BRANCH AND PAYMENT CLASSES ARE ADDED
     // Constructor for Company class
-    public Company(Staff[] staffList) {
+    public Company(Staff[] staffList, Item[] menuList) {
         this.staffList = staffList;
+        this.menuList = menuList; 
     }
 
     /* STAFF PURPOSES */
@@ -114,6 +119,41 @@ public class Company {
         Staff[] managerList = getStaffList("role", Staff.Roles.MANAGER, auth);
         return managerList.length;
     }
+public Item[] getMenuList(String filter, String filterVal, Staff.Roles auth) {
+    // Initialize new menu list
+    Item[] filteredItem = new Item[0];
+    // Authenticate menu else return empty list
+    if (auth == Staff.Roles.ADMIN || auth == Staff.Roles.MANAGER) {
+        // Get number of menu items
+        int numItems = this.menuList.length;
+        // Counter for indexing
+        int counter = 0;
+        // Check if the filter is "branch", else it returns an empty array
+        if (filter.equals("branch")) { // Use equals method to compare strings
+            for (int i = 0; i < numItems; i++) {
+                if (this.menuList[i].getBranch().equalsIgnoreCase(filterVal)) {
+                    // Corrected the array name to filteredMenu
+                    // Corrected array assignment
+                    filteredItem = Arrays.copyOf(filteredItem, filteredItem.length + 1);
+                    filteredItem[counter] = this.menuList[i];
+                    counter++;
+                }
+            }
+        }
+    } else {
+        System.out.println("Invalid access.");
+    }
+    return filteredItem;
+}
+
+public int getNumMenuItems() {
+    // Assuming 'auth' is a member variable accessible in this method
+    Staff.Roles auth = Staff.Roles.MANAGER;
+    Item[] itemList = getMenuList("branch", "exampleBranch", auth); // Corrected the filter parameter
+    return itemList.length; // Return the length of the filtered menu list
+}
+
+    
 
     /* BRANCHES PURPOSES */
 //    public Branch[] getBranches() {

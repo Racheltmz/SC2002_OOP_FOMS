@@ -15,18 +15,18 @@ public class Manager extends Staff  {
     /* MENU ITEM PURPOSES */
     // TODO: UNCOMMENT WHEN MENU AND ITEM CLASSES ARE CREATED
     // Add menu item
-//    public void addMenuItem(Menu menu, String name, double price, String description, String category) {
-//        Item menuItem = new Item(name, price, description, category);
-//        menu.addItem(menuItem);
-//    }
+ public void addMenuItem(Menu menu, String name, double price, String description, String category) {
+     Item menuItem = new Item(name, price, description, category);
+     menu.addItem(menuItem);
+  }
 
     // Update menu item
-//    public void updateMenuItem(Menu menu, String name) {
-//        menu.updateItem(name);
+public void updateMenuItem(Menu menu, String name) {
+     menu.updateItem(name);
 //    }
 
     // Remove menu item
-//    public void removeMenuItem(Menu menu, String name) {
-//        menu.removeItem(name);
-//    }
+   public void removeMenuItem(Menu menu, String name) {
+       menu.removeItem(name);
+   }
 }
