@@ -89,6 +89,7 @@ public class Manager extends Staff  {
                 try {
                     // Get item to update by name
                     int itemIndex = validateInt("Enter the number of the item you want to update: ") - 1;
+                    System.out.println(itemIndex);
                     Item itemToUpdate = branchMenu.getMenuItems().get(itemIndex);
                     // Update price and description
                     double price = validateDouble("Enter price ($): ");
@@ -96,6 +97,7 @@ public class Manager extends Staff  {
                     String description = sc.next();
                     branchMenu.updateItem(itemToUpdate, price, description);
                     success = true;
+                    System.out.println("Item successfully updated in menu!");
                 } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
                     System.out.println("Please enter a valid number.");
                 }
@@ -116,10 +118,11 @@ public class Manager extends Staff  {
             do {
                 try {
                     // Get item to remove by name
-                    int itemIndex = validateInt("Enter the number of the item you want to update: ") - 1;
+                    int itemIndex = validateInt("Enter the number of the item you want to remove: ") - 1;
                     Item itemToRmv = branchMenu.getMenuItems().get(itemIndex);
                     branchMenu.removeItem(itemToRmv);
                     success = true;
+                    System.out.println("Item successfully removed from menu!");
                 } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
                     System.out.println("Please enter a valid number.");
                 }
