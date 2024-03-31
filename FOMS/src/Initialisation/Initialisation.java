@@ -5,24 +5,34 @@ import Management.Branch;
 import Management.Admin;
 import Management.Manager;
 import Management.Staff;
+import Management.Staff.Roles;
+import Menu.Menu;
+import Menu.Item;
 import Payment.Payment;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 // Initialisation tasks for Test Case 26
 public class Initialisation {
     /* LOAD STAFF LIST ON INITIALISATION */
     public static Company initialiseCompany() {
         ArrayList<Staff> staffList = initialiseStaffRecords();
-        ArrayList<Branch> branchList = initialiseBranchRecords();
+        ArrayList<Branch> branchList = new ArrayList<>();
+        ArrayList<Menu> menuList = new ArrayList<>();
+        initialiseBranchRecords(branchList, menuList);
         ArrayList<Payment> paymentList = initialisePaymentRecords();
-        return new Company(staffList, branchList, paymentList);
+        Company company = new Company(staffList, branchList, paymentList, menuList);
+        initialiseMenus(company);
+        return company;
     }
 
     // Get Excel spreadsheet by filename
@@ -30,7 +40,7 @@ public class Initialisation {
         XSSFSheet sheet = null;
         try {
             // Reading file from local directory
-            FileInputStream file = new FileInputStream(new File(filePath));
+            FileInputStream file = new FileInputStream(filePath);
 
             // Create Workbook instance holding reference to .xlsx file
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -41,10 +51,10 @@ public class Initialisation {
             // Closing workbook and file output streams
             workbook.close();
             file.close();
+        } catch (IOException ioException) {
+            System.out.println("Error reading the Excel file: " + ioException.getMessage());
         } catch (Exception e) {
-            // Display the exception along with line number
-            // using printStackTrace() method
-            System.out.println("Error when loading file, please check the file.");
+            System.out.println("Error: " + e.getMessage());
         }
         return sheet;
     }
@@ -53,69 +63,74 @@ public class Initialisation {
     public static ArrayList<Staff> initialiseStaffRecords() {
         // Initialise a list
         ArrayList<Staff> staffList = new ArrayList<Staff>();
-        XSSFSheet sheet = getSheet("./data/staff_list.xlsx");
-        try {
-            // Iterate all rows
-            for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
-                Row row = sheet.getRow(i);
+        XSSFSheet staffSheet = getSheet("./data/staff_list.xlsx");
+        // Iterate all rows
+        for (int i = 1; i < staffSheet.getPhysicalNumberOfRows(); i++) {
+            Row row = staffSheet.getRow(i);
+            if (row != null && row.getLastCellNum() >= 6) { // Ensure at least 6 cells in a row
                 // Get values from rows
-                String staffId = row.getCell(1).toString();
-                String name = row.getCell(0).toString();
-                char role = row.getCell(2).toString().charAt(0);
-                char gender = row.getCell(3).toString().charAt(0);
-                int age = (int) row.getCell(4).getNumericCellValue();
-                String branch = row.getCell(5).toString();
-                Staff.Roles roleCat;
+                Cell staffIdCell = row.getCell(1);
+                Cell nameCell = row.getCell(0);
+                Cell roleCell = row.getCell(2);
+                Cell genderCell = row.getCell(3);
+                Cell ageCell = row.getCell(4);
+                Cell branchCell = row.getCell(5);
 
-                // Add new staff
-                switch (role) {
-                    case 'S':
-                        roleCat = Staff.Roles.STAFF;
-                        Staff staff = new Staff(staffId, name, roleCat, gender, age, branch);
-                        staffList.add(staff);
-                        break;
-                    case 'M':
-                        roleCat = Staff.Roles.MANAGER;
-                        Manager manager = new Manager(staffId, name, roleCat, gender, age, branch);
-                        staffList.add(manager);
-                        break;
-                    case 'A':
-                        roleCat = Staff.Roles.ADMIN;
-                        Admin admin = new Admin(staffId, name, roleCat, gender, age, branch);
-                        staffList.add(admin);
-                        break;
+                // Ensure cells are not empty
+                if (staffIdCell != null && nameCell != null && roleCell != null && genderCell != null && ageCell != null && branchCell != null) {
+                    // Convert to respective datatype
+                    String staffId = staffIdCell.toString();
+                    String name = nameCell.toString();
+                    char role = roleCell.toString().charAt(0);
+                    char gender = genderCell.toString().charAt(0);
+                    int age = (int) ageCell.getNumericCellValue();
+                    String branch = branchCell.toString();
+
+                    // Add new staff
+                    switch (role) {
+                        case 'S':
+                            staffList.add(new Staff(staffId, name, Roles.STAFF, gender, age, branch));
+                            break;
+                        case 'M':
+                            staffList.add(new Manager(staffId, name, Roles.MANAGER, gender, age, branch));
+                            break;
+                        case 'A':
+                            staffList.add(new Admin(staffId, name, Roles.ADMIN, gender, age, branch));
+                            break;
+                    }
                 }
             }
-        } catch (NullPointerException nullPointerException) {
-            // Alert if a record has an empty cell (TBC)
-            System.out.println("Record was not inserted as it has an empty cell.");
         }
         return staffList;
     }
 
     // Initialise branch records
-    public static ArrayList<Branch> initialiseBranchRecords() {
-        // Initialise a list
-        ArrayList<Branch> branchList = new ArrayList<Branch>();
-        XSSFSheet sheet = getSheet("./data/branch_list.xlsx");
-        try {
-            // Iterate all rows
-            for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
-                Row row = sheet.getRow(i);
+    public static void initialiseBranchRecords(ArrayList<Branch> branchList, ArrayList<Menu> menuList) {
+        XSSFSheet branchSheet = getSheet("./data/branch_list.xlsx");
+        // Iterate all rows
+        for (int i = 1; i < branchSheet.getPhysicalNumberOfRows(); i++) {
+            Row row = branchSheet.getRow(i);
+            if (row != null && row.getLastCellNum() >= 3) { // Ensure at least 3 cells in a row
                 // Get values from rows
-                String name = row.getCell(0).toString();
-                String location = row.getCell(1).toString();
-                int staffQuota = (int) row.getCell(2).getNumericCellValue();
+                Cell nameCell = row.getCell(0);
+                Cell locCell = row.getCell(1);
+                Cell quotaCell = row.getCell(2);
 
-                // Add new branch
-                Branch branch = new Branch(name, location, staffQuota);
-                branchList.add(branch);
+                // Ensure cells are not empty
+                if (nameCell != null && locCell != null && quotaCell != null) {
+                    // Convert to respective data type
+                    String name = nameCell.toString();
+                    String location = locCell.toString();
+                    int staffQuota = (int) quotaCell.getNumericCellValue();
+
+                    // Add new branch
+                    branchList.add(new Branch(name, location, staffQuota));
+
+                    // Create a menu for each branch
+                    menuList.add(new Menu(name));
+                }
             }
-        } catch (NullPointerException nullPointerException) {
-            // Alert if a record has an empty cell (TBC)
-            System.out.println("Record was not inserted as it has an empty cell.");
         }
-        return branchList;
     }
 
     // Initialise payment records (card and online)
@@ -126,5 +141,33 @@ public class Initialisation {
         paymentList.add(card);
         paymentList.add(online);
         return paymentList;
+    }
+
+    // Add menu items by branch
+    public static void initialiseMenus(Company company) {
+        XSSFSheet menuSheet = getSheet("./data/menu_list.xlsx");
+        // Iterate all rows
+        for (int i = 1; i < menuSheet.getPhysicalNumberOfRows(); i++) {
+            Row row = menuSheet.getRow(i);
+            if (row != null && row.getLastCellNum() >= 4) { // Ensure at least 4 cells in a row
+                // Get values from rows
+                Cell nameCell = row.getCell(0);
+                Cell priceCell = row.getCell(1);
+                Cell branchCell = row.getCell(2);
+                Cell categoryCell = row.getCell(3);
+
+                // Ensure cells are not empty
+                if (nameCell != null && priceCell != null && branchCell != null && categoryCell != null) {
+                    // Convert to respective data type
+                    String name = nameCell.toString().trim();
+                    double price = priceCell.getNumericCellValue();
+                    String branch = branchCell.toString().trim();
+                    String category = categoryCell.toString().trim();
+
+                    // Add new item
+                    company.getMenu(branch).addItem(new Item(name, price, branch, category));
+                }
+            }
+        }
     }
 }

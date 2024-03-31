@@ -25,6 +25,10 @@ public class ActiveStaff implements ActiveUserInterface {
 
     public void showOptions(Company company, OrderQueue queue) {
         InputScanner sc = getInstance();
+        System.out.println("-".repeat(30));
+        System.out.printf("| StaffID: %s\n| Role: %s\n", getActiveStaff().getStaffID(),
+                getActiveStaff().getRole());
+        System.out.println("-".repeat(30));
         System.out.println("Please select option (3 to quit): ");
         System.out.println(
                 "1. Display new orders\n2. View details of an order\n3. Set Order as Ready\n4. Change Password\n5. Logout");

@@ -1,5 +1,6 @@
 package Management;
 
+import Menu.Item;
 import Order.Order.Status;
 import Order.OrderQueue;
 
@@ -63,8 +64,8 @@ public class Staff {
     /* MANAGING STAFF PURPOSES */
     // Display staff details
     public void getStaffDetails() {
-        System.out.println(this.staffID + ' ' + this.name + ' ' + this.role + ' ' +
-                this.gender + ' ' + this.age + ' ' + this.branch);
+        System.out.printf("| %-10s | %-20s | %-10s | %-8s | %-5s |\n",
+                this.staffID, this.name, this.role, this.gender, this.age);
     }
 
     /* MANAGING ORDER PURPOSES */

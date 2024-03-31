@@ -1,6 +1,8 @@
 package Management;
 
 import Management.Staff.Roles;
+import Menu.Item;
+import Menu.Menu;
 import Payment.Payment;
 
 import java.util.ArrayList;
@@ -13,12 +15,14 @@ public class Company {
     private ArrayList<Staff> staffList;
     private ArrayList<Branch> branches;
     private ArrayList<Payment> paymentList;
+    private ArrayList<Menu> menuList;
 
     // Constructor for Company class
-    public Company(ArrayList<Staff> staffList, ArrayList<Branch> branches, ArrayList<Payment> paymentList) {
+    public Company(ArrayList<Staff> staffList, ArrayList<Branch> branches, ArrayList<Payment> paymentList, ArrayList<Menu> menuList) {
         this.staffList = staffList;
         this.branches = branches;
         this.paymentList = paymentList;
+        this.menuList = menuList;
     }
 
     /* STAFF PURPOSES */
@@ -42,8 +46,8 @@ public class Company {
 
     // Remove staff (admin purposes) (TO CHECK)
     public void rmvStaff(String staffID, Roles auth) {
-         if (authoriseAdmin(auth))
-             this.staffList.remove(this.getStaff(staffID));
+        if (authoriseAdmin(auth))
+            this.staffList.remove(this.getStaff(staffID));
     }
 
     // Filter list of staff members for strings (only branch field)
@@ -55,9 +59,9 @@ public class Company {
         if (isAuth) {
             // Check if the filter is "branch", else it returns an empty array
             if (Objects.equals(filter, "branch")) {
-                for (int i = 0; i < this.staffList.size(); i++) {
-                    if (Objects.equals(this.staffList.get(i).getBranch(), filterVal))
-                        filteredStaff.add(this.staffList.get(i));
+                for (Staff staff : this.staffList) {
+                    if (Objects.equals(staff.getBranch(), filterVal))
+                        filteredStaff.add(staff);
                 }
             }
         }
@@ -72,9 +76,9 @@ public class Company {
         if (authoriseAdmin(auth)) {
             // Check if the filter is "role", else it returns an empty array
             if (Objects.equals(filter, "role")) {
-                for (int i = 0; i < this.staffList.size(); i++) {
-                    if (this.staffList.get(i).getRole() == filterVal)
-                        filteredStaff.add(this.staffList.get(i));
+                for (Staff staff : this.staffList) {
+                    if (staff.getRole() == filterVal)
+                        filteredStaff.add(staff);
                 }
             }
         }
@@ -89,9 +93,9 @@ public class Company {
         if (authoriseAdmin(auth)) {
             // Check if the filter is "gender", else it returns an empty array
             if (Objects.equals(filter, "gender")) {
-                for (int i = 0; i < this.staffList.size(); i++) {
-                    if (this.staffList.get(i).getGender() == filterVal)
-                        filteredStaff.add(this.staffList.get(i));
+                for (Staff staff : this.staffList) {
+                    if (staff.getGender() == filterVal)
+                        filteredStaff.add(staff);
                 }
             }
         }
@@ -106,9 +110,9 @@ public class Company {
         if (authoriseAdmin(auth)) {
             // Check if the filter is "age", else it returns an empty array
             if (Objects.equals(filter, "age")) {
-                for (int i = 0; i < this.staffList.size(); i++) {
-                    if (this.staffList.get(i).getAge() == filterVal)
-                        filteredStaff.add(this.staffList.get(i));
+                for (Staff staff : this.staffList) {
+                    if (staff.getAge() == filterVal)
+                        filteredStaff.add(staff);
                 }
             }
         }
@@ -154,10 +158,10 @@ public class Company {
     }
 
     // Remove branch (admin purposes)
-     public void rmvBranch(String branchName, Roles auth) {
-         if (authoriseAdmin(auth))
-             this.branches.remove(this.getBranchByName(branchName));
-     }
+    public void rmvBranch(String branchName, Roles auth) {
+        if (authoriseAdmin(auth))
+            this.branches.remove(this.getBranchByName(branchName));
+    }
 
     /* PAYMENT PURPOSES */
     // Get all payment methods
@@ -184,8 +188,26 @@ public class Company {
     }
 
     // Remove payment method (admin purposes)
-     public void rmvPaymentMtd(String paymentMtd, Roles auth) {
-         if (authoriseAdmin(auth))
-             this.paymentList.remove(this.getPaymentMtd(paymentMtd));
-     }
+    public void rmvPaymentMtd(String paymentMtd, Roles auth) {
+        if (authoriseAdmin(auth))
+            this.paymentList.remove(this.getPaymentMtd(paymentMtd));
+    }
+
+    /* MENU PURPOSES */
+    // Get menu by branch name
+    public Menu getMenu(String branchName) {
+        // Return staff object if it can be found
+        for (int i = 0; i < this.menuList.size(); i++) {
+            Menu menu = this.menuList.get(i);
+            if (Objects.equals(menu.getBranch(), branchName))
+                return menu;
+        }
+        // Return null if menu cannot be found
+        return null;
+    }
+
+    // Get number of menu items
+    public int getNumMenuItems(String branch) {
+        return getMenu(branch).getMenuItems().size();
+    }
 }

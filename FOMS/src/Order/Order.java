@@ -1,18 +1,25 @@
 package Order;
 
+import Menu.Item;
+
+import java.util.ArrayList;
+
 // Information about order
 public class Order {
-    public enum Status { NEW, READY, COMPLETED, CANCELLED }
+    public enum Status {
+        NEW, READY, COMPLETED, CANCELLED
+    }
 
     private String orderID;
     private String branch;
-    private Item[] items;
+    private ArrayList<Item> items;
     private String[] customisation;
     private boolean takeaway;
     private Status status;
     private String paymentMethod;
 
-    public Order(String orderID, String branch, Item[] items, String[] customisation, boolean takeaway, String paymentMethod) {
+    public Order(String orderID, String branch, ArrayList<Item> items, String[] customisation, boolean takeaway,
+            String paymentMethod) {
         this.orderID = orderID;
         this.branch = branch;
         this.items = items;
@@ -31,7 +38,7 @@ public class Order {
         return this.branch;
     }
 
-    public Item[] getItems() {
+    public ArrayList<Item> getItems() {
         return this.items;
     }
 
@@ -45,7 +52,7 @@ public class Order {
 
     /* Details for customers */
     // Customer makes payment
-   public void pay(String paymentMethod) {
+    public void pay(String paymentMethod) {
         this.setStatus(Status.NEW);
     }
 
@@ -85,18 +92,5 @@ public class Order {
         } else {
             System.out.println("Dine In");
         }
-    }
-}
-
-// delete when item class is made
-class Item {
-    private String name;
-
-    public Item(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 }

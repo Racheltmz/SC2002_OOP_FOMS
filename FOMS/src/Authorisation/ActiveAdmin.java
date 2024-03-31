@@ -25,6 +25,10 @@ public class ActiveAdmin implements ActiveUserInterface {
 
     public void showOptions(Company company, OrderQueue queue) {
         InputScanner sc = getInstance();
+        System.out.println("-".repeat(30));
+        System.out.printf("| StaffID: %s\n| Role: %s\n", getActiveStaff().getStaffID(),
+                getActiveStaff().getRole());
+        System.out.println("-".repeat(30));
         System.out.println("Please select option (3 to quit): ");
         System.out.println("1. Change Password\n2. Logout");
         int staffChoice = sc.nextInt();
