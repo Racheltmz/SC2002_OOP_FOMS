@@ -1,23 +1,21 @@
 package Management;
 
-import Menu.Item;
-import Order.Order.Status;
 import Order.OrderQueue;
+import Order.OrderStatus;
 
 import static Authentication.Authentication.setNewPassword;
 import static Authentication.Hashing.genHash;
 
 public class Staff {
-    public enum Roles { STAFF, MANAGER, ADMIN }
     private String staffID;
     private String name;
     private String password;
-    private Roles role;
+    private StaffRoles role;
     private char gender;
     private int age;
     private String branch;
 
-    public Staff(String staffID, String name, Roles role, char gender, int age, String branch) {
+    public Staff(String staffID, String name, StaffRoles role, char gender, int age, String branch) {
         this.staffID = staffID;
         this.name = name;
         this.role = role;
@@ -32,7 +30,7 @@ public class Staff {
         return this.staffID;
     }
 
-    public Roles getRole() {
+    public StaffRoles getRole() {
         return this.role;
     }
 
@@ -81,6 +79,6 @@ public class Staff {
 
     // Update order status to ready to pickup for Test Case 10 and 12
     public void setOrderReady(OrderQueue queue) {
-        queue.updateStatus(Status.NEW, Status.READY);
+        queue.updateStatus(OrderStatus.NEW, OrderStatus.READY);
     }
 }

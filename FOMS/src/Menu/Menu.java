@@ -1,12 +1,11 @@
 package Menu;
 
-import Initialisation.InputScanner;
 import Management.Branch;
 import Management.Company;
 
 import java.util.ArrayList;
 
-import static Initialisation.InputScanner.getInstance;
+import static Validation.ValidateDataType.validateInt;
 
 public class Menu {
     // Attributes
@@ -38,15 +37,13 @@ public class Menu {
     }
 
     public static void displayItemsByBranch(Company company) {
-        InputScanner sc = getInstance();
         // Display branches
         company.displayBranches();
         // Get branches
         ArrayList<Branch> branches = company.getBranches();
         try {
             // Get user's selection
-            System.out.println("Select Branch: ");
-            int branchIndex = sc.nextInt();
+            int branchIndex = validateInt("Select Branch: ");
             // Get branch name
             String branch = branches.get(branchIndex-1).getBranchName();
             Menu menu = company.getMenu(branch);

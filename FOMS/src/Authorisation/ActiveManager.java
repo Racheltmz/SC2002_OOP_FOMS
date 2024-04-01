@@ -3,7 +3,7 @@ package Authorisation;
 import Initialisation.InputScanner;
 import Management.Company;
 import Management.Manager;
-import Management.Staff.Roles;
+import Management.StaffRoles;
 import Order.OrderQueue;
 
 import static Initialisation.InputScanner.getInstance;
@@ -35,16 +35,16 @@ public class ActiveManager implements ActiveUserInterface {
         sc.nextLine(); // Consume newline character
         switch (staffChoice) {
             case 1:
-                this.getActiveStaff().displayStaffList(company, Roles.MANAGER);
+                this.getActiveStaff().displayStaffList(company, StaffRoles.MANAGER);
                 break;
             case 2:
-                this.getActiveStaff().addMenuItem(company, Roles.MANAGER);
+                this.getActiveStaff().addMenuItem(company, StaffRoles.MANAGER);
                 break;
             case 3:
-                this.getActiveStaff().updateMenuItem(company, Roles.MANAGER);
+                this.getActiveStaff().updateMenuItem(company, StaffRoles.MANAGER);
                 break;
             case 4:
-                this.getActiveStaff().removeMenuItem(company, Roles.MANAGER);
+                this.getActiveStaff().removeMenuItem(company, StaffRoles.MANAGER);
                 break;
             case 5:
                 this.getActiveStaff().getNewOrders(this.activeStaff.getBranch(), queue);

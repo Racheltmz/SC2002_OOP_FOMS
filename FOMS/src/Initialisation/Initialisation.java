@@ -5,7 +5,7 @@ import Management.Branch;
 import Management.Admin;
 import Management.Manager;
 import Management.Staff;
-import Management.Staff.Roles;
+import Management.StaffRoles;
 import Menu.Menu;
 import Menu.Item;
 import Payment.Payment;
@@ -18,8 +18,6 @@ import org.apache.poi.ss.usermodel.Row;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 // Initialisation tasks for Test Case 26
 public class Initialisation {
@@ -89,13 +87,13 @@ public class Initialisation {
                     // Add new staff
                     switch (role) {
                         case 'S':
-                            staffList.add(new Staff(staffId, name, Roles.STAFF, gender, age, branch));
+                            staffList.add(new Staff(staffId, name, StaffRoles.STAFF, gender, age, branch));
                             break;
                         case 'M':
-                            staffList.add(new Manager(staffId, name, Roles.MANAGER, gender, age, branch));
+                            staffList.add(new Manager(staffId, name, StaffRoles.MANAGER, gender, age, branch));
                             break;
                         case 'A':
-                            staffList.add(new Admin(staffId, name, Roles.ADMIN, gender, age, branch));
+                            staffList.add(new Admin(staffId, name, StaffRoles.ADMIN, gender, age, branch));
                             break;
                     }
                 }

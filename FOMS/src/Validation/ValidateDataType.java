@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
 
 import static Initialisation.InputScanner.getInstance;
 
-public class Validate {
+public class ValidateDataType {
     // Check integer
     public static int validateInt(String msg) {
         InputScanner sc = getInstance();

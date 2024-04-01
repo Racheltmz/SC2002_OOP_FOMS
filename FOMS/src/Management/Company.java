@@ -1,7 +1,5 @@
 package Management;
 
-import Management.Staff.Roles;
-import Menu.Item;
 import Menu.Menu;
 import Payment.Payment;
 
@@ -39,19 +37,19 @@ public class Company {
     }
 
     // Add staff (admin purposes)
-    public void addStaff(Staff staff, Roles auth) {
+    public void addStaff(Staff staff, StaffRoles auth) {
         if (authoriseAdmin(auth))
             this.staffList.add(staff);
     }
 
     // Remove staff (admin purposes) (TO CHECK)
-    public void rmvStaff(String staffID, Roles auth) {
+    public void rmvStaff(String staffID, StaffRoles auth) {
         if (authoriseAdmin(auth))
             this.staffList.remove(this.getStaff(staffID));
     }
 
     // Filter list of staff members for strings (only branch field)
-    public ArrayList<Staff> getStaffList(String filter, String filterVal, Roles auth) {
+    public ArrayList<Staff> getStaffList(String filter, String filterVal, StaffRoles auth) {
         // Initialise new staff list
         ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
         // Authorise staff else return empty list
@@ -69,7 +67,7 @@ public class Company {
     }
 
     // Filter list of staff members for roles enum (only role field)
-    public ArrayList<Staff> getStaffList(String filter, Roles filterVal, Roles auth) {
+    public ArrayList<Staff> getStaffList(String filter, StaffRoles filterVal, StaffRoles auth) {
         // Initialise new staff list
         ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
         // Authorise staff else return empty list
@@ -86,7 +84,7 @@ public class Company {
     }
 
     // Filter list of staff members for character (only gender field)
-    public ArrayList<Staff> getStaffList(String filter, char filterVal, Roles auth) {
+    public ArrayList<Staff> getStaffList(String filter, char filterVal, StaffRoles auth) {
         // Initialise new staff list
         ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
         // Authorise staff else return empty list
@@ -103,7 +101,7 @@ public class Company {
     }
 
     // Filter list of staff members for integer (only age field)
-    public ArrayList<Staff> getStaffList(String filter, int filterVal, Roles auth) {
+    public ArrayList<Staff> getStaffList(String filter, int filterVal, StaffRoles auth) {
         // Initialise new staff list
         ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
         // Authorise staff else return empty list
@@ -120,8 +118,8 @@ public class Company {
     }
 
     // Get number of managers to check quota
-    public int getNumManagers(Roles auth) {
-        ArrayList<Staff> managerList = getStaffList("role", Roles.MANAGER, auth);
+    public int getNumManagers(StaffRoles auth) {
+        ArrayList<Staff> managerList = getStaffList("role", StaffRoles.MANAGER, auth);
         return managerList.size();
     }
 
@@ -152,13 +150,13 @@ public class Company {
     }
 
     // Add branch (admin purposes)
-    public void addBranch(Branch branch, Roles auth) {
+    public void addBranch(Branch branch, StaffRoles auth) {
         if (authoriseAdmin(auth))
             this.branches.add(branch);
     }
 
     // Remove branch (admin purposes)
-    public void rmvBranch(String branchName, Roles auth) {
+    public void rmvBranch(String branchName, StaffRoles auth) {
         if (authoriseAdmin(auth))
             this.branches.remove(this.getBranchByName(branchName));
     }
@@ -182,13 +180,13 @@ public class Company {
     }
 
     // Add payment method (admin purposes)
-    public void addPaymentMtd(Payment payment, Roles auth) {
+    public void addPaymentMtd(Payment payment, StaffRoles auth) {
         if (authoriseAdmin(auth))
             this.paymentList.add(payment);
     }
 
     // Remove payment method (admin purposes)
-    public void rmvPaymentMtd(String paymentMtd, Roles auth) {
+    public void rmvPaymentMtd(String paymentMtd, StaffRoles auth) {
         if (authoriseAdmin(auth))
             this.paymentList.remove(this.getPaymentMtd(paymentMtd));
     }

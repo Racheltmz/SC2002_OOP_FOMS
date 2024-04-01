@@ -9,11 +9,11 @@ import java.util.InputMismatchException;
 
 import static Authorisation.Authorisation.authoriseManager;
 import static Initialisation.InputScanner.getInstance;
-import static Validation.Validate.*;
+import static Validation.ValidateDataType.*;
 
 public class Manager extends Staff  {
     // Constructor
-    public Manager(String staffID, String name, Roles role, char gender, int age, String branch) {
+    public Manager(String staffID, String name, StaffRoles role, char gender, int age, String branch) {
         super(staffID, name, role, gender, age, branch);
     }
 
@@ -44,7 +44,7 @@ public class Manager extends Staff  {
 
     /* STAFF MANAGEMENT PURPOSES */
     // Display staff list by branch Test Case 11
-    public void displayStaffList(Company company, Roles auth) {
+    public void displayStaffList(Company company, StaffRoles auth) {
         if (authoriseManager(auth)) {
             // Display staff info from branches
             String branch = queryBranch(company);
@@ -59,7 +59,7 @@ public class Manager extends Staff  {
 
     /* MENU ITEM PURPOSES */
     // Add menu item
-    public void addMenuItem(Company company, Roles auth) throws InputMismatchException {
+    public void addMenuItem(Company company, StaffRoles auth) throws InputMismatchException {
         if (authoriseManager(auth)) {
             InputScanner sc = getInstance();
             // Get menu by branch
@@ -76,7 +76,7 @@ public class Manager extends Staff  {
     }
 
     // Update menu item
-    public void updateMenuItem(Company company, Roles auth) {
+    public void updateMenuItem(Company company, StaffRoles auth) {
         if (authoriseManager(auth)) {
             InputScanner sc = getInstance();
             // Get menu by branch
@@ -106,7 +106,7 @@ public class Manager extends Staff  {
     }
 
     // Remove menu item
-    public void removeMenuItem(Company company, Roles auth) {
+    public void removeMenuItem(Company company, StaffRoles auth) {
         if (authoriseManager(auth)) {
             // Get menu by branch
             String branch = queryBranch(company);

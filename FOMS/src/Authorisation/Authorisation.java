@@ -1,9 +1,9 @@
 package Authorisation;
 
-import Management.Staff.Roles;
+import Management.StaffRoles;
 
 public class Authorisation {
-    private static boolean authorise(Roles expectedRole, Roles roleToCheck) {
+    private static boolean authorise(StaffRoles expectedRole, StaffRoles roleToCheck) {
         if (roleToCheck == expectedRole) {
             return true;
         } else {
@@ -11,11 +11,11 @@ public class Authorisation {
             return false;
         }
     }
-    public static boolean authoriseManager(Roles role) {
-        return authorise(Roles.MANAGER, role);
+    public static boolean authoriseManager(StaffRoles role) {
+        return authorise(StaffRoles.MANAGER, role);
     }
 
-    public static boolean authoriseAdmin(Roles role) {
-        return authorise(Roles.ADMIN, role);
+    public static boolean authoriseAdmin(StaffRoles role) {
+        return authorise(StaffRoles.ADMIN, role);
     }
 }

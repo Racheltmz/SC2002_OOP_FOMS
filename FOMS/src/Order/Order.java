@@ -6,16 +6,12 @@ import java.util.ArrayList;
 
 // Information about order
 public class Order {
-    public enum Status {
-        NEW, READY, COMPLETED, CANCELLED
-    }
-
     private String orderID;
     private String branch;
     private ArrayList<Item> items;
     private String[] customisation;
     private boolean takeaway;
-    private Status status;
+    private OrderStatus status;
     private String paymentMethod;
 
     public Order(String orderID, String branch, ArrayList<Item> items, String[] customisation, boolean takeaway,
@@ -25,7 +21,7 @@ public class Order {
         this.items = items;
         this.customisation = customisation;
         this.takeaway = takeaway;
-        this.status = Status.NEW;
+        this.status = OrderStatus.NEW;
         this.paymentMethod = paymentMethod;
     }
 
@@ -42,18 +38,18 @@ public class Order {
         return this.items;
     }
 
-    public Status getStatus() {
+    public OrderStatus getStatus() {
         return this.status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
     /* Details for customers */
     // Customer makes payment
     public void pay(String paymentMethod) {
-        this.setStatus(Status.NEW);
+        this.setStatus(OrderStatus.NEW);
     }
 
     // Receipt information

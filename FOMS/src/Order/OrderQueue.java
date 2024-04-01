@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import Initialisation.InputScanner;
-import Order.Order.Status;
 
 import Exceptions.EmptyListException;
 
@@ -76,7 +75,7 @@ public class OrderQueue {
         if (!this.orders.isEmpty()) {
             System.out.println("Orders in the queue:");
             for (Order order : this.orders) {
-                if (Objects.equals(order.getStatus(), Status.NEW) && Objects.equals(order.getBranch(), branch)) {
+                if (Objects.equals(order.getStatus(), OrderStatus.NEW) && Objects.equals(order.getBranch(), branch)) {
                     order.printOrderDetails();
                 }
             }
@@ -97,7 +96,7 @@ public class OrderQueue {
     }
 
     // Update order status to ready when food is ready or when customer collects order
-    public void updateStatus(Status valStatus, Status newStatus) {
+    public void updateStatus(OrderStatus valStatus, OrderStatus newStatus) {
         try {
             Order order = this.getOrderById();
             if (order.getStatus().equals(valStatus))

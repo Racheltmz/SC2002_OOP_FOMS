@@ -10,7 +10,7 @@ import Management.Admin;
 import Management.Company;
 import Management.Manager;
 import Management.Staff;
-import Management.Staff.Roles;
+import Management.StaffRoles;
 import Order.OrderQueue;
 
 import static Authentication.Authentication.login;
@@ -57,7 +57,7 @@ public class FOMSApp {
                             System.out.println("Please select option");
                             System.out.println("1. Browse Menu\n2. Check Order Status\n3. Return back");
                             // Iterate until customer is done using functionalities
-                            int customerChoice = 0;
+                            // int customerChoice = 0;
 //                            do {
 //                                // Menu Browsing
 //
@@ -97,11 +97,11 @@ public class FOMSApp {
                                             staff = login(company);
                                             // Set active staff
                                             if (staff != null) {
-                                                if (staff.getRole() == Roles.STAFF) {
+                                                if (staff.getRole() == StaffRoles.STAFF) {
                                                     activeStaff.setActiveStaff(staff);
-                                                } else if (staff.getRole() == Roles.MANAGER) {
+                                                } else if (staff.getRole() == StaffRoles.MANAGER) {
                                                     activeManager.setActiveStaff((Manager) staff);
-                                                } else if (staff.getRole() == Roles.ADMIN) {
+                                                } else if (staff.getRole() == StaffRoles.ADMIN) {
                                                     activeAdmin.setActiveStaff((Admin) staff);
                                                 }
                                             }
