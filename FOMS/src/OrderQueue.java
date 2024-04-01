@@ -1,38 +1,41 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class OrderQueue {
-    private Order[] orders;
-    private int front;
-    private int rear;
-    private int size;
-    private int capacity;
+    private List<Order> orders;
 
     public OrderQueue(int capacity){
-        this.capacity = capacity;
-        this.orders = new Order[capacity];
-        this.front = 0;
-        this.rear = -1;
-        this.size = 0;
+        this.orders = new ArrayList<>();
+        
+    }
+
+    public String getStatusByOrderID(String orderID){
+        for (Order order : orders){
+            if (order.getOrderId().equals(orderID)){
+                return order.getStatus();
+            }
+        }
+        return "Order not found";
     }
 
     public void addOrder(Order order){
-        if (size == capacity){
-            System.out.println("Order queue is full. Cannot add order.");
-            return;
-        }
-        rear = (rear + 1) % capacity;
-        orders[rear] = order;
-        size++;
+        orders.add(order);
     }
 
-    public Order removeOrder(){
-        if (size == 0){
-            System.out.println("Order queue is empty.");
-            return null;
+    public void removeOrder(String orderID){
+        Order orderToRemove = null;
+        for (Order order : orders){
+            if (order.getOrderId().equals(orderID)){
+                orderToRemove = order;
+                break;
+            }
         }
-
-        Order removedOrder = orders[front];
-        orders[front] = null;
-        front = (front + 1) % capacity;
-        size--;
-        return removedOrder;
+        if (orderToRemove != null){
+            orders.remove(orderToRemove);
+            System.out.println("Order with ID " + orderID + " removed successfully.");
+        }
+        else{
+            System.out.println("Order with ID " + orderID + " not found.");
+        }
     }
 }

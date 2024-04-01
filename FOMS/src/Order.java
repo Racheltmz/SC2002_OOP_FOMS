@@ -1,6 +1,5 @@
+public enum Status{ NEW, READY, COMPLETED, CANCELLED }
 public class Order {
-    public enum Status{NEW, READY, COMPLETED, CANCELLED}
-
     private String orderID;
     private String branch;
     private Item[] items;
@@ -42,8 +41,8 @@ public class Order {
         System.out.println("Thank you for shopping at " + branch);
     }
 
-    public void getOrderById(String orderID) {
-        
+    public String getOrderId() {
+        return orderID;
     }
 
     public void processOrder() {
@@ -58,29 +57,16 @@ public class Order {
     }
 
     public String getStatus(){
-        return status;
+        return status.toString();
     }
 
-    protected String setStatus(Status status){
+    protected void setStatus(Status status){
         this.status = status.toString();
-        return this.status;
     }
 
     public void collectOrder(){
         if (getStatus().equals(Status.READY.toString())){
             setStatus(Status.COMPLETED);
         }
-    }
-}
-
-// delete when item class is made
-class Item {
-    private String name;
-
-    public Item(String name) {
-        this.name = name;
-    }
-    public String getName() {
-        return name;
     }
 }
