@@ -1,27 +1,22 @@
-// Import
 import java.security.NoSuchAlgorithmException;
 import java.util.InputMismatchException;
 
-import Authorisation.ActiveAdmin;
-import Authorisation.ActiveManager;
-import Authorisation.ActiveStaff;
-import Initialisation.InputScanner;
-import Management.Admin;
-import Management.Company;
-import Management.Manager;
-import Management.Staff;
-import Management.StaffRoles;
-import Order.OrderQueue;
+import authorisation.*;
+import utils.InputScanner;
+import management.Company;
+import staff.Staff;
+import staff.StaffRoles;
+import order.OrderQueue;
 
-import static Authentication.Authentication.login;
-import static Initialisation.Initialisation.initialiseCompany;
-import static Initialisation.InputScanner.getInstance;
-import static Menu.Menu.displayItemsByBranch;
+import static authentication.Authentication.login;
+import static menu.MenuDirectory.displayMenuByBranch;
+import static utils.Initialisation.initialiseCompany;
+import static utils.InputScanner.getInstance;
 
 // Main app file
 public class FOMSApp {
-
     public static void main(String[] args) {
+        // Initialise scanner
         InputScanner sc = getInstance();
 
         // Initialise company and order queue
@@ -51,7 +46,7 @@ public class FOMSApp {
                             System.out.println("|        Welcome Customer!       |");
                             System.out.println("==================================");
                             // Ask customer to select branch
-                            displayItemsByBranch(company);
+                            displayMenuByBranch(company);
 
                             // Customer Options @gwen (test case 4-8, 18)
                             System.out.println("Please select option");
@@ -70,10 +65,13 @@ public class FOMSApp {
                         break;
                     case 2:
                         /* STAFF INTERFACE */
-                        // Initialise variables
-                        ActiveStaff activeStaff = new ActiveStaff();
-                        ActiveManager activeManager = new ActiveManager();
-                        ActiveAdmin activeAdmin = new ActiveAdmin();
+                        // Initialise staff
+                        ActiveFactory staffFactory = new ActiveFactoryStaff();
+                        ActiveUser activeStaff = staffFactory.initInactive();
+                        ActiveFactory managerFactory = new ActiveFactoryManager();
+                        ActiveUser activeManager = managerFactory.initInactive();
+                        ActiveFactory adminFactory = new ActiveFactoryAdmin();
+                        ActiveUser activeAdmin = adminFactory.initInactive();
                         Staff staff;
 
                         // Iterate until user successfully logs in
@@ -94,15 +92,15 @@ public class FOMSApp {
                                     sc.nextLine(); // Consume newline character
                                     if (staffChoice == 1) {
                                         try {
-                                            staff = login(company);
+                                            staff = login(company.getStaffDirectory());
                                             // Set active staff
                                             if (staff != null) {
                                                 if (staff.getRole() == StaffRoles.STAFF) {
-                                                    activeStaff.setActiveStaff(staff);
+                                                    activeStaff = staffFactory.initActive(staff);
                                                 } else if (staff.getRole() == StaffRoles.MANAGER) {
-                                                    activeManager.setActiveStaff((Manager) staff);
+                                                    activeManager = managerFactory.initActive(staff);
                                                 } else if (staff.getRole() == StaffRoles.ADMIN) {
-                                                    activeAdmin.setActiveStaff((Admin) staff);
+                                                    activeAdmin = adminFactory.initActive(staff);
                                                 }
                                             }
                                         } catch (NoSuchAlgorithmException e) {
@@ -141,5 +139,7 @@ public class FOMSApp {
                 sc.nextLine();
             }
         } while (choice != 3);
+        // Close scanner when the program terminates
+        sc.close();
     }
 }
