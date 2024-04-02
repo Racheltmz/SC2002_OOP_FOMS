@@ -9,7 +9,7 @@ public class Branch {
     public Branch(String name, String location, int staffQuota) {
         this.setBranchName(name);
         this.setLocation(location);
-        this.setStaffQuota(staffQuota); // IMPORTANT: ensure in main that (1 <= staffQuota <= 15) as this will affect
+        this.setStaffQuota(staffQuota); // TODO: IMPORTANT: ensure in main that (1 <= staffQuota <= 15) as this will affect
                                         // managerQuota
         if (1 <= staffQuota && staffQuota <= 4) {
             this.managerQuota = 1;
@@ -28,12 +28,12 @@ public class Branch {
         return this.name;
     }
 
-    public void setStaffQuota(int quota) {
-        this.staffQuota = quota;
-    }
-
     public int getStaffQuota() {
         return this.staffQuota;
+    }
+
+    public void setStaffQuota(int quota) {
+        this.staffQuota = quota;
     }
 
     public int getManagerQuota() {

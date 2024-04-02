@@ -9,6 +9,7 @@ import java.util.InputMismatchException;
 
 import static Authorisation.Authorisation.authoriseManager;
 import static Initialisation.InputScanner.getInstance;
+import static Management.EmployeeView.displayStaffByBranch;
 import static Validation.ValidateDataType.*;
 
 public class Manager extends Staff  {
@@ -17,7 +18,7 @@ public class Manager extends Staff  {
         super(staffID, name, role, gender, age, branch);
     }
 
-    // Get the manager's input of the branch
+    /* STAFF MANAGEMENT PURPOSES */
     public static String queryBranch(Company company) {
         InputScanner sc = getInstance();
         // Display branches
@@ -42,18 +43,12 @@ public class Manager extends Staff  {
         return branchName;
     }
 
-    /* STAFF MANAGEMENT PURPOSES */
     // Display staff list by branch Test Case 11
     public void displayStaffList(Company company, StaffRoles auth) {
         if (authoriseManager(auth)) {
             // Display staff info from branches
             String branch = queryBranch(company);
-            ArrayList<Staff> staffByBranch = company.getStaffList("branch", branch, auth);
-            System.out.printf("Staff Details from %s branch:\n", branch);
-            System.out.printf("| %-10s | %-20s | %-10s | %-8s | %-5s |\n", "StaffID", "Name", "Role", "Gender", "Age");
-            System.out.println("-".repeat(70));
-            for (Staff staff : staffByBranch)
-                staff.getStaffDetails();
+            displayStaffByBranch(company.filterBranch(branch), branch);
         }
     }
 

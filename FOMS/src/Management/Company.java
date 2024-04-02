@@ -36,6 +36,10 @@ public class Company {
         return null;
     }
 
+    public ArrayList<Staff> getAllStaff() {
+        return this.staffList;
+    }
+
     // Add staff (admin purposes)
     public void addStaff(Staff staff, StaffRoles auth) {
         if (authoriseAdmin(auth))
@@ -48,79 +52,22 @@ public class Company {
             this.staffList.remove(this.getStaff(staffID));
     }
 
-    // Filter list of staff members for strings (only branch field)
-    public ArrayList<Staff> getStaffList(String filter, String filterVal, StaffRoles auth) {
-        // Initialise new staff list
-        ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
-        // Authorise staff else return empty list
-        boolean isAuth = authoriseManager(auth) || authoriseAdmin(auth);
-        if (isAuth) {
-            // Check if the filter is "branch", else it returns an empty array
-            if (Objects.equals(filter, "branch")) {
-                for (Staff staff : this.staffList) {
-                    if (Objects.equals(staff.getBranch(), filterVal))
-                        filteredStaff.add(staff);
-                }
-            }
-        }
-        return filteredStaff;
+    // Filters
+    public ArrayList<Staff> filterBranch(String branch) {
+        CriteriaStr branchFilter = new CriteriaBranch();
+        return branchFilter.meetCriteria(this.getAllStaff(), branch);
     }
-
-    // Filter list of staff members for roles enum (only role field)
-    public ArrayList<Staff> getStaffList(String filter, StaffRoles filterVal, StaffRoles auth) {
-        // Initialise new staff list
-        ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
-        // Authorise staff else return empty list
-        if (authoriseAdmin(auth)) {
-            // Check if the filter is "role", else it returns an empty array
-            if (Objects.equals(filter, "role")) {
-                for (Staff staff : this.staffList) {
-                    if (staff.getRole() == filterVal)
-                        filteredStaff.add(staff);
-                }
-            }
-        }
-        return filteredStaff;
-    }
-
-    // Filter list of staff members for character (only gender field)
-    public ArrayList<Staff> getStaffList(String filter, char filterVal, StaffRoles auth) {
-        // Initialise new staff list
-        ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
-        // Authorise staff else return empty list
-        if (authoriseAdmin(auth)) {
-            // Check if the filter is "gender", else it returns an empty array
-            if (Objects.equals(filter, "gender")) {
-                for (Staff staff : this.staffList) {
-                    if (staff.getGender() == filterVal)
-                        filteredStaff.add(staff);
-                }
-            }
-        }
-        return filteredStaff;
-    }
-
-    // Filter list of staff members for integer (only age field)
-    public ArrayList<Staff> getStaffList(String filter, int filterVal, StaffRoles auth) {
-        // Initialise new staff list
-        ArrayList<Staff> filteredStaff = new ArrayList<Staff>();
-        // Authorise staff else return empty list
-        if (authoriseAdmin(auth)) {
-            // Check if the filter is "age", else it returns an empty array
-            if (Objects.equals(filter, "age")) {
-                for (Staff staff : this.staffList) {
-                    if (staff.getAge() == filterVal)
-                        filteredStaff.add(staff);
-                }
-            }
-        }
-        return filteredStaff;
+ 
+    public ArrayList<Staff> filterRole(String role) {
+        CriteriaStr roleFilter = new CriteriaRole();
+        return roleFilter.meetCriteria(this.getAllStaff(), role);
     }
 
     // Get number of managers to check quota
     public int getNumManagers(StaffRoles auth) {
-        ArrayList<Staff> managerList = getStaffList("role", StaffRoles.MANAGER, auth);
-        return managerList.size();
+        if (authoriseAdmin(auth))
+            return this.filterRole(StaffRoles.MANAGER.getName()).size();
+        return 0;
     }
 
     /* BRANCHES PURPOSES */
