@@ -9,9 +9,9 @@ public class OrderQueue {
         
     }
 
-    public String getStatusByOrderID(String orderID){
+    public String getStatusByOrderID(int orderID){
         for (Order order : orders){
-            if (order.getOrderId().equals(orderID)){
+            if (order.getOrderId() == orderID){
                 return order.getStatus();
             }
         }
@@ -22,10 +22,10 @@ public class OrderQueue {
         orders.add(order);
     }
 
-    public void removeOrder(String orderID){
+    public void removeOrder(int orderID){
         Order orderToRemove = null;
         for (Order order : orders){
-            if (order.getOrderId().equals(orderID)){
+            if (order.getOrderId() == orderID){
                 orderToRemove = order;
                 break;
             }

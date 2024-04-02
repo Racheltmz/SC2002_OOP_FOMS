@@ -1,21 +1,28 @@
-public enum Status{ NEW, READY, COMPLETED, CANCELLED }
+import java.util.Random;
+
 public class Order {
-    private String orderID;
+    public enum Status{ NEW, READY, COMPLETED, CANCELLED }
+    private int orderID;
     private String branch;
     private Item[] items;
     private String[] customisation;
     private boolean takeaway;
-    private String status;
+    private Status status;
     private String paymentMethod;
 
-    public Order(String orderID, String branch, Item[] items, String[] customisation, boolean takeaway, String paymentMethod){
-        this.orderID = orderID;
+    public Order(String branch, Item[] items, String[] customisation, boolean takeaway, String paymentMethod){
+        this.orderID = generateRandomOrderID();
         this.branch = branch;
         this.items = items;
         this.customisation = customisation;
         this.takeaway = takeaway;
-        this.status = setStatus(Status.NEW);
+        this.status = Status.NEW;
         this.paymentMethod = paymentMethod;
+    }
+
+    private int generateRandomOrderID() {
+        Random random = new Random();
+        return random.nextInt(1000);
     }
 
     public void pay(String paymentMethod){
@@ -41,7 +48,7 @@ public class Order {
         System.out.println("Thank you for shopping at " + branch);
     }
 
-    public String getOrderId() {
+    public int getOrderId() {
         return orderID;
     }
 
@@ -61,7 +68,7 @@ public class Order {
     }
 
     protected void setStatus(Status status){
-        this.status = status.toString();
+        this.status = status;
     }
 
     public void collectOrder(){
