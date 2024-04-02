@@ -47,19 +47,19 @@ public class StaffDirectory {
 
     // Filters
     public ArrayList<Staff> filterBranch(String branch) {
-        Criteria branchFilter = new CriteriaBranch();
-        return branchFilter.getStaffList(this.staffDirectory, branch);
+        StaffList toFilter = new StaffList();
+        return toFilter.getStaffBranch(this.staffDirectory, branch);
     }
 
-    public ArrayList<Staff> filterRole(String role) {
-        Criteria roleFilter = new CriteriaRole();
-        return roleFilter.getStaffList(this.staffDirectory, role);
+    public ArrayList<Staff> filterRole(StaffRoles role) {
+        StaffList toFilter = new StaffList();
+        return toFilter.getStaffRole(this.staffDirectory, role);
     }
 
     // Get number of managers to check quota
     public int getNumManagers(StaffRoles auth) {
         if (authoriseAdmin(auth))
-            return this.filterRole(StaffRoles.MANAGER.getName()).size();
+            return this.filterRole(StaffRoles.MANAGER).size();
         return 0;
     }
 }

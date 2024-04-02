@@ -16,7 +16,11 @@ public class ValidateDataType {
             try {
                 System.out.println(msg);
                 input = sc.nextInt();
-                success = true;
+                // TODO: Improve implementation of handling negative vals
+                if (input >= 0)
+                    success = true;
+                else
+                    System.out.println("Negative values are invalid.");
             }  catch (InputMismatchException inputMismatchException) {
                 System.out.println("Please enter a valid integer.\n");
                 sc.nextLine();
@@ -34,7 +38,11 @@ public class ValidateDataType {
             try {
                 System.out.println(msg);
                 input = sc.nextDouble();
-                success = true;
+                // TODO: Improve implementation of handling negative vals
+                if (input >= 0)
+                    success = true;
+                else
+                    System.out.println("Negative values are invalid.");
             }  catch (InputMismatchException inputMismatchException) {
                 System.out.println("Please enter a valid float.\n");
                 sc.nextLine();
