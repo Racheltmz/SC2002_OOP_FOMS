@@ -14,7 +14,7 @@ import static Validation.ValidateDataType.*;
 
 public class Manager extends Staff  {
     // Constructor
-    public Manager(String staffID, String name, StaffRoles role, char gender, int age, String branch) {
+    public Manager(String staffID, String name, StaffRoles role, String gender, int age, String branch) {
         super(staffID, name, role, gender, age, branch);
     }
 

@@ -11,11 +11,11 @@ public class Staff {
     private String name;
     private String password;
     private StaffRoles role;
-    private char gender;
+    private String gender;
     private int age;
     private String branch;
 
-    public Staff(String staffID, String name, StaffRoles role, char gender, int age, String branch) {
+    public Staff(String staffID, String name, StaffRoles role, String gender, int age, String branch) {
         this.staffID = staffID;
         this.name = name;
         this.role = role;
@@ -34,7 +34,7 @@ public class Staff {
         return this.role;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
