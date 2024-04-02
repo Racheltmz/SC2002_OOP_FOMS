@@ -54,19 +54,19 @@ public class Company {
 
     // Filters
     public ArrayList<Staff> filterBranch(String branch) {
-        CriteriaStr branchFilter = new CriteriaBranch();
-        return branchFilter.meetCriteria(this.getAllStaff(), branch);
+        StaffList toFilter = new StaffList();
+        return toFilter.getStaffBranch(this.staffList, branch);
     }
- 
-    public ArrayList<Staff> filterRole(String role) {
-        CriteriaStr roleFilter = new CriteriaRole();
-        return roleFilter.meetCriteria(this.getAllStaff(), role);
+
+    public ArrayList<Staff> filterRole(StaffRoles role) {
+        StaffList toFilter = new StaffList();
+        return toFilter.getStaffRole(this.staffList, role);
     }
 
     // Get number of managers to check quota
     public int getNumManagers(StaffRoles auth) {
         if (authoriseAdmin(auth))
-            return this.filterRole(StaffRoles.MANAGER.getName()).size();
+            return this.filterRole(StaffRoles.MANAGER).size();
         return 0;
     }
 

@@ -1,4 +1,4 @@
-package Management;
+/* package Management;
 
 import java.util.ArrayList;
 
@@ -14,4 +14,4 @@ public class CriteriaBranch implements CriteriaStr {
         }
         return filteredList;
     }
-}
+} */
