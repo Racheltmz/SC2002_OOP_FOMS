@@ -46,10 +46,16 @@ public class Menu {
     // TODO: CHECK DESCRIPTION
     public void updateItem(MenuItem itemToUpdate, double price, String description) {
         itemToUpdate.setPrice(price);
+       // itemToUpdate.setDescription(description);
+        System.out.println("Menu item updated successfully.");
     }
 
     // Remove menu item
     public void removeItem(MenuItem itemToRemove) {
-        menuItems.removeIf(item -> item.getName().equals(itemToRemove.getName()));
+        boolean removed = menuItems.removeIf(item -> item.getName().equals(itemToRemove.getName()));
+        if (removed)
+            System.out.println("Menu item removed successfully.");
+        else
+            System.out.println("Menu item not found.");
     }
 }
