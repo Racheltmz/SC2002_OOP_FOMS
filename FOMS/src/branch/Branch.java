@@ -1,7 +1,9 @@
 package branch;
+import staff.StaffRoles;
+import utils.IXlsxSerializable;
 
 // Branch details
-public class Branch {
+public class Branch implements IXlsxSerializable{
     // Attributes
     public String name;
     public String location;
@@ -14,14 +16,29 @@ public class Branch {
         this.location = location;
         this.staffQuota = staffQuota;
         // TODO: IMPORTANT: ensure in main that (1 <= staffQuota <= 15) as this will affect
-        // managerQuota
-        if (1 <= staffQuota && staffQuota <= 4) {
+        if (staffQuota >= 1 && staffQuota <= 4) {
             this.managerQuota = 1;
-        } else if (5 <= staffQuota && staffQuota <= 8) {
+        } else if (staffQuota >= 5 && staffQuota <= 8) {
             this.managerQuota = 2;
-        } else if (9 <= staffQuota && staffQuota <= 15) {
+        } else if (staffQuota >= 9 && staffQuota <= 15) {
             this.managerQuota = 3;
         }
+    }
+
+    // Constructor for deserialization from XLSX data
+    public Branch(String[] data) {
+        if (data.length != 4) {
+            throw new IllegalArgumentException("Invalid data format for Branch");
+        }
+        this.name = data[0];
+        this.location = data[1];
+        this.staffQuota = Integer.parseInt(data[2]);
+        this.managerQuota = Integer.parseInt(data[3]);
+    }
+
+    // Serialization to XLSX
+    public String[] toXlsx() {
+        return new String[] {name, location, String.valueOf(staffQuota), String.valueOf(managerQuota)};
     }
 
     // Getters and setters

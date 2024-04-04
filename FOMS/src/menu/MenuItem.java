@@ -1,7 +1,10 @@
 package menu;
 
+
+import utils.IXlsxSerializable;
+
 // Menu Item details
-public class MenuItem {
+public class MenuItem implements IXlsxSerializable{
     // Attributes
     private String name;
     private double price;
@@ -15,6 +18,23 @@ public class MenuItem {
         this.branch = branch;
         this.category = category;
     }
+
+    
+   // Constructor for deserialization from XLSX data
+   public MenuItem(String[] data) {
+    if (data.length != 4) {
+        throw new IllegalArgumentException("Invalid data format for MenuItem");
+    }
+    this.name = data[0];
+    this.price = Double.parseDouble(data[1]);
+    this.branch = data[2];
+    this.category = data[3];
+}
+
+// Serialization to XLSX
+public String[] toXlsx(){
+    return new String[]{name, String.valueOf(price), branch, category};
+}
 
     // Getters and setters
     public String getName() {

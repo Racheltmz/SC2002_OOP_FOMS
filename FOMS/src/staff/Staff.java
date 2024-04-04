@@ -2,13 +2,14 @@ package staff;
 
 import order.OrderQueue;
 import order.OrderStatus;
+import utils.IXlsxSerializable;
 
 import static authentication.Authentication.setNewPassword;
 import static authentication.Hashing.genHash;
 
 // TODO: SOLID: SEPARATE PERMISSIONS INTO A STAFFACTIONS CLASS (OTHER THAN PASSWORD) + CREATE 1 INTERFACE FOR THE ORDERS
 // Staff Details
-public class Staff {
+public class Staff implements IXlsxSerializable {
     private String staffID;
     private String name;
     private String password;
@@ -26,7 +27,25 @@ public class Staff {
         this.branch = branch;
         this.password = genHash("password");
     }
+    
+  // Constructor for deserialization from XLSX data
+  public Staff(String[] data) {
+    if (data.length != 6) {
+        throw new IllegalArgumentException("Invalid data format for Staff");
+    }
+    this.name = data[0];
+    this.staffID = data[1];
+    this.role = StaffRoles.valueOf(data[2]); // Assuming role is stored as a String representation of the enum
+    this.gender = data[3].charAt(0); // Assuming gender is stored as a single character
+    this.age = Integer.parseInt(data[4]);
+    this.branch = data[5];
+}
 
+       // Serialization to XLSX
+       public String[] toXlsx() {
+        return new String[] {name, staffID, role.toString(), String.valueOf(gender), String.valueOf(age), branch};
+    }
+    
     /* GETTERS AND SETTERS */
     public String getStaffID() {
         return this.staffID;
