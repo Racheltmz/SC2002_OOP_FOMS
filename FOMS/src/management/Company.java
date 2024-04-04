@@ -15,9 +15,9 @@ import java.util.ArrayList;
 public class Company {
     // Attributes
     private StaffDirectory staffDirectory; //TODO: change back to private once conjoined
-    public BranchDirectory branchDirectory;
-    public PaymentDirectory paymentDirectory;
-    public MenuDirectory menuDirectory;
+    private BranchDirectory branchDirectory;
+    private PaymentDirectory paymentDirectory;
+    private MenuDirectory menuDirectory;
 
     // Constructor
     public Company(ArrayList<Staff> staffList, ArrayList<Branch> branchList, ArrayList<Payment> paymentList, ArrayList<Menu> menuList) {

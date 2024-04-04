@@ -112,7 +112,7 @@ public class Admin extends Staff{
             String branchLocation = sc.next();
 
             Company company = new Company(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-            ArrayList<Branch> branches = company.branchDirectory.getBranchDirectory();
+            ArrayList<Branch> branches = company.getBranchDirectory().getBranchDirectory();
 
             Iterator<Branch> iterator = branches.iterator();
             while(iterator.hasNext()){
