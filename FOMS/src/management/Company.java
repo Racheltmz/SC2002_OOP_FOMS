@@ -14,10 +14,10 @@ import java.util.ArrayList;
 // Company Details
 public class Company {
     // Attributes
-    private StaffDirectory staffDirectory;
-    private BranchDirectory branchDirectory;
-    private PaymentDirectory paymentDirectory;
-    private MenuDirectory menuDirectory;
+    private StaffDirectory staffDirectory; //TODO: change back to private once conjoined
+    public BranchDirectory branchDirectory;
+    public PaymentDirectory paymentDirectory;
+    public MenuDirectory menuDirectory;
 
     // Constructor
     public Company(ArrayList<Staff> staffList, ArrayList<Branch> branchList, ArrayList<Payment> paymentList, ArrayList<Menu> menuList) {
@@ -29,7 +29,7 @@ public class Company {
 
     // Getters
     public StaffDirectory getStaffDirectory() {
-        return staffDirectory;
+        return this.staffDirectory;
     }
 
     public BranchDirectory getBranchDirectory() {

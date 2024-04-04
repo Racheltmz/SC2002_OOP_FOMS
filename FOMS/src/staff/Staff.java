@@ -56,6 +56,12 @@ public class Staff {
         this.password = password;
     }
 
+    protected void setStaffID(String staffID) { this.staffID = staffID; }
+
+    protected void setRole(StaffRoles role) { this.role = role; }
+
+    protected void setBranch(String branch) { this.branch = branch; }
+
     /* MANAGING PERSONAL DETAILS PURPOSES */
     public void changePassword(Staff activeStaff) {
         setNewPassword(activeStaff);

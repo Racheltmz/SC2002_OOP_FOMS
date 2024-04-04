@@ -9,7 +9,7 @@ import static authorisation.Authorisation.authoriseAdmin;
 // Records of staff
 public class StaffDirectory {
     // Attribute
-    private ArrayList<Staff> staffDirectory;
+    protected ArrayList<Staff> staffDirectory;
 
     // Constructor
     public StaffDirectory(ArrayList<Staff> staffDirectory) {
