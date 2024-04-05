@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import static authorisation.Authorisation.authoriseAdmin;
-// TODO: VIEW TO DISPLAY PAYMENT METHODS
-// Records of payment methods
+
+// TODO: VIEW TO DISPLAY PAYMENT METHODS 
+// Records of payment methods (DONE)
+
 public class PaymentDirectory {
     // Attributes
     private ArrayList<Payment> paymentDirectory;
