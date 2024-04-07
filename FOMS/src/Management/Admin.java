@@ -2,7 +2,10 @@ package management;
 
 import java.util.Scanner;
 
-import Payment.Payment;
+import staff.Staff;
+import staff.StaffRoles;
+
+//import Payment.Payment;
 
 //import javax.smartcardio.CommandAPDU;
 
@@ -19,7 +22,7 @@ public class Admin extends Staff{
     //private int staffQuota; 
     private Company company; //admin class now has access to company class 
 
-    public Admin(String staffID, String name, Roles role, char gender, int age, String branch){
+    public Admin(String staffID, String name, StaffRoles role, char gender, int age, String branch){
         super(staffID, name, role, gender, age, branch); 
         //this.company = company; 
         // staffList = new ArrayList<>();
@@ -36,7 +39,7 @@ public class Admin extends Staff{
     }
 
     public void setRole(String staffID, String branch){
-        Staff staff = company.getStaff(staffID);
+        Staff staff = this.getStaffID();
         if(staff != null){
             if(staff.getBranch().equals(branch)){
                 System.out.println("Role updated successfully.");
@@ -51,7 +54,7 @@ public class Admin extends Staff{
     }
 
     public void setBranch(String staffID, String branch){
-        Staff staff = company.getStaff(staffID);
+        Staff staff = staff.getStaffID();
         if(staff != null){
             if(staff.getBranch().equals(branch)){
                 System.out.println("Branch updated successfully");
