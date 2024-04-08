@@ -1,12 +1,13 @@
 package payment;
 
 import staff.StaffRoles;
+import exceptions.AuthorizationException;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 import static authorisation.Authorisation.authoriseAdmin;
-// TODO: VIEW TO DISPLAY PAYMENT METHODS
+
 // Records of payment methods
 public class PaymentDirectory {
     // Attributes
@@ -35,14 +36,18 @@ public class PaymentDirectory {
     }
 
     // Add payment method
-    public void addPaymentMtd(Payment payment, StaffRoles auth) {
+    public void addPaymentMtd(Payment payment, StaffRoles auth) throws AuthorizationException {
         if (authoriseAdmin(auth))
             this.paymentDirectory.add(payment);
+        else
+            throw new AuthorizationException("Unauthorized access: Admin authorization required to add payment method.");
     }
 
     // Remove payment method
-    public void rmvPaymentMtd(String paymentMtd, StaffRoles auth) {
+    public void rmvPaymentMtd(String paymentMtd, StaffRoles auth) throws AuthorizationException {
         if (authoriseAdmin(auth))
             this.paymentDirectory.remove(this.getPaymentMtd(paymentMtd));
+        else
+            throw new AuthorizationException("Unauthorized access: Admin authorization required to remove payment method.");
     }
 }
