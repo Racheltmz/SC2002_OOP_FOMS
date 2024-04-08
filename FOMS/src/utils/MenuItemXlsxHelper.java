@@ -1,6 +1,9 @@
 package utils;
 
 import menu.MenuItem;
+import exceptions.*;
+import exceptions.IllegalArgumentException;
+
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileOutputStream;
@@ -51,7 +54,14 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper  {
             List<String[]> XlsxData = readAll(sheet, 1);
             ArrayList<MenuItem> items = new ArrayList<>();
             if (XlsxData.size() == 0) return items;
-            XlsxData.forEach((str) -> items.add(new MenuItem(str)));
+            XlsxData.forEach((str) -> {
+                try {
+                    items.add(new MenuItem(str));
+                } catch (IllegalArgumentException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            });
             return items;
         } finally {
             if (workbook != null) {

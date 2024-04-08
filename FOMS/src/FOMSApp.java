@@ -2,6 +2,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.InputMismatchException;
 
 import authorisation.*;
+import exceptions.ItemNotFoundException;
+import exceptions.MenuItemNotFoundException;
 import utils.InputScanner;
 import management.Company;
 import staff.Staff;
@@ -15,7 +17,7 @@ import static utils.InputScanner.getInstance;
 
 // Main app file
 public class FOMSApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MenuItemNotFoundException, ItemNotFoundException {
         // Initialise scanner
         InputScanner sc = getInstance();
 

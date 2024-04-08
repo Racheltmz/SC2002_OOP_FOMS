@@ -7,6 +7,9 @@ import menu.Menu;
 
 import java.util.InputMismatchException;
 
+import exceptions.ItemNotFoundException;
+import exceptions.MenuItemNotFoundException;
+
 import static authorisation.Authorisation.authoriseManager;
 import static branch.BranchDirectory.getBranchByUserInput;
 import static utils.InputScanner.getInstance;
@@ -18,7 +21,7 @@ import static validation.ValidateDataType.validateInt;
 // Manager's permissions
 public class ManagerActions {
     // Add menu item
-    public void addMenuItem(Company company, StaffRoles auth) throws InputMismatchException {
+    public void addMenuItem(Company company, StaffRoles auth) throws InputMismatchException, MenuItemNotFoundException, ItemNotFoundException {
         if (authoriseManager(auth)) {
             InputScanner sc = getInstance();
             // Get menu by branch
@@ -34,7 +37,7 @@ public class ManagerActions {
     }
 
     // Update menu item
-    public void updateMenuItem(Company company, StaffRoles auth) {
+    public void updateMenuItem(Company company, StaffRoles auth) throws MenuItemNotFoundException, ItemNotFoundException {
         if (authoriseManager(auth)) {
             InputScanner sc = getInstance();
             // Get menu by branch
@@ -63,7 +66,7 @@ public class ManagerActions {
     }
 
     // Remove menu item
-    public void removeMenuItem(Company company, StaffRoles auth) {
+    public void removeMenuItem(Company company, StaffRoles auth) throws MenuItemNotFoundException, ItemNotFoundException {
         if (authoriseManager(auth)) {
             // Get menu by branch
             String branch = getBranchByUserInput(company.getBranchDirectory());

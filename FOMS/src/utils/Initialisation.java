@@ -2,6 +2,8 @@ package utils;
 
 import management.Company;
 import branch.Branch;
+import exceptions.ItemNotFoundException;
+import exceptions.MenuItemNotFoundException;
 import staff.Admin;
 import staff.Manager;
 import staff.Staff;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 // Initialise all company-related directories
 public class Initialisation {
     // Initialise all directories
-    public static Company initialiseCompany() {
+    public static Company initialiseCompany() throws MenuItemNotFoundException, ItemNotFoundException {
         ArrayList<Staff> staffList = initialiseStaffRecords();
         ArrayList<Branch> branchList = new ArrayList<>();
         ArrayList<Menu> menuList = new ArrayList<>();
@@ -143,7 +145,7 @@ public class Initialisation {
     }
 
     // Add menu items by branch
-    public static void initialiseMenus(Company company) {
+    public static void initialiseMenus(Company company) throws MenuItemNotFoundException, ItemNotFoundException {
         XSSFSheet menuSheet = getSheet("./data/menu_list.xlsx");
         // Iterate all rows
         for (int i = 1; i < menuSheet.getPhysicalNumberOfRows(); i++) {

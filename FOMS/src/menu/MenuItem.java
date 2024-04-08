@@ -1,6 +1,6 @@
 package menu;
 
-
+import exceptions.IllegalArgumentException;
 import utils.IXlsxSerializable;
 
 // Menu Item details
@@ -21,7 +21,7 @@ public class MenuItem implements IXlsxSerializable{
 
     
    // Constructor for deserialization from XLSX data
-   public MenuItem(String[] data) {
+   public MenuItem(String[] data) throws IllegalArgumentException{
     if (data.length != 4) {
         throw new IllegalArgumentException("Invalid data format for MenuItem");
     }

@@ -4,6 +4,9 @@ import management.Company;
 
 import java.util.InputMismatchException;
 
+import exceptions.ItemNotFoundException;
+import exceptions.MenuItemNotFoundException;
+
 import static authorisation.Authorisation.authoriseManager;
 import static branch.BranchDirectory.getBranchByUserInput;
 import static staff.StaffView.displayStaffByBranch;
@@ -29,17 +32,17 @@ public class Manager extends Staff  {
     }
 
     // Add menu item
-    public void addMenuItem(Company company, StaffRoles auth) throws InputMismatchException {
+    public void addMenuItem(Company company, StaffRoles auth) throws InputMismatchException, MenuItemNotFoundException, ItemNotFoundException {
         managerActions.addMenuItem(company, auth);
     }
 
     // Update menu item
-    public void updateMenuItem(Company company, StaffRoles auth) {
+    public void updateMenuItem(Company company, StaffRoles auth) throws MenuItemNotFoundException, ItemNotFoundException {
         managerActions.updateMenuItem(company, auth);
     }
 
     // Remove menu item
-    public void removeMenuItem(Company company, StaffRoles auth) {
+    public void removeMenuItem(Company company, StaffRoles auth) throws MenuItemNotFoundException, ItemNotFoundException {
         managerActions.removeMenuItem(company, auth);
     }
 
