@@ -2,6 +2,7 @@ package staff;
 
 import java.lang.reflect.Array;
 import java.util.Scanner;
+
 import management.Company;
 
 import payment.Payment;
@@ -25,7 +26,7 @@ public class Admin extends Staff {
     //private int staffQuota;
     private Company company; //admin class now has access to company class
 
-    public Admin(String staffID, String name, StaffRoles role, char gender, int age, String branch){
+    public Admin(String staffID, String name, StaffRoles role, char gender, int age, String branch) {
         super(staffID, name, role, gender, age, branch);
         //this.company = company;
         // staffList = new ArrayList<>();
@@ -41,48 +42,43 @@ public class Admin extends Staff {
         // staffList.add(new Staff("boss", "Boss", Roles.ADMIN, 'F', 62, "NTU"));
     }
 
-    public void setRole(String staffID, String branch){
+    public void setRole(String staffID, String branch) {
         Staff staff = company.getStaffDirectory().getStaff(staffID);
-        if(staff != null){
-            if(staff.getBranch().equals(branch)){
+        if (staff != null) {
+            if (staff.getBranch().equals(branch)) {
                 System.out.println("Role updated successfully.");
-            }
-            else{
+            } else {
                 System.out.println("This staff member does not belong to this branch.");
             }
-        }
-        else{
+        } else {
             System.out.println("Staff member not found.");
         }
     }
 
-    public void setBranch(String staffID, String branch){
+    public void setBranch(String staffID, String branch) {
         Staff staff = company.getStaffDirectory().getStaff(staffID);
-        if(staff != null){
-            if(staff.getBranch().equals(branch)){
+        if (staff != null) {
+            if (staff.getBranch().equals(branch)) {
                 System.out.println("Branch updated successfully");
-            }
-            else{
+            } else {
                 System.out.println("This staff member does not belong to this branch");
             }
-        }
-        else{
+        } else {
             System.out.println("Staff member not found");
         }
     }
 
-    public void setStaffID(String staffID, String newStaffID){
+    public void setStaffID(String staffID, String newStaffID) {
         Staff staff = company.getStaffDirectory().getStaff(staffID);
-        if(staff != null){
+        if (staff != null) {
             staff.setStaffID(newStaffID);
             System.out.println("Staff ID updated successfully");
-        }
-        else{
+        } else {
             System.out.println("Staff member not found");
         }
     }
 
-    protected void addBranch(String Branch){
+    protected void addBranch(String Branch) {
         //company calls admin for this
         try (Scanner sc = new Scanner(System.in)) {
             System.out.print("Enter branch name: ");
@@ -102,9 +98,9 @@ public class Admin extends Staff {
         }
     }
 
-    protected void closeBranch(String Branch){
+    protected void closeBranch(String Branch) {
 
-        try(Scanner sc = new Scanner(System.in)){
+        try (Scanner sc = new Scanner(System.in)) {
             System.out.println("Enter branch name: ");
             String branchName = sc.nextLine();
 
@@ -115,9 +111,9 @@ public class Admin extends Staff {
             ArrayList<Branch> branches = company.getBranchDirectory().getBranchDirectory();
 
             Iterator<Branch> iterator = branches.iterator();
-            while(iterator.hasNext()){
+            while (iterator.hasNext()) {
                 Branch branch = iterator.next();
-                if(branch.getBranchName().equals(branchName)){
+                if (branch.getBranchName().equals(branchName)) {
                     iterator.remove();
                     System.out.println("Branch " + branchName + " at " + branchLocation + " has been closed.");
                     return;
@@ -182,13 +178,13 @@ public class Admin extends Staff {
         }
     }
 
-    protected void promoteStaff(String staffID, String Branch){
+    protected void promoteStaff(String staffID, String Branch) {
         Staff staff = company.getStaffDirectory().getStaff(staffID);
 
-        if(staff != null){
+        if (staff != null) {
             StaffRoles currentRole = staff.getRole();
 
-            switch(currentRole){
+            switch (currentRole) {
                 case STAFF:
                     staff.setRole(StaffRoles.MANAGER);
                     System.out.println("Staff member with ID " + staffID + " has been promoted to Manager");
@@ -200,41 +196,38 @@ public class Admin extends Staff {
                     System.out.println("Admin cannot be promoted.");
                     break;
             }
-        }
-        else{
+        } else {
             System.out.println("Staff member with ID " + staffID + " not found");
         }
     }
 
-    protected void transferStaff(String staffID, String Branch){
+    protected void transferStaff(String staffID, String Branch) {
         Staff staff = company.getStaffDirectory().getStaff(staffID);
 
-        if(staff != null){
+        if (staff != null) {
             //String currentBranch = staff.getBranch();
 
             boolean newBranchExists = false;
-            for(Branch branch : company.getBranchDirectory().getBranchDirectory()){
-                if(branch.getBranchName().equals(Branch)){
+            for (Branch branch : company.getBranchDirectory().getBranchDirectory()) {
+                if (branch.getBranchName().equals(Branch)) {
                     newBranchExists = true;
                     break;
                 }
             }
-            if(newBranchExists){
+            if (newBranchExists) {
                 staff.setBranch(Branch);
                 System.out.println("Staff member with ID " + staffID + " has been transferred to " + Branch + " successfully");
-            }
-            else{
+            } else {
                 System.out.println("This branch does not exist");
             }
-        }
-        else{
+        } else {
             System.out.println("Staff member with ID " + staffID + " not found");
         }
     }
 
-    protected String addPayment(String method){
+    protected String addPayment(String method) {
         Payment payment;
-        switch(method){
+        switch (method) {
             case "Credit/Debit Card":
                 payment = new Payment(method);
                 company.getPaymentDirectory().addPaymentMtd(payment, StaffRoles.ADMIN); //since only admins can add payment methods
