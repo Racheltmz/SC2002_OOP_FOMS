@@ -21,11 +21,7 @@ public class Manager extends Staff  {
 
     // Display staff list by branch
     public void displayStaffList(Company company, StaffRoles auth) {
-        if (authoriseManager(auth)) {
-            // Display staff info from branches
-            String branch = getBranchByUserInput(company.getBranchDirectory());;
-            displayStaffByBranch(company.getStaffDirectory().filterBranch(branch), branch);
-        }
+        managerActions.displayStaffList(company, auth);
     }
 
     // Add menu item

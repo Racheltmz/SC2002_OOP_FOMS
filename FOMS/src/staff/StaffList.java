@@ -3,6 +3,10 @@ package staff;
 import java.util.ArrayList;
 
 public class StaffList {
+    public StaffList()
+    {
+
+    }
     public ArrayList<Staff> getStaffBranch(ArrayList<Staff> staffList, String branch)
     {
         ArrayList<Staff> filteredList = new ArrayList<Staff>();

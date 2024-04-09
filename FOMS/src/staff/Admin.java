@@ -1,48 +1,25 @@
 package staff;
 
-import java.lang.reflect.Array;
-import java.util.Scanner;
-
 import management.Company;
 
 import payment.Payment;
 import branch.Branch;
+import utils.InputScanner;
 
-
-//import javax.smartcardio.CommandAPDU;
-
-//import javax.swing.text.html.HTMLDocument.Iterator;
 import java.util.Iterator;
 
 import java.util.ArrayList;
 
-import static staff.StaffRoles.STAFF;
-//import java.util.List;
+import static staff.StaffRoles.*;
+import static utils.InputScanner.getInstance;
 
 public class Admin extends Staff {
-    // List<Staff> staffList;
-    // private List<String> branches;
-    // private List<String> paymentMethods;
-    //private int staffQuota;
-    private Company company; //admin class now has access to company class
 
     public Admin(String staffID, String name, StaffRoles role, char gender, int age, String branch) {
         super(staffID, name, role, gender, age, branch);
-        //this.company = company;
-        // staffList = new ArrayList<>();
-        // this.branches = new ArrayList<>();
-        // this.paymentMethods = new ArrayList<>();
-
-        // staffList.add(new Staff("KumarB", "Kumar Blackmore", Roles.STAFF, 'M', 32, "NTU"));
-        // staffList.add(new Staff("Alexei", "Alexei", Roles.MANAGER, 'M', 25, "NTU"));
-        // staffList.add(new Staff("TomC", "Tom Chan", Roles.MANAGER, 'M', 56, "JP"));
-        // staffList.add(new Staff("AliciaA", "Alicia Ang", Roles.MANAGER, 'F', 27, "JE"));
-        // staffList.add(new Staff("MaryL", "Mary Lee", Roles.STAFF, 'F', 44, "JE"));
-        // staffList.add(new Staff("JustinL", "Justin Loh", Roles.STAFF, 'M', 49, "JP"));
-        // staffList.add(new Staff("boss", "Boss", Roles.ADMIN, 'F', 62, "NTU"));
     }
 
-    public void setRole(String staffID, String branch) {
+    public void setRole(Company company, String staffID, String branch) {
         Staff staff = company.getStaffDirectory().getStaff(staffID);
         if (staff != null) {
             if (staff.getBranch().equals(branch)) {
@@ -55,7 +32,7 @@ public class Admin extends Staff {
         }
     }
 
-    public void setBranch(String staffID, String branch) {
+    public void setBranch(Company company, String staffID, String branch) {
         Staff staff = company.getStaffDirectory().getStaff(staffID);
         if (staff != null) {
             if (staff.getBranch().equals(branch)) {
@@ -68,7 +45,7 @@ public class Admin extends Staff {
         }
     }
 
-    public void setStaffID(String staffID, String newStaffID) {
+    public void setStaffID(Company company, String staffID, String newStaffID) {
         Staff staff = company.getStaffDirectory().getStaff(staffID);
         if (staff != null) {
             staff.setStaffID(newStaffID);
@@ -78,88 +55,62 @@ public class Admin extends Staff {
         }
     }
 
-    protected void addBranch(String Branch) {
-        //company calls admin for this
-        try (Scanner sc = new Scanner(System.in)) {
-            System.out.print("Enter branch name: ");
-            String branchName = sc.nextLine();
+    protected void addBranch(Company company, String Branch) {
+        InputScanner sc = getInstance();
+        System.out.print("Enter branch name: ");
+        String branchName = sc.nextLine();
+        System.out.print("Enter staff quota: ");
+        int quota = sc.nextInt();
+        while (!(1 <= quota && quota <= 15)) {
+            System.out.println("Invalid staff quota! Please re-enter.");
             System.out.print("Enter staff quota: ");
-            int quota = sc.nextInt();
-            while (!(1 <= quota && quota <= 15)) {
-                System.out.println("Invalid staff quota! Please re-enter.");
-                System.out.print("Enter staff quota: ");
-                quota = sc.nextInt();
-            }
-            System.out.print("Enter branch location: ");
-            String location = sc.next();
-            location += sc.nextLine();
-            Branch branch = new Branch(branchName, location, quota);
-            System.out.printf("New branch created. Its details are:\nName: %s\nStaff quota: %d\nManager Quota: %d\nLocation: %s\n", branchName, quota, branch.getManagerQuota(), location);
+            quota = sc.nextInt();
         }
+        System.out.print("Enter branch location: ");
+        String location = sc.next();
+        location += sc.nextLine();
+        Branch branch = new Branch(branchName, location, quota);
+        company.getBranchDirectory().addBranch(branch, MANAGER);
+        System.out.printf("New branch created. Its details are:\nName: %s\nStaff quota: %d\nManager Quota: %d\nLocation: %s\n", branchName, quota, branch.getManagerQuota(), location);
+        sc.close();
     }
 
-    protected void closeBranch(String Branch) {
+    protected void closeBranch(Company company, String Branch) {
+        InputScanner sc = getInstance();
+        System.out.println("Enter branch name: ");
+        String branchName = sc.nextLine();
 
-        try (Scanner sc = new Scanner(System.in)) {
-            System.out.println("Enter branch name: ");
-            String branchName = sc.nextLine();
+        ArrayList<Branch> branches = company.getBranchDirectory().getBranchDirectory();
+        ArrayList<Staff> staff = company.getStaffDirectory().getStaffDirectory();
 
-            System.out.println("Enter branch location: "); //should i add or just use branch name cause not much value added?
-            String branchLocation = sc.next();
-
-            Company company = new Company(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-            ArrayList<Branch> branches = company.getBranchDirectory().getBranchDirectory();
-
-            Iterator<Branch> iterator = branches.iterator();
-            while (iterator.hasNext()) {
-                Branch branch = iterator.next();
-                if (branch.getBranchName().equals(branchName)) {
-                    iterator.remove();
-                    System.out.println("Branch " + branchName + " at " + branchLocation + " has been closed.");
-                    return;
+        Iterator<Branch> branchIterator = branches.iterator();
+        while (branchIterator.hasNext())
+        {
+            Branch branch = branchIterator.next();
+            if (branch.getBranchName().equals(branchName)) {
+                for (Staff eachStaff : staff)
+                {
+                    if (eachStaff.getBranch().equals(branchName))
+                    {
+                        company.getStaffDirectory().rmvStaff(eachStaff.getStaffID(), ADMIN);
+                    }
                 }
+                branchIterator.remove();
+                System.out.println("Branch " + branchName + "has been closed.");
+                sc.close();
+                return;
             }
-            System.out.println("Branch " + branchName + " is not found.");
         }
-        //fire staff?
+        System.out.println("Branch " + branchName + " is not found.");
+        sc.close();
     }
 
-    // protected void displayStaffList(String filter){
-    //     switch(filter.toLowerCase()){
 
-    //         case "role":
-    //             System.out.println("Staff List filtered by role (S, M, A): \n");
-    //             for(Staff staff : staffList){
-    //                 System.out.println(staff.getName() + " - Role: " + staff.getRole());
-    //             }
-    //             break;
-    //         case "gender":
-    //             System.out.println("Staff List filtered by gender: \n");
-    //             for(Staff staff : staffList){
-    //                 System.out.println(staff.getName() + " - Gender: " + staff.getGender());
-    //             }
-    //             break;
-    //         case "age":
-    //             System.out.println("Staff List filtered by age: \n");
-    //             for(Staff staff : staffList){
-    //                 System.out.println(staff.getName() + " - Age : " + staff.getAge());
-    //             }
-    //         case "branch":
-    //         default:
-    //             System.out.println("Staff List filtered by branch: \n");
-    //             for(Staff staff : staffList){
-    //                 System.out.println(staff.getName() + " - Branch: " + staff.getBranch());
-    //             }
-    //             break;
-    //     }
-    // }
-
-    protected void assignManager(String staffId, String Branch) {
+    protected void assignManager(Company company, String staffId, String Branch) {
         //int numManagers = getNumManagers(branch);
-        Company company = new Company(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        int numManagers = company.getStaffDirectory().getNumManagers(StaffRoles.ADMIN);
+        int numManagers = company.getStaffDirectory().getNumManagers(ADMIN);
         StaffList stafflist = new StaffList();
-        int numStaff = stafflist.getStaffRole(company.getStaffDirectory().staffDirectory, STAFF).size();
+        int numStaff = stafflist.getStaffRole(company.getStaffDirectory().getStaffDirectory(), STAFF).size();
 
         int quota = 0;
         if (numStaff >= 9 && numStaff <= 15) {
@@ -178,7 +129,7 @@ public class Admin extends Staff {
         }
     }
 
-    protected void promoteStaff(String staffID, String Branch) {
+    protected void promoteStaff(Company company, String staffID, String Branch) {
         Staff staff = company.getStaffDirectory().getStaff(staffID);
 
         if (staff != null) {
@@ -201,7 +152,7 @@ public class Admin extends Staff {
         }
     }
 
-    protected void transferStaff(String staffID, String Branch) {
+    protected void transferStaff(Company company, String staffID, String Branch) {
         Staff staff = company.getStaffDirectory().getStaff(staffID);
 
         if (staff != null) {
@@ -225,16 +176,16 @@ public class Admin extends Staff {
         }
     }
 
-    protected String addPayment(String method) {
+    protected String addPayment(Company company, String method) {
         Payment payment;
         switch (method) {
             case "Credit/Debit Card":
                 payment = new Payment(method);
-                company.getPaymentDirectory().addPaymentMtd(payment, StaffRoles.ADMIN); //since only admins can add payment methods
+                company.getPaymentDirectory().addPaymentMtd(payment, ADMIN); //since only admins can add payment methods
                 break;
             case "Paypal":
                 payment = new Payment(method);
-                company.getPaymentDirectory().addPaymentMtd(payment, StaffRoles.ADMIN);
+                company.getPaymentDirectory().addPaymentMtd(payment, ADMIN);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported payment method: " + method);
@@ -242,19 +193,18 @@ public class Admin extends Staff {
         return "Payment method added successfully";
     }
 
-    // protected String removePayment(String method){
-    //     if (company.getPaymentList().isEmpty()) {
-    //         return "No payment methods available to remove.";
-    //     }
+    protected String removePayment(Company company, String method){
+         if (company.getPaymentDirectory().getPaymentDirectory().isEmpty()) {
+             return "No payment methods available to remove.";
+         }
 
-    //     for (Payment payment : company.getPaymentList()) {
-    //         if (payment.getMethod().equals(method)) {
-    //             company.removePaymentMtd(payment, Roles.ADMIN); // Assuming removePaymentMtd method is available in Company class
-    //             return "Payment method removed successfully.";
-    //         }
-    //     }
-
-    //     // If payment method with specified method is not found
-    //     return "Payment method not found.";
-    // }
+         for (Payment payment : company.getPaymentDirectory().getPaymentDirectory()) {
+             if (payment.getPaymentMethod().equals(method)) {
+                 company.getPaymentDirectory().rmvPaymentMtd(payment.getPaymentMethod(), ADMIN); // Assuming removePaymentMtd method is available in Company class
+                 return "Payment method removed successfully.";
+             }
+         }
+         // If payment method with specified method is not found
+         return "Payment method not found.";
+     }
 }

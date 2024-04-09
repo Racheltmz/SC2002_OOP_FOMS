@@ -10,6 +10,7 @@ import java.util.InputMismatchException;
 
 import static authorisation.Authorisation.authoriseManager;
 import static branch.BranchDirectory.getBranchByUserInput;
+import static staff.StaffView.displayStaffByBranch;
 import static utils.InputScanner.getInstance;
 import static validation.ValidateDataType.*;
 
@@ -34,6 +35,14 @@ public class ManagerActions {
     public void removeMenuItem(Company company, StaffRoles auth) {
         if (authoriseManager(auth)) {
             validateMenuItemRemoval(company);
+        }
+    }
+
+    public void displayStaffList(Company company, StaffRoles auth) {
+        if (authoriseManager(auth)) {
+            // Display staff info from branches
+            String branch = getBranchByUserInput(company.getBranchDirectory());;
+            displayStaffByBranch(company.getStaffDirectory().filterBranch(branch), branch);
         }
     }
 }
