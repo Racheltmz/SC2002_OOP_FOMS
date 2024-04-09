@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import static staff.StaffRoles.STAFF;
 //import java.util.List;
 
-public class Admin extends Staff{
+public class Admin extends Staff {
     // List<Staff> staffList;
     // private List<String> branches;
     // private List<String> paymentMethods;
