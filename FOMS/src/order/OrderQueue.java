@@ -2,6 +2,7 @@ package order;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Timer;
 
 import utils.InputScanner;
 
@@ -29,6 +30,10 @@ public class OrderQueue {
     // Add order
     public void addOrder(Order order) {
         this.orders.add(order);
+        Timer timer = new Timer();
+        OrderTimerTask orderTask = new OrderTimerTask(timer, order);
+        int seconds = 5;
+        timer.schedule(orderTask, seconds * 1000);
     }
 
     // Remove order

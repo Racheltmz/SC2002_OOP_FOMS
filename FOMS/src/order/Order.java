@@ -34,7 +34,6 @@ public class Order {
         this.takeaway = takeaway;
         this.status = OrderStatus.NEW;
         this.payment = payment;
-       
     }
 
     // Getters and Setters
