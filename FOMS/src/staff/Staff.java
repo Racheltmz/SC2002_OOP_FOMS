@@ -32,8 +32,16 @@ public class Staff {
         return this.staffID;
     }
 
+    public void setStaffID(String staffID) {
+        this.staffID = staffID;
+    }
+
     public StaffRoles getRole() {
         return this.role;
+    }
+
+    public void setRole(StaffRoles role) {
+        this.role = role;
     }
 
     public char getGender() {
@@ -46,6 +54,10 @@ public class Staff {
 
     public String getBranch() {
         return this.branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
     }
 
     public String getPassword() {
