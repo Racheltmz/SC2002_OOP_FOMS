@@ -7,6 +7,8 @@ import order.OrderQueue;
 
 import static utils.InputScanner.getInstance;
 
+import exceptions.EmptyListException;
+
 // TODO: STRUCT: CREATE A VIEW FOR STAFF, MANAGEMENT, ADMIN for the print statements (1 for printing the header (staff and role) then 3 more for the mennu
 // Authorised operations for active user with a staff role
 public class ActiveStaff implements ActiveUser {
@@ -32,7 +34,7 @@ public class ActiveStaff implements ActiveUser {
         setActiveStaff(null);
     }
 
-    public void showOptions(Company company, OrderQueue queue) {
+    public void showOptions(Company company, OrderQueue queue) throws EmptyListException {
         InputScanner sc = getInstance();
         System.out.println("-".repeat(30));
         System.out.printf("| StaffID: %s\n| Role: %s\n", getActiveStaff().getStaffID(),

@@ -7,6 +7,9 @@ import utils.IXlsxSerializable;
 import static authentication.Authentication.setNewPassword;
 import static authentication.Hashing.genHash;
 
+import exceptions.EmptyListException;
+import exceptions.IllegalArgumentException;
+
 // TODO: SOLID: SEPARATE PERMISSIONS INTO A STAFFACTIONS CLASS (OTHER THAN PASSWORD) + CREATE 1 INTERFACE FOR THE ORDERS
 // Staff Details
 public class Staff implements IXlsxSerializable {
@@ -29,7 +32,7 @@ public class Staff implements IXlsxSerializable {
     }
     
   // Constructor for deserialization from XLSX data
-  public Staff(String[] data) {
+  public Staff(String[] data) throws IllegalArgumentException {
     if (data.length != 6) {
         throw new IllegalArgumentException("Invalid data format for Staff");
     }
@@ -89,17 +92,17 @@ public class Staff implements IXlsxSerializable {
 
     /* MANAGING ORDER PURPOSES */
     // New orders for Test Case 9 and 11
-    public void getNewOrders(String branchName, OrderQueue queue) {
+    public void getNewOrders(String branchName, OrderQueue queue) throws EmptyListException {
         queue.displayNewOrders(branchName);
     }
 
     // Specific order
-    public void getOrderDetails(OrderQueue queue) {
+    public void getOrderDetails(OrderQueue queue) throws EmptyListException{
         queue.displayOrder();
     }
 
     // Update order status to ready to pickup for Test Case 10 and 12
-    public void setOrderReady(OrderQueue queue) {
+    public void setOrderReady(OrderQueue queue) throws EmptyListException {
         queue.updateStatus(OrderStatus.NEW, OrderStatus.READY);
     }
 }

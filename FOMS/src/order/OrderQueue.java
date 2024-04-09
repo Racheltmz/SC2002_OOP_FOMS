@@ -62,17 +62,16 @@ public class OrderQueue {
     }
 
     // Display a specific order
-    public void displayOrder() {
-        try {
+    public void displayOrder() throws EmptyListException {
+         
             Order order = this.getOrderById();
             order.printOrderDetails();
-        } catch (EmptyListException emptyListException) {
-            System.out.println("There has to be an order before this option can be used.");
-        }
+        throw new EmptyListException ("There has to be an order before this option can be used.");
+        
     }
 
     // Display orders
-    public void displayNewOrders(String branch) {
+    public void displayNewOrders(String branch) throws EmptyListException {
         if (!this.orders.isEmpty()) {
             System.out.println("Orders in the queue:");
             for (Order order : this.orders) {
@@ -81,30 +80,27 @@ public class OrderQueue {
                 }
             }
         } else {
-            System.out.println("Queue is empty. No orders to display.");
+            throw new EmptyListException("Queue is empty. No orders to display.");
         }
     }
 
     // TODO: Implement for test case 8, 18
     // Get order status by order ID
-    public void getStatusById() {
-        try {
+    public void getStatusById() throws EmptyListException {
+        
             Order order = this.getOrderById();
             System.out.printf("Status of Order ID: %s is %s", order.getOrderID(), order.getStatus());
-        } catch (EmptyListException emptyListException) {
-            System.out.println("There has to be an order before this option can be used.");
-        }
+         throw new EmptyListException ("There has to be an order before this option can be used.");
+        
     }
 
     // Update order status to ready when food is ready or when customer collects order
-    public void updateStatus(OrderStatus valStatus, OrderStatus newStatus) {
-        try {
+    public void updateStatus(OrderStatus valStatus, OrderStatus newStatus) throws EmptyListException {
+        
             Order order = this.getOrderById();
             if (order.getStatus().equals(valStatus))
                 order.setStatus(newStatus);
             System.out.println("Order status update processed successfully.");
-        } catch (EmptyListException emptyListException) {
-            System.out.println("There has to be an order before this option can be used.");
+        throw new EmptyListException("There has to be an order before this option can be used.");
         }
     }
-}

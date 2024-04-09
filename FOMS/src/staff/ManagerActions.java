@@ -9,6 +9,7 @@ import java.util.InputMismatchException;
 
 import exceptions.ItemNotFoundException;
 import exceptions.MenuItemNotFoundException;
+import exceptions.StringIndexOutOfBoundsException;
 
 import static authorisation.Authorisation.authoriseManager;
 import static branch.BranchDirectory.getBranchByUserInput;
@@ -37,7 +38,7 @@ public class ManagerActions {
     }
 
     // Update menu item
-    public void updateMenuItem(Company company, StaffRoles auth) throws MenuItemNotFoundException, ItemNotFoundException {
+    public void updateMenuItem(Company company, StaffRoles auth) throws MenuItemNotFoundException, ItemNotFoundException,IndexOutOfBoundsException {
         if (authoriseManager(auth)) {
             InputScanner sc = getInstance();
             // Get menu by branch
@@ -47,7 +48,6 @@ public class ManagerActions {
             branchMenu.displayItems();
             boolean success = false;
             do {
-                try {
                     // Get item to update by name
                     int itemIndex = validateInt("Enter the number of the item you want to update: ") - 1;
                     MenuItem itemToUpdate = branchMenu.getMenuItems().get(itemIndex);
@@ -58,15 +58,12 @@ public class ManagerActions {
                     branchMenu.updateItem(itemToUpdate, price, description);
                     success = true;
                     System.out.println("Item successfully updated in menu!");
-                } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
-                    System.out.println("Please enter a valid number.");
-                }
             } while (!success);
         }
     }
 
     // Remove menu item
-    public void removeMenuItem(Company company, StaffRoles auth) throws MenuItemNotFoundException, ItemNotFoundException {
+    public void removeMenuItem(Company company, StaffRoles auth) throws MenuItemNotFoundException,IndexOutOfBoundsException, ItemNotFoundException {
         if (authoriseManager(auth)) {
             // Get menu by branch
             String branch = getBranchByUserInput(company.getBranchDirectory());
@@ -76,16 +73,12 @@ public class ManagerActions {
 
             boolean success = false;
             do {
-                try {
                     // Get item to remove by name
                     int itemIndex = validateInt("Enter the number of the item you want to remove: ") - 1;
                     MenuItem itemToRmv = branchMenu.getMenuItems().get(itemIndex);
                     branchMenu.removeItem(itemToRmv);
                     success = true;
                     System.out.println("Item successfully removed from menu!");
-                } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
-                    System.out.println("Please enter a valid number.");
-                }
             } while (!success);
         }
     }

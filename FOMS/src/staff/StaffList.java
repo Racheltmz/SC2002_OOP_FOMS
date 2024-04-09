@@ -1,9 +1,13 @@
 package staff;
 
 import java.util.ArrayList;
+import exceptions.InvalidInputException;
 
 public class StaffList {
-    public ArrayList<Staff> getStaffBranch(ArrayList<Staff> staffList, String branch)
+    public ArrayList<Staff> getStaffBranch(ArrayList<Staff> staffList, String branch) throws InvalidInputException{
+    if (branch == null || branch.isEmpty()) {
+        throw new InvalidInputException("Branch name cannot be empty or null");
+    }
     {
         ArrayList<Staff> filteredList = new ArrayList<Staff>();
 
@@ -14,6 +18,7 @@ public class StaffList {
         }
         return filteredList;
     }
+}
 
     public ArrayList<Staff> getStaffAge(ArrayList<Staff> staffList, int age)
     {

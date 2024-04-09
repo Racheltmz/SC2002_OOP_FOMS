@@ -1,6 +1,7 @@
 package branch;
 import staff.StaffRoles;
 import utils.IXlsxSerializable;
+import exceptions.IllegalArgumentException;
 
 // Branch details
 public class Branch implements IXlsxSerializable{
@@ -26,7 +27,7 @@ public class Branch implements IXlsxSerializable{
     }
 
     // Constructor for deserialization from XLSX data
-    public Branch(String[] data) {
+    public Branch(String[] data) throws IllegalArgumentException{
         if (data.length != 4) {
             throw new IllegalArgumentException("Invalid data format for Branch");
         }

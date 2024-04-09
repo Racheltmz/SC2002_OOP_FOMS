@@ -1,6 +1,8 @@
 package utils;
 
 import branch.Branch;
+import exceptions.IllegalArgumentException;
+
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileOutputStream;
@@ -49,7 +51,14 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
             List<String[]> xlsxData = readAll(sheet, 1);
             ArrayList<Branch> branches = new ArrayList<>();
             if (xlsxData.size() == 0) return branches;
-            xlsxData.forEach((str) -> branches.add(new Branch(str)));
+            xlsxData.forEach((str) -> {
+                try {
+                    branches.add(new Branch(str));
+                } catch (IllegalArgumentException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            });
             return branches;
         } finally {
             if (workbook != null) {

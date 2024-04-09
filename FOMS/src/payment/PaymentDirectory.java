@@ -2,6 +2,7 @@ package payment;
 
 import staff.StaffRoles;
 import exceptions.AuthorizationException;
+import exceptions.EmptyListException;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -25,14 +26,14 @@ public class PaymentDirectory {
     }
 
     // Get a specific payment method
-    public Payment getPaymentMtd(String method) {
+    public Payment getPaymentMtd(String method) throws EmptyListException {
         // Return payment object if it can be found
         for (Payment payment : this.paymentDirectory) {
             if (Objects.equals(payment.getPaymentMethod(), method))
                 return payment;
-        }
+        } 
+         throw new EmptyListException(" The payment cannot be found ");
         // Return null if payment cannot be found
-        return null;
     }
 
     // Add payment method
@@ -44,7 +45,7 @@ public class PaymentDirectory {
     }
 
     // Remove payment method
-    public void rmvPaymentMtd(String paymentMtd, StaffRoles auth) throws AuthorizationException {
+    public void rmvPaymentMtd(String paymentMtd, StaffRoles auth) throws AuthorizationException, EmptyListException {
         if (authoriseAdmin(auth))
             this.paymentDirectory.remove(this.getPaymentMtd(paymentMtd));
         else

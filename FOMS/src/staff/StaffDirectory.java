@@ -3,6 +3,9 @@ package staff;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import exceptions.InvalidInputException;
+import exceptions.ItemNotFoundException;
+
 import static authorisation.Authorisation.authoriseAdmin;
 
 // TODO: IMPLEMENT: FILTERS FOR ALL 4 CRITERIAS
@@ -23,14 +26,14 @@ public class StaffDirectory {
     }
 
     // Get staff based on staff ID
-    public Staff getStaff(String staffId) {
+    public Staff getStaff(String staffId) throws ItemNotFoundException {
         // Return staff object if it can be found
         for (Staff curStaff : this.staffDirectory) {
             if (Objects.equals(curStaff.getStaffID(), staffId))
                 return curStaff;
         }
         // Return null if staff cannot be found
-        return null;
+        throw new ItemNotFoundException("Staff cannot be found");
     }
 
     // Add staff (admin purposes)
@@ -40,7 +43,7 @@ public class StaffDirectory {
     }
 
     // Remove staff (admin purposes) (TO CHECK)
-    public void rmvStaff(String staffID, StaffRoles auth) {
+    public void rmvStaff(String staffID, StaffRoles auth) throws ItemNotFoundException {
         if (authoriseAdmin(auth))
             this.staffDirectory.remove(this.getStaff(staffID));
     }
@@ -48,7 +51,13 @@ public class StaffDirectory {
     // Filters
     public ArrayList<Staff> filterBranch(String branch) {
         StaffList toFilter = new StaffList();
-        return toFilter.getStaffBranch(this.staffDirectory, branch);
+        try {
+            return toFilter.getStaffBranch(this.staffDirectory, branch);
+        } catch (InvalidInputException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return staffDirectory;
     }
 
     public ArrayList<Staff> filterRole(StaffRoles role) {

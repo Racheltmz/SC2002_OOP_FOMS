@@ -6,6 +6,8 @@ import staff.Staff;
 
 import java.security.NoSuchAlgorithmException;
 
+import exceptions.ItemNotFoundException;
+
 import static authentication.Hashing.genHash;
 import static utils.InputScanner.getInstance;
 
