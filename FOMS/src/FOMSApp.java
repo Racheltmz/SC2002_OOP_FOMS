@@ -1,173 +1,145 @@
-// Import
-<<<<<<< Updated upstream
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Scanner;
+import java.util.InputMismatchException;
 
-import Authorisation.ActiveUsers.*;
-import Management.Admin;
-import Management.Company;
-import Management.Manager;
-import Management.Staff;
-import Management.Staff.Roles;
-import Order.OrderQueue;
+import authorisation.*;
+import utils.InputScanner;
+import management.Company;
+import staff.Staff;
+import staff.StaffRoles;
+import order.OrderQueue;
 
-import static Authentication.Authentication.login;
-import static Initialisation.Initialisation.initialiseCompany;
+import static authentication.Authentication.login;
+import static menu.MenuDirectory.displayMenuByBranch;
+import static utils.Initialisation.initialiseCompany;
+import static utils.InputScanner.getInstance;
 
 // Main app file
 public class FOMSApp {
-
-    public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) {
+        // Initialise scanner
+        InputScanner sc = getInstance();
 
         // Initialise company and order queue
         Company company = initialiseCompany();
-        OrderQueue orderQueue = new OrderQueue(10);
+        OrderQueue orderQueue = new OrderQueue();
 
         /* FOMS INTERFACE */
-        System.out.println("==================================");
-        System.out.println("|         Welcome to FOMS!       |");
-        System.out.println("|         By FDAB Group 3        |");
-        System.out.println("==================================");
-        System.out.println("Please select option (3 to quit): ");
-        System.out.println("1. Customer\n2. Staff");
-        int choice = sc.nextInt();
-
-        switch (choice) {
-            case 1:
-                /* CUSTOMER INTERFACE */
-                break;
-            case 2:
-                /* STAFF INTERFACE */
-                ActiveStaff activeStaff = new ActiveStaff();
-                ActiveManager activeManager = new ActiveManager();
-                ActiveAdmin activeAdmin = new ActiveAdmin();
-                Staff staff;
-
-                // Iterate until user successfully logs in
-                int staffChoice = 0;
-                System.out.println("\nFOMS Login System.");
+        // Iterate until system receives a valid input
+        int choice = 0;
+        do {
+            try {
+                System.out.println("==================================");
+                System.out.println("|         Welcome to FOMS!       |");
+                System.out.println("|         By FDAB Group 3        |");
+                System.out.println("==================================");
+                System.out.println("Please select option");
+                System.out.println("1. Customer\n2. Staff\n3: Quit");
+                choice = sc.nextInt();
                 sc.nextLine(); // Consume newline character
 
-                do {
-                    // Login
-                    if (activeStaff.getActiveStaff() == null
-                            && activeManager.getActiveStaff() == null
-                            && activeAdmin.getActiveStaff() == null) {
-                        System.out.println("\nPlease select option (2 to quit): ");
-                        System.out.println("1. Login");
-                        staffChoice = sc.nextInt();
-                        sc.nextLine(); // Consume newline character
-                        if (staffChoice == 1) {
-                            try {
-                                staff = login(sc, company);
-                                // Set active staff
-                                if (staff != null) {
-                                    if (staff.getRole() == Roles.STAFF) {
-                                        activeStaff.setActiveStaff(staff);
-                                    } else if (staff.getRole() == Roles.MANAGER) {
-                                        activeManager.setActiveStaff((Manager) staff);
-                                    } else if (staff.getRole() == Roles.ADMIN) {
-                                        activeAdmin.setActiveStaff((Admin) staff);
+                switch (choice) {
+                    case 1:
+                        /* CUSTOMER INTERFACE */
+                        try {
+                            System.out.println("==================================");
+                            System.out.println("|              Menu              |");
+                            System.out.println("|        Welcome Customer!       |");
+                            System.out.println("==================================");
+                            // Ask customer to select branch
+                            displayMenuByBranch(company);
+
+                            // Customer Options @gwen (test case 4-8, 18)
+                            System.out.println("Please select option");
+                            System.out.println("1. Browse Menu\n2. Check Order Status\n3. Return back");
+                            // Iterate until customer is done using functionalities
+                            // int customerChoice = 0;
+//                            do {
+//                                // Menu Browsing
+//
+//                                // Check order status
+//                            } while (customerChoice != 3);
+                        } catch (InputMismatchException inputMismatchException) {
+                            System.out.println("Please enter a valid integer only.\n");
+                            sc.nextLine();
+                        }
+                        break;
+                    case 2:
+                        /* STAFF INTERFACE */
+                        // Initialise staff
+                        ActiveFactory staffFactory = new ActiveFactoryStaff();
+                        ActiveUser activeStaff = staffFactory.initInactive();
+                        ActiveFactory managerFactory = new ActiveFactoryManager();
+                        ActiveUser activeManager = managerFactory.initInactive();
+                        ActiveFactory adminFactory = new ActiveFactoryAdmin();
+                        ActiveUser activeAdmin = adminFactory.initInactive();
+                        Staff staff;
+
+                        // Iterate until user successfully logs in
+                        int staffChoice = 0;
+                        do {
+                            // Login
+                            if (activeStaff.getActiveStaff() == null
+                                    && activeManager.getActiveStaff() == null
+                                    && activeAdmin.getActiveStaff() == null) {
+                                try {
+                                    System.out.println("==================================");
+                                    System.out.println("|          Login System          |");
+                                    System.out.println("|         Welcome Staff!         |");
+                                    System.out.println("==================================");
+                                    System.out.println("Please select option");
+                                    System.out.println("1. Login\n2. Return back");
+                                    staffChoice = sc.nextInt();
+                                    sc.nextLine(); // Consume newline character
+                                    if (staffChoice == 1) {
+                                        try {
+                                            staff = login(company.getStaffDirectory());
+                                            // Set active staff
+                                            if (staff != null) {
+                                                if (staff.getRole() == StaffRoles.STAFF) {
+                                                    activeStaff = staffFactory.initActive(staff);
+                                                } else if (staff.getRole() == StaffRoles.MANAGER) {
+                                                    activeManager = managerFactory.initActive(staff);
+                                                } else if (staff.getRole() == StaffRoles.ADMIN) {
+                                                    activeAdmin = adminFactory.initActive(staff);
+                                                }
+                                            }
+                                        } catch (NoSuchAlgorithmException e) {
+                                            System.out.println("Unable to find algorithm.");
+                                        }
+                                    } else if (staffChoice < 1 || staffChoice > 2)
+                                        System.out.print("Invalid choice, please re-enter\n");
+                                } catch (InputMismatchException inputMismatchException) {
+                                    System.out.println("Please enter a valid integer only.\n");
+                                    sc.nextLine();
+                                }
+                            } else {
+                                try {
+                                    if (activeStaff.getActiveStaff() != null) {
+                                        activeStaff.showOptions(company, orderQueue);
+                                    } else if (activeManager.getActiveStaff() != null) {
+                                        activeManager.showOptions(company, orderQueue);
+                                    } else if (activeAdmin.getActiveStaff() != null) {
+                                        activeAdmin.showOptions(company, orderQueue);
                                     }
+                                } catch (InputMismatchException inputMismatchException) {
+                                    System.out.println("Please choose a valid option.\n");
+                                    sc.nextLine();
                                 }
                             }
-                            catch (NoSuchAlgorithmException e) {
-                                System.out.println("Unable to find algorithm.");
-                            }
-                        }
-                    } else {
-                        if (activeStaff.getActiveStaff() != null) {
-                            activeStaff.processMenu(sc, company, orderQueue);
-                        } else if (activeManager.getActiveStaff() != null) {
-                            activeManager.processMenu(sc, company, orderQueue);
-                        } else if (activeAdmin.getActiveStaff() != null) {
-                            activeAdmin.processMenu(sc, company, orderQueue);
-                        }
-                    }
-                } while (staffChoice != 2);
-                break;
-            case 3:
-                break;
-            default:
-                System.out.print("Invalid choice, please re-enter: ");
-                break;
-        }
+                        } while (staffChoice != 2);
+                        break;
+                    case 3:
+                        break;
+                    default:
+                        System.out.print("Invalid choice, please re-enter\n");
+                        break;
+                }
+            } catch (InputMismatchException inputMismatchException) {
+                System.out.println("Please enter a valid integer only.\n");
+                sc.nextLine();
+            }
+        } while (choice != 3);
+        // Close scanner when the program terminates
+        sc.close();
     }
 }
-=======
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-// import org.apache.poi.xssf.usermodel.XSSFSheet;
-// import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-// import org.apache.poi.ss.usermodel.Row;
-
-public class FOMSApp {
-    public static void main(String[] args) throws IOException {
-        // Try block to check for exceptions
-        // try {
-
-        //     // Reading file from local directory
-        //     FileInputStream file = new FileInputStream(new File("./data/staff_list.xlsx"));
-
-        //     // Create Workbook instance holding reference to
-        //     // .xlsx file
-        //     XSSFWorkbook workbook = new XSSFWorkbook(file);
-
-        //     // Get first/desired sheet from the workbook
-        //     XSSFSheet sheet = workbook.getSheetAt(0);
-
-        //     // Iterate through each rows one by one
-        //     Iterator<Row> rowIterator = sheet.iterator();
-
-        //     // Initialise a list
-        //     List<Staff> staffList = new ArrayList<Staff>();
-
-        //     // Iterate all rows
-        //     for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
-        //         Row row = sheet.getRow(i);
-        //         String staffId = row.getCell(1).toString();
-        //         String name = row.getCell(0).toString();
-        //         char role = row.getCell(2).toString().charAt(0);
-        //         Staff.Roles roleCat = Staff.Roles.STAFF;
-        //         switch (role) {
-        //             case 'S':
-        //                 roleCat = Staff.Roles.STAFF;
-        //                 break;
-        //             case 'M':
-        //                 roleCat = Staff.Roles.MANAGER;
-        //                 break;
-        //             case 'A':
-        //                 roleCat = Staff.Roles.ADMIN;
-        //                 break;
-        //         }
-        //         char gender = row.getCell(3).toString().charAt(0);
-        //         int age = (int) row.getCell(4).getNumericCellValue();
-        //         String branch = row.getCell(5).toString();
-        //         Staff staff = new Staff(staffId, name, roleCat, gender, age, branch);
-        //         staff.getStaff();
-        //         // Append new staff
-        //         staffList.add(staff);
-        //     }
-        //     // Closing file output streams
-        //     file.close();
-        // }
-
-        // // Catch block to handle exceptions
-        // catch (NullPointerException nullPointerException) {
-        //     System.out.println("Record was not inserted as it has an empty cell.");
-        // }
-        // catch (Exception e) {
-            // Display the exception along with line number
-            // using printStackTrace() method
-            // e.printStackTrace();
-        // }
-    }
-}
->>>>>>> Stashed changes
