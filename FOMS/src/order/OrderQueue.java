@@ -30,10 +30,6 @@ public class OrderQueue {
     // Add order
     public void addOrder(Order order) {
         this.orders.add(order);
-        Timer timer = new Timer();
-        OrderTimerTask orderTask = new OrderTimerTask(timer, order);
-        int seconds = 5;
-        timer.schedule(orderTask, seconds * 1000);
     }
 
     // Remove order
@@ -120,6 +116,12 @@ public class OrderQueue {
             Order order = this.getOrderById();
             if (order.getStatus().equals(valStatus))
                 order.setStatus(newStatus);
+            if (newStatus.equals(OrderStatus.READY)) {
+                Timer timer = new Timer();
+                OrderTimerTask orderTask = new OrderTimerTask(timer, order);
+                int seconds = 5;
+                timer.schedule(orderTask, seconds * 1000);
+            }
             System.out.println("Order status updated from " + valStatus + " to " + newStatus);
         } catch (EmptyListException emptyListException) {
             System.out.println("There has to be an order before this option can be used.");
