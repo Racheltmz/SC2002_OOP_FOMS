@@ -1,5 +1,6 @@
 package payment;
 
+import staff.StaffDirectory;
 import staff.StaffRoles;
 import exceptions.AuthorizationException;
 import exceptions.EmptyListException;
@@ -8,15 +9,22 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import static authorisation.Authorisation.authoriseAdmin;
+import static utils.Initialisation.initialisePaymentRecords;
 
 // Records of payment methods
 public class PaymentDirectory {
     // Attributes
     private ArrayList<Payment> paymentDirectory;
+    private static PaymentDirectory paymentSingleton = null;
+    private PaymentDirectory() {
+        this.paymentDirectory = initialisePaymentRecords();
+    }
 
-    // Constructor
-    public PaymentDirectory(ArrayList<Payment> paymentDirectory) {
-        this.paymentDirectory = paymentDirectory;
+    public static PaymentDirectory getInstance() {
+        if (paymentSingleton == null) {
+            paymentSingleton = new PaymentDirectory();
+        }
+        return paymentSingleton;
     }
 
     // Functionalities

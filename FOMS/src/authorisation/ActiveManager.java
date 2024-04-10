@@ -1,15 +1,11 @@
 package authorisation;
 
 import utils.InputScanner;
-import management.Company;
 import staff.Manager;
 import staff.StaffRoles;
-import order.OrderQueue;
 import exceptions.EmptyListException;
 import exceptions.ItemNotFoundException;
 import exceptions.MenuItemNotFoundException;
-
-import static utils.InputScanner.getInstance;
 
 import java.util.InputMismatchException;
 
@@ -39,9 +35,9 @@ public class ActiveManager implements ActiveUser {
         setActiveStaff(null);
     }
 
-    public void showOptions(Company company, OrderQueue queue) throws EmptyListException, MenuItemNotFoundException, ItemNotFoundException{
+    public void showOptions() throws EmptyListException, MenuItemNotFoundException, ItemNotFoundException{
         try {
-            InputScanner sc = getInstance();
+            InputScanner sc = InputScanner.getInstance();
             System.out.println("-".repeat(30));
             System.out.printf("| StaffID: %s\n| Role: %s\n", getActiveStaff().getStaffID(),
                     getActiveStaff().getRole());
@@ -52,25 +48,25 @@ public class ActiveManager implements ActiveUser {
             sc.nextLine();
             switch (staffChoice) {
                 case 1:
-                    this.getActiveStaff().displayStaffList(company, StaffRoles.MANAGER);
+                    this.getActiveStaff().displayStaffList(StaffRoles.MANAGER);
                     break;
                 case 2:
-                    this.getActiveStaff().addMenuItem(company, StaffRoles.MANAGER);
+                    this.getActiveStaff().addMenuItem(StaffRoles.MANAGER);
                     break;
                 case 3:
-                    this.getActiveStaff().updateMenuItem(company, StaffRoles.MANAGER);
+                    this.getActiveStaff().updateMenuItem(StaffRoles.MANAGER);
                     break;
                 case 4:
-                    this.getActiveStaff().removeMenuItem(company, StaffRoles.MANAGER);
+                    this.getActiveStaff().removeMenuItem(StaffRoles.MANAGER);
                     break;
                 case 5:
-                    this.getActiveStaff().getNewOrders(this.activeStaff.getBranch(), queue);
+                    this.getActiveStaff().getNewOrders(this.activeStaff.getBranch());
                     break;
                 case 6:
-                    this.getActiveStaff().getOrderDetails(queue);
+                    this.getActiveStaff().getOrderDetails();
                     break;
                 case 7:
-                    this.getActiveStaff().setOrderReady(queue);
+                    this.getActiveStaff().setOrderReady();
                     break;
                 case 8:
                     this.getActiveStaff().changePassword(this.getActiveStaff());

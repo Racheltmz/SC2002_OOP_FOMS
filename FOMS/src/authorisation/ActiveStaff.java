@@ -1,11 +1,7 @@
 package authorisation;
 
 import utils.InputScanner;
-import management.Company;
 import staff.Staff;
-import order.OrderQueue;
-
-import static utils.InputScanner.getInstance;
 
 import exceptions.EmptyListException;
 
@@ -34,8 +30,8 @@ public class ActiveStaff implements ActiveUser {
         setActiveStaff(null);
     }
 
-    public void showOptions(Company company, OrderQueue queue) throws EmptyListException {
-        InputScanner sc = getInstance();
+    public void showOptions() throws EmptyListException {
+        InputScanner sc = InputScanner.getInstance();
         System.out.println("-".repeat(30));
         System.out.printf("| StaffID: %s\n| Role: %s\n", getActiveStaff().getStaffID(),
                 getActiveStaff().getRole());
@@ -47,13 +43,13 @@ public class ActiveStaff implements ActiveUser {
         sc.nextLine(); // Consume newline character
         switch (staffChoice) {
             case 1:
-                this.getActiveStaff().getNewOrders(this.activeStaff.getBranch(), queue);
+                this.getActiveStaff().getNewOrders(this.activeStaff.getBranch());
                 break;
             case 2:
-                this.getActiveStaff().getOrderDetails(queue);
+                this.getActiveStaff().getOrderDetails();
                 break;
             case 3:
-                this.getActiveStaff().setOrderReady(queue);
+                this.getActiveStaff().setOrderReady();
                 break;
             case 4:
                 this.getActiveStaff().changePassword(this.getActiveStaff());

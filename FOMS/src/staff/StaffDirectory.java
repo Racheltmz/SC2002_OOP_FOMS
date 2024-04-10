@@ -5,18 +5,26 @@ import java.util.Objects;
 
 import exceptions.InvalidInputException;
 import exceptions.ItemNotFoundException;
+import utils.InputScanner;
 
 import static authorisation.Authorisation.authoriseAdmin;
+import static utils.Initialisation.initialiseStaffRecords;
 
-// TODO: IMPLEMENT: FILTERS FOR ALL 4 CRITERIAS
 // Records of staff
 public class StaffDirectory {
     // Attribute
     private ArrayList<Staff> staffDirectory;
+    private static StaffDirectory staffSingleton = null;
 
-    // Constructor
-    public StaffDirectory(ArrayList<Staff> staffDirectory) {
-        this.staffDirectory = staffDirectory;
+    private StaffDirectory() {
+        this.staffDirectory = initialiseStaffRecords();
+    }
+
+    public static StaffDirectory getInstance() {
+        if (staffSingleton == null) {
+            staffSingleton = new StaffDirectory();
+        }
+        return staffSingleton;
     }
 
     // Functionalities

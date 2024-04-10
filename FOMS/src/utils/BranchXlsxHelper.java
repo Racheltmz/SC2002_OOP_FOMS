@@ -13,7 +13,7 @@ import java.util.List;
 public class BranchXlsxHelper extends BaseXlsxHelper {
 
     /**
-     * Path to Branch XLSX File in the data folder. Defaults to menu.xlsx.
+     * Path to Branch XLSX File in the data folder. Defaults to branch_list.xlsx.
      */
     private String branchXlsx = "branch_list.xlsx";
     /**
@@ -24,8 +24,7 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
     /**
      * Default Constructor to initialize this class with branch_list.xlsx as the XLSX file.
      */
-    private BranchXlsxHelper() {
-    }
+    private BranchXlsxHelper() {}
     /**
      * Gets the singleton instance of BranchXlsxHelper that reads from branch_list.xlsx
      *
@@ -50,7 +49,7 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
             Sheet sheet = workbook.getSheetAt(0); // Assuming first sheet is where data is stored
             List<String[]> xlsxData = readAll(sheet, 1);
             ArrayList<Branch> branches = new ArrayList<>();
-            if (xlsxData.size() == 0) return branches;
+            if (xlsxData.isEmpty()) return branches;
             xlsxData.forEach((str) -> {
                 try {
                     branches.add(new Branch(str));
@@ -82,17 +81,17 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
         }
     }
 
-    private void writeHeader(String[] header, Row row) {
-        for (int i = 0; i < header.length; i++) {
-            Cell cell = row.createCell(i);
-            cell.setCellValue(header[i]);
-        }
-    }
-
-    private void writeRow(String[] data, Row row) {
-        for (int i = 0; i < data.length; i++) {
-            Cell cell = row.createCell(i);
-            cell.setCellValue(data[i]);
-        }
-    }
+//    private void writeHeader(String[] header, Row row) {
+//        for (int i = 0; i < header.length; i++) {
+//            Cell cell = row.createCell(i);
+//            cell.setCellValue(header[i]);
+//        }
+//    }
+//
+//    private void writeRow(String[] data, Row row) {
+//        for (int i = 0; i < data.length; i++) {
+//            Cell cell = row.createCell(i);
+//            cell.setCellValue(data[i]);
+//        }
+//    }
 }

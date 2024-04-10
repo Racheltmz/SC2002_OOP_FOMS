@@ -4,7 +4,7 @@ import exceptions.IllegalArgumentException;
 import utils.IXlsxSerializable;
 
 // Menu Item details
-public class MenuItem implements IXlsxSerializable{
+public class MenuItem implements IXlsxSerializable {
     // Attributes
     private String name;
     private double price;
@@ -19,36 +19,40 @@ public class MenuItem implements IXlsxSerializable{
         this.category = category;
     }
 
-    
-   // Constructor for deserialization from XLSX data
-   public MenuItem(String[] data) throws IllegalArgumentException{
-    if (data.length != 4) {
-        throw new IllegalArgumentException("Invalid data format for MenuItem");
+    // Constructor for deserialization from XLSX data
+    public MenuItem(String[] data) throws IllegalArgumentException {
+        System.out.println(data.length);
+        if (data.length != 4) {
+            throw new IllegalArgumentException("Invalid data format for MenuItem");
+        }
+        this.name = data[0];
+        this.price = Double.parseDouble(data[1]);
+        this.branch = data[2];
+        this.category = data[3];
     }
-    this.name = data[0];
-    this.price = Double.parseDouble(data[1]);
-    this.branch = data[2];
-    this.category = data[3];
-}
 
-// Serialization to XLSX
-public String[] toXlsx(){
-    return new String[]{name, String.valueOf(price), branch, category};
-}
+    // Serialization to XLSX
+    public String[] toXlsx() {
+        return new String[] { name, String.valueOf(price), branch, category };
+    }
 
     // Getters and setters
     public String getName() {
         return name;
     }
+
     public double getPrice() {
         return price;
     }
+
     public void setPrice(double price) {
         this.price = price;
     }
+
     public String getBranch() {
         return branch;
     }
+
     public String getCategory() {
         return category;
     }

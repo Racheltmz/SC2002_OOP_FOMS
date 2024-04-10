@@ -1,7 +1,11 @@
 package utils;
 
+import menu.MenuItem;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +14,11 @@ import java.util.List;
 
 @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
 public class BaseXlsxHelper {
+    private final String dataDir = "./data/";
 
+    public String getDataDir() {
+        return dataDir;
+    }
     /**
      * Reads data from an Excel (XLSX) file and returns a List of String arrays representing rows and columns.
      *
@@ -46,7 +54,7 @@ public class BaseXlsxHelper {
      * @param sheetName    The name of the sheet to write data into.
      * @throws IOException If an I/O error occurs while writing to the Excel file.
      */
-    protected void writeToXlxsFile(List<String[]> writeStrings, Workbook workbook, String sheetName) throws IOException {
+    protected void writeToXlsxFile(List<String[]> writeStrings, Workbook workbook, String sheetName) throws IOException {
         Sheet sheet = workbook.createSheet(sheetName);
         for (int i = 0; i < writeStrings.size(); i++) {
             Row row = sheet.createRow(i);
@@ -58,6 +66,27 @@ public class BaseXlsxHelper {
         }
         try (FileOutputStream fileOut = new FileOutputStream("output.xlsx")) {
             workbook.write(fileOut);
+        }
+    }
+
+    // TODO: NEW
+    protected void writeHeader(String[] header, Row row) {
+        for (int i = 0; i < header.length; i++) {
+            Cell cell = row.createCell(i);
+            cell.setCellValue(header[i]);
+        }
+    }
+
+    protected void writeRow(String[] data, Row row) {
+        for (int i = 0; i < data.length; i++) {
+            Cell cell = row.createCell(i);
+            Object obj = data[i];
+            if (obj instanceof String)
+                cell.setCellValue((String) obj);
+            else if (obj instanceof Integer)
+                cell.setCellValue((Integer) obj);
+            else if (obj instanceof Double)
+                cell.setCellValue((Double) obj);
         }
     }
 }

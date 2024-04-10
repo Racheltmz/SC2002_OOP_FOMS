@@ -23,7 +23,7 @@ import java.util.List;
 public class StaffXlsxHelper extends BaseXlsxHelper {
 
     /**
-     * Path to Staff XLSX File in the data folder. Defaults to staff.xlsx
+     * Path to Staff XLSX File in the data folder. Defaults to staff_list.xlsx
      */
     private String staffXlsx = "staff_list.xlsx";
 
@@ -35,8 +35,7 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
     /**
      * Private constructor to initialize this class with staff.xlsx as the XLSX file
      */
-    private StaffXlsxHelper() {
-    }
+    private StaffXlsxHelper() {}
 
     /**
      * Gets the singleton instance of StaffXlsxHelper
@@ -99,17 +98,17 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
         }
     }
 
-    private void writeHeader(String[] header, Row row) {
-        for (int i = 0; i < header.length; i++) {
-            Cell cell = row.createCell(i);
-            cell.setCellValue(header[i]);
-        }
-    }
-
-    private void writeRow(String[] data, Row row) {
-        for (int i = 0; i < data.length; i++) {
-            Cell cell = row.createCell(i);
-            cell.setCellValue(data[i]);
-        }
-    }
+//    private void writeHeader(String[] header, Row row) {
+//        for (int i = 0; i < header.length; i++) {
+//            Cell cell = row.createCell(i);
+//            cell.setCellValue(header[i]);
+//        }
+//    }
+//
+//    private void writeRow(String[] data, Row row) {
+//        for (int i = 0; i < data.length; i++) {
+//            Cell cell = row.createCell(i);
+//            cell.setCellValue(data[i]);
+//        }
+//    }
 }

@@ -12,7 +12,7 @@ import java.io.*;
 public class FileIOHelper {
 
     /**
-     * Ensure that the data folder exists. Otherwise creates it
+     * Ensure that the data folder exists. Otherwise, creates it.
      *
      * @return Folder file object
      */

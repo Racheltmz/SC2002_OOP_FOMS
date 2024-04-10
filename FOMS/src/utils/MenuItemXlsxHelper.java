@@ -1,39 +1,40 @@
 package utils;
 
 import menu.MenuItem;
-import exceptions.*;
 import exceptions.IllegalArgumentException;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class MenuItemXlsxHelper extends BaseXlsxHelper  {
+public class MenuItemXlsxHelper extends BaseXlsxHelper {
 
     /**
-     * Path to Menu Items XLSX File in the data folder. Defaults to menu.xlsx.
+     * Path to Menu Items XLSX File in the data folder. Defaults to menu_list.xlsx.
      */
-     String menuItemXlsx;
+    private String menuItemXlsx;
 
-     //Constructor with custom file path
-     public MenuItemXlsxHelper(String filePath){
+    /**
+     * Default Constructor to initialize this class with menu.xlsx as the XLSX file.
+     */
+    public MenuItemXlsxHelper() {
+        this.menuItemXlsx = getDataDir() + "menu_list.xlsx";
+    }
+
+    // Constructor with custom file path
+    public MenuItemXlsxHelper(String filePath) {
         this.menuItemXlsx = filePath;
-     }
+    }
 
     /**
      * Singleton instance of this class.
      */
     private static MenuItemXlsxHelper mInstance;
-
-    /**
-     * Default Constructor to initialize this class with menu.xlsx as the XLSX file.
-     */
-    private MenuItemXlsxHelper() {
-    }
 
     /**
      * Gets the singleton instance of MenuItemXlsxHelper that reads from menu.xlsx
@@ -42,7 +43,8 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper  {
      * @throws IOException
      */
     public static MenuItemXlsxHelper getInstance() {
-        if (mInstance == null) mInstance = new MenuItemXlsxHelper();
+        if (mInstance == null)
+            mInstance = new MenuItemXlsxHelper();
         return mInstance;
     }
 
@@ -57,10 +59,11 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper  {
         try {
             workbook = WorkbookFactory.create(FileIOHelper.getFileInputStream(menuItemXlsx));
             Sheet sheet = workbook.getSheetAt(0); // Assuming first sheet is where data is stored
-            List<String[]> XlsxData = readAll(sheet, 1);
+            List<String[]> xlsxData = readAll(sheet, 1);
             ArrayList<MenuItem> items = new ArrayList<>();
-            if (XlsxData.size() == 0) return items;
-            XlsxData.forEach((str) -> {
+            if (xlsxData.isEmpty())
+                return items;
+            xlsxData.forEach((str) -> {
                 try {
                     items.add(new MenuItem(str));
                 } catch (IllegalArgumentException e) {
@@ -79,48 +82,28 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper  {
     /**
      * Writes to the XLSX File.
      *
-     * @param items ArrayList of Menu items to save.
      * @throws IOException Unable to write to file.
      */
-    public void writeToXlsx(ArrayList<MenuItem> items) throws IOException {
-        Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("Menu");
-        String[] header = {"Name", "Price", "Branch", "Category"};
-        writeHeader(header, sheet.createRow(0));
-        for (int i = 0; i < items.size(); i++) {
-            writeRow(items.get(i).toXlsx(), sheet.createRow(i + 1));
-        }
-        try (FileOutputStream fileOut = new FileOutputStream(menuItemXlsx)) {
+    public void writeToXlsx(int numExistingRecords, MenuItem newItem) throws IOException {
+        System.out.println("hello " + numExistingRecords + " " + newItem.getName());
+        XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(this.menuItemXlsx));
+        Sheet sheet = workbook.getSheetAt(0);
+        writeRow(newItem.toXlsx(), sheet.createRow(numExistingRecords));
+        try (FileOutputStream fileOut = new FileOutputStream(this.menuItemXlsx)) {
             // Write to file...
             workbook.write(fileOut);
         } finally {
             workbook.close();
         }
-        
-    }
-    public void saveAll(ArrayList<MenuItem> menuItems) {
-        try {
-        writeToXlsx(menuItems);
-        System.out.println("Menu items saved to menu_list.xlsx.");
-        } catch (IOException e) {
-        System.out.println("Failed to save menu items to menu_list.xlsx: " + e.getMessage());
-        }
-        }
-
-    private void writeHeader(String[] header, Row row) {
-        for (int i = 0; i < header.length; i++) {
-            Cell cell = row.createCell(i);
-            cell.setCellValue(header[i]);
-        }
     }
 
-    private void writeRow(String[] data, Row row) {
-        for (int i = 0; i < data.length; i++) {
-            Cell cell = row.createCell(i);
-            cell.setCellValue(data[i]);
-        }
-    }
+//    public void saveAll(ArrayList<MenuItem> menuItems) {
+//        try {
+//            writeToXlsx(menuItems);
+//            System.out.println("Menu items saved to menu_list.xlsx.");
+//        } catch (IOException e) {
+//            System.out.println("Failed to save menu items to menu_list.xlsx: " + e.getMessage());
+//        }
+//    }
+
 }
-
-
-

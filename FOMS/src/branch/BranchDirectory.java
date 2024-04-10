@@ -1,23 +1,34 @@
 package branch;
 
+import menu.Menu;
+import staff.Staff;
+import staff.StaffDirectory;
 import staff.StaffRoles;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 import static authorisation.Authorisation.authoriseAdmin;
+import static utils.Initialisation.initialiseBranchRecords;
+import static utils.Initialisation.initialiseStaffRecords;
 import static validation.ValidateDataType.validateInt;
 
 // Records of branch
 public class BranchDirectory {
-    // Attributes
+    // Attribute
     private ArrayList<Branch> branchDirectory;
+    private static BranchDirectory branchSingleton = null;
 
-    // Constructor
-    public BranchDirectory(ArrayList<Branch> branchDirectory) {
-        this.branchDirectory = branchDirectory;
+    private BranchDirectory() {
+        this.branchDirectory = initialiseBranchRecords();
     }
 
+    public static BranchDirectory getInstance() {
+        if (branchSingleton == null) {
+            branchSingleton = new BranchDirectory();
+        }
+        return branchSingleton;
+    }
     // Functionalities
     // Get all branches
     public ArrayList<Branch> getBranchDirectory() {

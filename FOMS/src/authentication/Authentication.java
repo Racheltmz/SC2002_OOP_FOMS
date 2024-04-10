@@ -9,7 +9,6 @@ import java.security.NoSuchAlgorithmException;
 import exceptions.ItemNotFoundException;
 
 import static authentication.Hashing.genHash;
-import static utils.InputScanner.getInstance;
 
 // TODO: STRUCT: CREATE A VIEW FOR THE PRINT STATEMENTS
 // Authentication purposes (login)
@@ -21,7 +20,7 @@ public class Authentication {
 
     // Login
     public static Staff login(StaffDirectory staffDirectory) throws NoSuchAlgorithmException, ItemNotFoundException {
-        InputScanner sc = getInstance();
+        InputScanner sc = InputScanner.getInstance();
         while (true) {
             System.out.print("\nEnter staffID: ");
             String inputStaffID = sc.next();
@@ -47,7 +46,7 @@ public class Authentication {
 
     // Change password
     public static void setNewPassword(Staff staff) {
-        InputScanner sc = getInstance();
+        InputScanner sc = InputScanner.getInstance();
         System.out.print("\nPlease enter new password: ");
         String newPassword = sc.next();
         // Check if user entered a password or if they entered the same password as they had in the past

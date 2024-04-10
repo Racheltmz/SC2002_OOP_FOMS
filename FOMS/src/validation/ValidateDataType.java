@@ -4,12 +4,10 @@ import utils.InputScanner;
 
 import java.util.InputMismatchException;
 
-import static utils.InputScanner.getInstance;
-
 public class ValidateDataType {
     // Check integer
     public static int validateInt(String msg) {
-        InputScanner sc = getInstance();
+        InputScanner sc = InputScanner.getInstance();
         boolean success = false;
         int input = 0;
         do {
@@ -31,7 +29,7 @@ public class ValidateDataType {
 
     // Check double
     public static double validateDouble(String msg) {
-        InputScanner sc = getInstance();
+        InputScanner sc = InputScanner.getInstance();
         boolean success = false;
         double input = 0;
         do {

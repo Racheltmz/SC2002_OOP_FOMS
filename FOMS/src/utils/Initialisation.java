@@ -1,9 +1,10 @@
 package utils;
 
-import management.Company;
+import branch.BranchDirectory;
 import branch.Branch;
 import exceptions.ItemNotFoundException;
 import exceptions.MenuItemNotFoundException;
+import menu.MenuDirectory;
 import staff.Admin;
 import staff.Manager;
 import staff.Staff;
@@ -20,21 +21,10 @@ import org.apache.poi.ss.usermodel.Row;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 // Initialise all company-related directories
 public class Initialisation {
-    // Initialise all directories
-    public static Company initialiseCompany() throws MenuItemNotFoundException, ItemNotFoundException {
-        ArrayList<Staff> staffList = initialiseStaffRecords();
-        ArrayList<Branch> branchList = new ArrayList<>();
-        ArrayList<Menu> menuList = new ArrayList<>();
-        initialiseBranchRecords(branchList, menuList);
-        ArrayList<Payment> paymentList = initialisePaymentRecords();
-        Company company = new Company(staffList, branchList, paymentList, menuList);
-        initialiseMenus(company);
-        return company;
-    }
-
     // Get Excel spreadsheet by filename
     public static XSSFSheet getSheet(String filePath) {
         XSSFSheet sheet = null;
@@ -104,8 +94,11 @@ public class Initialisation {
         return staffList;
     }
 
-    // Initialise branch records and menu records based on the branch
-    public static void initialiseBranchRecords(ArrayList<Branch> branchList, ArrayList<Menu> menuList) {
+    // Initialise branch records
+    public static ArrayList<Branch> initialiseBranchRecords() {
+        // Initialise a list
+        ArrayList<Branch> branchList = new ArrayList<Branch>();
+        ArrayList<Menu> menuList = new ArrayList<Menu>();
         XSSFSheet branchSheet = getSheet("./data/branch_list.xlsx");
         // Iterate all rows
         for (int i = 1; i < branchSheet.getPhysicalNumberOfRows(); i++) {
@@ -132,20 +125,18 @@ public class Initialisation {
                 }
             }
         }
+        return branchList;
     }
 
-    // Initialise payment records
-    public static ArrayList<Payment> initialisePaymentRecords() {
-        ArrayList<Payment> paymentList = new ArrayList<Payment>();
-        Payment card = new Payment("Credit/Debit Card");
-        Payment online = new Payment("PayPal");
-        paymentList.add(card);
-        paymentList.add(online);
-        return paymentList;
-    }
+    // Initialise menu records based on the branch
+    public static ArrayList<Menu> initialiseMenuRecords() {
+        // Initialise a list
+        ArrayList<Menu> menuList = new ArrayList<Menu>();
+        BranchDirectory branchDirectory = BranchDirectory.getInstance();
+        // Create a menu for each branch
+        for (Branch branch : branchDirectory.getBranchDirectory())
+            menuList.add(new Menu(branch));
 
-    // Add menu items by branch
-    public static void initialiseMenus(Company company) throws MenuItemNotFoundException, ItemNotFoundException {
         XSSFSheet menuSheet = getSheet("./data/menu_list.xlsx");
         // Iterate all rows
         for (int i = 1; i < menuSheet.getPhysicalNumberOfRows(); i++) {
@@ -166,9 +157,24 @@ public class Initialisation {
                     String category = categoryCell.toString().trim();
 
                     // Add new item
-                    company.getMenuDirectory().getMenu(branch).addItem(new MenuItem(name, price, branch, category));
+                    for (Menu menu : menuList) {
+                        if (Objects.equals(menu.getBranch().getBranchName(), branch)) {
+                            menu.addItem(new MenuItem(name, price, branch, category));
+                        }
+                    }
                 }
             }
         }
+        return menuList;
+    }
+
+    // Initialise payment records
+    public static ArrayList<Payment> initialisePaymentRecords() {
+        ArrayList<Payment> paymentList = new ArrayList<Payment>();
+        Payment card = new Payment("Credit/Debit Card");
+        Payment online = new Payment("PayPal");
+        paymentList.add(card);
+        paymentList.add(online);
+        return paymentList;
     }
 }

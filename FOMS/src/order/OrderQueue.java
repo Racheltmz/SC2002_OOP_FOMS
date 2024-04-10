@@ -3,11 +3,12 @@ package order;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import menu.MenuDirectory;
 import utils.InputScanner;
 
 import exceptions.EmptyListException;
 
-import static utils.InputScanner.getInstance;
+import static utils.Initialisation.initialiseMenuRecords;
 
 // TODO: Create views accordingly
 // TODO: Merge the customer order functions (by gwen) with the staff order functions (in enhancement branch)
@@ -15,10 +16,17 @@ import static utils.InputScanner.getInstance;
 public class OrderQueue {
     // Attributes
     private ArrayList<Order> orders;
+    private static OrderQueue ordersSingleton = null;
 
     // Constructor
     public OrderQueue() {
         this.orders = new ArrayList<Order>();
+    }
+    public static OrderQueue getInstance() {
+        if (ordersSingleton == null) {
+            ordersSingleton = new OrderQueue();
+        }
+        return ordersSingleton;
     }
 
     // Get all orders
@@ -42,7 +50,7 @@ public class OrderQueue {
 
     // Get order by ID
     public Order getOrderById() throws EmptyListException {
-        InputScanner sc = getInstance();
+        InputScanner sc = InputScanner.getInstance();
         if (!this.orders.isEmpty()) {
             // Else iterate until user enters a valid id
             while (true) {
@@ -63,11 +71,10 @@ public class OrderQueue {
 
     // Display a specific order
     public void displayOrder() throws EmptyListException {
-         
-            Order order = this.getOrderById();
-            order.printOrderDetails();
-        throw new EmptyListException ("There has to be an order before this option can be used.");
-        
+        Order order = this.getOrderById();
+        order.printOrderDetails();
+        throw new EmptyListException("There has to be an order before this option can be used.");
+
     }
 
     // Display orders
@@ -87,20 +94,19 @@ public class OrderQueue {
     // TODO: Implement for test case 8, 18
     // Get order status by order ID
     public void getStatusById() throws EmptyListException {
-        
-            Order order = this.getOrderById();
-            System.out.printf("Status of Order ID: %s is %s", order.getOrderID(), order.getStatus());
-         throw new EmptyListException ("There has to be an order before this option can be used.");
-        
+        Order order = this.getOrderById();
+        System.out.printf("Status of Order ID: %s is %s", order.getOrderID(), order.getStatus());
+        throw new EmptyListException("There has to be an order before this option can be used.");
+
     }
 
-    // Update order status to ready when food is ready or when customer collects order
+    // Update order status to ready when food is ready or when customer collects
+    // order
     public void updateStatus(OrderStatus valStatus, OrderStatus newStatus) throws EmptyListException {
-        
-            Order order = this.getOrderById();
-            if (order.getStatus().equals(valStatus))
-                order.setStatus(newStatus);
-            System.out.println("Order status update processed successfully.");
+        Order order = this.getOrderById();
+        if (order.getStatus().equals(valStatus))
+            order.setStatus(newStatus);
+        System.out.println("Order status update processed successfully.");
         throw new EmptyListException("There has to be an order before this option can be used.");
-        }
     }
+}

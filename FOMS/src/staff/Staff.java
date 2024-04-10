@@ -30,25 +30,25 @@ public class Staff implements IXlsxSerializable {
         this.branch = branch;
         this.password = genHash("password");
     }
-    
-  // Constructor for deserialization from XLSX data
-  public Staff(String[] data) throws IllegalArgumentException {
-    if (data.length != 6) {
-        throw new IllegalArgumentException("Invalid data format for Staff");
-    }
-    this.name = data[0];
-    this.staffID = data[1];
-    this.role = StaffRoles.valueOf(data[2]); // Assuming role is stored as a String representation of the enum
-    this.gender = data[3].charAt(0); // Assuming gender is stored as a single character
-    this.age = Integer.parseInt(data[4]);
-    this.branch = data[5];
-}
 
-       // Serialization to XLSX
-       public String[] toXlsx() {
-        return new String[] {name, staffID, role.toString(), String.valueOf(gender), String.valueOf(age), branch};
+    // Constructor for deserialization from XLSX data
+    public Staff(String[] data) throws IllegalArgumentException {
+        if (data.length != 6) {
+            throw new IllegalArgumentException("Invalid data format for Staff");
+        }
+        this.name = data[0];
+        this.staffID = data[1];
+        this.role = StaffRoles.valueOf(data[2]); // Assuming role is stored as a String representation of the enum
+        this.gender = data[3].charAt(0); // Assuming gender is stored as a single character
+        this.age = Integer.parseInt(data[4]);
+        this.branch = data[5];
     }
-    
+
+    // Serialization to XLSX
+    public String[] toXlsx() {
+        return new String[] { name, staffID, role.toString(), String.valueOf(gender), String.valueOf(age), branch };
+    }
+
     /* GETTERS AND SETTERS */
     public String getStaffID() {
         return this.staffID;
@@ -92,17 +92,20 @@ public class Staff implements IXlsxSerializable {
 
     /* MANAGING ORDER PURPOSES */
     // New orders for Test Case 9 and 11
-    public void getNewOrders(String branchName, OrderQueue queue) throws EmptyListException {
+    public void getNewOrders(String branchName) throws EmptyListException {
+        OrderQueue queue = OrderQueue.getInstance();
         queue.displayNewOrders(branchName);
     }
 
     // Specific order
-    public void getOrderDetails(OrderQueue queue) throws EmptyListException{
+    public void getOrderDetails() throws EmptyListException {
+        OrderQueue queue = OrderQueue.getInstance();
         queue.displayOrder();
     }
 
     // Update order status to ready to pickup for Test Case 10 and 12
-    public void setOrderReady(OrderQueue queue) throws EmptyListException {
+    public void setOrderReady() throws EmptyListException {
+        OrderQueue queue = OrderQueue.getInstance();
         queue.updateStatus(OrderStatus.NEW, OrderStatus.READY);
     }
 }

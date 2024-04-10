@@ -5,26 +5,23 @@ import authorisation.*;
 import exceptions.EmptyListException;
 import exceptions.ItemNotFoundException;
 import exceptions.MenuItemNotFoundException;
+import menu.MenuDirectory;
+import staff.StaffDirectory;
 import utils.InputScanner;
-import management.Company;
 import staff.Staff;
 import staff.StaffRoles;
 import order.OrderQueue;
 
 import static authentication.Authentication.login;
-import static menu.MenuDirectory.displayMenuByBranch;
-import static utils.Initialisation.initialiseCompany;
-import static utils.InputScanner.getInstance;
 
 // Main app file
 public class FOMSApp {
     public static void main(String[] args) throws MenuItemNotFoundException, ItemNotFoundException, EmptyListException {
         // Initialise scanner
-        InputScanner sc = getInstance();
-
-        // Initialise company and order queue
-        Company company = initialiseCompany();
-        OrderQueue orderQueue = new OrderQueue();
+        InputScanner sc = InputScanner.getInstance();
+        StaffDirectory staffDirectory = StaffDirectory.getInstance();
+        MenuDirectory menuDirectory = MenuDirectory.getInstance();
+        OrderQueue orderQueue = OrderQueue.getInstance();
 
         /* FOMS INTERFACE */
         // Iterate until system receives a valid input
@@ -49,7 +46,7 @@ public class FOMSApp {
                             System.out.println("|        Welcome Customer!       |");
                             System.out.println("==================================");
                             // Ask customer to select branch
-                            displayMenuByBranch(company);
+                            menuDirectory.displayMenuByBranch();
 
                             // Customer Options @gwen (test case 4-8, 18)
                             System.out.println("Please select option");
@@ -95,7 +92,7 @@ public class FOMSApp {
                                     sc.nextLine(); // Consume newline character
                                     if (staffChoice == 1) {
                                         try {
-                                            staff = login(company.getStaffDirectory());
+                                            staff = login(staffDirectory);
                                             // Set active staff
                                             if (staff != null) {
                                                 if (staff.getRole() == StaffRoles.STAFF) {
@@ -118,11 +115,11 @@ public class FOMSApp {
                             } else {
                                 try {
                                     if (activeStaff.getActiveStaff() != null) {
-                                        activeStaff.showOptions(company, orderQueue);
+                                        activeStaff.showOptions();
                                     } else if (activeManager.getActiveStaff() != null) {
-                                        activeManager.showOptions(company, orderQueue);
+                                        activeManager.showOptions();
                                     } else if (activeAdmin.getActiveStaff() != null) {
-                                        activeAdmin.showOptions(company, orderQueue);
+                                        activeAdmin.showOptions();
                                     }
                                 } catch (InputMismatchException inputMismatchException) {
                                     System.out.println("Please choose a valid option.\n");
