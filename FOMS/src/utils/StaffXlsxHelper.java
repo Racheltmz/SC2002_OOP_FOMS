@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import exceptions.IllegalArgumentException;
 import menu.MenuItem;
 
 import java.io.FileInputStream;
@@ -61,7 +62,14 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
             List<String[]> XlsxData = readAll(sheet, 1);
             ArrayList<Staff> staff = new ArrayList<>();
             if(XlsxData.size()==0) return staff;
-            XlsxData.forEach((str) -> staff.add(new Staff(str)));
+            XlsxData.forEach((str) -> {
+                try {
+                    staff.add(new Staff(str));
+                } catch (IllegalArgumentException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            });
             return staff;
         }finally {
             if(workbook != null){

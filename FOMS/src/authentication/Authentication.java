@@ -20,7 +20,7 @@ public class Authentication {
     }
 
     // Login
-    public static Staff login(StaffDirectory staffDirectory) throws NoSuchAlgorithmException {
+    public static Staff login(StaffDirectory staffDirectory) throws NoSuchAlgorithmException, ItemNotFoundException {
         InputScanner sc = getInstance();
         while (true) {
             System.out.print("\nEnter staffID: ");

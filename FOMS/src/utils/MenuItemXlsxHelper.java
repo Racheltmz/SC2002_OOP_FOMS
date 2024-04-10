@@ -17,7 +17,12 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper  {
     /**
      * Path to Menu Items XLSX File in the data folder. Defaults to menu.xlsx.
      */
-    private String menuItemXlsx = "menu_list.xlsx";
+     String menuItemXlsx;
+
+     //Constructor with custom file path
+     public MenuItemXlsxHelper(String filePath){
+        this.menuItemXlsx = filePath;
+     }
 
     /**
      * Singleton instance of this class.
@@ -34,6 +39,7 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper  {
      * Gets the singleton instance of MenuItemXlsxHelper that reads from menu.xlsx
      *
      * @return Instance of this class
+     * @throws IOException
      */
     public static MenuItemXlsxHelper getInstance() {
         if (mInstance == null) mInstance = new MenuItemXlsxHelper();
@@ -49,7 +55,7 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper  {
     public ArrayList<MenuItem> readFromXlsx() throws IOException {
         Workbook workbook = null;
         try {
-            workbook = WorkbookFactory.create(FileIOHelper.getFileInputStream(this.menuItemXlsx));
+            workbook = WorkbookFactory.create(FileIOHelper.getFileInputStream(menuItemXlsx));
             Sheet sheet = workbook.getSheetAt(0); // Assuming first sheet is where data is stored
             List<String[]> XlsxData = readAll(sheet, 1);
             ArrayList<MenuItem> items = new ArrayList<>();
@@ -84,12 +90,22 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper  {
         for (int i = 0; i < items.size(); i++) {
             writeRow(items.get(i).toXlsx(), sheet.createRow(i + 1));
         }
-        try (FileOutputStream fileOut = new FileOutputStream(this.menuItemXlsx)) {
+        try (FileOutputStream fileOut = new FileOutputStream(menuItemXlsx)) {
+            // Write to file...
             workbook.write(fileOut);
         } finally {
             workbook.close();
         }
+        
     }
+    public void saveAll(ArrayList<MenuItem> menuItems) {
+        try {
+        writeToXlsx(menuItems);
+        System.out.println("Menu items saved to menu_list.xlsx.");
+        } catch (IOException e) {
+        System.out.println("Failed to save menu items to menu_list.xlsx: " + e.getMessage());
+        }
+        }
 
     private void writeHeader(String[] header, Row row) {
         for (int i = 0; i < header.length; i++) {
