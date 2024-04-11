@@ -14,7 +14,7 @@ import static utils.Initialisation.initialisePaymentRecords;
 // Records of payment methods
 public class PaymentDirectory {
     // Attributes
-    private ArrayList<Payment> paymentDirectory;
+    private final ArrayList<Payment> paymentDirectory;
     private static PaymentDirectory paymentSingleton = null;
     private PaymentDirectory() {
         this.paymentDirectory = initialisePaymentRecords();

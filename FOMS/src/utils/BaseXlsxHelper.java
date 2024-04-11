@@ -39,6 +39,13 @@ public class BaseXlsxHelper {
         return result;
     }
 
+    /**
+     * Get the row index from the Excel spreadsheet based on the record's UUID
+     *
+     * @param sheet Excel spreadsheet to search
+     * @param id UUID to match
+     * @return Row index of the record
+     */
     private static int getIndexById(XSSFSheet sheet, UUID id) {
         for (int row = 1; row < sheet.getLastRowNum(); row++){
             if(sheet.getRow(row).getCell(0).toString().equalsIgnoreCase(String.valueOf(id))){
@@ -50,16 +57,15 @@ public class BaseXlsxHelper {
 
 
     /**
-     * Writes data to an Excel (XLSX) file.
+     * Adds a data record into the Excel File
      *
-     * @param sheetName The name of the sheet to write data into.
-     * @param newRecord String to write into file.
-     * @param header
+     * @param sheetName The name of the sheet to write data into
+     * @param newRecord String to write into file
+     * @param header Headers for the file
      * @param idxRecord Index to add / update record
-     * @throws IOException If an I/O error occurs while writing to the Excel file.
+     * @throws IOException If an I/O error occurs while writing to the Excel file
      */
     protected void serializeRecord(String sheetName, String[] newRecord, String[] header, int idxRecord) throws IOException {
-        // TODO: AVOID DRY (COMPARE WITH FILEIOHELPER)
         XSSFWorkbook workbook = new XSSFWorkbook(FileIOHelper.getFileInputStream(sheetName));
         XSSFSheet sheet = workbook.getSheetAt(0);
         if (sheet.getRow(0) == null) { // TODO: check this
@@ -74,12 +80,20 @@ public class BaseXlsxHelper {
         }
     }
 
-    protected void serializeUpdate(String sheetName, String[] newRecord, UUID id) throws IOException {
-        // TODO: AVOID DRY
+
+    /**
+     * Updates a data record based on the ID
+     *
+     * @param sheetName Sheet to update
+     * @param record Record to update
+     * @param id ID of the record to be updated
+     * @throws IOException Error if there is a problem with the IO process
+     */
+    protected void serializeUpdate(String sheetName, String[] record, UUID id) throws IOException {
         XSSFWorkbook workbook = new XSSFWorkbook(FileIOHelper.getFileInputStream(sheetName));
         XSSFSheet sheet = workbook.getSheetAt(0);
         // Update row by id
-        writeRow(newRecord, sheet.getRow(getIndexById(sheet, id)));
+        writeRow(record, sheet.getRow(getIndexById(sheet, id)));
         try (FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName)) {
             // Write to file...
             workbook.write(fileOut);
@@ -88,6 +102,13 @@ public class BaseXlsxHelper {
         }
     }
 
+    /**
+     * Deletes a record based on the ID
+     *
+     * @param sheetName Sheet to delete
+     * @param id ID of record to delete
+     * @throws IOException Error if there is a problem with the IO process
+     */
     protected void deleteRecord(String sheetName, UUID id) throws IOException {
         XSSFWorkbook workbook = new XSSFWorkbook(FileIOHelper.getFileInputStream(sheetName));
         XSSFSheet sheet = workbook.getSheetAt(0);
@@ -105,6 +126,12 @@ public class BaseXlsxHelper {
         }
     }
 
+    /**
+     * Create a header
+     *
+     * @param header Header to add to the top of the file
+     * @param row Row to add the record to
+     */
     protected void writeHeader(String[] header, Row row) {
         for (int i = 0; i < header.length; i++) {
             Cell cell = row.createCell(i);
@@ -112,6 +139,12 @@ public class BaseXlsxHelper {
         }
     }
 
+    /**
+     * Create a new row
+     *
+     * @param data Data record to add
+     * @param row Row to add the record to
+     */
     protected void writeRow(String[] data, Row row) {
         for (int i = 0; i < data.length; i++) {
             Cell cell = row.createCell(i);

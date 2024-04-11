@@ -70,17 +70,6 @@ public class FileIOHelper {
         return new FileOutputStream(getFile(name));
     }
 
-    /**
-     * Get the Buffered Writer object from the file
-     *
-     * @param name filename with extension
-     * @return Buffered Writer of the file
-     * @throws IOException File Not Found Exception
-     */
-    public static BufferedWriter getFileBufferedWriter(String name) throws IOException {
-        return new BufferedWriter(new OutputStreamWriter(getFileOutputStream(name)));
-    }
-
     // Get Excel spreadsheet by filename
     public static XSSFSheet getSheet(String filePath) {
         XSSFSheet sheet = null;

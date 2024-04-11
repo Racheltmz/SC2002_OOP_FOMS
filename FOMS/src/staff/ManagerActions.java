@@ -3,11 +3,9 @@ package staff;
 import branch.BranchDirectory;
 import menu.MenuDirectory;
 import utils.InputScanner;
-import utils.MenuItemXlsxHelper;
 import menu.MenuItem;
 import menu.Menu;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 import exceptions.ItemNotFoundException;
@@ -21,17 +19,14 @@ import static validation.ValidateDataType.validateInt;
 // TODO: SOLID: IMPLEMENT INTERFACE (For all 3 methods)
 // TODO: STRUCT: MOVE PRINT STATEMENTS TO VIEW
 // Manager's permissions
-
 public class ManagerActions {
-
-    MenuItemXlsxHelper menuItemXlsxHelper = new MenuItemXlsxHelper();
+    InputScanner sc = InputScanner.getInstance();
+    BranchDirectory branchDirectory = BranchDirectory.getInstance();
+    MenuDirectory menuDirectory = MenuDirectory.getInstance();
 
     // Add menu item
     public void addMenuItem(StaffRoles auth) {
         if (authoriseManager(auth)) {
-            InputScanner sc = InputScanner.getInstance();
-            BranchDirectory branchDirectory = BranchDirectory.getInstance();
-            MenuDirectory menuDirectory = MenuDirectory.getInstance();
             try {
                 // Get branch by user input
                 String branch = getBranchByUserInput(branchDirectory);
@@ -60,10 +55,6 @@ public class ManagerActions {
     public void updateMenuItem(StaffRoles auth)
             throws MenuItemNotFoundException, ItemNotFoundException {
         if (authoriseManager(auth)) {
-            InputScanner sc = InputScanner.getInstance();
-            BranchDirectory branchDirectory = BranchDirectory.getInstance();
-            MenuDirectory menuDirectory = MenuDirectory.getInstance();
-
             // Get menu by branch
             String branch = getBranchByUserInput(branchDirectory);
             Menu branchMenu = menuDirectory.getMenu(branch);
@@ -95,9 +86,6 @@ public class ManagerActions {
     public void removeMenuItem(StaffRoles auth)
             throws MenuItemNotFoundException, IndexOutOfBoundsException, ItemNotFoundException, IOException {
         if (authoriseManager(auth)) {
-            BranchDirectory branchDirectory = BranchDirectory.getInstance();
-            MenuDirectory menuDirectory = MenuDirectory.getInstance();
-
             // Get menu by branch
             String branch = getBranchByUserInput(branchDirectory);
             Menu branchMenu = menuDirectory.getMenu(branch);

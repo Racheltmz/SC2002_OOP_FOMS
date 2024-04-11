@@ -49,16 +49,16 @@ public class ActiveManager implements ActiveUser {
             sc.nextLine();
             switch (staffChoice) {
                 case 1:
-                    this.getActiveStaff().displayStaffList(StaffRoles.MANAGER);
+                    this.getActiveStaff().displayStaffList(this.activeStaff.getRole());
                     break;
                 case 2:
-                    this.getActiveStaff().addMenuItem(StaffRoles.MANAGER);
+                    this.getActiveStaff().addMenuItem(this.activeStaff.getRole());
                     break;
                 case 3:
-                    this.getActiveStaff().updateMenuItem(StaffRoles.MANAGER);
+                    this.getActiveStaff().updateMenuItem(this.activeStaff.getRole());
                     break;
                 case 4:
-                    this.getActiveStaff().removeMenuItem(StaffRoles.MANAGER);
+                    this.getActiveStaff().removeMenuItem(this.activeStaff.getRole());
                     break;
                 case 5:
                     this.getActiveStaff().getNewOrders(this.activeStaff.getBranch());
@@ -70,7 +70,7 @@ public class ActiveManager implements ActiveUser {
                     this.getActiveStaff().setOrderReady();
                     break;
                 case 8:
-                    this.getActiveStaff().changePassword(this.getActiveStaff());
+                    this.getActiveStaff().changePassword(this.activeStaff);
                     break;
                 case 9:
                     this.logout();

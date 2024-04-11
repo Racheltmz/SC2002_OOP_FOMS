@@ -14,7 +14,7 @@ import java.util.UUID;
 // TODO: SOLID: SEPARATE PERMISSIONS INTO A STAFFACTIONS CLASS (OTHER THAN PASSWORD) + CREATE 1 INTERFACE FOR THE ORDERS
 // Staff Details
 public class Staff implements IXlsxSerializable {
-    private final UUID id = UUID.randomUUID();
+    private UUID id = UUID.randomUUID();
     private String staffID;
     private String name;
     private String password;
@@ -33,14 +33,30 @@ public class Staff implements IXlsxSerializable {
         this.password = genHash("password");
     }
 
-    // TODO: CHECK IF CAN BE DONE IN STRING
-    // Serialization to XLSX
-    public String[] toXlsx() {
-        return new String[] { name, staffID, role.toString(), String.valueOf(gender), String.valueOf(age), branch };
-//        return new String[] { String.valueOf(id), name, staffID, role.toString(), String.valueOf(gender), String.valueOf(age), branch };
+    public Staff(UUID id, String staffID, String name, StaffRoles role, char gender, int age, String branch) {
+        this.id = id;
+        this.staffID = staffID;
+        this.name = name;
+        this.role = role;
+        this.gender = gender;
+        this.age = age;
+        this.branch = branch;
+        this.password = genHash("password");
     }
 
-    /* GETTERS AND SETTERS */
+    // Serialization to XLSX
+    public String[] toXlsx() {
+        return new String[] { String.valueOf(id), name, staffID, role.toString(), String.valueOf(gender), String.valueOf(age), branch };
+    }
+
+    /**
+     * Get record ID
+     * @return ID
+     */
+    public UUID getId() {
+        return id;
+    }
+
     public String getStaffID() {
         return this.staffID;
     }

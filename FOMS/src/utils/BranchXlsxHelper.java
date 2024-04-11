@@ -3,11 +3,11 @@ package utils;
 import branch.Branch;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import staff.Staff;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static utils.FileIOHelper.getSheet;
 
@@ -42,7 +42,7 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
     }
 
      /**
-     * Reads the XLSX file and parses it into an array list of branch objects.
+     * On initialisation, reads the XLSX file and parses it into an array list of branch objects.
      *
      * @return ArrayList of branch Objects.
      */
@@ -52,57 +52,49 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
         ArrayList<Branch> branches = new ArrayList<>();
         if (XlsxData.isEmpty()) return branches;
         XlsxData.forEach((data) -> {
-            if (data.length == 3) {
+            if (data.length == 4) {
+                UUID id = UUID.fromString(data[0]);
                 // Convert to respective data type
-                String name = data[0];
-                String location = data[1];
-                int staffQuota = (int) Double.parseDouble(data[2]);
+                String name = data[1];
+                String location = data[2];
+                int staffQuota = (int) Double.parseDouble(data[3]);
 
                 // Add new branch
-                branches.add(new Branch(name, location, staffQuota));
+                branches.add(new Branch(id, name, location, staffQuota));
             }
         });
         return branches;
     }
 
+    /**
+     * Writes a branch record to the XLSX File.
+     *
+     * @param branch Branch record to add
+     * @param numExistingRecords Number of existing branch records
+     * @throws IOException Error if there is an issue with IO processes
+     */
     public void writeToXlsx(Branch branch, int numExistingRecords) throws IOException {
         String[] header = {"id", "name", "location", "manager"};
         serializeRecord(this.branchXlsx, branch.toXlsx(), header, numExistingRecords);
     }
 
-//    public void updateXlsx(Branch branch, int idxToUpdate) throws IOException {
-//        serializeUpdate(this.branchXlsx, branch.toXlsx(), idxToUpdate);
-//    }
+    /**
+     * Updates a branch record in the XLSX File.
+     *
+     * @param branch Branch record to add
+     * @throws IOException Error if there is an issue with IO processes
+     */
+    public void updateXlsx(Branch branch) throws IOException {
+        serializeUpdate(this.branchXlsx, branch.toXlsx(), branch.getId());
+    }
 
-
-
-//    public void writeToXlsx(ArrayList<Branch> branches) throws IOException {
-//        Workbook workbook = new XSSFWorkbook();
-//        Sheet sheet = workbook.createSheet("Branches");
-//        String[] header = {"Name", "Location", "Manager"};
-//        writeHeader(header, sheet.createRow(0));
-//        for (int i = 0; i < branches.size(); i++) {
-//            writeRow(branches.get(i).toXlsx(), sheet.createRow(i + 1));
-//        }
-//        try (FileOutputStream fileOut = new FileOutputStream(this.branchXlsx)) {
-//            workbook.write(fileOut);
-//        } finally {
-//            workbook.close();
-//        }
-//    }
-
-//    private void writeHeader(String[] header, Row row) {
-//        for (int i = 0; i < header.length; i++) {
-//            Cell cell = row.createCell(i);
-//            cell.setCellValue(header[i]);
-//        }
-//    }
-//
-//    private void writeRow(String[] data, Row row) {
-//        for (int i = 0; i < data.length; i++) {
-//            Cell cell = row.createCell(i);
-//            cell.setCellValue(data[i]);
-//        }
-//    }
-
+    /**
+     * Deletes a branch record in the XLSX File.
+     *
+     * @param id ID of branch record to delete
+     * @throws IOException Error if there is an issue with IO processes
+     */
+    public void removeXlsx(UUID id) throws IOException {
+        deleteRecord(this.branchXlsx, id);
+    }
 }

@@ -4,6 +4,7 @@ import branch.BranchDirectory;
 
 import java.io.IOException;
 import java.util.InputMismatchException;
+import java.util.UUID;
 
 import exceptions.ItemNotFoundException;
 import exceptions.MenuItemNotFoundException;
@@ -20,6 +21,11 @@ public class Manager extends Staff  {
     // Constructor
     public Manager(String staffID, String name, StaffRoles role, char gender, int age, String branch) {
         super(staffID, name, role, gender, age, branch);
+        this.managerActions = new ManagerActions();
+    }
+
+    public Manager(UUID id, String staffID, String name, StaffRoles role, char gender, int age, String branch) {
+        super(id, staffID, name, role, gender, age, branch);
         this.managerActions = new ManagerActions();
     }
 

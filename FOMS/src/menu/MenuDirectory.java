@@ -10,8 +10,9 @@ import java.util.Objects;
 
 import static branch.BranchDirectory.getBranchByUserInput;
 
+// TODO: CLEAN THIS FILE
 public class MenuDirectory {
-    private ArrayList<Menu> menuDirectory;
+    private final ArrayList<Menu> menuDirectory;
     private static MenuDirectory menuSingleton = null;
 
     private MenuDirectory() {

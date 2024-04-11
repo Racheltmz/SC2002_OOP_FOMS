@@ -13,7 +13,7 @@ import static authorisation.Authorisation.authoriseAdmin;
 // Records of staff
 public class StaffDirectory {
     // Attribute
-    private ArrayList<Staff> staffDirectory;
+    private final ArrayList<Staff> staffDirectory;
     private static StaffDirectory staffSingleton = null;
 
     private StaffDirectory() throws IOException {

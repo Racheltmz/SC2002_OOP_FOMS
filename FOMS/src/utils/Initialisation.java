@@ -4,7 +4,7 @@ import payment.Payment;
 
 import java.util.ArrayList;
 
-// TODO: TEMP LEAVE PAYMENT HERE
+// TODO: REMOVE AFTER IMPLEMENTING EXTENSIBILITY FOR PAYMENT
 public class Initialisation {
 
 

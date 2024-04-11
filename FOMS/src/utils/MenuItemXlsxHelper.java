@@ -47,7 +47,7 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
     }
 
     /**
-     * Reads the XLSX file and parses it into an array list of menu item objects.
+     * On initialisation, reads the XLSX file and parses it into an array list of menu item objects.
      *
      * @return ArrayList of Menu Item Objects.
      */
@@ -90,28 +90,34 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
     }
 
     /**
-     * Writes to the XLSX File.
+     * Writes a menuItem record to the XLSX File.
      *
-     * @throws IOException Unable to write to file.
+     * @param item MenuItem record to add
+     * @param numExistingRecords Number of existing menuItem records
+     * @throws IOException Error if there is an issue with IO processes
      */
     public void writeToXlsx(MenuItem item, int numExistingRecords) throws IOException {
         String[] header = {"id", "name", "price", "branch", "category", "description"};
         serializeRecord(this.menuItemXlsx, item.toXlsx(), header, numExistingRecords);
     }
 
+    /**
+     * Updates a menuItem record in the XLSX File.
+     *
+     * @param item MenuItem record to add
+     * @throws IOException Error if there is an issue with IO processes
+     */
     public void updateXlsx(MenuItem item) throws IOException {
         serializeUpdate(this.menuItemXlsx, item.toXlsx(), item.getId());
     }
 
+    /**
+     * Deletes a menuItem record in the XLSX File.
+     *
+     * @param id ID of menuItem record to delete
+     * @throws IOException Error if there is an issue with IO processes
+     */
     public void removeXlsx(UUID id) throws IOException {
         deleteRecord(this.menuItemXlsx, id);
     }
-    //    public void saveAll(ArrayList<MenuItem> menuItems) {
-//        try {
-//            writeToXlsx(menuItems);
-//            System.out.println("Menu items saved to menu_list.xlsx.");
-//        } catch (IOException e) {
-//            System.out.println("Failed to save menu items to menu_list.xlsx: " + e.getMessage());
-//        }
-//    }
 }

@@ -13,7 +13,7 @@ import static validation.ValidateDataType.validateInt;
 // Records of branch
 public class BranchDirectory {
     // Attribute
-    private ArrayList<Branch> branchDirectory;
+    private final ArrayList<Branch> branchDirectory;
     private static BranchDirectory branchSingleton = null;
 
     private BranchDirectory() {

@@ -11,14 +11,30 @@ import exceptions.ItemNotFoundException;
 import static authentication.Hashing.genHash;
 
 // TODO: STRUCT: CREATE A VIEW FOR THE PRINT STATEMENTS
-// Authentication purposes (login)
+
+/**
+ * Authenticate staff based on their roles
+ */
 public class Authentication {
-    // Verify if the password matches
+    /**
+     * Verify if the user entered the right password for the account
+     *
+     * @param staff Staff object based on the username entered
+     * @param password Password inputted
+     * @return Boolean value of whether the password matches
+     */
     protected static boolean verifyPassword(Staff staff, String password) {
         return password.equals(staff.getPassword());
     }
 
-    // Login
+    /**
+     * Staff login into their account
+     *
+     * @param staffDirectory List of staff records
+     * @return Nothing is returned
+     * @throws NoSuchAlgorithmException Error if algorithm cannot be found
+     * @throws ItemNotFoundException Error if staff cannot be found
+     */
     public static Staff login(StaffDirectory staffDirectory) throws NoSuchAlgorithmException, ItemNotFoundException {
         InputScanner sc = InputScanner.getInstance();
         while (true) {
@@ -44,7 +60,11 @@ public class Authentication {
         }
     }
 
-    // Change password
+    /**
+     * Change password
+     *
+     * @param staff Staff that wants to change their password
+     */
     public static void setNewPassword(Staff staff) {
         InputScanner sc = InputScanner.getInstance();
         System.out.print("\nPlease enter new password: ");

@@ -3,8 +3,16 @@ package authentication;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-// Hash password for security purposes
+/**
+ * Hash password for security purposes.
+ */
 public class Hashing {
+    /**
+     * Generate a hashed password using SHA-512 algorithm.
+     *
+     * @param passwordToHash String password to be hashed.
+     * @return Returns a hashed password.
+     */
     public static String genHash(String passwordToHash) {
         String hashedPassword = null;
         try {

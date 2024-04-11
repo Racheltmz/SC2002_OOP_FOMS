@@ -1,6 +1,5 @@
 package utils;
 
-
 public interface IXlsxSerializable {
     /**
      * Method to get the data to be written to XLSX file.

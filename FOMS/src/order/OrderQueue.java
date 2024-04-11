@@ -13,7 +13,7 @@ import exceptions.EmptyListException;
 // Records of all orders made by customers
 public class OrderQueue {
     // Attributes
-    private ArrayList<Order> orders;
+    private final ArrayList<Order> orders;
     private static OrderQueue ordersSingleton = null;
 
     // Constructor

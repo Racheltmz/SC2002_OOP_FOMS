@@ -15,7 +15,10 @@ import order.OrderQueue;
 
 import static authentication.Authentication.login;
 
-// Main app file
+/**
+ * Main App File
+ * @author Afreen, Gwen, Priya, Rachel, Sanjana
+ */
 public class FOMSApp {
     public static void main(String[] args) throws MenuItemNotFoundException, ItemNotFoundException, EmptyListException, IOException {
         // Initialise scanner

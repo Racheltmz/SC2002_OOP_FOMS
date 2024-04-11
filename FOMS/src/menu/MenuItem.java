@@ -34,7 +34,6 @@ public class MenuItem implements IXlsxSerializable {
 
     // Serialization to XLSX
     public String[] toXlsx() {
-//        return new String[] { name, String.valueOf(price), branch, category, description };
         return new String[] { String.valueOf(id), name, String.valueOf(price), branch, category, description };
     }
 
