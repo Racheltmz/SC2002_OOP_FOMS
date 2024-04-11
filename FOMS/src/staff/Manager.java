@@ -2,6 +2,7 @@ package staff;
 
 import branch.BranchDirectory;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 
 import exceptions.ItemNotFoundException;
@@ -23,7 +24,7 @@ public class Manager extends Staff  {
     }
 
     // Display staff list by branch
-    public void displayStaffList(StaffRoles auth) {
+    public void displayStaffList(StaffRoles auth) throws IOException {
         if (authoriseManager(auth)) {
             StaffDirectory staffDirectory = StaffDirectory.getInstance();
             BranchDirectory branchDirectory = BranchDirectory.getInstance();

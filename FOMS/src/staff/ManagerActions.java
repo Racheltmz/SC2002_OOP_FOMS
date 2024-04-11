@@ -42,19 +42,16 @@ public class ManagerActions {
                 double price = validateDouble("Enter price ($): ");
                 System.out.println("Enter category: ");
                 String category = sc.next();
+                System.out.println("Enter description: ");
+                String description = sc.next();
 
                 // Add the new menu item to the menu
-                MenuItem newItem = new MenuItem(name, price, branch, category);
-                menuDirectory.getMenu(branch).addItem(newItem);
-
-                // Write the updated menu items to the Excel file
-                menuItemXlsxHelper.writeToXlsx(menuDirectory.getNumAllMenuItems(), newItem);
-                System.out.println("New menu item added and saved to menu_list.xlsx.");
-
-            } catch (IOException e) {
-                System.out.println("Failed to save menu items to menu_list.xlsx: " + e.getMessage());
+                MenuItem newItem = new MenuItem(name, price, branch, category, description);
+                menuDirectory.getMenu(branch).addItem(newItem, menuDirectory.getNumAllMenuItems(), false);
             } catch (InputMismatchException e) { //| MenuItemNotFoundException | ItemNotFoundException e
                 System.out.println("Error: " + e.getMessage());
+            } catch (IOException e) {
+                System.out.println("File Error: " + e.getMessage()); // TODO: BETTER MSG
             }
         }
     }
@@ -82,30 +79,13 @@ public class ManagerActions {
                     double price = validateDouble("Enter price ($): ");
                     System.out.println("Enter description: ");
                     String description = sc.next();
-                    branchMenu.updateItem(itemToUpdate, price, description);
+                    branchMenu.updateItem(itemToUpdate, price, description, itemIndex);
                     success = true;
                     System.out.println("Item successfully updated in menu!");
-
-                    // Read existing menu items from the Excel file
-                    ArrayList<MenuItem> menuItems = menuItemXlsxHelper.readFromXlsx();
-
-                    // Find and update the item in the list
-                    for (MenuItem menuItem : menuItems) {
-                        if (menuItem.getName().equals(itemToUpdate.getName())) {
-                            menuItem.setPrice(price);
-                            // Update description if needed
-                            // menuItem.setDescription(description);
-                            break;
-                        }
-                    }
-
-                    // Write the updated menu items to the Excel file
-//                    menuItemXlsxHelper.writeToXlsx(menuItems);
-                    System.out.println("Menu items updated and saved to menu_list.xlsx.");
-                } catch (IOException e) {
-                    System.out.println("Failed to save menu items to menu_list.xlsx: " + e.getMessage());
                 } catch (InputMismatchException e) {
                     System.out.println("Error: " + e.getMessage());
+                } catch (IOException e) {
+                    System.out.println("File Error: " + e.getMessage()); // TODO: TO EDIT
                 }
             } while (!success);
         }

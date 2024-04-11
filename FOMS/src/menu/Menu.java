@@ -1,7 +1,9 @@
 package menu;
 
 import branch.Branch;
+import utils.MenuItemXlsxHelper;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 // TODO: CREATE VIEW for displayItems
@@ -29,24 +31,31 @@ public class Menu {
     // Functionalities
     // Display information
     public void displayItems() {
-        System.out.printf("| No. | %-10s | %-20s | %-10s |\n", "Category", "Name", "Price ($)");
-        System.out.println("-".repeat(55));
+        System.out.printf("| No. | %-10s | %-20s | %-10s | %-50s |\n", "Category", "Name", "Price ($)", "Description");
+        System.out.println("-".repeat(110));
         for (int i=0; i<this.menuItems.size(); i++) {
             MenuItem item = this.menuItems.get(i);
-            System.out.printf("| %-3d | %-10s | %-20s | %-10s |\n", i+1, item.getCategory(), item.getName(), item.getPrice());
+            System.out.printf("| %-3d | %-10s | %-20s | %-10s | %-50s |\n", i+1, item.getCategory(), item.getName(), item.getPrice(), item.getDescription());
         }
     }
 
     // Add menu item
-    public void addItem(MenuItem menuItem) {
+    public void addItem(MenuItem menuItem, int numExistingItems, boolean stored) throws IOException {
         menuItems.add(menuItem);
+        if (!stored) {
+            MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
+            menuItemXlsxHelper.writeToXlsx(menuItem, numExistingItems);
+        }
+        System.out.println("Menu item added successfully.");
     }
 
     // Update menu item
-    // TODO: CHECK DESCRIPTION
-    public void updateItem(MenuItem itemToUpdate, double price, String description) {
+    public void updateItem(MenuItem itemToUpdate, double price, String description, int idxToUpdate) throws IOException {
         itemToUpdate.setPrice(price);
-       // itemToUpdate.setDescription(description);
+        itemToUpdate.setDescription(description);
+        // Write the updated menu items to the Excel file
+        MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
+        menuItemXlsxHelper.updateXlsx(itemToUpdate, idxToUpdate);
         System.out.println("Menu item updated successfully.");
     }
 

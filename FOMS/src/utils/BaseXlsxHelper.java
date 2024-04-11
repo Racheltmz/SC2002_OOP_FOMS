@@ -4,45 +4,13 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
 public class BaseXlsxHelper {
-    private final String dataDir = "./data/";
-
-    public String getDataDir() {
-        return dataDir;
-    }
-
-    // Get Excel spreadsheet by filename
-    protected XSSFSheet getSheet(String filePath) {
-        XSSFSheet sheet = null;
-        try {
-            // Reading file from local directory
-            FileInputStream file = new FileInputStream(filePath);
-
-            // Create Workbook instance holding reference to .xlsx file
-            XSSFWorkbook workbook = new XSSFWorkbook(file);
-
-            // Get first sheet from the workbook
-            sheet = workbook.getSheetAt(0);
-
-            // Closing workbook and file output streams
-            workbook.close();
-            file.close();
-        } catch (IOException ioException) {
-            System.out.println("Error reading the Excel file: " + ioException.getMessage());
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return sheet;
-    }
-
     /**
      * Reads data from an Excel (XLSX) file and returns a List of String arrays representing rows and columns.
      *
@@ -50,7 +18,7 @@ public class BaseXlsxHelper {
      * @param skip  How many rows in the file to skip (set 1 for header)
      * @return A list of string arrays containing all the Excel values
      */
-    protected List<String[]> readAll(Sheet sheet, int skip) {
+    protected List<String[]> deserializeRecords(XSSFSheet sheet, int skip) {
         List<String[]> result = new ArrayList<>();
         for (int i = skip; i < sheet.getPhysicalNumberOfRows(); i++) {
             Row row = sheet.getRow(i);
@@ -73,27 +41,53 @@ public class BaseXlsxHelper {
     /**
      * Writes data to an Excel (XLSX) file.
      *
-     * @param writeStrings List of String arrays representing rows and columns to write to the Excel file.
-     * @param workbook     The Workbook object instance representing the Excel workbook.
-     * @param sheetName    The name of the sheet to write data into.
+     * @param sheetName The name of the sheet to write data into.
+     * @param newRecord String to write into file.
+     * @param header
+     * @param idxRecord Index to add / update record
      * @throws IOException If an I/O error occurs while writing to the Excel file.
      */
-    protected void writeToXlsxFile(List<String[]> writeStrings, Workbook workbook, String sheetName) throws IOException {
-        Sheet sheet = workbook.createSheet(sheetName);
-        for (int i = 0; i < writeStrings.size(); i++) {
-            Row row = sheet.createRow(i);
-            String[] rowData = writeStrings.get(i);
-            for (int j = 0; j < rowData.length; j++) {
-                Cell cell = row.createCell(j);
-                cell.setCellValue(rowData[j]);
-            }
+    protected void serializeRecord(String sheetName, String[] newRecord, String[] header, int idxRecord) throws IOException {
+//        Sheet sheet = workbook.createSheet(sheetName);
+//        for (int i = 0; i < writeStrings.size(); i++) {
+//            Row row = sheet.createRow(i);
+//            String[] rowData = writeStrings.get(i);
+//            for (int j = 0; j < rowData.length; j++) {
+//                Cell cell = row.createCell(j);
+//                cell.setCellValue(rowData[j]);
+//            }
+//        }
+//        try (FileOutputStream fileOut = new FileOutputStream("output.xlsx")) {
+//            workbook.write(fileOut);
+//        }
+        // TODO: AVOID DRY (COMPARE WITH FILEIOHELPER)
+        XSSFWorkbook workbook = new XSSFWorkbook(FileIOHelper.getFileInputStream(sheetName));
+        XSSFSheet sheet = workbook.getSheetAt(0);
+        if (sheet.getLastRowNum() == 0) {
+            writeHeader(header, sheet.createRow(0));
         }
-        try (FileOutputStream fileOut = new FileOutputStream("output.xlsx")) {
+        writeRow(newRecord, sheet.createRow(idxRecord));
+        try (FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName)) {
+            // Write to file...
             workbook.write(fileOut);
+        } finally {
+            workbook.close();
         }
     }
 
-    // TODO: NEW
+    protected void serializeUpdate(String sheetName, String[] newRecord, int idxRecord) throws IOException {
+        // TODO: AVOID DRY (COMPARE WITH FILEIOHELPER)
+        XSSFWorkbook workbook = new XSSFWorkbook(FileIOHelper.getFileInputStream(sheetName));
+        XSSFSheet sheet = workbook.getSheetAt(0);
+        writeRow(newRecord, sheet.getRow(idxRecord));
+        try (FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName)) {
+            // Write to file...
+            workbook.write(fileOut);
+        } finally {
+            workbook.close();
+        }
+    }
+
     protected void writeHeader(String[] header, Row row) {
         for (int i = 0; i < header.length; i++) {
             Cell cell = row.createCell(i);

@@ -8,11 +8,13 @@ import static authentication.Authentication.setNewPassword;
 import static authentication.Hashing.genHash;
 
 import exceptions.EmptyListException;
-import exceptions.IllegalArgumentException;
+
+import java.io.Serializable;
 
 // TODO: SOLID: SEPARATE PERMISSIONS INTO A STAFFACTIONS CLASS (OTHER THAN PASSWORD) + CREATE 1 INTERFACE FOR THE ORDERS
 // Staff Details
-public class Staff implements IXlsxSerializable {
+public class Staff implements Serializable, IXlsxSerializable {
+//    private static final long serialVersionUID = 1L;
     private String staffID;
     private String name;
     private String password;
@@ -31,22 +33,11 @@ public class Staff implements IXlsxSerializable {
         this.password = genHash("password");
     }
 
-    // Constructor for deserialization from XLSX data
-    public Staff(String[] data) throws IllegalArgumentException {
-        if (data.length != 6) {
-            throw new IllegalArgumentException("Invalid data format for Staff");
-        }
-        this.name = data[0];
-        this.staffID = data[1];
-        this.role = StaffRoles.valueOf(data[2]); // Assuming role is stored as a String representation of the enum
-        this.gender = data[3].charAt(0); // Assuming gender is stored as a single character
-        this.age = Integer.parseInt(data[4]);
-        this.branch = data[5];
-    }
-
+    // TODO: CHECK IF CAN BE DONE IN STRING
     // Serialization to XLSX
     public String[] toXlsx() {
         return new String[] { name, staffID, role.toString(), String.valueOf(gender), String.valueOf(age), branch };
+//        return new String[] { String.valueOf(serialVersionUID), name, staffID, role.toString(), String.valueOf(gender), String.valueOf(age), branch };
     }
 
     /* GETTERS AND SETTERS */

@@ -7,6 +7,7 @@ import exceptions.EmptyListException;
 import exceptions.ItemNotFoundException;
 import exceptions.MenuItemNotFoundException;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 
 // Authorised operations for active user with a manager role
@@ -82,6 +83,8 @@ public class ActiveManager implements ActiveUser {
             System.out.println("Invalid input: " + e.getMessage());
         } catch (MenuItemNotFoundException | ItemNotFoundException e) {
             System.out.println("Menu item not found: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

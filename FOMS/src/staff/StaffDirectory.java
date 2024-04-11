@@ -1,5 +1,6 @@
 package staff;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -15,12 +16,12 @@ public class StaffDirectory {
     private ArrayList<Staff> staffDirectory;
     private static StaffDirectory staffSingleton = null;
 
-    private StaffDirectory() {
+    private StaffDirectory() throws IOException {
         StaffXlsxHelper staffXlsxHelper = StaffXlsxHelper.getInstance();
-        this.staffDirectory = staffXlsxHelper.initialiseRecords();
+        this.staffDirectory = staffXlsxHelper.readFromXlsx();
     }
 
-    public static StaffDirectory getInstance() {
+    public static StaffDirectory getInstance() throws IOException {
         if (staffSingleton == null) {
             staffSingleton = new StaffDirectory();
         }
@@ -58,7 +59,7 @@ public class StaffDirectory {
 
     // Filters
     public ArrayList<Staff> filterBranch(String branch) {
-        StaffList toFilter = new StaffList();
+        StaffActions toFilter = new StaffActions();
         try {
             return toFilter.getStaffBranch(this.staffDirectory, branch);
         } catch (InvalidInputException e) {
@@ -69,7 +70,7 @@ public class StaffDirectory {
     }
 
     public ArrayList<Staff> filterRole(StaffRoles role) {
-        StaffList toFilter = new StaffList();
+        StaffActions toFilter = new StaffActions();
         return toFilter.getStaffRole(this.staffDirectory, role);
     }
 

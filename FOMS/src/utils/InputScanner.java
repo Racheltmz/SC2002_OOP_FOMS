@@ -11,6 +11,7 @@ public class InputScanner {
     private InputScanner() {
         alreadyClosed = false;
         reader = new Scanner(System.in);
+        reader.useDelimiter("\\n");
     }
 
     public static InputScanner getInstance() {

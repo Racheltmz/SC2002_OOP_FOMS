@@ -1,11 +1,13 @@
 package branch;
-import staff.StaffRoles;
+
 import utils.IXlsxSerializable;
-import exceptions.IllegalArgumentException;
+
+import java.io.Serializable;
 
 // Branch details
-public class Branch implements IXlsxSerializable{
+public class Branch implements Serializable, IXlsxSerializable {
     // Attributes
+//    private static final long serialVersionUID = 1L;
     public String name;
     public String location;
     public int staffQuota;
@@ -26,20 +28,10 @@ public class Branch implements IXlsxSerializable{
         }
     }
 
-    // Constructor for deserialization from XLSX data
-    public Branch(String[] data) throws IllegalArgumentException{
-        if (data.length != 4) {
-            throw new IllegalArgumentException("Invalid data format for Branch");
-        }
-        this.name = data[0];
-        this.location = data[1];
-        this.staffQuota = Integer.parseInt(data[2]);
-        this.managerQuota = Integer.parseInt(data[3]);
-    }
-
     // Serialization to XLSX
     public String[] toXlsx() {
-        return new String[] {name, location, String.valueOf(staffQuota), String.valueOf(managerQuota)};
+        return new String[] { name, location, String.valueOf(staffQuota), String.valueOf(managerQuota)};
+//        return new String[] {String.valueOf(serialVersionUID), name, location, String.valueOf(staffQuota), String.valueOf(managerQuota)};
     }
 
     // Getters and setters

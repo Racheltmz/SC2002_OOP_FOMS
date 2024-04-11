@@ -16,7 +16,7 @@ public class MenuDirectory {
 
     private MenuDirectory() {
         MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
-        this.menuDirectory = menuItemXlsxHelper.initialiseRecords();
+        this.menuDirectory = menuItemXlsxHelper.readFromXlsx();
     }
 
     public static MenuDirectory getInstance() {

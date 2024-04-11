@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.InputMismatchException;
 
@@ -16,7 +17,7 @@ import static authentication.Authentication.login;
 
 // Main app file
 public class FOMSApp {
-    public static void main(String[] args) throws MenuItemNotFoundException, ItemNotFoundException, EmptyListException {
+    public static void main(String[] args) throws MenuItemNotFoundException, ItemNotFoundException, EmptyListException, IOException {
         // Initialise scanner
         InputScanner sc = InputScanner.getInstance();
         StaffDirectory staffDirectory = StaffDirectory.getInstance();

@@ -1,5 +1,7 @@
 package utils;
 
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
 
@@ -18,7 +20,7 @@ public class FileIOHelper {
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private static File init() {
-        File folder = new File("../data");
+        File folder = new File("./data");
         if (!folder.exists()) folder.mkdir();
         return folder;
     }
@@ -36,7 +38,7 @@ public class FileIOHelper {
     }
 
     /**
-     * Gets the file object in the data folder
+     * Gets the file object in the data folder, creates the file if it doesn't exist
      *
      * @param name Filename with extension
      * @return File object if valid, null otherwise
@@ -77,5 +79,29 @@ public class FileIOHelper {
      */
     public static BufferedWriter getFileBufferedWriter(String name) throws IOException {
         return new BufferedWriter(new OutputStreamWriter(getFileOutputStream(name)));
+    }
+
+    // Get Excel spreadsheet by filename
+    public static XSSFSheet getSheet(String filePath) {
+        XSSFSheet sheet = null;
+        try {
+            // Reading file from local directory
+            FileInputStream file = FileIOHelper.getFileInputStream(filePath);
+
+            // Create Workbook instance holding reference to .xlsx file
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+
+            // Get first sheet from the workbook
+            sheet = workbook.getSheetAt(0);
+
+            // Closing workbook and file output streams
+            workbook.close();
+            file.close();
+        } catch (IOException ioException) {
+            System.out.println("Error reading the Excel file: " + ioException.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return sheet;
     }
 }

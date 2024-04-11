@@ -1,27 +1,17 @@
 package utils;
 
-
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import staff.Admin;
 import staff.Manager;
 import staff.Staff;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import exceptions.IllegalArgumentException;
-import menu.MenuItem;
 import staff.StaffRoles;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static utils.FileIOHelper.getSheet;
 
 // Helper class for staff
 public class StaffXlsxHelper extends BaseXlsxHelper {
@@ -35,7 +25,7 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
      * Default Constructor to initialize this class with staff.xlsx as the XLSX file.
      */
     public StaffXlsxHelper() {
-        this.staffXlsx = getDataDir() + "staff_list.xlsx";
+        this.staffXlsx = "staff_list.xlsx";
     }
 
     /**
@@ -60,95 +50,67 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
      * @throws IOException Unable to read from file
      */
     public ArrayList<Staff> readFromXlsx() throws IOException {
-        Workbook workbook = null;
-        try{
-            workbook = WorkbookFactory.create(FileIOHelper.getFileInputStream(this.staffXlsx));
-            Sheet sheet = workbook.getSheetAt(0);//Assuming first sheet i s where data is stored
-            List<String[]> XlsxData = readAll(sheet, 1);
-            ArrayList<Staff> staff = new ArrayList<>();
-            if(XlsxData.isEmpty()) return staff;
-            XlsxData.forEach((str) -> {
-                try {
-                    staff.add(new Staff(str));
-                } catch (IllegalArgumentException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            });
-            return staff;
-        } finally {
-            if(workbook != null){
-                workbook.close();
-            }
-        }
-    }
+        XSSFSheet sheet = getSheet(this.staffXlsx);
+        List<String[]> XlsxData = deserializeRecords(sheet, 1);
+        ArrayList<Staff> staffList = new ArrayList<>();
+        if(XlsxData.isEmpty()) return staffList;
+        XlsxData.forEach((data) -> {
+            if (data.length == 6) {
+                // Convert to respective datatype
+                String name = data[0];
+                String staffId = data[1];
+                String role = data[2];
+                char gender = data[3].charAt(0);
+                int age = (int) Double.parseDouble(data[4]);
+                String branch = data[5];
 
-     /**
-     * Writes to the XLSX File.
-     *
-     * @param items ArrayList of Menu items to save.
-     * @throws IOException Unable to write to file.
-     */
-    public void writeToXlsx(ArrayList<Staff> staff) throws IOException {
-        Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("Staff");
-        String[] header = {"Name", "StaffID", "Role", "Gender", "Age","Branch"};
-        writeHeader(header, sheet.createRow(0));
-        for (int i = 0; i < staff.size(); i++) {
-            writeRow(staff.get(i).toXlsx(), sheet.createRow(i + 1));
-        }
-        try (FileOutputStream fileOut = new FileOutputStream(this.staffXlsx)) {
-            workbook.write(fileOut);
-        } finally {
-            workbook.close();
-        }
-    }
-
-    // Initialise staff records
-    public ArrayList<Staff> initialiseRecords() {
-        // Initialise a list
-        ArrayList<Staff> staffList = new ArrayList<Staff>();
-        XSSFSheet staffSheet = getSheet(this.staffXlsx);
-        // Iterate all rows
-        for (int i = 1; i < staffSheet.getPhysicalNumberOfRows(); i++) {
-            Row row = staffSheet.getRow(i);
-            if (row != null && row.getLastCellNum() >= 6) { // Ensure at least 6 cells in a row
-                // Get values from rows
-                Cell staffIdCell = row.getCell(1);
-                Cell nameCell = row.getCell(0);
-                Cell roleCell = row.getCell(2);
-                Cell genderCell = row.getCell(3);
-                Cell ageCell = row.getCell(4);
-                Cell branchCell = row.getCell(5);
-
-                // Ensure cells are not empty
-                if (staffIdCell != null && nameCell != null && roleCell != null && genderCell != null && ageCell != null && branchCell != null) {
-                    // Convert to respective datatype
-                    String staffId = staffIdCell.toString();
-                    String name = nameCell.toString();
-                    char role = roleCell.toString().charAt(0);
-                    char gender = genderCell.toString().charAt(0);
-                    int age = (int) ageCell.getNumericCellValue();
-                    String branch = branchCell.toString();
-
-                    // Add new staff
-                    switch (role) {
-                        case 'S':
-                            staffList.add(new Staff(staffId, name, StaffRoles.STAFF, gender, age, branch));
-                            break;
-                        case 'M':
-                            staffList.add(new Manager(staffId, name, StaffRoles.MANAGER, gender, age, branch));
-                            break;
-                        case 'A':
-                            staffList.add(new Admin(staffId, name, StaffRoles.ADMIN, gender, age, branch));
-                            break;
-                    }
+                // Add new staff
+                switch (role) {
+                    case "S":
+                        staffList.add(new Staff(staffId, name, StaffRoles.STAFF, gender, age, branch));
+                        break;
+                    case "M":
+                        staffList.add(new Manager(staffId, name, StaffRoles.MANAGER, gender, age, branch));
+                        break;
+                    case "A":
+                        staffList.add(new Admin(staffId, name, StaffRoles.ADMIN, gender, age, branch));
+                        break;
                 }
             }
-        }
+        });
         return staffList;
     }
 
+    /**
+     * Writes to the XLSX File.
+     * @param staff
+     * @throws IOException
+     */
+    // Insert record
+    public void writeToXlsx(Staff staff, int numExistingRecords) throws IOException {
+        String[] header = {"id", "name", "staffID", "role", "gender", "age", "branch"};
+        serializeRecord(this.staffXlsx, staff.toXlsx(), header, numExistingRecords);
+    }
+
+    // Update record
+    public void updateXlsx(Staff staff, int idxToUpdate) throws IOException {
+        serializeUpdate(this.staffXlsx, staff.toXlsx(), idxToUpdate);
+    }
+
+//    public void writeToXlsx(ArrayList<Staff> staff) throws IOException {
+//        Workbook workbook = new XSSFWorkbook();
+//        Sheet sheet = workbook.createSheet("Staff");
+//        String[] header = {"Name", "StaffID", "Role", "Gender", "Age","Branch"};
+//        writeHeader(header, sheet.createRow(0));
+//        for (int i = 0; i < staff.size(); i++) {
+//            writeRow(staff.get(i).toXlsx(), sheet.createRow(i + 1));
+//        }
+//        try (FileOutputStream fileOut = new FileOutputStream(this.staffXlsx)) {
+//            workbook.write(fileOut);
+//        } finally {
+//            workbook.close();
+//        }
+//    }
 //    private void writeHeader(String[] header, Row row) {
 //        for (int i = 0; i < header.length; i++) {
 //            Cell cell = row.createCell(i);

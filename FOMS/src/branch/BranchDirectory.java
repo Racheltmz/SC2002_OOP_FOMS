@@ -17,7 +17,7 @@ public class BranchDirectory {
 
     private BranchDirectory() {
         BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
-        this.branchDirectory = branchXlsxHelper.initialiseRecords();
+        this.branchDirectory = branchXlsxHelper.readFromXlsx();
     }
 
     public static BranchDirectory getInstance() {

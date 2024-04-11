@@ -8,35 +8,26 @@ import java.io.Serializable;
 // Menu Item details
 public class MenuItem implements Serializable, IXlsxSerializable {
     // Attributes
-    private static final long serialVersionUID = 1L;
+//    private static final long serialVersionUID = 1L;
     private String name;
     private double price;
     private String branch;
     private String category;
+    private String description;
 
     // Constructor
-    public MenuItem(String name, double price, String branch, String category) {
+    public MenuItem(String name, double price, String branch, String category, String description) {
         this.name = name;
         this.price = price;
         this.branch = branch;
         this.category = category;
-    }
-
-    // Constructor for deserialization from XLSX data
-    public MenuItem(String[] data) throws IllegalArgumentException {
-        System.out.println(data.length);
-        if (data.length != 4) {
-            throw new IllegalArgumentException("Invalid data format for MenuItem");
-        }
-        this.name = data[0];
-        this.price = Double.parseDouble(data[1]);
-        this.branch = data[2];
-        this.category = data[3];
+        this.description = description;
     }
 
     // Serialization to XLSX
     public String[] toXlsx() {
-        return new String[] { name, String.valueOf(price), branch, category };
+        return new String[] { name, String.valueOf(price), branch, category, description };
+//        return new String[] { String.valueOf(serialVersionUID), name, String.valueOf(price), branch, category, description };
     }
 
     // Getters and setters
@@ -58,5 +49,13 @@ public class MenuItem implements Serializable, IXlsxSerializable {
 
     public String getCategory() {
         return category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
