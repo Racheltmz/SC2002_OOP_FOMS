@@ -111,18 +111,19 @@ public class OrderQueue {
     }
 
     // Update order status to ready when food is ready or when customer collects order
-    public void updateStatus(OrderStatus valStatus, OrderStatus newStatus) {
+    public void updateStatus(OrderStatus newStatus) {
         try {
             Order order = this.getOrderById();
-            if (order.getStatus().equals(valStatus))
-                order.setStatus(newStatus);
+            OrderStatus prevStatus = order.getStatus();
             if (newStatus.equals(OrderStatus.READY)) {
                 Timer timer = new Timer();
                 OrderTimerTask orderTask = new OrderTimerTask(timer, order);
                 int seconds = 5;
                 timer.schedule(orderTask, seconds * 1000);
             }
-            System.out.println("Order status updated from " + valStatus + " to " + newStatus);
+            else
+                order.setStatus(newStatus);
+            System.out.println("Order status updated from " + prevStatus + " to " + newStatus);
         } catch (EmptyListException emptyListException) {
             System.out.println("There has to be an order before this option can be used.");
         }

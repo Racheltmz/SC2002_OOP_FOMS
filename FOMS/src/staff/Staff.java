@@ -93,6 +93,6 @@ public class Staff {
 
     // Update order status to ready to pickup for Test Case 10 and 12
     public void setOrderReady(OrderQueue queue) {
-        queue.updateStatus(OrderStatus.NEW, OrderStatus.READY);
+        queue.updateStatus(OrderStatus.READY);
     }
 }
