@@ -35,6 +35,7 @@ public class OrderQueue {
     public void rmvOrder() {
         try {
             this.orders.remove(this.getOrderById());
+            System.out.println("Order removed.");
         } catch (EmptyListException emptyListException) {
             System.out.println("No orders to remove.");
         }
@@ -44,18 +45,19 @@ public class OrderQueue {
     public Order getOrderById() throws EmptyListException {
         InputScanner sc = getInstance();
         if (!this.orders.isEmpty()) {
-            // Else iterate until user enters a valid id
-            while (true) {
-                // Get user's input
-                System.out.println("Enter orderID: ");
-                String orderID = sc.next();
-                // Return order object if it can be found
-                for (Order order : this.orders) {
-                    if (Objects.equals(order.getOrderID(), orderID))
-                        return order;
+                while(true){
+                    // Get user's input
+                    System.out.println("Enter orderID: ");
+                    String orderID = sc.next();
+
+                    // Return order object if found
+                    for (Order order : this.orders) {
+                        if (Objects.equals(order.getOrderID(), orderID))
+                            return order;
+                    } 
+                    System.out.println("Please retry, invalid orderID.");
                 }
-                System.out.println("Please retry, invalid orderID.");
-            }
+                
         } else {
             throw new EmptyListException("No orders to display.");
         }
@@ -100,12 +102,24 @@ public class OrderQueue {
 
     // TODO: Implement for test case 8, 18
     // Get order status by order ID
-    public void getStatusById() {
-        try {
-            Order order = this.getOrderById();
-            System.out.printf("Status of Order ID: %s is %s", order.getOrderID(), order.getStatus());
-        } catch (EmptyListException emptyListException) {
-            System.out.println("There has to be an order before this option can be used.");
+    public OrderStatus getStatusById() throws EmptyListException {
+        InputScanner sc = getInstance();
+        if (!this.orders.isEmpty()){
+            while(true){
+                // Get user's input
+                System.out.println("Enter orderID: ");
+                String orderID = sc.next();
+
+                // Return status if order found
+                for (Order order : this.orders){
+                    if (Objects.equals(order.getOrderID(),orderID))
+                        return order.getStatus();
+                }
+                System.out.println("Invalid orderID. Please retry.");
+            }
+        }
+        else{
+            throw new EmptyListException("No orders to display.");
         }
     }
 

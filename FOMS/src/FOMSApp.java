@@ -2,13 +2,24 @@ import java.security.NoSuchAlgorithmException;
 import java.util.InputMismatchException;
 
 import authorisation.*;
+import exceptions.EmptyListException;
 import utils.InputScanner;
+import java.util.ArrayList;
+import java.util.Timer;
 import management.Company;
 import staff.Staff;
 import staff.StaffRoles;
 import order.OrderQueue;
+import order.Order;
+import order.OrderStatus;
+import order.OrderTimerTask;
+import menu.MenuItem;
+import menu.Menu;
+import payment.PaymentView;
+import payment.Payment;
 
 import static authentication.Authentication.login;
+import static branch.BranchDirectory.getBranchByUserInput;
 import static menu.MenuDirectory.displayMenuByBranch;
 import static utils.Initialisation.initialiseCompany;
 import static utils.InputScanner.getInstance;
@@ -19,7 +30,7 @@ public class FOMSApp {
         // Initialise scanner
         InputScanner sc = getInstance();
 
-        // Initialise company and order queue
+        // Initialise company, order queue, payment;
         Company company = initialiseCompany();
         OrderQueue orderQueue = new OrderQueue();
 
@@ -48,16 +59,101 @@ public class FOMSApp {
                             // Ask customer to select branch
                             displayMenuByBranch(company);
 
-                            // Customer Options @gwen (test case 4-8, 18)
-                            System.out.println("Please select option");
-                            System.out.println("1. Browse Menu\n2. Check Order Status\n3. Return back");
                             // Iterate until customer is done using functionalities
-                            // int customerChoice = 0;
-//                            do {
-//                                // Menu Browsing
-//
-//                                // Check order status
-//                            } while (customerChoice != 3);
+                            int customerChoice = 0;
+                            do {
+                                // Customer Options @gwen (test case 4-8, 18)
+                                System.out.println("Please select option");
+                                System.out.println("1. Browse Menu\n2. Check Order Status\n3. Return back");
+                                customerChoice = sc.nextInt();
+                                sc.nextLine();
+
+                                switch(customerChoice){
+                                    case 1:
+                                        // Menu Browsing
+                                        ArrayList<MenuItem> selectedItems = new ArrayList<>();
+                                        String branchName = getBranchByUserInput(company.getBranchDirectory());
+                                        Menu menu = company.getMenuDirectory().getMenu(branchName);
+
+                                        String itemName;
+                                        while(true){
+                                            System.out.println("Enter item name or DONE to finish ordering:");
+                                            itemName = sc.nextLine();
+                                            sc.nextLine();
+                                            if (itemName.equalsIgnoreCase("done")){
+                                                break;
+                                            }
+                                            // Find MenuItem in Menu
+                                            MenuItem selectedItem = null;
+                                            for (MenuItem item : menu.getMenuItems()){
+                                                if (item.getName().equalsIgnoreCase(itemName)){
+                                                    selectedItem = item;
+                                                    break;
+                                                }
+                                            }
+                                            if (selectedItem != null){
+                                                selectedItems.add(selectedItem);
+                                            }
+                                            else{
+                                                System.out.println("Item not found in the menu.");
+                                            }
+                                        }
+                                        // Customisations
+                                        System.out.println("What would you like to customise?");
+                                        String customisationInput = sc.nextLine();
+                                        sc.nextLine();
+                                        String[] customisations = customisationInput.split(",");
+
+                                        // Dining Options
+                                        System.out.println("Are you dining in? Y/N");
+                                        sc.nextLine();
+                                        boolean takeaway = !sc.next().equalsIgnoreCase("Y");
+
+                                        // Payment Information
+                                        System.out.println("How would you like to pay?");
+                                        PaymentView.displayPaymentMethods(company.getPaymentDirectory().getPaymentDirectory());
+                                        String paymentMethod = sc.next();
+                                        sc.nextLine();
+
+                                        // Order Processing and Payment
+                                        Payment payment = new Payment(paymentMethod);
+                                        Order order = new Order(branchName, selectedItems, customisations, takeaway, payment);
+                                        orderQueue.addOrder(order);
+
+                                        System.out.println("Total is " + order.calculateTotal());
+                                        System.out.println("How much would you like to pay?");
+                                        double customerPay = sc.nextDouble();
+
+                                        // Verify Order and Payment
+                                        order.placeOrder(customerPay);
+                                        order.printReceipt();
+
+                                        // Start Timer for Order Cancellation
+                                        Timer timer = new Timer();
+                                        // 5 Minutes in Milliseconds
+                                        timer.schedule(new OrderTimerTask(timer,order),3000000);
+                                        break;
+                                    
+                                    case 2:
+                                        // Check Order Status
+                                        try{
+                                            // Already asked for input inside
+                                            OrderStatus status  = orderQueue.getStatusById();
+                                            if (status == OrderStatus.READY){
+                                                orderQueue.updateStatus(OrderStatus.READY, OrderStatus.COMPLETED);
+                                            }
+                                            else{
+                                                System.out.println("Order is not ready for pickup.");
+                                            }
+                                        } catch (EmptyListException e){
+                                            System.out.println(e.getMessage());
+                                        }
+                                        break;
+                                    case 3:
+                                        System.out.println("Returning back to main menu.");
+                                        break;
+                                }
+                            } while (customerChoice != 3);
                         } catch (InputMismatchException inputMismatchException) {
                             System.out.println("Please enter a valid integer only.\n");
                             sc.nextLine();
