@@ -1,16 +1,12 @@
 package branch;
 
-import menu.Menu;
-import staff.Staff;
-import staff.StaffDirectory;
 import staff.StaffRoles;
+import utils.BranchXlsxHelper;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 import static authorisation.Authorisation.authoriseAdmin;
-import static utils.Initialisation.initialiseBranchRecords;
-import static utils.Initialisation.initialiseStaffRecords;
 import static validation.ValidateDataType.validateInt;
 
 // Records of branch
@@ -20,7 +16,8 @@ public class BranchDirectory {
     private static BranchDirectory branchSingleton = null;
 
     private BranchDirectory() {
-        this.branchDirectory = initialiseBranchRecords();
+        BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
+        this.branchDirectory = branchXlsxHelper.initialiseRecords();
     }
 
     public static BranchDirectory getInstance() {

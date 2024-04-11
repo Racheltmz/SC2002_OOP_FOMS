@@ -1,11 +1,10 @@
 package utils;
 
-import menu.MenuItem;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,6 +18,31 @@ public class BaseXlsxHelper {
     public String getDataDir() {
         return dataDir;
     }
+
+    // Get Excel spreadsheet by filename
+    protected XSSFSheet getSheet(String filePath) {
+        XSSFSheet sheet = null;
+        try {
+            // Reading file from local directory
+            FileInputStream file = new FileInputStream(filePath);
+
+            // Create Workbook instance holding reference to .xlsx file
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+
+            // Get first sheet from the workbook
+            sheet = workbook.getSheetAt(0);
+
+            // Closing workbook and file output streams
+            workbook.close();
+            file.close();
+        } catch (IOException ioException) {
+            System.out.println("Error reading the Excel file: " + ioException.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return sheet;
+    }
+
     /**
      * Reads data from an Excel (XLSX) file and returns a List of String arrays representing rows and columns.
      *

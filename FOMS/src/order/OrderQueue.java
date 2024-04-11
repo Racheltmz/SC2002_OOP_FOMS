@@ -8,8 +8,6 @@ import utils.InputScanner;
 
 import exceptions.EmptyListException;
 
-import static utils.Initialisation.initialiseMenuRecords;
-
 // TODO: Create views accordingly
 // TODO: Merge the customer order functions (by gwen) with the staff order functions (in enhancement branch)
 // Records of all orders made by customers
@@ -22,6 +20,7 @@ public class OrderQueue {
     public OrderQueue() {
         this.orders = new ArrayList<Order>();
     }
+
     public static OrderQueue getInstance() {
         if (ordersSingleton == null) {
             ordersSingleton = new OrderQueue();

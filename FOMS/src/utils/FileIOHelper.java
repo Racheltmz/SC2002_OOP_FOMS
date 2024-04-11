@@ -18,7 +18,7 @@ public class FileIOHelper {
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private static File init() {
-        File folder = new File("./data");
+        File folder = new File("../data");
         if (!folder.exists()) folder.mkdir();
         return folder;
     }

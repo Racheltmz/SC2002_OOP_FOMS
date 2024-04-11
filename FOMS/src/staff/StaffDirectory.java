@@ -5,10 +5,9 @@ import java.util.Objects;
 
 import exceptions.InvalidInputException;
 import exceptions.ItemNotFoundException;
-import utils.InputScanner;
+import utils.StaffXlsxHelper;
 
 import static authorisation.Authorisation.authoriseAdmin;
-import static utils.Initialisation.initialiseStaffRecords;
 
 // Records of staff
 public class StaffDirectory {
@@ -17,7 +16,8 @@ public class StaffDirectory {
     private static StaffDirectory staffSingleton = null;
 
     private StaffDirectory() {
-        this.staffDirectory = initialiseStaffRecords();
+        StaffXlsxHelper staffXlsxHelper = StaffXlsxHelper.getInstance();
+        this.staffDirectory = staffXlsxHelper.initialiseRecords();
     }
 
     public static StaffDirectory getInstance() {

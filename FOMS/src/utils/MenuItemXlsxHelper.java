@@ -1,9 +1,13 @@
 package utils;
 
+import branch.Branch;
+import branch.BranchDirectory;
+import menu.Menu;
 import menu.MenuItem;
 import exceptions.IllegalArgumentException;
 
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
@@ -11,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MenuItemXlsxHelper extends BaseXlsxHelper {
 
@@ -24,11 +29,6 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
      */
     public MenuItemXlsxHelper() {
         this.menuItemXlsx = getDataDir() + "menu_list.xlsx";
-    }
-
-    // Constructor with custom file path
-    public MenuItemXlsxHelper(String filePath) {
-        this.menuItemXlsx = filePath;
     }
 
     /**
@@ -59,11 +59,11 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
         try {
             workbook = WorkbookFactory.create(FileIOHelper.getFileInputStream(menuItemXlsx));
             Sheet sheet = workbook.getSheetAt(0); // Assuming first sheet is where data is stored
-            List<String[]> xlsxData = readAll(sheet, 1);
+            List<String[]> XlsxData = readAll(sheet, 1);
             ArrayList<MenuItem> items = new ArrayList<>();
-            if (xlsxData.isEmpty())
+            if (XlsxData.isEmpty())
                 return items;
-            xlsxData.forEach((str) -> {
+            XlsxData.forEach((str) -> {
                 try {
                     items.add(new MenuItem(str));
                 } catch (IllegalArgumentException e) {
@@ -85,7 +85,6 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
      * @throws IOException Unable to write to file.
      */
     public void writeToXlsx(int numExistingRecords, MenuItem newItem) throws IOException {
-        System.out.println("hello " + numExistingRecords + " " + newItem.getName());
         XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(this.menuItemXlsx));
         Sheet sheet = workbook.getSheetAt(0);
         writeRow(newItem.toXlsx(), sheet.createRow(numExistingRecords));
@@ -105,5 +104,43 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
 //            System.out.println("Failed to save menu items to menu_list.xlsx: " + e.getMessage());
 //        }
 //    }
+    // Initialise menu records based on the branch
+    public ArrayList<Menu> initialiseRecords() {
+        // Initialise a list
+        ArrayList<Menu> menuList = new ArrayList<Menu>();
+        BranchDirectory branchDirectory = BranchDirectory.getInstance();
+        // Create a menu for each branch
+        for (Branch branch : branchDirectory.getBranchDirectory())
+            menuList.add(new Menu(branch));
 
+        XSSFSheet menuSheet = getSheet(this.menuItemXlsx);
+        // Iterate all rows
+        for (int i = 1; i < menuSheet.getPhysicalNumberOfRows(); i++) {
+            Row row = menuSheet.getRow(i);
+            if (row != null && row.getLastCellNum() >= 4) { // Ensure at least 4 cells in a row
+                // Get values from rows
+                Cell nameCell = row.getCell(0);
+                Cell priceCell = row.getCell(1);
+                Cell branchCell = row.getCell(2);
+                Cell categoryCell = row.getCell(3);
+
+                // Ensure cells are not empty
+                if (nameCell != null && priceCell != null && branchCell != null && categoryCell != null) {
+                    // Convert to respective data type
+                    String name = nameCell.toString().trim();
+                    double price = priceCell.getNumericCellValue();
+                    String branch = branchCell.toString().trim();
+                    String category = categoryCell.toString().trim();
+
+                    // Add new item
+                    for (Menu menu : menuList) {
+                        if (Objects.equals(menu.getBranch().getBranchName(), branch)) {
+                            menu.addItem(new MenuItem(name, price, branch, category));
+                        }
+                    }
+                }
+            }
+        }
+        return menuList;
+    }
 }

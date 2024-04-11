@@ -3,18 +3,20 @@ package menu;
 import branch.BranchDirectory;
 import exceptions.ItemNotFoundException;
 import exceptions.MenuItemNotFoundException;
+import utils.MenuItemXlsxHelper;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
 import static branch.BranchDirectory.getBranchByUserInput;
-import static utils.Initialisation.initialiseMenuRecords;
 
 public class MenuDirectory {
     private ArrayList<Menu> menuDirectory;
     private static MenuDirectory menuSingleton = null;
 
     private MenuDirectory() {
-        this.menuDirectory = initialiseMenuRecords();
+        MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
+        this.menuDirectory = menuItemXlsxHelper.initialiseRecords();
     }
 
     public static MenuDirectory getInstance() {
