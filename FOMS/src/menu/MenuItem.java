@@ -3,9 +3,12 @@ package menu;
 import exceptions.IllegalArgumentException;
 import utils.IXlsxSerializable;
 
+import java.io.Serializable;
+
 // Menu Item details
-public class MenuItem implements IXlsxSerializable {
+public class MenuItem implements Serializable, IXlsxSerializable {
     // Attributes
+    private static final long serialVersionUID = 1L;
     private String name;
     private double price;
     private String branch;

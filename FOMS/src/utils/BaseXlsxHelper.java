@@ -104,13 +104,7 @@ public class BaseXlsxHelper {
     protected void writeRow(String[] data, Row row) {
         for (int i = 0; i < data.length; i++) {
             Cell cell = row.createCell(i);
-            Object obj = data[i];
-            if (obj instanceof String)
-                cell.setCellValue((String) obj);
-            else if (obj instanceof Integer)
-                cell.setCellValue((Integer) obj);
-            else if (obj instanceof Double)
-                cell.setCellValue((Double) obj);
+            cell.setCellValue(data[i]);
         }
     }
 }

@@ -87,7 +87,7 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
     public void writeToXlsx(int numExistingRecords, MenuItem newItem) throws IOException {
         XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(this.menuItemXlsx));
         Sheet sheet = workbook.getSheetAt(0);
-        writeRow(newItem.toXlsx(), sheet.createRow(numExistingRecords));
+        writeRow(newItem.toXlsx(), sheet.createRow(numExistingRecords)); //.toXlsx()
         try (FileOutputStream fileOut = new FileOutputStream(this.menuItemXlsx)) {
             // Write to file...
             workbook.write(fileOut);
@@ -96,14 +96,6 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
         }
     }
 
-//    public void saveAll(ArrayList<MenuItem> menuItems) {
-//        try {
-//            writeToXlsx(menuItems);
-//            System.out.println("Menu items saved to menu_list.xlsx.");
-//        } catch (IOException e) {
-//            System.out.println("Failed to save menu items to menu_list.xlsx: " + e.getMessage());
-//        }
-//    }
     // Initialise menu records based on the branch
     public ArrayList<Menu> initialiseRecords() {
         // Initialise a list
@@ -143,4 +135,13 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
         }
         return menuList;
     }
+
+    //    public void saveAll(ArrayList<MenuItem> menuItems) {
+//        try {
+//            writeToXlsx(menuItems);
+//            System.out.println("Menu items saved to menu_list.xlsx.");
+//        } catch (IOException e) {
+//            System.out.println("Failed to save menu items to menu_list.xlsx: " + e.getMessage());
+//        }
+//    }
 }
