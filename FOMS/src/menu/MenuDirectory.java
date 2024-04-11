@@ -61,6 +61,7 @@ public class MenuDirectory {
         }
         return count;
     }
+
     public int getNumMenuItems(String branch) {
 //        try {
             Menu menu = getMenu(branch);

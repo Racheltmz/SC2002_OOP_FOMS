@@ -2,10 +2,8 @@ package branch;
 
 import utils.IXlsxSerializable;
 
-import java.io.Serializable;
-
 // Branch details
-public class Branch implements Serializable, IXlsxSerializable {
+public class Branch implements IXlsxSerializable {
     // Attributes
 //    private static final long serialVersionUID = 1L;
     public String name;

@@ -5,6 +5,7 @@ import utils.MenuItemXlsxHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 // TODO: CREATE VIEW for displayItems
 // Menu details
@@ -45,17 +46,17 @@ public class Menu {
         if (!stored) {
             MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
             menuItemXlsxHelper.writeToXlsx(menuItem, numExistingItems);
+            System.out.println("Menu item added successfully.");
         }
-        System.out.println("Menu item added successfully.");
     }
 
     // Update menu item
-    public void updateItem(MenuItem itemToUpdate, double price, String description, int idxToUpdate) throws IOException {
+    public void updateItem(MenuItem itemToUpdate, double price, String description) throws IOException {
         itemToUpdate.setPrice(price);
         itemToUpdate.setDescription(description);
         // Write the updated menu items to the Excel file
         MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
-        menuItemXlsxHelper.updateXlsx(itemToUpdate, idxToUpdate);
+        menuItemXlsxHelper.updateXlsx(itemToUpdate);
         System.out.println("Menu item updated successfully.");
     }
 

@@ -93,9 +93,9 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
     }
 
     // Update record
-    public void updateXlsx(Staff staff, int idxToUpdate) throws IOException {
-        serializeUpdate(this.staffXlsx, staff.toXlsx(), idxToUpdate);
-    }
+//    public void updateXlsx(Staff staff, int idxToUpdate) throws IOException {
+//        serializeUpdate(this.staffXlsx, staff.toXlsx(), idxToUpdate);
+//    }
 
 //    public void writeToXlsx(ArrayList<Staff> staff) throws IOException {
 //        Workbook workbook = new XSSFWorkbook();

@@ -1,14 +1,13 @@
 package menu;
 
-import exceptions.IllegalArgumentException;
 import utils.IXlsxSerializable;
 
-import java.io.Serializable;
+import java.util.UUID;
 
 // Menu Item details
-public class MenuItem implements Serializable, IXlsxSerializable {
+public class MenuItem implements IXlsxSerializable {
     // Attributes
-//    private static final long serialVersionUID = 1L;
+    private UUID id = UUID.randomUUID();
     private String name;
     private double price;
     private String branch;
@@ -24,13 +23,26 @@ public class MenuItem implements Serializable, IXlsxSerializable {
         this.description = description;
     }
 
+    public MenuItem(UUID id, String name, double price, String branch, String category, String description) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.branch = branch;
+        this.category = category;
+        this.description = description;
+    }
+
     // Serialization to XLSX
     public String[] toXlsx() {
-        return new String[] { name, String.valueOf(price), branch, category, description };
-//        return new String[] { String.valueOf(serialVersionUID), name, String.valueOf(price), branch, category, description };
+//        return new String[] { name, String.valueOf(price), branch, category, description };
+        return new String[] { String.valueOf(id), name, String.valueOf(price), branch, category, description };
     }
 
     // Getters and setters
+    public UUID getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }

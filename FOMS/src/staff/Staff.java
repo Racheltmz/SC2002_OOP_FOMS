@@ -9,12 +9,12 @@ import static authentication.Hashing.genHash;
 
 import exceptions.EmptyListException;
 
-import java.io.Serializable;
+import java.util.UUID;
 
 // TODO: SOLID: SEPARATE PERMISSIONS INTO A STAFFACTIONS CLASS (OTHER THAN PASSWORD) + CREATE 1 INTERFACE FOR THE ORDERS
 // Staff Details
-public class Staff implements Serializable, IXlsxSerializable {
-//    private static final long serialVersionUID = 1L;
+public class Staff implements IXlsxSerializable {
+    private final UUID id = UUID.randomUUID();
     private String staffID;
     private String name;
     private String password;
@@ -37,7 +37,7 @@ public class Staff implements Serializable, IXlsxSerializable {
     // Serialization to XLSX
     public String[] toXlsx() {
         return new String[] { name, staffID, role.toString(), String.valueOf(gender), String.valueOf(age), branch };
-//        return new String[] { String.valueOf(serialVersionUID), name, staffID, role.toString(), String.valueOf(gender), String.valueOf(age), branch };
+//        return new String[] { String.valueOf(id), name, staffID, role.toString(), String.valueOf(gender), String.valueOf(age), branch };
     }
 
     /* GETTERS AND SETTERS */

@@ -70,9 +70,12 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
         serializeRecord(this.branchXlsx, branch.toXlsx(), header, numExistingRecords);
     }
 
-    public void updateXlsx(Branch branch, int idxToUpdate) throws IOException {
-        serializeUpdate(this.branchXlsx, branch.toXlsx(), idxToUpdate);
-    }
+//    public void updateXlsx(Branch branch, int idxToUpdate) throws IOException {
+//        serializeUpdate(this.branchXlsx, branch.toXlsx(), idxToUpdate);
+//    }
+
+
+
 //    public void writeToXlsx(ArrayList<Branch> branches) throws IOException {
 //        Workbook workbook = new XSSFWorkbook();
 //        Sheet sheet = workbook.createSheet("Branches");

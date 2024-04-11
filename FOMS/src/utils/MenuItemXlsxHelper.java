@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import static utils.FileIOHelper.getSheet;
 
@@ -64,19 +65,20 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
         if (XlsxData.isEmpty())
             return menuList;
         XlsxData.forEach((data) -> {
-            if (data.length == 5) {
-                String name = data[0];
-                double price = Double.parseDouble(data[1]);
-                String branch = data[2];
-                String category = data[3];
-                String description = data[4];
+            if (data.length == 6) {
+                UUID id = UUID.fromString(data[0]);
+                String name = data[1];
+                double price = Double.parseDouble(data[2]);
+                String branch = data[3];
+                String category = data[4];
+                String description = data[5];
 
                 // TODO: INEFFICIENT IF HV TIME HANDLE
                 // Add new item
                 for (Menu menu : menuList) {
                     if (Objects.equals(menu.getBranch().getBranchName(), branch)) {
                         try {
-                            menu.addItem(new MenuItem(name, price, branch, category, description), -1, true);
+                            menu.addItem(new MenuItem(id, name, price, branch, category, description), -1, true);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -97,8 +99,8 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
         serializeRecord(this.menuItemXlsx, item.toXlsx(), header, numExistingRecords);
     }
 
-    public void updateXlsx(MenuItem item, int idxToUpdate) throws IOException {
-        serializeUpdate(this.menuItemXlsx, item.toXlsx(), idxToUpdate);
+    public void updateXlsx(MenuItem item) throws IOException {
+        serializeUpdate(this.menuItemXlsx, item.toXlsx(), item.getId());
     }
     //    public void saveAll(ArrayList<MenuItem> menuItems) {
 //        try {

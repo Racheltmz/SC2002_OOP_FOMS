@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
 public class BaseXlsxHelper {
@@ -63,7 +64,7 @@ public class BaseXlsxHelper {
         // TODO: AVOID DRY (COMPARE WITH FILEIOHELPER)
         XSSFWorkbook workbook = new XSSFWorkbook(FileIOHelper.getFileInputStream(sheetName));
         XSSFSheet sheet = workbook.getSheetAt(0);
-        if (sheet.getLastRowNum() == 0) {
+        if (sheet.getRow(0) == null) { // TODO: check this
             writeHeader(header, sheet.createRow(0));
         }
         writeRow(newRecord, sheet.createRow(idxRecord));
@@ -75,11 +76,19 @@ public class BaseXlsxHelper {
         }
     }
 
-    protected void serializeUpdate(String sheetName, String[] newRecord, int idxRecord) throws IOException {
-        // TODO: AVOID DRY (COMPARE WITH FILEIOHELPER)
+    protected void serializeUpdate(String sheetName, String[] newRecord, UUID id) throws IOException {
+        // TODO: AVOID DRY
         XSSFWorkbook workbook = new XSSFWorkbook(FileIOHelper.getFileInputStream(sheetName));
         XSSFSheet sheet = workbook.getSheetAt(0);
-        writeRow(newRecord, sheet.getRow(idxRecord));
+        System.out.println(sheet.getLastRowNum());
+        for (int row = 1; row < sheet.getLastRowNum(); row++){
+            if(sheet.getRow(row).getCell(0).toString().equalsIgnoreCase(String.valueOf(id))){
+                System.out.println(row);
+                writeRow(newRecord, sheet.getRow(row));
+                break;
+            }
+        }
+
         try (FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName)) {
             // Write to file...
             workbook.write(fileOut);

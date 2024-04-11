@@ -79,7 +79,7 @@ public class ManagerActions {
                     double price = validateDouble("Enter price ($): ");
                     System.out.println("Enter description: ");
                     String description = sc.next();
-                    branchMenu.updateItem(itemToUpdate, price, description, itemIndex);
+                    branchMenu.updateItem(itemToUpdate, price, description);
                     success = true;
                     System.out.println("Item successfully updated in menu!");
                 } catch (InputMismatchException e) {

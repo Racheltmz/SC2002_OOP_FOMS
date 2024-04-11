@@ -3,6 +3,7 @@ package branch;
 import staff.StaffRoles;
 import utils.BranchXlsxHelper;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -74,9 +75,12 @@ public class BranchDirectory {
     }
 
     // Add branch (admin purposes)
-    public void addBranch(Branch branch, StaffRoles auth) {
-        if (authoriseAdmin(auth))
+    public void addBranch(Branch branch, StaffRoles auth) throws IOException {
+        if (authoriseAdmin(auth)) {
             this.branchDirectory.add(branch);
+            BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
+            branchXlsxHelper.writeToXlsx(branch, this.branchDirectory.size());
+        }
     }
 
     // Remove branch (admin purposes)
