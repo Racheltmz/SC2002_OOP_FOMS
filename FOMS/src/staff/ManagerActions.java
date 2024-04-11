@@ -93,7 +93,7 @@ public class ManagerActions {
 
     // Remove menu item
     public void removeMenuItem(StaffRoles auth)
-            throws MenuItemNotFoundException, IndexOutOfBoundsException, ItemNotFoundException {
+            throws MenuItemNotFoundException, IndexOutOfBoundsException, ItemNotFoundException, IOException {
         if (authoriseManager(auth)) {
             BranchDirectory branchDirectory = BranchDirectory.getInstance();
             MenuDirectory menuDirectory = MenuDirectory.getInstance();

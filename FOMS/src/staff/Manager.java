@@ -45,7 +45,7 @@ public class Manager extends Staff  {
     }
 
     // Remove menu item
-    public void removeMenuItem(StaffRoles auth) throws MenuItemNotFoundException, ItemNotFoundException {
+    public void removeMenuItem(StaffRoles auth) throws MenuItemNotFoundException, ItemNotFoundException, IOException {
         managerActions.removeMenuItem(auth);
     }
 

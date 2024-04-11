@@ -61,11 +61,14 @@ public class Menu {
     }
 
     // Remove menu item
-    public void removeItem(MenuItem itemToRemove) {
+    public void removeItem(MenuItem itemToRemove) throws IOException {
         boolean removed = menuItems.removeIf(item -> item.getName().equals(itemToRemove.getName()));
-        if (removed)
+        if (removed) {
+            MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
+            menuItemXlsxHelper.removeXlsx(itemToRemove.getId());
             System.out.println("Menu item removed successfully.");
-        else
+        } else {
             System.out.println("Menu item not found.");
+        }
     }
 }

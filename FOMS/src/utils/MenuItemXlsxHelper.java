@@ -102,6 +102,10 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
     public void updateXlsx(MenuItem item) throws IOException {
         serializeUpdate(this.menuItemXlsx, item.toXlsx(), item.getId());
     }
+
+    public void removeXlsx(UUID id) throws IOException {
+        deleteRecord(this.menuItemXlsx, id);
+    }
     //    public void saveAll(ArrayList<MenuItem> menuItems) {
 //        try {
 //            writeToXlsx(menuItems);

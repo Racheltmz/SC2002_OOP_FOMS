@@ -39,6 +39,16 @@ public class BaseXlsxHelper {
         return result;
     }
 
+    private static int getIndexById(XSSFSheet sheet, UUID id) {
+        for (int row = 1; row < sheet.getLastRowNum(); row++){
+            if(sheet.getRow(row).getCell(0).toString().equalsIgnoreCase(String.valueOf(id))){
+                return row;
+            }
+        }
+        return -1;
+    }
+
+
     /**
      * Writes data to an Excel (XLSX) file.
      *
@@ -49,18 +59,6 @@ public class BaseXlsxHelper {
      * @throws IOException If an I/O error occurs while writing to the Excel file.
      */
     protected void serializeRecord(String sheetName, String[] newRecord, String[] header, int idxRecord) throws IOException {
-//        Sheet sheet = workbook.createSheet(sheetName);
-//        for (int i = 0; i < writeStrings.size(); i++) {
-//            Row row = sheet.createRow(i);
-//            String[] rowData = writeStrings.get(i);
-//            for (int j = 0; j < rowData.length; j++) {
-//                Cell cell = row.createCell(j);
-//                cell.setCellValue(rowData[j]);
-//            }
-//        }
-//        try (FileOutputStream fileOut = new FileOutputStream("output.xlsx")) {
-//            workbook.write(fileOut);
-//        }
         // TODO: AVOID DRY (COMPARE WITH FILEIOHELPER)
         XSSFWorkbook workbook = new XSSFWorkbook(FileIOHelper.getFileInputStream(sheetName));
         XSSFSheet sheet = workbook.getSheetAt(0);
@@ -80,20 +78,30 @@ public class BaseXlsxHelper {
         // TODO: AVOID DRY
         XSSFWorkbook workbook = new XSSFWorkbook(FileIOHelper.getFileInputStream(sheetName));
         XSSFSheet sheet = workbook.getSheetAt(0);
-        System.out.println(sheet.getLastRowNum());
-        for (int row = 1; row < sheet.getLastRowNum(); row++){
-            if(sheet.getRow(row).getCell(0).toString().equalsIgnoreCase(String.valueOf(id))){
-                System.out.println(row);
-                writeRow(newRecord, sheet.getRow(row));
-                break;
-            }
-        }
-
+        // Update row by id
+        writeRow(newRecord, sheet.getRow(getIndexById(sheet, id)));
         try (FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName)) {
             // Write to file...
             workbook.write(fileOut);
         } finally {
             workbook.close();
+        }
+    }
+
+    protected void deleteRecord(String sheetName, UUID id) throws IOException {
+        XSSFWorkbook workbook = new XSSFWorkbook(FileIOHelper.getFileInputStream(sheetName));
+        XSSFSheet sheet = workbook.getSheetAt(0);
+        // Remove row by id
+        int rowIdx = getIndexById(sheet, id);
+        if (rowIdx != -1) {
+            sheet.removeRow(sheet.getRow(rowIdx));
+            sheet.shiftRows(rowIdx + 1, sheet.getLastRowNum(), -1);
+            try (FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName)) {
+                // Write to file...
+                workbook.write(fileOut);
+            } finally {
+                workbook.close();
+            }
         }
     }
 
