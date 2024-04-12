@@ -30,17 +30,23 @@ public class Manager extends Staff  {
 
     // Add menu item
     public void addMenuItem(Company company, StaffRoles auth) throws InputMismatchException {
-        managerActions.addMenuItem(company, auth);
+        if(authoriseManager(auth)){
+            managerActions.addMenuItem(company, auth);
+        }
     }
 
     // Update menu item
     public void updateMenuItem(Company company, StaffRoles auth) {
-        managerActions.updateMenuItem(company, auth);
+        if(authoriseManager(auth)){
+            managerActions.updateMenuItem(company, auth);
+        }
     }
 
     // Remove menu item
     public void removeMenuItem(Company company, StaffRoles auth) {
-        managerActions.removeMenuItem(company, auth);
+        if(authoriseManager(auth)){
+            managerActions.removeMenuItem(company, auth);
+        }
     }
 
 }
