@@ -77,20 +77,17 @@ public class OrderQueue {
     public void displayOrder() {
         if (ordersExist()) {
             Order order = getOrderById();
-            order.printOrderDetails();
+            OrderView.printOrderDetails(order);
         }
     }
-    
+
     // Display all orders
-    public void displayAllOrders(){
-        if (!this.orders.isEmpty()){
+    public void displayAllOrders() {
+        if (ordersExist()) {
             System.out.println("All Orders:");
-            for (Order order : this.orders){
+            for (Order order : this.orders) {
                 OrderView.printOrderDetails(order);
             }
-        }
-        else{
-            System.out.println("No orders to display.");
         }
     }
 
@@ -119,13 +116,23 @@ public class OrderQueue {
         this.orders.add(order);
     }
 
+    // Process order placement
+    public void placeOrder(Order order, double amountPaid) {
+        order.placeOrder(amountPaid);
+    }
+
     // Update order status to ready when food is ready or when customer collects order
-    public void updateStatus(OrderStatus valStatus, OrderStatus newStatus) {
+    public void updateStatusToReady() {
         if (ordersExist()) {
+            // Get order
             Order order = getOrderById();
-            if (order.getStatus().equals(valStatus))
-                order.setStatus(newStatus);
-            System.out.println("Order status updated successfully.");
+            // Set timer
+            Timer timer = new Timer();
+            OrderTimerTask orderTask = new OrderTimerTask(timer, order);
+            int seconds = 5;
+            timer.schedule(orderTask, seconds * 1000);
+            order.setStatus(OrderStatus.READY);
+            System.out.println("Order status updated from NEW to READY for order ID: " + order.getOrderID());
         }
     }
 

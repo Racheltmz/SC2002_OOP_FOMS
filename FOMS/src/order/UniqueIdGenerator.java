@@ -5,6 +5,6 @@ public class UniqueIdGenerator {
 
     public static synchronized String generateUniqueID(boolean takeaway){
         String prefix = takeaway ? "T" : "D";
-        return prefix + "-" + String.valueOf(idCounter++);
+        return prefix + "-" + idCounter++;
     }
 }

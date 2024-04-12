@@ -1,7 +1,6 @@
 package staff;
 
 import order.OrderQueue;
-import order.OrderStatus;
 import utils.IXlsxSerializable;
 
 import static authentication.Authentication.setNewPassword;
@@ -120,6 +119,6 @@ public class Staff implements IXlsxSerializable {
     // Update order status to ready to pickup for Test Case 10 and 12
     public void setOrderReady() {
         OrderQueue queue = OrderQueue.getInstance();
-        queue.updateStatus(OrderStatus.READY);
+        queue.updateStatusToReady();
     }
 }

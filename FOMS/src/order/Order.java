@@ -6,6 +6,7 @@ import payment.PaymentView;
 import payment.PaymentDirectory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 // Order details
 public class Order {
@@ -21,7 +22,7 @@ public class Order {
 
     // Constructor
     public Order(String branch, ArrayList<MenuItem> items, String[] customisation, boolean takeaway,
-                 Payment payment) {
+            Payment payment) {
         this.orderID = UniqueIdGenerator.generateUniqueID(takeaway);
         this.branch = branch;
         this.items = items;
@@ -33,7 +34,8 @@ public class Order {
 
     // Serialization to XLSX
     public String[] toXlsx() {
-        return new String[] { orderID, branch, String.valueOf(items), String.valueOf(customisation), String.valueOf(takeaway), String.valueOf(status), paymentMethod};
+        return new String[] { orderID, branch, String.valueOf(items), Arrays.toString(customisation),
+                String.valueOf(takeaway), String.valueOf(status), payment.getPaymentMethod() };
     }
 
     // Getters and Setters
@@ -45,11 +47,11 @@ public class Order {
         return this.branch;
     }
 
-    public String[] getCustomisation(){
+    public String[] getCustomisation() {
         return this.customisation;
     }
 
-    public boolean isTakeaway(){
+    public boolean isTakeaway() {
         return this.takeaway;
     }
 
@@ -65,23 +67,22 @@ public class Order {
         this.status = status;
     }
 
-    // Functionalities    
+    // Functionalities
     // Place order
-    public void placeOrder(double amountPaid){
-        if (payment != null){
+    public void placeOrder(double amountPaid) {
+        if (payment != null) {
             System.out.println("Order placed successfully.");
             setStatus(OrderStatus.NEW);
             pay(amountPaid);
-        }
-        else{
+        } else {
             System.out.println("Payment method not set. Cannot place order.");
         }
     }
 
     // Calculate total price
-    public double calculateTotal(){
+    public double calculateTotal() {
         double total = 0.00;
-        for (MenuItem item : items){
+        for (MenuItem item : items) {
             total += item.getPrice();
         }
         return total;
@@ -94,26 +95,23 @@ public class Order {
 
         double total = calculateTotal();
         // Check if payment method exists
-        if (paymentDirectory.getPaymentMtd(payment.getPaymentMethod()) != null){
-            if (amountPaid == total){
+        if (paymentDirectory.getPaymentMtd(payment.getPaymentMethod()) != null) {
+            if (amountPaid == total) {
                 System.out.println("Payment successful.");
                 processOrder();
-            }
-            else if (amountPaid > total){
+            } else if (amountPaid > total) {
                 System.out.printf("Change is $%.2f ", amountPaid - total);
                 processOrder();
-            }
-            else if (amountPaid < total){
+            } else if (amountPaid < total) {
                 System.out.println("Payment unsuccessful.");
             }
-        }
-        else{
+        } else {
             System.out.println("Payment method does not exist.");
         }
     }
 
     // Process the order
-    public void processOrder(){
+    public void processOrder() {
         if (items == null) {
             System.out.println("Error: Cannot process order without selecting any items.");
             return;

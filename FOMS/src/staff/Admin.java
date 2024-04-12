@@ -6,8 +6,9 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 import branch.Branch;
-import management.Company;
+import branch.BranchDirectory;
 import payment.Payment;
+import payment.PaymentDirectory;
 import utils.InputScanner;
 
 import static utils.InputScanner.getInstance;
@@ -17,8 +18,9 @@ public class Admin extends Staff{
         super(id, staffID, name, role, gender, age, null); 
     }
 
-    public void setRole(Company company, String staffID, String branch){
-        Staff staff = company.getStaffDirectory().getStaff(staffID);
+    public void setRole(String staffID, String branch){
+        StaffDirectory staffDirectory = StaffDirectory.getInstance();
+        Staff staff = staffDirectory.getStaff(staffID);
         if(staff != null){
             if(staff.getBranch().equals(branch)){
                 System.out.println("Role updated successfully.");
@@ -32,8 +34,9 @@ public class Admin extends Staff{
         }
     }
 
-    public void setBranch(Company company, String staffID, String branch){
-        Staff staff = company.getStaffDirectory().getStaff(staffID);
+    public void setBranch(String staffID, String branch){
+        StaffDirectory staffDirectory = StaffDirectory.getInstance();
+        Staff staff = staffDirectory.getStaff(staffID);
         if(staff != null){
             if(staff.getBranch().equals(branch)){
                 System.out.println("Branch updated successfully");
@@ -47,8 +50,9 @@ public class Admin extends Staff{
         }
     }
 
-    public void setStaffID(Company company, String staffID, String newStaffID){
-        Staff staff = company.getStaffDirectory().getStaff(staffID);
+    public void setStaffID(String staffID, String newStaffID){
+        StaffDirectory staffDirectory = StaffDirectory.getInstance();
+        Staff staff = staffDirectory.getStaff(staffID);
         if(staff != null){
             staff.setStaffID(newStaffID);
             System.out.println("Staff ID updated successfully");
@@ -78,16 +82,18 @@ public class Admin extends Staff{
         System.out.printf("New branch created. Its details are:\nName: %s\nStaff quota: %d\nManager Quota: %d\nLocation: %s\n", branchName, quota, branch.getManagerQuota(), location);
     }
 
-    protected void closeBranch(Company company, String Branch){
+    protected void closeBranch(String Branch){
         // Initialise scanner
         InputScanner sc = getInstance();
+        BranchDirectory branchDirectory = BranchDirectory.getInstance();
+
         System.out.println("Enter branch name: ");
         String branchName = sc.nextLine();
 
         System.out.println("Enter branch location: "); //should i add or just use branch name cause not much value added?
         String branchLocation = sc.next();
 
-        ArrayList<Branch> branches = company.getBranchDirectory().getBranchDirectory();
+        ArrayList<Branch> branches = branchDirectory.getBranchDirectory();
 
         Iterator<Branch> iterator = branches.iterator();
         while(iterator.hasNext()){
@@ -102,10 +108,12 @@ public class Admin extends Staff{
         //fire staff?
     }
 
-    protected void assignManager(Company company, String staffId, String branchName){
-        int numManagers = company.getStaffDirectory().getNumManagers(StaffRoles.ADMIN);
+    protected void assignManager(String staffId, String branchName){
+        StaffDirectory staffDirectory = StaffDirectory.getInstance();
+        BranchDirectory branchDirectory = BranchDirectory.getInstance();
 
-        int numStaff = company.getBranchDirectory().getBranchByName(branchName).getStaffQuota();
+        int numManagers = staffDirectory.getNumManagers(StaffRoles.ADMIN);
+        int numStaff = branchDirectory.getBranchByName(branchName).getStaffQuota();
 
         int quota = 0; 
         if(numStaff >= 9 && numStaff <= 15){
@@ -126,8 +134,9 @@ public class Admin extends Staff{
         }
     }
 
-    protected void promoteStaff(Company company, String staffID, String Branch){
-        Staff staff = company.getStaffDirectory().getStaff(staffID);
+    protected void promoteStaff(String staffID, String Branch){
+        StaffDirectory staffDirectory = StaffDirectory.getInstance();
+        Staff staff = staffDirectory.getStaff(staffID);
 
         if(staff != null){
             StaffRoles currentRole = staff.getRole(); 
@@ -150,14 +159,17 @@ public class Admin extends Staff{
         }
     }
 
-    protected void transferStaff(Company company, String staffID, String Branch){
-        Staff staff = company.getStaffDirectory().getStaff(staffID);
+    protected void transferStaff(String staffID, String Branch){
+        StaffDirectory staffDirectory = StaffDirectory.getInstance();
+        BranchDirectory branchDirectory = BranchDirectory.getInstance();
+
+        Staff staff = staffDirectory.getStaff(staffID);
 
         if(staff != null){
             //String currentBranch = staff.getBranch(); 
 
             boolean newBranchExists = false; 
-            for(Branch branch : company.getBranchDirectory().getBranchDirectory()){
+            for(Branch branch : branchDirectory.getBranchDirectory()){
                 if(branch.getBranchName().equals(Branch)){
                     newBranchExists = true; 
                     break; 
@@ -176,16 +188,17 @@ public class Admin extends Staff{
         }
     }
 
-    protected String addPayment(Company company, String method){
+    protected String addPayment(String method) {
+        PaymentDirectory paymentDirectory = PaymentDirectory.getInstance();
         Payment payment; 
         switch(method){
             case "Credit/Debit Card":
-                payment = new Payment(method); 
-                company.getPaymentDirectory().addPaymentMtd(payment, StaffRoles.ADMIN); //since only admins can add payment methods
+                payment = new Payment(method);
+                paymentDirectory.addPaymentMtd(payment, StaffRoles.ADMIN); //since only admins can add payment methods
                 break; 
             case "Paypal":
-                payment = new Payment(method); 
-                company.getPaymentDirectory().addPaymentMtd(payment, StaffRoles.ADMIN);
+                payment = new Payment(method);
+                paymentDirectory.addPaymentMtd(payment, StaffRoles.ADMIN);
                 break; 
             default:
                 throw new IllegalArgumentException("Unsupported payment method: " + method);

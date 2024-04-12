@@ -10,6 +10,7 @@ public class ActiveStaff implements ActiveUser {
 
     // Constructor
     public ActiveStaff() { this.activeStaff = null; }
+    
     public ActiveStaff(Staff activeStaff) {
         this.activeStaff = activeStaff;
     }

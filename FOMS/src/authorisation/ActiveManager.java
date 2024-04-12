@@ -12,6 +12,7 @@ public class ActiveManager implements ActiveUser {
     public ActiveManager() {
         this.activeStaff = null;
     }
+    
     public ActiveManager(Manager activeStaff) {
         this.activeStaff = activeStaff;
     }

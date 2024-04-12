@@ -31,22 +31,22 @@ public class Manager extends Staff  {
     }
 
     // Add menu item
-    public void addMenuItem(StaffRoles auth) throws InputMismatchException {
-        if(authoriseManager(auth)){
-            managerActions.addMenuItem(company, auth);
+    public void addMenuItem(StaffRoles auth) {
+        if (authoriseManager(auth)){
+            managerActions.addMenuItem(auth);
         }
     }
 
     // Update menu item
     public void updateMenuItem(StaffRoles auth) {
-        if(authoriseManager(auth)){
+        if (authoriseManager(auth)){
             managerActions.updateMenuItem(auth);
         }
     }
 
     // Remove menu item
     public void removeMenuItem(StaffRoles auth) {
-        if(authoriseManager(auth)){
+        if (authoriseManager(auth)){
             managerActions.removeMenuItem(auth);
         }
     }

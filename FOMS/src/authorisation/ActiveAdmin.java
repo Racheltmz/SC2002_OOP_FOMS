@@ -8,6 +8,7 @@ public class ActiveAdmin implements ActiveUser {
     private Admin activeStaff;
 
     public ActiveAdmin() { this.activeStaff = null; }
+    
     public ActiveAdmin(Admin activeStaff) {
         this.activeStaff = activeStaff;
     }
