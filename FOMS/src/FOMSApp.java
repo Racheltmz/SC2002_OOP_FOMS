@@ -3,6 +3,7 @@ import java.util.InputMismatchException;
 
 import authorisation.*;
 import exceptions.EmptyListException;
+import payment.PaymentLoader;
 import utils.InputScanner;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -15,7 +16,6 @@ import order.OrderStatus;
 import order.OrderTimerTask;
 import menu.MenuItem;
 import menu.Menu;
-import payment.PaymentView;
 import payment.Payment;
 
 import static authentication.Authentication.login;
@@ -111,7 +111,7 @@ public class FOMSApp {
 
                                         // Payment Information
                                         System.out.println("How would you like to pay?");
-                                        PaymentView.displayPaymentMethods(company.getPaymentDirectory().getPaymentDirectory());
+                                        PaymentLoader.loadMethods();
                                         String paymentMethod = sc.next();
                                         sc.nextLine();
 

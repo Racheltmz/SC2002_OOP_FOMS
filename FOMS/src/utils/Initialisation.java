@@ -92,13 +92,22 @@ public class Initialisation {
                         case 'M':
                             staffList.add(new Manager(staffId, name, StaffRoles.MANAGER, gender, age, branch));
                             break;
-                        case 'A':
-                            staffList.add(new Admin(staffId, name, StaffRoles.ADMIN, gender, age, branch));
-                            break;
+                    }
+                }
+                else if (staffIdCell != null && nameCell != null && roleCell != null && genderCell != null && ageCell != null && branchCell == null) {
+                    // Convert to respective datatype
+                    String staffId = staffIdCell.toString();
+                    String name = nameCell.toString();
+                    char role = roleCell.toString().charAt(0);
+                    char gender = genderCell.toString().charAt(0);
+                    int age = (int) ageCell.getNumericCellValue();
+
+                    // Add new admin
+                        staffList.add(new Admin(staffId, name, StaffRoles.ADMIN, gender, age, "null"));
+                        break;
                     }
                 }
             }
-        }
         return staffList;
     }
 

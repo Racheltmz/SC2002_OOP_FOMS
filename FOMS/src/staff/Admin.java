@@ -8,28 +8,32 @@ public class Admin extends Staff {
         super(staffID, name, role, gender, age, branch);
     }
 
-    protected void setStaffID(Company company, String staffID, String newStaffID) {
+    public static void displayPaymentMethods() { AdminActions.displayPaymentMethods(); }
+
+    public void setStaffID(Company company, String staffID, String newStaffID) {
         AdminActions.setStaffID(company, staffID, newStaffID);
     }
 
-    protected void addBranch(Company company) {
+    public static void staffFiltering(Company company) { AdminActions.staffFiltering(company); }
+
+    public static void addBranch(Company company) {
         AdminActions.addBranch(company);
     }
 
-    protected void closeBranch(Company company, String Branch) {
-        AdminActions.closeBranch(company, Branch);
+    public static void closeBranch(Company company) {
+        AdminActions.closeBranch(company);
     }
 
 
-    protected void assignManager(Company company, String staffId, String Branch) {
+    public static void assignManager(Company company, String staffId, String Branch) {
         AdminActions.assignManager(company, staffId, Branch);
     }
 
-    protected void promoteStaff(Company company, String staffID, String Branch) {
+    public static void promoteStaff(Company company, String staffID, String Branch) {
         AdminActions.promoteStaff(company, staffID, Branch);
     }
 
-    protected void transferStaff(Company company, String staffID, String Branch) {
+    public static void transferStaff(Company company, String staffID, String Branch) {
         AdminActions.transferStaff(company, staffID, Branch);
     }
 

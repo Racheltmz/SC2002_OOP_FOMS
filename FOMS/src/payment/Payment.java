@@ -1,16 +1,17 @@
 package payment;
 
 // Payment Method Details
-public class Payment {
+public class Payment implements PaymentService {
     // Attributes
     private String paymentMethod;
 
     // Constructor
-    public Payment(String method){
-        this.paymentMethod = method;
+    public Payment(String paymentMethod){
+        this.paymentMethod = paymentMethod;
     }
 
     // Getter
+    @Override
     public String getPaymentMethod() {
         return paymentMethod;
     }

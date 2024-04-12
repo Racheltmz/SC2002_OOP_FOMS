@@ -11,7 +11,7 @@ import static branch.BranchDirectory.getBranchByUserInput;
 import static utils.InputScanner.getInstance;
 
 public class ValidateDataType {
-    // Check integer
+    //Check integer
     public static int validateInt(String msg) {
         InputScanner sc = getInstance();
         boolean success = false;
@@ -20,11 +20,31 @@ public class ValidateDataType {
             try {
                 System.out.println(msg);
                 input = sc.nextInt();
-                // TODO: Improve implementation of handling negative values
+                // TODO: Improve implementation of handling negative vals
                 if (input >= 0)
                     success = true;
                 else
                     System.out.println("Negative values are invalid.");
+            }  catch (InputMismatchException inputMismatchException) {
+                System.out.println("Please enter a valid integer.\n");
+                sc.nextLine();
+            }
+        } while (!success);
+        return input;
+    }
+    // Check option
+    public static int validateOption(String msg, int initial, int end) {
+        InputScanner sc = getInstance();
+        boolean success = false;
+        int input = 0;
+        do {
+            try {
+                System.out.println(msg);
+                input = sc.nextInt();
+                if (input >= initial && input <= end)
+                {
+                    success = true;
+                }
             }  catch (InputMismatchException inputMismatchException) {
                 System.out.println("Please enter a valid integer.\n");
                 sc.nextLine();

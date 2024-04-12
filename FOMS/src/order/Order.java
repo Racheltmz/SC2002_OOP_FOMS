@@ -2,7 +2,7 @@ package order;
 
 import menu.MenuItem;
 import payment.Payment;
-import payment.PaymentView;
+import payment.PaymentLoader;
 import payment.PaymentDirectory;
 
 import java.util.ArrayList;
@@ -91,7 +91,7 @@ public class Order {
     // Display payment methods and customer makes payment
     public void pay(double amountPaid) {
         // Display payment methods
-        PaymentView.displayPaymentMethods(paymentDirectory.getPaymentDirectory());
+        PaymentLoader.loadMethods();
 
         double total = calculateTotal();
         // Check if payment method exists

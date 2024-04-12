@@ -11,6 +11,6 @@ public class ActiveFactoryAdmin implements ActiveFactory {
     }
     @Override
     public ActiveUser initActive(Staff staff) {
-        return new ActiveAdmin((Admin) staff);
+        return new ActiveAdmin((Admin)staff);
     }
 }
