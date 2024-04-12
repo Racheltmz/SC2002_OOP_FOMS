@@ -2,12 +2,6 @@ package authorisation;
 
 import utils.InputScanner;
 import staff.Manager;
-import exceptions.EmptyListException;
-import exceptions.ItemNotFoundException;
-import exceptions.MenuItemNotFoundException;
-
-import java.io.IOException;
-import java.util.InputMismatchException;
 
 // Authorised operations for active user with a manager role
 public class ActiveManager implements ActiveUser {
@@ -45,45 +39,37 @@ public class ActiveManager implements ActiveUser {
         System.out.println("1. Display Staff List\n2. Add Menu Item\n3. Update Menu Item\n4. Remove Menu Item\n5. Display new orders\n6. View details of an order\n7. Set Order as Ready\n8. Change Password\n9. Logout");
         int staffChoice = sc.nextInt();
         sc.nextLine();
-        try {
-            switch (staffChoice) {
-                case 1:
-                    this.getActiveStaff().displayStaffList(this.activeStaff.getRole());
-                    break;
-                case 2:
-                    this.getActiveStaff().addMenuItem(this.activeStaff.getRole());
-                    break;
-                case 3:
-                    this.getActiveStaff().updateMenuItem(this.activeStaff.getRole());
-                    break;
-                case 4:
-                    this.getActiveStaff().removeMenuItem(this.activeStaff.getRole());
-                    break;
-                case 5:
-                    this.getActiveStaff().getNewOrders(this.activeStaff.getBranch());
-                    break;
-                case 6:
-                    this.getActiveStaff().getOrderDetails();
-                    break;
-                case 7:
-                    this.getActiveStaff().setOrderReady();
-                    break;
-                case 8:
-                    this.getActiveStaff().changePassword(this.activeStaff);
-                    break;
-                case 9:
-                    this.logout();
-                    break;
-                default:
-                    System.out.println("Invalid choice, please re-enter: ");
-                    break;
-            }
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input: " + e.getMessage());
-        } catch (EmptyListException e) {
-            System.out.println("Menu: " + e.getMessage());
-        } catch (MenuItemNotFoundException | ItemNotFoundException e) {
-            System.out.println("Menu item not found: " + e.getMessage());
+        switch (staffChoice) {
+            case 1:
+                this.getActiveStaff().displayStaffList(this.activeStaff.getRole());
+                break;
+            case 2:
+                this.getActiveStaff().addMenuItem(this.activeStaff.getRole());
+                break;
+            case 3:
+                this.getActiveStaff().updateMenuItem(this.activeStaff.getRole());
+                break;
+            case 4:
+                this.getActiveStaff().removeMenuItem(this.activeStaff.getRole());
+                break;
+            case 5:
+                this.getActiveStaff().getNewOrders(this.activeStaff.getBranch());
+                break;
+            case 6:
+                this.getActiveStaff().getOrderDetails();
+                break;
+            case 7:
+                this.getActiveStaff().setOrderReady();
+                break;
+            case 8:
+                this.getActiveStaff().changePassword(this.activeStaff);
+                break;
+            case 9:
+                this.logout();
+                break;
+            default:
+                System.out.println("Invalid choice, please re-enter: ");
+                break;
         }
     }
 }

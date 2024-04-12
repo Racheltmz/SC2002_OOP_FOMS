@@ -12,25 +12,22 @@ import java.util.UUID;
 
 // Helper class for staff
 public class StaffXlsxHelper extends BaseXlsxHelper {
-
     /**
      * Path to Staff XLSX File in the data folder. Defaults to staff_list.xlsx
      */
-    private final String staffXlsx;
+    private final String staffXlsx = "staff_list.xlsx";
 
     private final String[] header = {"id", "name", "staffID", "role", "gender", "age", "branch"};
 
     /**
-     * Default Constructor to initialize this class with staff.xlsx as the XLSX file.
+     * Default Constructor.
      */
-    public StaffXlsxHelper() {
-        this.staffXlsx = "staff_list.xlsx";
-    }
+    public StaffXlsxHelper() {}
 
     /**
-     * Singleton instance of this class
+     * Singleton instance StaffXlsxHelper.
      */
-    private static StaffXlsxHelper mInstance;
+    private static StaffXlsxHelper staffInstance;
 
     /**
      * Gets the singleton instance of StaffXlsxHelper
@@ -38,8 +35,8 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
      * @return Instance of this class
      */
     public static StaffXlsxHelper getInstance() {
-        if (mInstance == null) mInstance = new StaffXlsxHelper();
-        return mInstance;
+        if (staffInstance == null) staffInstance = new StaffXlsxHelper();
+        return staffInstance;
     }
 
     /**
@@ -48,12 +45,17 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
      * @return ArrayList of Staff objects
      */
     public ArrayList<Staff> readFromXlsx() {
-        List<String[]> XlsxData = deserializeRecords(this.staffXlsx, this.header,7, 1);
+        // Initialise a list
         ArrayList<Staff> staffList = new ArrayList<>();
+
+        // Deserialize records
+        List<String[]> XlsxData = deserializeRecords(this.staffXlsx, this.header,7, 1);
         if(XlsxData.isEmpty()) {
             serializeHeader(this.staffXlsx, this.header);
             return staffList;
         }
+
+        // Add staff
         XlsxData.forEach((data) -> {
             UUID id = UUID.fromString(data[0]);
             // Convert to respective datatype
@@ -64,7 +66,6 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
             int age = (int) Double.parseDouble(data[5]);
             String branch = data[6];
 
-            // Add new staff
             switch (role) {
                 case "S":
                     staffList.add(new Staff(id, staffId, name, StaffRoles.STAFF, gender, age, branch));
@@ -81,7 +82,7 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
     }
 
     /**
-     * Writes a staff record to the XLSX File.
+     * Writes a Staff record to the XLSX File.
      *
      * @param staff Staff record to add
      * @param numExistingRecords Number of existing staff records
@@ -91,7 +92,7 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
     }
 
     /**
-     * Updates a staff record in the XLSX File.
+     * Updates a Staff record in the XLSX File.
      *
      * @param staff Staff record to add
      */
@@ -100,9 +101,9 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
     }
 
     /**
-     * Deletes a staff record in the XLSX File.
+     * Deletes a Staff record in the XLSX File.
      *
-     * @param id ID of staff record to delete
+     * @param id ID of Staff record to delete
      */
     public void removeXlsx(UUID id) {
         deleteRecord(this.staffXlsx, id);

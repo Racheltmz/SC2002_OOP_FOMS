@@ -1,8 +1,8 @@
 package menu;
 
 import branch.BranchDirectory;
+import exceptions.EmptyListException;
 import exceptions.ItemNotFoundException;
-import exceptions.MenuItemNotFoundException;
 import utils.MenuItemXlsxHelper;
 
 import java.util.ArrayList;
@@ -10,7 +10,6 @@ import java.util.Objects;
 
 import static branch.BranchDirectory.getBranchByUserInput;
 
-// TODO: CLEAN THIS FILE
 public class MenuDirectory {
     private final ArrayList<Menu> menuDirectory;
     private static MenuDirectory menuSingleton = null;
@@ -27,32 +26,45 @@ public class MenuDirectory {
         return menuSingleton;
     }
 
+    /**
+     * Check if the directory has any menus
+     *
+     * @return boolean
+     */
+    public boolean menusExist() {
+        try {
+            if (this.menuDirectory.isEmpty())
+                return false;
+            else
+                throw new EmptyListException("There are no menus. Please approach the staff for assistance.");
+        } catch (EmptyListException e) {
+            System.out.println(e.getMessage());
+        }
+        return true;
+    }
+
     public Menu getMenu(String branchName) {
-        for (Menu menu : this.menuDirectory) {
-            if (Objects.equals(menu.getBranch().getBranchName(), branchName)) {
-                return menu;
+        if (menusExist()) {
+            try {
+                for (Menu menu : this.menuDirectory) {
+                    if (Objects.equals(menu.getBranch().getBranchName(), branchName)) {
+                        return menu;
+                    }
+                }
+                throw new ItemNotFoundException("There is no menu for this branch. Please check the branch name.");
+            } catch (ItemNotFoundException e) {
+                System.out.println(e.getMessage());
             }
         }
-        return null; // TODO: FIX THE EXCEPTIONS HERE
-//        throw new MenuItemNotFoundException("Menu item not found in the branch: " + branchName);
+        return null;
     }
 
     public void displayMenuByBranch() {
         BranchDirectory branchDirectory = BranchDirectory.getInstance();
         String branch = getBranchByUserInput(branchDirectory);
-        Menu menu;
-//        try {
-        menu = getMenu(branch);
-//            if (menu == null) {
-//                throw new ItemNotFoundException("Menu is empty for branch " + branch);
-//            }
+        Menu menu = getMenu(branch);
         System.out.println("Menu items in branch " + branch + ":");
         menu.displayItems();
-//        } catch (MenuItemNotFoundException e) {
-//            System.out.println(e.getMessage());
-//        } catch (ItemNotFoundException e) {
-//            System.out.println(e.getMessage());
-//        }
     }
 
     public int getNumAllMenuItems() {
@@ -64,19 +76,7 @@ public class MenuDirectory {
     }
 
     public int getNumMenuItems(String branch) {
-//        try {
-            Menu menu = getMenu(branch);
-//            if (menu == null) {
-//                throw new ItemNotFoundException("Menu is empty for branch " + branch);
-//            }
-            return menu.getMenuItems().size();
-//        }
-//        catch (MenuItemNotFoundException e) {
-//            System.out.println(e.getMessage());
-//            return 0;
-//        } catch (ItemNotFoundException e) {
-//            System.out.println(e.getMessage());
-//            return 0;
-//        }
+        Menu menu = getMenu(branch);
+        return menu.getMenuItems().size();
     }
 }

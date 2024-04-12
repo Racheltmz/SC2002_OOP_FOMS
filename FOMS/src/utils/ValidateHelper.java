@@ -1,10 +1,8 @@
-package validation;
-
-import utils.InputScanner;
+package utils;
 
 import java.util.InputMismatchException;
 
-public class ValidateDataType {
+public class ValidateHelper {
     // Check integer
     public static int validateInt(String msg) {
         InputScanner sc = InputScanner.getInstance();
@@ -14,7 +12,7 @@ public class ValidateDataType {
             try {
                 System.out.println(msg);
                 input = sc.nextInt();
-                // TODO: Improve implementation of handling negative vals
+                // TODO: NEW Check implementation and Improve implementation of handling negative values
                 if (input >= 0)
                     success = true;
                 else
@@ -36,7 +34,7 @@ public class ValidateDataType {
             try {
                 System.out.println(msg);
                 input = sc.nextDouble();
-                // TODO: Improve implementation of handling negative vals
+                // TODO: NEW: Check implementation and Improve implementation of handling negative values
                 if (input >= 0)
                     success = true;
                 else

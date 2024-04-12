@@ -2,12 +2,7 @@ package staff;
 
 import branch.BranchDirectory;
 
-import java.io.IOException;
-import java.util.InputMismatchException;
 import java.util.UUID;
-
-import exceptions.ItemNotFoundException;
-import exceptions.MenuItemNotFoundException;
 
 import static authorisation.Authorisation.authoriseManager;
 import static branch.BranchDirectory.getBranchByUserInput;
@@ -16,14 +11,9 @@ import static staff.StaffView.displayStaffByBranch;
 // Manager details
 public class Manager extends Staff  {
     // Attributes
-    private ManagerActions managerActions;
+    private final ManagerActions managerActions;
 
     // Constructor
-    public Manager(String staffID, String name, StaffRoles role, char gender, int age, String branch) {
-        super(staffID, name, role, gender, age, branch);
-        this.managerActions = new ManagerActions();
-    }
-
     public Manager(UUID id, String staffID, String name, StaffRoles role, char gender, int age, String branch) {
         super(id, staffID, name, role, gender, age, branch);
         this.managerActions = new ManagerActions();
@@ -41,17 +31,17 @@ public class Manager extends Staff  {
     }
 
     // Add menu item
-    public void addMenuItem(StaffRoles auth) throws InputMismatchException, MenuItemNotFoundException, ItemNotFoundException {
+    public void addMenuItem(StaffRoles auth) {
         managerActions.addMenuItem(auth);
     }
 
     // Update menu item
-    public void updateMenuItem(StaffRoles auth) throws MenuItemNotFoundException, ItemNotFoundException {
+    public void updateMenuItem(StaffRoles auth) {
         managerActions.updateMenuItem(auth);
     }
 
     // Remove menu item
-    public void removeMenuItem(StaffRoles auth) throws MenuItemNotFoundException, ItemNotFoundException {
+    public void removeMenuItem(StaffRoles auth) {
         managerActions.removeMenuItem(auth);
     }
 

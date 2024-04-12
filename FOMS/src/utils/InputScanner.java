@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 // Scanner
 public class InputScanner {
-    private Scanner reader;
+    private final Scanner reader;
     private static InputScanner singleton = null;
 
     private InputScanner() {

@@ -1,12 +1,11 @@
 package menu;
 
 import branch.Branch;
-import exceptions.DuplicateEntryException;
+import exceptions.EmptyListException;
 import utils.MenuItemXlsxHelper;
 
 import java.util.ArrayList;
 
-// TODO: CREATE VIEW for displayItems
 // Menu details
 public class Menu {
     // Attributes
@@ -39,7 +38,19 @@ public class Menu {
         }
     }
 
-    public boolean itemExists(String name) {
+    public boolean itemsExist() {
+        try {
+            if (this.menuItems.isEmpty())
+                return false;
+            else
+                throw new EmptyListException("There are no items on the menu. Please approach the staff for assistance.");
+        } catch (EmptyListException e) {
+            System.out.println(e.getMessage());
+        }
+        return true;
+    }
+
+    public boolean itemExistsByName(String name) {
         for (MenuItem item: this.menuItems) {
             if (item.getName().equalsIgnoreCase(name)) {
                 return true;
@@ -52,35 +63,35 @@ public class Menu {
     public void addItem(MenuItem menuItem, int numExistingItems, boolean stored) {
         this.menuItems.add(menuItem);
         if (!stored) {
-            try {
-                MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
-                menuItemXlsxHelper.writeToXlsx(menuItem, numExistingItems);
-                System.out.println("Menu item added successfully.");
-            } catch (DuplicateEntryException e) {
-                System.out.println(e.getMessage());
-            }
+            MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
+            menuItemXlsxHelper.writeToXlsx(menuItem, numExistingItems);
+            System.out.println("Menu item added successfully.");
         }
     }
 
     // Update menu item
     public void updateItem(MenuItem itemToUpdate, double price, String description) {
-        itemToUpdate.setPrice(price);
-        itemToUpdate.setDescription(description);
-        // Write the updated menu items to the Excel file
-        MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
-        menuItemXlsxHelper.updateXlsx(itemToUpdate);
-        System.out.println("Menu item updated successfully.");
+        if (itemsExist()) {
+            itemToUpdate.setPrice(price);
+            itemToUpdate.setDescription(description);
+            // Write the updated menu items to the Excel file
+            MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
+            menuItemXlsxHelper.updateXlsx(itemToUpdate);
+            System.out.println("Menu item updated successfully.");
+        }
     }
 
     // Remove menu item
     public void removeItem(MenuItem itemToRemove) {
-        boolean removed = this.menuItems.removeIf(item -> item.getName().equals(itemToRemove.getName()));
-        if (removed) {
-            MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
-            menuItemXlsxHelper.removeXlsx(itemToRemove.getId());
-            System.out.println("Menu item removed successfully.");
-        } else {
-            System.out.println("Menu item not found.");
+        if (itemsExist()) {
+            boolean removed = this.menuItems.removeIf(item -> item.getName().equals(itemToRemove.getName()));
+            if (removed) {
+                MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
+                menuItemXlsxHelper.removeXlsx(itemToRemove.getId());
+                System.out.println("Menu item removed successfully.");
+            } else {
+                System.out.println("Menu item not found.");
+            }
         }
     }
 }

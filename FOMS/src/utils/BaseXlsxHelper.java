@@ -65,6 +65,22 @@ public class BaseXlsxHelper {
         return -1;
     }
 
+    /**
+     * Get the row index from the Excel spreadsheet based on the record's id
+     *
+     * @param sheet Excel spreadsheet to search
+     * @param id id to match
+     * @return Row index of the record
+     */
+    private static int getIndexById(XSSFSheet sheet, String id) {
+        for (int row = 1; row < sheet.getLastRowNum(); row++){
+            if(sheet.getRow(row).getCell(0).toString().equalsIgnoreCase(id)){
+                return row;
+            }
+        }
+        return -1;
+    }
+
     protected void serializeHeader(String sheetName, String[] header) {
         try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(FileIOHelper.getFileInputStream(sheetName)))) {
             XSSFSheet sheet = workbook.getSheetAt(0);
@@ -105,6 +121,19 @@ public class BaseXlsxHelper {
      * @param id ID of the record to be updated
      */
     protected void serializeUpdate(String sheetName, String[] record, UUID id) {
+        try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(FileIOHelper.getFileInputStream(sheetName)))) {
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            // Update row by id
+            writeRow(record, sheet.getRow(getIndexById(sheet, id)));
+            FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName);
+            // Write to file
+            workbook.write(fileOut);
+        } catch (IOException ioException) {
+            System.out.println("Error: unable to add header.");
+        }
+    }
+
+    protected void serializeUpdate(String sheetName, String[] record, String id) {
         try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(FileIOHelper.getFileInputStream(sheetName)))) {
             XSSFSheet sheet = workbook.getSheetAt(0);
             // Update row by id

@@ -13,25 +13,25 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class MenuItemXlsxHelper extends BaseXlsxHelper {
+    /**
+     * Path to Menu Items XLSX File in the data folder.
+     */
+    private final String menuItemXlsx = "menu_list.xlsx";
 
     /**
-     * Path to Menu Items XLSX File in the data folder. Defaults to menu_list.xlsx.
+     * Headers for menu item.
      */
-    private final String menuItemXlsx;
-
     private final String[] header = {"id", "name", "price", "branch", "category", "description"};
 
     /**
-     * Default Constructor to initialize this class with menu.xlsx as the XLSX file.
+     * Default Constructor.
      */
-    public MenuItemXlsxHelper() {
-        this.menuItemXlsx = "menu_list.xlsx";
-    }
+    public MenuItemXlsxHelper() {}
 
     /**
-     * Singleton instance of this class.
+     * Singleton instance of MenuItemXlsxHelper.
      */
-    private static MenuItemXlsxHelper mInstance;
+    private static MenuItemXlsxHelper menuInstance;
 
     /**
      * Gets the singleton instance of MenuItemXlsxHelper that reads from menu.xlsx
@@ -39,9 +39,9 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
      * @return Instance of this class
      */
     public static MenuItemXlsxHelper getInstance() {
-        if (mInstance == null)
-            mInstance = new MenuItemXlsxHelper();
-        return mInstance;
+        if (menuInstance == null)
+            menuInstance = new MenuItemXlsxHelper();
+        return menuInstance;
     }
 
     /**
@@ -53,15 +53,18 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
         // Initialise a list
         ArrayList<Menu> menuList = new ArrayList<>();
         BranchDirectory branchDirectory = BranchDirectory.getInstance();
+
         // Create a menu for each branch
         for (Branch branch : branchDirectory.getBranchDirectory())
             menuList.add(new Menu(branch));
 
+        // Deserialize records
         List<String[]> XlsxData = deserializeRecords(this.menuItemXlsx, this.header,6, 1);
-
         if (XlsxData.isEmpty()) {
             return menuList;
         }
+
+        // Create items
         XlsxData.forEach((data) -> {
             UUID id = UUID.fromString(data[0]);
             String name = data[1];
@@ -86,22 +89,26 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
      * @param item MenuItem record to add
      * @param numExistingRecords Number of existing menuItem records
      */
-    public void writeToXlsx(MenuItem item, int numExistingRecords) throws DuplicateEntryException {
-        MenuDirectory menuDirectory = MenuDirectory.getInstance();
-        boolean isExisting = menuDirectory
-                .getMenu(item.getBranch())
-                .itemExists(item.getName());
-        if (!isExisting) {
-            serializeRecord(this.menuItemXlsx, item.toXlsx(), numExistingRecords);
-        } else {
-            throw new DuplicateEntryException("Record not inserted: Duplicate item entered.");
+    public void writeToXlsx(MenuItem item, int numExistingRecords) {
+        try {
+            MenuDirectory menuDirectory = MenuDirectory.getInstance();
+            boolean isExisting = menuDirectory
+                    .getMenu(item.getBranch())
+                    .itemExistsByName(item.getName());
+            if (!isExisting) {
+                serializeRecord(this.menuItemXlsx, item.toXlsx(), numExistingRecords);
+            } else {
+                throw new DuplicateEntryException("Record not inserted: Duplicate item entered.");
+            }
+        } catch (DuplicateEntryException e) {
+            System.out.println(e.getMessage());
         }
     }
 
     /**
      * Updates a menuItem record in the XLSX File.
      *
-     * @param item MenuItem record to add
+     * @param item MenuItem record to update.
      */
     public void updateXlsx(MenuItem item) {
         serializeUpdate(this.menuItemXlsx, item.toXlsx(), item.getId());

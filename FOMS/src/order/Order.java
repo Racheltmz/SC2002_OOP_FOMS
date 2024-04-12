@@ -4,11 +4,6 @@ import menu.MenuItem;
 
 import java.util.ArrayList;
 
-// TODO: STRUCT: PRINT RECEIPT UNDER VIEW
-// TODO: UNIQUE AND AUTO INCREMENTED ID
-// TODO: STRUCT: Implement pay method as a view for pay to print out paid message
-// TODO: Merge the customer order functions (by gwen) with the staff order functions (in enhancement branch)
-
 // Order details
 public class Order {
     // Attributes
@@ -30,6 +25,11 @@ public class Order {
         this.takeaway = takeaway;
         this.status = OrderStatus.NEW;
         this.paymentMethod = paymentMethod;
+    }
+
+    // Serialization to XLSX
+    public String[] toXlsx() {
+        return new String[] { orderID, branch, String.valueOf(items), String.valueOf(customisation), String.valueOf(takeaway), String.valueOf(status), paymentMethod};
     }
 
     // Getters and Setters

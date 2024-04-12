@@ -1,11 +1,6 @@
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.InputMismatchException;
 
 import authorisation.*;
-import exceptions.EmptyListException;
-import exceptions.ItemNotFoundException;
-import exceptions.MenuItemNotFoundException;
 import menu.MenuDirectory;
 import staff.StaffDirectory;
 import utils.InputScanner;
@@ -21,20 +16,18 @@ import static authentication.Authentication.login;
  */
 public class FOMSApp {
     public static void main(String[] args) {
-        // Initialise scanner
+        // Initialise scanner, directories, and order queue
         InputScanner sc = InputScanner.getInstance();
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         MenuDirectory menuDirectory = MenuDirectory.getInstance();
         OrderQueue orderQueue = OrderQueue.getInstance();
 
-        /* FOMS INTERFACE */
         // Iterate until system receives a valid input
         int choice = 0;
         do {
             try {
                 System.out.println("==================================");
-                System.out.println("|         Welcome to FOMS!       |");
-                System.out.println("|         By FDAB Group 3        |");
+                System.out.println("|       Welcome to Popeyes!      |");
                 System.out.println("==================================");
                 System.out.println("Please select option");
                 System.out.println("1. Customer\n2. Staff\n3: Quit");

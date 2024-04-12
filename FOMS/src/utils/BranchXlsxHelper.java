@@ -7,24 +7,21 @@ import java.util.List;
 import java.util.UUID;
 
 public class BranchXlsxHelper extends BaseXlsxHelper {
-
     /**
      * Path to Branch XLSX File in the data folder. Defaults to branch_list.xlsx.
      */
-    private final String branchXlsx;
+    private final String branchXlsx = "branch_list.xlsx";
     private final String[] header = {"id", "name", "location", "manager"};
 
     /**
-     * Default Constructor to initialize this class with staff.xlsx as the XLSX file.
+     * Default Constructor.
      */
-    public BranchXlsxHelper() {
-        this.branchXlsx = "branch_list.xlsx";
-    }
+    public BranchXlsxHelper() {}
 
     /**
-     * Singleton instance of this class.
+     * Singleton instance of BranchXlsxHelper.
      */
-    private static BranchXlsxHelper mInstance;
+    private static BranchXlsxHelper branchInstance;
 
     /**
      * Gets the singleton instance of BranchXlsxHelper that reads from branch_list.xlsx
@@ -33,22 +30,27 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
      */
 
     public static BranchXlsxHelper getInstance() {
-        if (mInstance == null) mInstance = new BranchXlsxHelper();
-        return mInstance;
+        if (branchInstance == null) branchInstance = new BranchXlsxHelper();
+        return branchInstance;
     }
 
      /**
-     * On initialisation, reads the XLSX file and parses it into an array list of branch objects.
+     * On initialisation, reads the XLSX file and parses it into an ArrayList of Branch objects.
      *
-     * @return ArrayList of branch Objects.
+     * @return ArrayList of Branch Objects.
      */
     public ArrayList<Branch> readFromXlsx() {
-        List<String[]> XlsxData = deserializeRecords(this.branchXlsx, this.header, 4, 1);
+        // Initialise a list
         ArrayList<Branch> branches = new ArrayList<>();
+
+        // Deserialize records
+        List<String[]> XlsxData = deserializeRecords(this.branchXlsx, this.header, 4, 1);
         if (XlsxData.isEmpty()) {
             serializeHeader(this.branchXlsx, this.header);
             return branches;
         }
+
+        // Add branches
         XlsxData.forEach((data) -> {
             UUID id = UUID.fromString(data[0]);
             // Convert to respective data type
@@ -56,14 +58,13 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
             String location = data[2];
             int staffQuota = (int) Double.parseDouble(data[3]);
 
-            // Add new branch
             branches.add(new Branch(id, name, location, staffQuota));
         });
         return branches;
     }
 
     /**
-     * Writes a branch record to the XLSX File.
+     * Writes a Branch record to the XLSX File.
      *
      * @param branch Branch record to add
      * @param numExistingRecords Number of existing branch records
@@ -73,7 +74,7 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
     }
 
     /**
-     * Updates a branch record in the XLSX File.
+     * Updates a Branch record in the XLSX File.
      *
      * @param branch Branch record to add
      */
@@ -82,9 +83,9 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
     }
 
     /**
-     * Deletes a branch record in the XLSX File.
+     * Deletes a Branch record in the XLSX File.
      *
-     * @param id ID of branch record to delete
+     * @param id ID of Branch record to delete
      */
     public void removeXlsx(UUID id) {
         deleteRecord(this.branchXlsx, id);

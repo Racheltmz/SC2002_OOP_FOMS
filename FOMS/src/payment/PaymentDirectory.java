@@ -1,8 +1,7 @@
 package payment;
 
-import staff.StaffDirectory;
+import exceptions.ItemNotFoundException;
 import staff.StaffRoles;
-import exceptions.AuthorizationException;
 import exceptions.EmptyListException;
 
 import java.util.ArrayList;
@@ -33,30 +32,54 @@ public class PaymentDirectory {
         return this.paymentDirectory;
     }
 
+    /**
+     * Check if there are any existing payment methods
+     *
+     * @return boolean
+     */
+    public boolean methodsExist() {
+        try {
+            if (this.paymentDirectory.isEmpty())
+                return false;
+            else
+                throw new EmptyListException("No payment methods.");
+        } catch (EmptyListException e) {
+            System.out.println(e.getMessage());
+        }
+        return true;
+    }
+
     // Get a specific payment method
-    public Payment getPaymentMtd(String method) throws EmptyListException {
-        // Return payment object if it can be found
-        for (Payment payment : this.paymentDirectory) {
-            if (Objects.equals(payment.getPaymentMethod(), method))
-                return payment;
-        } 
-         throw new EmptyListException(" The payment cannot be found ");
-        // Return null if payment cannot be found
+    // TODO: NEW: Review if we shld do something similar to OrderQueue getOrderById
+    public Payment getPaymentMtd(String method) {
+        if (methodsExist()) {
+            try {
+                // Return payment object if it can be found
+                for (Payment payment : this.paymentDirectory) {
+                    if (Objects.equals(payment.getPaymentMethod(), method))
+                        return payment;
+                }
+                throw new ItemNotFoundException("Payment method cannot be found ");
+            } catch (ItemNotFoundException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return null;
     }
 
     // Add payment method
-    public void addPaymentMtd(Payment payment, StaffRoles auth) throws AuthorizationException {
-        if (authoriseAdmin(auth))
-            this.paymentDirectory.add(payment);
-        else
-            throw new AuthorizationException("Unauthorized access: Admin authorization required to add payment method.");
+    public void addPaymentMtd(Payment payment, StaffRoles auth) {
+        if (authoriseAdmin(auth)) {
+            if (methodsExist())
+                this.paymentDirectory.add(payment);
+        }
     }
 
     // Remove payment method
-    public void rmvPaymentMtd(String paymentMtd, StaffRoles auth) throws AuthorizationException, EmptyListException {
-        if (authoriseAdmin(auth))
-            this.paymentDirectory.remove(this.getPaymentMtd(paymentMtd));
-        else
-            throw new AuthorizationException("Unauthorized access: Admin authorization required to remove payment method.");
+    public void rmvPaymentMtd(String paymentMtd, StaffRoles auth) {
+        if (authoriseAdmin(auth)) {
+            if (methodsExist())
+                this.paymentDirectory.remove(getPaymentMtd(paymentMtd));
+        }
     }
 }

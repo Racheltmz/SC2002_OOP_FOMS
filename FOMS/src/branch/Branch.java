@@ -18,7 +18,7 @@ public class Branch implements IXlsxSerializable {
         this.name = name;
         this.location = location;
         this.staffQuota = staffQuota;
-        // TODO: IMPORTANT: ensure in main that (1 <= staffQuota <= 15) as this will affect
+        // TODO: NEW ensure in main that (1 <= staffQuota <= 15) as this will affect
         if (staffQuota >= 1 && staffQuota <= 4) {
             this.managerQuota = 1;
         } else if (staffQuota >= 5 && staffQuota <= 8) {
@@ -44,7 +44,7 @@ public class Branch implements IXlsxSerializable {
 
     // Serialization to XLSX
     public String[] toXlsx() {
-        return new String[] { name, location, String.valueOf(staffQuota), String.valueOf(managerQuota)};
+        return new String[] { String.valueOf(id), name, location, String.valueOf(staffQuota), String.valueOf(managerQuota)};
     }
 
     // Getters and setters

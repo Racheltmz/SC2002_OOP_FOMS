@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import static authorisation.Authorisation.authoriseAdmin;
-import static validation.ValidateDataType.validateInt;
+import static utils.ValidateHelper.validateInt;
 
 // Records of branch
 public class BranchDirectory {
