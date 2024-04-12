@@ -1,12 +1,7 @@
 package authorisation;
 
 import utils.InputScanner;
-import management.Company;
 import staff.Manager;
-import staff.StaffRoles;
-import order.OrderQueue;
-
-import static utils.InputScanner.getInstance;
 
 // Authorised operations for active user with a manager role
 public class ActiveManager implements ActiveUser {
@@ -34,8 +29,8 @@ public class ActiveManager implements ActiveUser {
         setActiveStaff(null);
     }
 
-    public void showOptions(Company company, OrderQueue queue) {
-        InputScanner sc = getInstance();
+    public void showOptions() {
+        InputScanner sc = InputScanner.getInstance();
         System.out.println("-".repeat(30));
         System.out.printf("| StaffID: %s\n| Role: %s\n", getActiveStaff().getStaffID(),
                 getActiveStaff().getRole());
@@ -46,28 +41,28 @@ public class ActiveManager implements ActiveUser {
         sc.nextLine();
         switch (staffChoice) {
             case 1:
-                this.getActiveStaff().displayStaffList(company, StaffRoles.MANAGER);
+                this.getActiveStaff().displayStaffList(this.activeStaff.getRole());
                 break;
             case 2:
-                this.getActiveStaff().addMenuItem(company, StaffRoles.MANAGER);
+                this.getActiveStaff().addMenuItem(this.activeStaff.getRole());
                 break;
             case 3:
-                this.getActiveStaff().updateMenuItem(company, StaffRoles.MANAGER);
+                this.getActiveStaff().updateMenuItem(this.activeStaff.getRole());
                 break;
             case 4:
-                this.getActiveStaff().removeMenuItem(company, StaffRoles.MANAGER);
+                this.getActiveStaff().removeMenuItem(this.activeStaff.getRole());
                 break;
             case 5:
-                this.getActiveStaff().getNewOrders(this.activeStaff.getBranch(), queue);
+                this.getActiveStaff().getNewOrders(this.activeStaff.getBranch());
                 break;
             case 6:
-                this.getActiveStaff().getOrderDetails(queue);
+                this.getActiveStaff().getOrderDetails();
                 break;
             case 7:
-                this.getActiveStaff().setOrderReady(queue);
+                this.getActiveStaff().setOrderReady();
                 break;
             case 8:
-                this.getActiveStaff().changePassword(this.getActiveStaff());
+                this.getActiveStaff().changePassword(this.activeStaff);
                 break;
             case 9:
                 this.logout();

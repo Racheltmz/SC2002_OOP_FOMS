@@ -1,36 +1,33 @@
-import java.security.NoSuchAlgorithmException;
 import java.util.InputMismatchException;
 
 import authorisation.*;
+import menu.MenuDirectory;
+import staff.StaffDirectory;
 import utils.InputScanner;
-import management.Company;
 import staff.Staff;
 import staff.StaffRoles;
 import order.OrderQueue;
 
 import static authentication.Authentication.login;
-import static menu.MenuDirectory.displayMenuByBranch;
-import static utils.Initialisation.initialiseCompany;
-import static utils.InputScanner.getInstance;
 
-// Main app file
+/**
+ * Main App File
+ * @author Afreen, Gwen, Priya, Rachel, Sanjana
+ */
 public class FOMSApp {
     public static void main(String[] args) {
-        // Initialise scanner
-        InputScanner sc = getInstance();
+        // Initialise scanner, directories, and order queue
+        InputScanner sc = InputScanner.getInstance();
+        StaffDirectory staffDirectory = StaffDirectory.getInstance();
+        MenuDirectory menuDirectory = MenuDirectory.getInstance();
+        OrderQueue orderQueue = OrderQueue.getInstance();
 
-        // Initialise company and order queue
-        Company company = initialiseCompany();
-        OrderQueue orderQueue = new OrderQueue();
-
-        /* FOMS INTERFACE */
         // Iterate until system receives a valid input
         int choice = 0;
         do {
             try {
                 System.out.println("==================================");
-                System.out.println("|         Welcome to FOMS!       |");
-                System.out.println("|         By FDAB Group 3        |");
+                System.out.println("|       Welcome to Popeyes!      |");
                 System.out.println("==================================");
                 System.out.println("Please select option");
                 System.out.println("1. Customer\n2. Staff\n3: Quit");
@@ -46,7 +43,7 @@ public class FOMSApp {
                             System.out.println("|        Welcome Customer!       |");
                             System.out.println("==================================");
                             // Ask customer to select branch
-                            displayMenuByBranch(company);
+                            menuDirectory.displayMenuByBranch();
 
                             // Customer Options @gwen (test case 4-8, 18)
                             System.out.println("Please select option");
@@ -91,20 +88,16 @@ public class FOMSApp {
                                     staffChoice = sc.nextInt();
                                     sc.nextLine(); // Consume newline character
                                     if (staffChoice == 1) {
-                                        try {
-                                            staff = login(company.getStaffDirectory());
-                                            // Set active staff
-                                            if (staff != null) {
-                                                if (staff.getRole() == StaffRoles.STAFF) {
-                                                    activeStaff = staffFactory.initActive(staff);
-                                                } else if (staff.getRole() == StaffRoles.MANAGER) {
-                                                    activeManager = managerFactory.initActive(staff);
-                                                } else if (staff.getRole() == StaffRoles.ADMIN) {
-                                                    activeAdmin = adminFactory.initActive(staff);
-                                                }
+                                        staff = login(staffDirectory);
+                                        // Set active staff
+                                        if (staff != null) {
+                                            if (staff.getRole() == StaffRoles.STAFF) {
+                                                activeStaff = staffFactory.initActive(staff);
+                                            } else if (staff.getRole() == StaffRoles.MANAGER) {
+                                                activeManager = managerFactory.initActive(staff);
+                                            } else if (staff.getRole() == StaffRoles.ADMIN) {
+                                                activeAdmin = adminFactory.initActive(staff);
                                             }
-                                        } catch (NoSuchAlgorithmException e) {
-                                            System.out.println("Unable to find algorithm.");
                                         }
                                     } else if (staffChoice < 1 || staffChoice > 2)
                                         System.out.print("Invalid choice, please re-enter\n");
@@ -115,11 +108,11 @@ public class FOMSApp {
                             } else {
                                 try {
                                     if (activeStaff.getActiveStaff() != null) {
-                                        activeStaff.showOptions(company, orderQueue);
+                                        activeStaff.showOptions();
                                     } else if (activeManager.getActiveStaff() != null) {
-                                        activeManager.showOptions(company, orderQueue);
+                                        activeManager.showOptions();
                                     } else if (activeAdmin.getActiveStaff() != null) {
-                                        activeAdmin.showOptions(company, orderQueue);
+                                        activeAdmin.showOptions();
                                     }
                                 } catch (InputMismatchException inputMismatchException) {
                                     System.out.println("Please choose a valid option.\n");

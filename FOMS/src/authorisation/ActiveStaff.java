@@ -1,13 +1,8 @@
 package authorisation;
 
 import utils.InputScanner;
-import management.Company;
 import staff.Staff;
-import order.OrderQueue;
 
-import static utils.InputScanner.getInstance;
-
-// TODO: STRUCT: CREATE A VIEW FOR STAFF, MANAGEMENT, ADMIN for the print statements (1 for printing the header (staff and role) then 3 more for the mennu
 // Authorised operations for active user with a staff role
 public class ActiveStaff implements ActiveUser {
     // Attribute
@@ -32,8 +27,8 @@ public class ActiveStaff implements ActiveUser {
         setActiveStaff(null);
     }
 
-    public void showOptions(Company company, OrderQueue queue) {
-        InputScanner sc = getInstance();
+    public void showOptions() {
+        InputScanner sc = InputScanner.getInstance();
         System.out.println("-".repeat(30));
         System.out.printf("| StaffID: %s\n| Role: %s\n", getActiveStaff().getStaffID(),
                 getActiveStaff().getRole());
@@ -42,19 +37,19 @@ public class ActiveStaff implements ActiveUser {
         System.out.println(
                 "1. Display new orders\n2. View details of an order\n3. Set Order as Ready\n4. Change Password\n5. Logout");
         int staffChoice = sc.nextInt();
-        sc.nextLine(); // Consume newline character
+        sc.nextLine();
         switch (staffChoice) {
             case 1:
-                this.getActiveStaff().getNewOrders(this.activeStaff.getBranch(), queue);
+                this.getActiveStaff().getNewOrders(this.activeStaff.getBranch());
                 break;
             case 2:
-                this.getActiveStaff().getOrderDetails(queue);
+                this.getActiveStaff().getOrderDetails();
                 break;
             case 3:
-                this.getActiveStaff().setOrderReady(queue);
+                this.getActiveStaff().setOrderReady();
                 break;
             case 4:
-                this.getActiveStaff().changePassword(this.getActiveStaff());
+                this.getActiveStaff().changePassword(this.activeStaff);
                 break;
             case 5:
                 this.logout();

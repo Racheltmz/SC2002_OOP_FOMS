@@ -3,17 +3,27 @@ package staff;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import exceptions.ItemNotFoundException;
+import utils.StaffXlsxHelper;
+
 import static authorisation.Authorisation.authoriseAdmin;
 
-// TODO: IMPLEMENT: FILTERS FOR ALL 4 CRITERIAS
 // Records of staff
 public class StaffDirectory {
     // Attribute
-    private ArrayList<Staff> staffDirectory;
+    private final ArrayList<Staff> staffDirectory;
+    private static StaffDirectory staffSingleton = null;
 
-    // Constructor
-    public StaffDirectory(ArrayList<Staff> staffDirectory) {
-        this.staffDirectory = staffDirectory;
+    private StaffDirectory() {
+        StaffXlsxHelper staffXlsxHelper = StaffXlsxHelper.getInstance();
+        this.staffDirectory = staffXlsxHelper.readFromXlsx();
+    }
+
+    public static StaffDirectory getInstance() {
+        if (staffSingleton == null) {
+            staffSingleton = new StaffDirectory();
+        }
+        return staffSingleton;
     }
 
     // Functionalities
@@ -24,12 +34,17 @@ public class StaffDirectory {
 
     // Get staff based on staff ID
     public Staff getStaff(String staffId) {
-        // Return staff object if it can be found
-        for (Staff curStaff : this.staffDirectory) {
-            if (Objects.equals(curStaff.getStaffID(), staffId))
-                return curStaff;
+        try {
+            // Return staff object if it can be found
+            for (Staff curStaff : this.staffDirectory) {
+                if (Objects.equals(curStaff.getStaffID(), staffId))
+                    return curStaff;
+            }
+            // Return null if staff cannot be found
+            throw new ItemNotFoundException("Staff does not exist. Please enter a valid staffID.");
+        } catch (ItemNotFoundException e) {
+            System.out.println(e.getMessage());
         }
-        // Return null if staff cannot be found
         return null;
     }
 
@@ -47,12 +62,12 @@ public class StaffDirectory {
 
     // Filters
     public ArrayList<Staff> filterBranch(String branch) {
-        StaffList toFilter = new StaffList();
+        StaffActions toFilter = new StaffActions();
         return toFilter.getStaffBranch(this.staffDirectory, branch);
     }
 
     public ArrayList<Staff> filterRole(StaffRoles role) {
-        StaffList toFilter = new StaffList();
+        StaffActions toFilter = new StaffActions();
         return toFilter.getStaffRole(this.staffDirectory, role);
     }
 

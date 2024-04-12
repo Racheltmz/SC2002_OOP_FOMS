@@ -1,56 +1,82 @@
 package menu;
 
-import management.Company;
+import branch.BranchDirectory;
+import exceptions.EmptyListException;
+import exceptions.ItemNotFoundException;
+import utils.MenuItemXlsxHelper;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 import static branch.BranchDirectory.getBranchByUserInput;
 
-// TODO: create view for displaymenubybranch
-// TODO: CHECK IF NEED queryBranch interface for displayitemsby branch
-// Records of menu
 public class MenuDirectory {
-    // Attributes
-    private ArrayList<Menu> menuDirectory;
+    private final ArrayList<Menu> menuDirectory;
+    private static MenuDirectory menuSingleton = null;
 
-    // Constructor
-    public MenuDirectory(ArrayList<Menu> menuDirectory) {
-        this.menuDirectory = menuDirectory;
+    private MenuDirectory() {
+        MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
+        this.menuDirectory = menuItemXlsxHelper.readFromXlsx();
     }
 
-    // Functionalities
-    // Get all menus
-    public ArrayList<Menu> getMenuDirectory() {
-        return menuDirectory;
-    }
-
-    // Get menu by branch name
-    public Menu getMenu(String branchName) {
-        // Return staff object if it can be found
-        for (Menu menu : this.menuDirectory) {
-            if (Objects.equals(menu.getBranch().getBranchName(), branchName))
-                return menu;
+    public static MenuDirectory getInstance() {
+        if (menuSingleton == null) {
+            menuSingleton = new MenuDirectory();
         }
-        // Return null if menu cannot be found
+        return menuSingleton;
+    }
+
+    /**
+     * Check if the directory has any menus
+     *
+     * @return boolean
+     */
+    public boolean menusExist() {
+        try {
+            if (this.menuDirectory.isEmpty())
+                return false;
+            else
+                throw new EmptyListException("There are no menus. Please approach the staff for assistance.");
+        } catch (EmptyListException e) {
+            System.out.println(e.getMessage());
+        }
+        return true;
+    }
+
+    public Menu getMenu(String branchName) {
+        if (menusExist()) {
+            try {
+                for (Menu menu : this.menuDirectory) {
+                    if (Objects.equals(menu.getBranch().getBranchName(), branchName)) {
+                        return menu;
+                    }
+                }
+                throw new ItemNotFoundException("There is no menu for this branch. Please check the branch name.");
+            } catch (ItemNotFoundException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         return null;
     }
 
-    // Display menu based on branch selected by customer
-    public static void displayMenuByBranch(Company company) {
-        // Get menu by user's selection of branch
-        String branch = getBranchByUserInput(company.getBranchDirectory());
-        Menu menu = company.getMenuDirectory().getMenu(branch);
-        if (menu == null) {
-            System.out.println("No items found for the specified branch.");
-            return;
-        }
+    public void displayMenuByBranch() {
+        BranchDirectory branchDirectory = BranchDirectory.getInstance();
+        String branch = getBranchByUserInput(branchDirectory);
+        Menu menu = getMenu(branch);
         System.out.println("Menu items in branch " + branch + ":");
         menu.displayItems();
     }
 
-    // Get number of menu items
+    public int getNumAllMenuItems() {
+        int count = 0;
+        for (Menu menu: this.menuDirectory) {
+            count += menu.getMenuItems().size();
+        }
+        return count;
+    }
+
     public int getNumMenuItems(String branch) {
-        return getMenu(branch).getMenuItems().size();
+        Menu menu = getMenu(branch);
+        return menu.getMenuItems().size();
     }
 }

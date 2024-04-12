@@ -1,22 +1,29 @@
 package payment;
 
+import exceptions.ItemNotFoundException;
 import staff.StaffRoles;
+import exceptions.EmptyListException;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 import static authorisation.Authorisation.authoriseAdmin;
+import static utils.Initialisation.initialisePaymentRecords;
 
-// TODO: VIEW TO DISPLAY PAYMENT METHODS 
-// Records of payment methods (DONE)
-
+// Records of payment methods
 public class PaymentDirectory {
     // Attributes
-    private ArrayList<Payment> paymentDirectory;
+    private final ArrayList<Payment> paymentDirectory;
+    private static PaymentDirectory paymentSingleton = null;
+    private PaymentDirectory() {
+        this.paymentDirectory = initialisePaymentRecords();
+    }
 
-    // Constructor
-    public PaymentDirectory(ArrayList<Payment> paymentDirectory) {
-        this.paymentDirectory = paymentDirectory;
+    public static PaymentDirectory getInstance() {
+        if (paymentSingleton == null) {
+            paymentSingleton = new PaymentDirectory();
+        }
+        return paymentSingleton;
     }
 
     // Functionalities
@@ -25,26 +32,54 @@ public class PaymentDirectory {
         return this.paymentDirectory;
     }
 
-    // Get a specific payment method
-    public Payment getPaymentMtd(String method) {
-        // Return payment object if it can be found
-        for (Payment payment : this.paymentDirectory) {
-            if (Objects.equals(payment.getPaymentMethod(), method))
-                return payment;
+    /**
+     * Check if there are any existing payment methods
+     *
+     * @return boolean
+     */
+    public boolean methodsExist() {
+        try {
+            if (this.paymentDirectory.isEmpty())
+                return false;
+            else
+                throw new EmptyListException("No payment methods.");
+        } catch (EmptyListException e) {
+            System.out.println(e.getMessage());
         }
-        // Return null if payment cannot be found
+        return true;
+    }
+
+    // Get a specific payment method
+    // TODO: NEW: Review if we shld do something similar to OrderQueue getOrderById
+    public Payment getPaymentMtd(String method) {
+        if (methodsExist()) {
+            try {
+                // Return payment object if it can be found
+                for (Payment payment : this.paymentDirectory) {
+                    if (Objects.equals(payment.getPaymentMethod(), method))
+                        return payment;
+                }
+                throw new ItemNotFoundException("Payment method cannot be found ");
+            } catch (ItemNotFoundException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         return null;
     }
 
     // Add payment method
     public void addPaymentMtd(Payment payment, StaffRoles auth) {
-        if (authoriseAdmin(auth))
-            this.paymentDirectory.add(payment);
+        if (authoriseAdmin(auth)) {
+            if (methodsExist())
+                this.paymentDirectory.add(payment);
+        }
     }
 
     // Remove payment method
     public void rmvPaymentMtd(String paymentMtd, StaffRoles auth) {
-        if (authoriseAdmin(auth))
-            this.paymentDirectory.remove(this.getPaymentMtd(paymentMtd));
+        if (authoriseAdmin(auth)) {
+            if (methodsExist())
+                this.paymentDirectory.remove(getPaymentMtd(paymentMtd));
+        }
     }
 }

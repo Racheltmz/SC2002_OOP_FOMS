@@ -2,10 +2,6 @@ package authorisation;
 
 import utils.InputScanner;
 import staff.Admin;
-import management.Company;
-import order.OrderQueue;
-
-import static utils.InputScanner.getInstance;
 
 // Authorised operations for active user with an admin role
 public class ActiveAdmin implements ActiveUser {
@@ -28,8 +24,8 @@ public class ActiveAdmin implements ActiveUser {
         setActiveStaff(null);
     }
 
-    public void showOptions(Company company, OrderQueue queue) {
-        InputScanner sc = getInstance();
+    public void showOptions() {
+        InputScanner sc = InputScanner.getInstance();
         System.out.println("-".repeat(30));
         System.out.printf("| StaffID: %s\n| Role: %s\n", getActiveStaff().getStaffID(),
                 getActiveStaff().getRole());

@@ -4,22 +4,31 @@ import staff.StaffDirectory;
 import utils.InputScanner;
 import staff.Staff;
 
-import java.security.NoSuchAlgorithmException;
-
 import static authentication.Hashing.genHash;
-import static utils.InputScanner.getInstance;
 
-// TODO: STRUCT: CREATE A VIEW FOR THE PRINT STATEMENTS
-// Authentication purposes (login)
+/**
+ * Authenticate staff based on their roles
+ */
 public class Authentication {
-    // Verify if the password matches
+    /**
+     * Verify if the user entered the right password for the account
+     *
+     * @param staff Staff object based on the username entered
+     * @param password Password inputted
+     * @return Boolean value of whether the password matches
+     */
     protected static boolean verifyPassword(Staff staff, String password) {
         return password.equals(staff.getPassword());
     }
 
-    // Login
-    public static Staff login(StaffDirectory staffDirectory) throws NoSuchAlgorithmException {
-        InputScanner sc = getInstance();
+    /**
+     * Staff login into their account
+     *
+     * @param staffDirectory List of staff records
+     * @return Nothing is returned
+     */
+    public static Staff login(StaffDirectory staffDirectory) {
+        InputScanner sc = InputScanner.getInstance();
         while (true) {
             System.out.print("\nEnter staffID: ");
             String inputStaffID = sc.next();
@@ -43,9 +52,13 @@ public class Authentication {
         }
     }
 
-    // Change password
+    /**
+     * Change password
+     *
+     * @param staff Staff that wants to change their password
+     */
     public static void setNewPassword(Staff staff) {
-        InputScanner sc = getInstance();
+        InputScanner sc = InputScanner.getInstance();
         System.out.print("\nPlease enter new password: ");
         String newPassword = sc.next();
         // Check if user entered a password or if they entered the same password as they had in the past

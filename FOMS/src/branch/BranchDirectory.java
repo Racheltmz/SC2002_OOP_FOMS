@@ -1,23 +1,31 @@
 package branch;
 
 import staff.StaffRoles;
+import utils.BranchXlsxHelper;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 import static authorisation.Authorisation.authoriseAdmin;
-import static validation.ValidateDataType.validateInt;
+import static utils.ValidateHelper.validateInt;
 
 // Records of branch
 public class BranchDirectory {
-    // Attributes
-    private ArrayList<Branch> branchDirectory;
+    // Attribute
+    private final ArrayList<Branch> branchDirectory;
+    private static BranchDirectory branchSingleton = null;
 
-    // Constructor
-    public BranchDirectory(ArrayList<Branch> branchDirectory) {
-        this.branchDirectory = branchDirectory;
+    private BranchDirectory() {
+        BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
+        this.branchDirectory = branchXlsxHelper.readFromXlsx();
     }
 
+    public static BranchDirectory getInstance() {
+        if (branchSingleton == null) {
+            branchSingleton = new BranchDirectory();
+        }
+        return branchSingleton;
+    }
     // Functionalities
     // Get all branches
     public ArrayList<Branch> getBranchDirectory() {
@@ -67,8 +75,11 @@ public class BranchDirectory {
 
     // Add branch (admin purposes)
     public void addBranch(Branch branch, StaffRoles auth) {
-        if (authoriseAdmin(auth))
+        if (authoriseAdmin(auth)) {
             this.branchDirectory.add(branch);
+            BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
+            branchXlsxHelper.writeToXlsx(branch, this.branchDirectory.size());
+        }
     }
 
     // Remove branch (admin purposes)

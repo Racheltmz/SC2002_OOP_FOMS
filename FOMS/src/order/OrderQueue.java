@@ -3,23 +3,28 @@ package order;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Timer;
-
+import exceptions.EmptyListException;
+import exceptions.ItemNotFoundException;
 import utils.InputScanner;
 
-import exceptions.EmptyListException;
-
-import static utils.InputScanner.getInstance;
-
-// TODO: Create views accordingly (DONE)
-// TODO: Merge the customer order functions (by gwen) with the staff order functions (in enhancement branch)
-// Records of all orders made by customers (DONE)
+/**
+ * Records of all orders made by customers
+ */
 public class OrderQueue {
     // Attributes
-    private ArrayList<Order> orders;
+    private final ArrayList<Order> orders;
+    private static OrderQueue ordersSingleton = null;
 
     // Constructor
     public OrderQueue() {
-        this.orders = new ArrayList<Order>();
+        this.orders = new ArrayList<>();
+    }
+
+    public static OrderQueue getInstance() {
+        if (ordersSingleton == null) {
+            ordersSingleton = new OrderQueue();
+        }
+        return ordersSingleton;
     }
 
     // Get all orders
@@ -27,48 +32,52 @@ public class OrderQueue {
         return this.orders;
     }
 
-    // Add order
-    public void addOrder(Order order) {
-        this.orders.add(order);
-    }
-
-    // Remove order
-    public void rmvOrder() {
+    /**
+     * Check if the queue has any orders
+     *
+     * @return boolean
+     */
+    public boolean ordersExist() {
         try {
-            this.orders.remove(this.getOrderById());
-        } catch (EmptyListException emptyListException) {
-            System.out.println("No orders to remove.");
+            if (this.orders.isEmpty())
+                return false;
+            else
+                throw new EmptyListException("Order queue is empty.");
+        } catch (EmptyListException e) {
+            System.out.println(e.getMessage());
         }
+        return true;
     }
 
     // Get order by ID
-    public Order getOrderById() throws EmptyListException {
-        InputScanner sc = getInstance();
-        if (!this.orders.isEmpty()) {
-            // Else iterate until user enters a valid id
+    public Order getOrderById() {
+        InputScanner sc = InputScanner.getInstance();
+        if (ordersExist()) {
+            // Iterate until user enters a valid id
             while (true) {
-                // Get user's input
-                System.out.println("Enter orderID: ");
-                String orderID = sc.next();
-                // Return order object if it can be found
-                for (Order order : this.orders) {
-                    if (Objects.equals(order.getOrderID(), orderID))
-                        return order;
+                try {
+                    // Get user's input
+                    System.out.println("Enter orderID: ");
+                    String orderID = sc.next();
+                    // Return order object if it can be found
+                    for (Order order : this.orders) {
+                        if (Objects.equals(order.getOrderID(), orderID))
+                            return order;
+                    }
+                    throw new ItemNotFoundException("Please retry, invalid orderID.");
+                } catch (ItemNotFoundException e) {
+                    System.out.println(e.getMessage());
                 }
-                System.out.println("Please retry, invalid orderID.");
             }
-        } else {
-            throw new EmptyListException("No orders to display.");
         }
+        return null;
     }
 
     // Display a specific order
     public void displayOrder() {
-        try {
-            Order order = this.getOrderById();
-            OrderView.printOrderDetails(order);
-        } catch (EmptyListException emptyListException) {
-            System.out.println("There has to be an order before this option can be used.");
+        if (ordersExist()) {
+            Order order = getOrderById();
+            order.printOrderDetails();
         }
     }
     
@@ -87,50 +96,44 @@ public class OrderQueue {
 
     // Display new orders
     public void displayNewOrders(String branch) {
-        if (!this.orders.isEmpty()) {
+        if (ordersExist()) {
             System.out.println("Orders in the queue:");
             for (Order order : this.orders) {
                 if (Objects.equals(order.getStatus(), OrderStatus.NEW) && Objects.equals(order.getBranch(), branch)) {
                     OrderView.printOrderDetails(order);
                 }
             }
-        } else {
-            System.out.println("No orders to display.");
         }
     }
 
-    // TODO: Implement for test case 8, 18
     // Get order status by order ID
     public void getStatusById() {
-        try {
-            Order order = this.getOrderById();
+        if (ordersExist()) {
+            Order order = getOrderById();
             System.out.printf("Status of Order ID: %s is %s", order.getOrderID(), order.getStatus());
-        } catch (EmptyListException emptyListException) {
-            System.out.println("There has to be an order before this option can be used.");
         }
+    }
+
+    // Add order
+    public void addOrder(Order order) {
+        this.orders.add(order);
     }
 
     // Update order status to ready when food is ready or when customer collects order
-    public void updateStatus(OrderStatus newStatus) {
-        try {
-            Order order = this.getOrderById();
-            OrderStatus prevStatus = order.getStatus();
-            if (newStatus.equals(OrderStatus.READY)) {
-                Timer timer = new Timer();
-                OrderTimerTask orderTask = new OrderTimerTask(timer, order);
-                int seconds = 5;
-                timer.schedule(orderTask, seconds * 1000);
-            }
-            else
+    public void updateStatus(OrderStatus valStatus, OrderStatus newStatus) {
+        if (ordersExist()) {
+            Order order = getOrderById();
+            if (order.getStatus().equals(valStatus))
                 order.setStatus(newStatus);
-            System.out.println("Order status updated from " + prevStatus + " to " + newStatus);
-        } catch (EmptyListException emptyListException) {
-            System.out.println("There has to be an order before this option can be used.");
+            System.out.println("Order status updated successfully.");
         }
     }
 
-    // Process order placement
-    public void placeOrder(Order order, double amountPaid){
-        order.placeOrder(amountPaid);
+    // Remove order
+    public void rmvOrder() {
+        if (ordersExist()) {
+            this.orders.remove(getOrderById());
+            System.out.println("Order removed successfully.");
+        }
     }
 }
