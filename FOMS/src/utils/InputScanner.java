@@ -6,10 +6,8 @@ import java.util.Scanner;
 public class InputScanner {
     private Scanner reader;
     private static InputScanner singleton = null;
-    private boolean alreadyClosed;
 
     private InputScanner() {
-        alreadyClosed = false;
         reader = new Scanner(System.in);
         reader.useDelimiter("\\n");
     }
@@ -38,7 +36,6 @@ public class InputScanner {
     }
 
     public void close() {
-        alreadyClosed = true;
         reader.close();
     }
 }

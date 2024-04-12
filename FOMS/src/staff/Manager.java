@@ -30,7 +30,7 @@ public class Manager extends Staff  {
     }
 
     // Display staff list by branch
-    public void displayStaffList(StaffRoles auth) throws IOException {
+    public void displayStaffList(StaffRoles auth) {
         if (authoriseManager(auth)) {
             StaffDirectory staffDirectory = StaffDirectory.getInstance();
             BranchDirectory branchDirectory = BranchDirectory.getInstance();
@@ -51,7 +51,7 @@ public class Manager extends Staff  {
     }
 
     // Remove menu item
-    public void removeMenuItem(StaffRoles auth) throws MenuItemNotFoundException, ItemNotFoundException, IOException {
+    public void removeMenuItem(StaffRoles auth) throws MenuItemNotFoundException, ItemNotFoundException {
         managerActions.removeMenuItem(auth);
     }
 

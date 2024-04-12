@@ -16,12 +16,12 @@ public class StaffDirectory {
     private final ArrayList<Staff> staffDirectory;
     private static StaffDirectory staffSingleton = null;
 
-    private StaffDirectory() throws IOException {
+    private StaffDirectory() {
         StaffXlsxHelper staffXlsxHelper = StaffXlsxHelper.getInstance();
         this.staffDirectory = staffXlsxHelper.readFromXlsx();
     }
 
-    public static StaffDirectory getInstance() throws IOException {
+    public static StaffDirectory getInstance() {
         if (staffSingleton == null) {
             staffSingleton = new StaffDirectory();
         }

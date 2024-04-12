@@ -2,21 +2,17 @@ package utils;
 
 import branch.Branch;
 
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import static utils.FileIOHelper.getSheet;
 
 public class BranchXlsxHelper extends BaseXlsxHelper {
 
     /**
      * Path to Branch XLSX File in the data folder. Defaults to branch_list.xlsx.
      */
-    private String branchXlsx;
+    private final String branchXlsx;
+    private final String[] header = {"id", "name", "location", "manager"};
 
     /**
      * Default Constructor to initialize this class with staff.xlsx as the XLSX file.
@@ -47,21 +43,21 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
      * @return ArrayList of branch Objects.
      */
     public ArrayList<Branch> readFromXlsx() {
-        XSSFSheet sheet = getSheet(this.branchXlsx);
-        List<String[]> XlsxData = deserializeRecords(sheet, 1);
+        List<String[]> XlsxData = deserializeRecords(this.branchXlsx, this.header, 4, 1);
         ArrayList<Branch> branches = new ArrayList<>();
-        if (XlsxData.isEmpty()) return branches;
+        if (XlsxData.isEmpty()) {
+            serializeHeader(this.branchXlsx, this.header);
+            return branches;
+        }
         XlsxData.forEach((data) -> {
-            if (data.length == 4) {
-                UUID id = UUID.fromString(data[0]);
-                // Convert to respective data type
-                String name = data[1];
-                String location = data[2];
-                int staffQuota = (int) Double.parseDouble(data[3]);
+            UUID id = UUID.fromString(data[0]);
+            // Convert to respective data type
+            String name = data[1];
+            String location = data[2];
+            int staffQuota = (int) Double.parseDouble(data[3]);
 
-                // Add new branch
-                branches.add(new Branch(id, name, location, staffQuota));
-            }
+            // Add new branch
+            branches.add(new Branch(id, name, location, staffQuota));
         });
         return branches;
     }
@@ -71,20 +67,17 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
      *
      * @param branch Branch record to add
      * @param numExistingRecords Number of existing branch records
-     * @throws IOException Error if there is an issue with IO processes
      */
-    public void writeToXlsx(Branch branch, int numExistingRecords) throws IOException {
-        String[] header = {"id", "name", "location", "manager"};
-        serializeRecord(this.branchXlsx, branch.toXlsx(), header, numExistingRecords);
+    public void writeToXlsx(Branch branch, int numExistingRecords) {
+        serializeRecord(this.branchXlsx, branch.toXlsx(), numExistingRecords);
     }
 
     /**
      * Updates a branch record in the XLSX File.
      *
      * @param branch Branch record to add
-     * @throws IOException Error if there is an issue with IO processes
      */
-    public void updateXlsx(Branch branch) throws IOException {
+    public void updateXlsx(Branch branch) {
         serializeUpdate(this.branchXlsx, branch.toXlsx(), branch.getId());
     }
 
@@ -92,9 +85,8 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
      * Deletes a branch record in the XLSX File.
      *
      * @param id ID of branch record to delete
-     * @throws IOException Error if there is an issue with IO processes
      */
-    public void removeXlsx(UUID id) throws IOException {
+    public void removeXlsx(UUID id) {
         deleteRecord(this.branchXlsx, id);
     }
 }

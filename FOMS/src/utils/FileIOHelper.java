@@ -53,10 +53,14 @@ public class FileIOHelper {
      *
      * @param name Filename with extension
      * @return FileInputStream of the file
-     * @throws IOException File Not Found Exception
      */
-    public static FileInputStream getFileInputStream(String name) throws IOException {
-        return new FileInputStream(getFile(name));
+    public static FileInputStream getFileInputStream(String name) {
+        try {
+            return new FileInputStream(getFile(name));
+        } catch (IOException ioException) {
+            System.out.println("Error: unable to add header.");
+        }
+        return null;
     }
 
     /**
@@ -64,10 +68,14 @@ public class FileIOHelper {
      *
      * @param name Filename with extension
      * @return FileOutputStream of the file
-     * @throws IOException File Not Found Exception
      */
-    public static FileOutputStream getFileOutputStream(String name) throws IOException {
-        return new FileOutputStream(getFile(name));
+    public static FileOutputStream getFileOutputStream(String name) {
+        try {
+            return new FileOutputStream(getFile(name));
+        } catch (IOException ioException) {
+            System.out.println("Error: unable to add header.");
+        }
+        return null;
     }
 
     // Get Excel spreadsheet by filename
@@ -78,6 +86,7 @@ public class FileIOHelper {
             FileInputStream file = FileIOHelper.getFileInputStream(filePath);
 
             // Create Workbook instance holding reference to .xlsx file
+            assert file != null;
             XSSFWorkbook workbook = new XSSFWorkbook(file);
 
             // Get first sheet from the workbook

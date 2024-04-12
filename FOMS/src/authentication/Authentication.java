@@ -4,8 +4,6 @@ import staff.StaffDirectory;
 import utils.InputScanner;
 import staff.Staff;
 
-import java.security.NoSuchAlgorithmException;
-
 import exceptions.ItemNotFoundException;
 
 import static authentication.Hashing.genHash;
@@ -32,30 +30,32 @@ public class Authentication {
      *
      * @param staffDirectory List of staff records
      * @return Nothing is returned
-     * @throws NoSuchAlgorithmException Error if algorithm cannot be found
-     * @throws ItemNotFoundException Error if staff cannot be found
      */
-    public static Staff login(StaffDirectory staffDirectory) throws NoSuchAlgorithmException, ItemNotFoundException {
+    public static Staff login(StaffDirectory staffDirectory) {
         InputScanner sc = InputScanner.getInstance();
         while (true) {
             System.out.print("\nEnter staffID: ");
             String inputStaffID = sc.next();
             // Get staff by id
-            Staff staff = staffDirectory.getStaff(inputStaffID);
-            if (staff != null) {
-                while (true) {
-                    System.out.print("Enter password: ");
-                    String inputPassword = sc.next();
-                    String securePassword = genHash(inputPassword);
-                    if (!verifyPassword(staff, securePassword)) {
-                        System.out.println("Incorrect password, please try again.");
-                    } else {
-                        System.out.println("Logged in!\n");
-                        return staff;
+            try {
+                Staff staff = staffDirectory.getStaff(inputStaffID);
+                if (staff != null) {
+                    while (true) {
+                        System.out.print("Enter password: ");
+                        String inputPassword = sc.next();
+                        String securePassword = genHash(inputPassword);
+                        if (!verifyPassword(staff, securePassword)) {
+                            System.out.println("Incorrect password, please try again.");
+                        } else {
+                            System.out.println("Logged in!\n");
+                            return staff;
+                        }
                     }
+                } else {
+                    System.out.println("Invalid staffID, please try again.");
                 }
-            } else {
-                System.out.println("Invalid staffID, please try again.");
+            } catch (ItemNotFoundException itemNotFoundException) {
+                System.out.println("Error: Item not found.");
             }
         }
     }

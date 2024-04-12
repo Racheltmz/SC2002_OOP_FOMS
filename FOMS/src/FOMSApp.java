@@ -20,7 +20,7 @@ import static authentication.Authentication.login;
  * @author Afreen, Gwen, Priya, Rachel, Sanjana
  */
 public class FOMSApp {
-    public static void main(String[] args) throws MenuItemNotFoundException, ItemNotFoundException, EmptyListException, IOException {
+    public static void main(String[] args) {
         // Initialise scanner
         InputScanner sc = InputScanner.getInstance();
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
@@ -95,20 +95,16 @@ public class FOMSApp {
                                     staffChoice = sc.nextInt();
                                     sc.nextLine(); // Consume newline character
                                     if (staffChoice == 1) {
-                                        try {
-                                            staff = login(staffDirectory);
-                                            // Set active staff
-                                            if (staff != null) {
-                                                if (staff.getRole() == StaffRoles.STAFF) {
-                                                    activeStaff = staffFactory.initActive(staff);
-                                                } else if (staff.getRole() == StaffRoles.MANAGER) {
-                                                    activeManager = managerFactory.initActive(staff);
-                                                } else if (staff.getRole() == StaffRoles.ADMIN) {
-                                                    activeAdmin = adminFactory.initActive(staff);
-                                                }
+                                        staff = login(staffDirectory);
+                                        // Set active staff
+                                        if (staff != null) {
+                                            if (staff.getRole() == StaffRoles.STAFF) {
+                                                activeStaff = staffFactory.initActive(staff);
+                                            } else if (staff.getRole() == StaffRoles.MANAGER) {
+                                                activeManager = managerFactory.initActive(staff);
+                                            } else if (staff.getRole() == StaffRoles.ADMIN) {
+                                                activeAdmin = adminFactory.initActive(staff);
                                             }
-                                        } catch (NoSuchAlgorithmException e) {
-                                            System.out.println("Unable to find algorithm.");
                                         }
                                     } else if (staffChoice < 1 || staffChoice > 2)
                                         System.out.print("Invalid choice, please re-enter\n");

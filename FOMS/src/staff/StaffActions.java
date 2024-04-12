@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import exceptions.InvalidInputException;
 
 public class StaffActions {
-    public ArrayList<Staff> getStaffBranch(ArrayList<Staff> staffList, String branch) throws InvalidInputException{
+    public ArrayList<Staff> getStaffBranch(ArrayList<Staff> staffList, String branch) throws InvalidInputException {
     if (branch == null || branch.isEmpty()) {
         throw new InvalidInputException("Branch name cannot be empty or null");
     }

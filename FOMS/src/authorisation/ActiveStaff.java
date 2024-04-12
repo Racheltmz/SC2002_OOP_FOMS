@@ -30,7 +30,7 @@ public class ActiveStaff implements ActiveUser {
         setActiveStaff(null);
     }
 
-    public void showOptions() throws EmptyListException {
+    public void showOptions() {
         InputScanner sc = InputScanner.getInstance();
         System.out.println("-".repeat(30));
         System.out.printf("| StaffID: %s\n| Role: %s\n", getActiveStaff().getStaffID(),
@@ -40,26 +40,30 @@ public class ActiveStaff implements ActiveUser {
         System.out.println(
                 "1. Display new orders\n2. View details of an order\n3. Set Order as Ready\n4. Change Password\n5. Logout");
         int staffChoice = sc.nextInt();
-        sc.nextLine(); // Consume newline character
-        switch (staffChoice) {
-            case 1:
-                this.getActiveStaff().getNewOrders(this.activeStaff.getBranch());
-                break;
-            case 2:
-                this.getActiveStaff().getOrderDetails();
-                break;
-            case 3:
-                this.getActiveStaff().setOrderReady();
-                break;
-            case 4:
-                this.getActiveStaff().changePassword(this.activeStaff);
-                break;
-            case 5:
-                this.logout();
-                break;
-            default:
-                System.out.println("Invalid choice, please re-enter: ");
-                break;
+        sc.nextLine();
+        try {
+            switch (staffChoice) {
+                case 1:
+                    this.getActiveStaff().getNewOrders(this.activeStaff.getBranch());
+                    break;
+                case 2:
+                    this.getActiveStaff().getOrderDetails();
+                    break;
+                case 3:
+                    this.getActiveStaff().setOrderReady();
+                    break;
+                case 4:
+                    this.getActiveStaff().changePassword(this.activeStaff);
+                    break;
+                case 5:
+                    this.logout();
+                    break;
+                default:
+                    System.out.println("Invalid choice, please re-enter: ");
+                    break;
+            }
+        } catch (EmptyListException e) {
+            System.out.println("Menu: " + e.getMessage());
         }
     }
 }

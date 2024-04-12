@@ -5,7 +5,6 @@ import menu.MenuDirectory;
 import utils.InputScanner;
 import menu.MenuItem;
 import menu.Menu;
-import java.io.IOException;
 import java.util.InputMismatchException;
 
 import exceptions.ItemNotFoundException;
@@ -45,8 +44,6 @@ public class ManagerActions {
                 menuDirectory.getMenu(branch).addItem(newItem, menuDirectory.getNumAllMenuItems(), false);
             } catch (InputMismatchException e) { //| MenuItemNotFoundException | ItemNotFoundException e
                 System.out.println("Error: " + e.getMessage());
-            } catch (IOException e) {
-                System.out.println("File Error: " + e.getMessage()); // TODO: BETTER MSG
             }
         }
     }
@@ -75,8 +72,6 @@ public class ManagerActions {
                     System.out.println("Item successfully updated in menu!");
                 } catch (InputMismatchException e) {
                     System.out.println("Error: " + e.getMessage());
-                } catch (IOException e) {
-                    System.out.println("File Error: " + e.getMessage()); // TODO: TO EDIT
                 }
             } while (!success);
         }
@@ -84,7 +79,7 @@ public class ManagerActions {
 
     // Remove menu item
     public void removeMenuItem(StaffRoles auth)
-            throws MenuItemNotFoundException, IndexOutOfBoundsException, ItemNotFoundException, IOException {
+            throws IndexOutOfBoundsException {
         if (authoriseManager(auth)) {
             // Get menu by branch
             String branch = getBranchByUserInput(branchDirectory);

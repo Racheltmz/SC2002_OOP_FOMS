@@ -1,11 +1,10 @@
 package menu;
 
 import branch.Branch;
+import exceptions.DuplicateEntryException;
 import utils.MenuItemXlsxHelper;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.UUID;
 
 // TODO: CREATE VIEW for displayItems
 // Menu details
@@ -40,18 +39,31 @@ public class Menu {
         }
     }
 
+    public boolean itemExists(String name) {
+        for (MenuItem item: this.menuItems) {
+            if (item.getName().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Add menu item
-    public void addItem(MenuItem menuItem, int numExistingItems, boolean stored) throws IOException {
-        menuItems.add(menuItem);
+    public void addItem(MenuItem menuItem, int numExistingItems, boolean stored) {
+        this.menuItems.add(menuItem);
         if (!stored) {
-            MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
-            menuItemXlsxHelper.writeToXlsx(menuItem, numExistingItems);
-            System.out.println("Menu item added successfully.");
+            try {
+                MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
+                menuItemXlsxHelper.writeToXlsx(menuItem, numExistingItems);
+                System.out.println("Menu item added successfully.");
+            } catch (DuplicateEntryException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
     // Update menu item
-    public void updateItem(MenuItem itemToUpdate, double price, String description) throws IOException {
+    public void updateItem(MenuItem itemToUpdate, double price, String description) {
         itemToUpdate.setPrice(price);
         itemToUpdate.setDescription(description);
         // Write the updated menu items to the Excel file
@@ -61,8 +73,8 @@ public class Menu {
     }
 
     // Remove menu item
-    public void removeItem(MenuItem itemToRemove) throws IOException {
-        boolean removed = menuItems.removeIf(item -> item.getName().equals(itemToRemove.getName()));
+    public void removeItem(MenuItem itemToRemove) {
+        boolean removed = this.menuItems.removeIf(item -> item.getName().equals(itemToRemove.getName()));
         if (removed) {
             MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
             menuItemXlsxHelper.removeXlsx(itemToRemove.getId());
