@@ -15,11 +15,12 @@ import staff.Staff;
 import staff.StaffDirectory;
 import staff.StaffRoles;
 
+// Class containing actions that admin can perform 
 public class AdminActions { 
+    // Map to store staff roles 
     private Map<String, StaffRoles> staffRolesMap = new HashMap<>();
 
-    protected void addBranch(String Branch){
-        //company calls admin for this 
+    protected void addBranch(String Branch){ 
         try (Scanner sc = new Scanner(System.in)) {
             System.out.print("Enter branch name: ");
             String branchName = sc.nextLine();

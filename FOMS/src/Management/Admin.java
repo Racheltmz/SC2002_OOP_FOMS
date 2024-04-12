@@ -5,14 +5,16 @@ import staff.StaffRoles;
 
 import java.lang.reflect.Field;
 
-
+// Admin Class 
 public class Admin extends Staff{
     private AdminActions adminActions;
 
+    // Constructor 
     public Admin(String staffID, String name, StaffRoles role, char gender, int age, String branch){
         super(staffID, name, role, gender, age, branch); 
     }
 
+    // Setter for updating role of staff member 
     public void setRole(String staffID, String branch){
         String staffIDFromObject = this.getStaffID();
         if(staffIDFromObject != null && staffIDFromObject.equals(staffID)){
@@ -28,6 +30,7 @@ public class Admin extends Staff{
         }
     }
 
+    // setter for uodating branch of staff member 
     public void setBranch(String staffID, String branch){
         String staffIDFromObject = this.getStaffID();
         if(staffIDFromObject != null && staffIDFromObject.equals(staffID)){
@@ -43,6 +46,7 @@ public class Admin extends Staff{
         }
     }
 
+    // setter for updating staff ID 
     public void setStaffID(String staffID, String newStaffID){
         String staffIDFromObject = this.getStaffID(); 
         if(staffIDFromObject != null && staffIDFromObject.equals(staffID)){
