@@ -8,7 +8,7 @@ public class StaffActions {
         ArrayList<Staff> filteredList = new ArrayList<>();
 
         for (Staff staff : staffList) {
-            if (staff.getRole() != StaffRoles.ADMIN && staff.getBranch().equalsIgnoreCase(branch)) {
+            if (staff.getRole() != StaffRoles.ADMIN && staff.getBranch().getName().equalsIgnoreCase(branch)) {
                 filteredList.add(staff);
             }
         }

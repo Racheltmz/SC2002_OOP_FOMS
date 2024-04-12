@@ -1,53 +1,55 @@
 package staff;
 
-import branch.BranchDirectory;
+import branch.Branch;
 
 import java.util.UUID;
 
 import static authorisation.Authorisation.authoriseManager;
-import static branch.BranchDirectory.getBranchByUserInput;
-import static staff.StaffView.displayStaffByBranch;
 
 // Manager details
 public class Manager extends Staff  {
     // Attributes
+    private final ManagerView managerView;
     private final ManagerActions managerActions;
 
     // Constructor
-    public Manager(UUID id, String staffID, String name, StaffRoles role, char gender, int age, String branch) {
+    public Manager(String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
+        super(staffID, name, role, gender, age, branch);
+        this.managerView = new ManagerView();
+        this.managerActions = new ManagerActions();
+    }
+
+    public Manager(UUID id, String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
         super(id, staffID, name, role, gender, age, branch);
+        this.managerView = new ManagerView();
         this.managerActions = new ManagerActions();
     }
 
     // Display staff list by branch
-    public void displayStaffList(StaffRoles auth) {
+    public void displayStaffList(StaffRoles auth, Branch branch) {
         if (authoriseManager(auth)) {
-            StaffDirectory staffDirectory = StaffDirectory.getInstance();
-            BranchDirectory branchDirectory = BranchDirectory.getInstance();
-            // Display staff info from branches
-            String branch = getBranchByUserInput(branchDirectory);;
-            displayStaffByBranch(staffDirectory.filterBranch(branch), branch);
+            managerView.displayStaffByBranch(branch);
         }
     }
 
     // Add menu item
     public void addMenuItem(StaffRoles auth) {
         if (authoriseManager(auth)){
-            managerActions.addMenuItem(auth);
+            managerActions.addMenuItem();
         }
     }
 
     // Update menu item
     public void updateMenuItem(StaffRoles auth) {
         if (authoriseManager(auth)){
-            managerActions.updateMenuItem(auth);
+            managerActions.updateMenuItem();
         }
     }
 
     // Remove menu item
     public void removeMenuItem(StaffRoles auth) {
         if (authoriseManager(auth)){
-            managerActions.removeMenuItem(auth);
+            managerActions.removeMenuItem();
         }
     }
 }

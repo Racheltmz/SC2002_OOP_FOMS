@@ -36,7 +36,7 @@ public class BranchDirectory {
     public Branch getBranchByName(String name) {
         // Return staff object if it can be found
         for (Branch branch : this.branchDirectory) {
-            if (Objects.equals(branch.getBranchName(), name))
+            if (Objects.equals(branch.getName(), name))
                 return branch;
         }
         // Return null if branch cannot be found
@@ -47,16 +47,14 @@ public class BranchDirectory {
     public void displayBranches() {
         System.out.println("Branches: ");
         for (int i = 0; i < this.branchDirectory.size(); i++) {
-            System.out.printf("%d. %s\n", i + 1, this.branchDirectory.get(i).getBranchName());
+            System.out.printf("%d. %s\n", i + 1, this.branchDirectory.get(i).getLocation());
         }
     }
 
     // Get branch name by user selection
-    public static String getBranchByUserInput(BranchDirectory branchDirectory) {
+    public String getBranchByUserInput() {
         // Display branches
-        branchDirectory.displayBranches();
-        // Get branches
-        ArrayList<Branch> branches = branchDirectory.getBranchDirectory();
+        displayBranches();
         // Handle invalid branch names by checking if index out of bounds
         String branchName = null;
         boolean success = false;
@@ -64,7 +62,7 @@ public class BranchDirectory {
             try {
                 // Get user's selection
                 int branchIndex = validateInt("Select Branch: ");
-                branchName = branches.get(branchIndex - 1).getBranchName();
+                branchName = this.branchDirectory.get(branchIndex - 1).getName();
                 success = true;
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Invalid value, please enter again.");

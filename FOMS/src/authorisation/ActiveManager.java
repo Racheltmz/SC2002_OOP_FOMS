@@ -42,7 +42,7 @@ public class ActiveManager implements ActiveUser {
         sc.nextLine();
         switch (staffChoice) {
             case 1:
-                this.getActiveStaff().displayStaffList(this.activeStaff.getRole());
+                this.getActiveStaff().displayStaffList(this.activeStaff.getRole(), this.activeStaff.getBranch());
                 break;
             case 2:
                 this.getActiveStaff().addMenuItem(this.activeStaff.getRole());

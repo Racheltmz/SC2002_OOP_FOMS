@@ -75,7 +75,7 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
 
             // Add new item
             for (Menu menu : menuList) {
-                if (Objects.equals(menu.getBranch().getBranchName(), branch)) {
+                if (Objects.equals(menu.getBranch().getName(), branch)) {
                     menu.addItem(new MenuItem(id, name, price, branch, category, description), -1, true);
                 }
             }

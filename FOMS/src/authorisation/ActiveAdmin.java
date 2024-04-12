@@ -34,12 +34,38 @@ public class ActiveAdmin implements ActiveUser {
         System.out.println("Please select option (3 to quit): ");
         System.out.println("1. Change Password\n2. Logout");
         int staffChoice = sc.nextInt();
-        sc.nextLine(); // Consume newline character
+        sc.nextLine();
         switch (staffChoice) {
             case 1:
-                this.getActiveStaff().changePassword(this.getActiveStaff());
+                // add staff
+                this.getActiveStaff().addStaff(this.activeStaff.getRole());
                 break;
             case 2:
+                // edit staff
+                this.getActiveStaff().updateStaff(this.activeStaff.getRole());
+                break;
+            case 3:
+                // remove staff
+                this.getActiveStaff().removeStaff(this.activeStaff.getRole());
+                break;
+            case 4:
+//                this.getActiveStaff().setRole(this.activeStaff);
+//                this.getActiveStaff().setBranch(this.activeStaff);
+//                this.getActiveStaff().setStaffID(this.activeStaff);
+//                this.getActiveStaff().filterStaff(this.activeStaff);
+//                this.getActiveStaff().assignManager(this.activeStaff);
+//                this.getActiveStaff().promoteStaff(this.activeStaff);
+//                this.getActiveStaff().transferStaff(this.activeStaff);
+
+//                this.getActiveStaff().addBranch(this.activeStaff);
+//                this.getActiveStaff().closeBranch(this.activeStaff);
+
+//                this.getActiveStaff().addPayment(this.activeStaff);
+//                this.getActiveStaff().removePayment(this.activeStaff);
+
+                this.getActiveStaff().changePassword(this.activeStaff);
+                break;
+            case 5:
                 this.logout();
                 break;
             default:

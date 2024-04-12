@@ -74,15 +74,6 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
     }
 
     /**
-     * Updates a Branch record in the XLSX File.
-     *
-     * @param branch Branch record to add
-     */
-    public void updateXlsx(Branch branch) {
-        serializeUpdate(this.branchXlsx, branch.toXlsx(), branch.getId());
-    }
-
-    /**
      * Deletes a Branch record in the XLSX File.
      *
      * @param id ID of Branch record to delete

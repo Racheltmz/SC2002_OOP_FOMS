@@ -8,8 +8,6 @@ import utils.MenuItemXlsxHelper;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static branch.BranchDirectory.getBranchByUserInput;
-
 public class MenuDirectory {
     private final ArrayList<Menu> menuDirectory;
     private static MenuDirectory menuSingleton = null;
@@ -47,7 +45,7 @@ public class MenuDirectory {
         if (menusExist()) {
             try {
                 for (Menu menu : this.menuDirectory) {
-                    if (Objects.equals(menu.getBranch().getBranchName(), branchName)) {
+                    if (Objects.equals(menu.getBranch().getName(), branchName)) {
                         return menu;
                     }
                 }
@@ -61,7 +59,7 @@ public class MenuDirectory {
 
     public void displayMenuByBranch() {
         BranchDirectory branchDirectory = BranchDirectory.getInstance();
-        String branch = getBranchByUserInput(branchDirectory);
+        String branch = branchDirectory.getBranchByUserInput();
         Menu menu = getMenu(branch);
         System.out.println("Menu items in branch " + branch + ":");
         menu.displayItems();

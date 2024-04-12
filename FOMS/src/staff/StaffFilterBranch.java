@@ -8,7 +8,7 @@ public class StaffFilterBranch implements StaffFilter {
         ArrayList<Staff> filteredList = new ArrayList<>();
 
         for (Staff staff : staffList) {
-            if(staff.getBranch().equalsIgnoreCase(branch)){
+            if(staff.getBranch().getName().equalsIgnoreCase(branch)){
                 filteredList.add(staff);
             }
         }

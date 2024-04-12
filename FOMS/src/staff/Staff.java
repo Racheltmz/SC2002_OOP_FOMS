@@ -1,5 +1,6 @@
 package staff;
 
+import branch.Branch;
 import order.OrderQueue;
 import utils.IXlsxSerializable;
 
@@ -16,19 +17,21 @@ public class Staff implements IXlsxSerializable {
     private StaffRoles role;
     private char gender;
     private int age;
-    private String branch;
+    private Branch branch;
     private String password = genHash("password");
+    private final StaffView staffView;
 
-    public Staff(String staffID, String name, StaffRoles role, char gender, int age, String branch) {
+    public Staff(String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
         this.staffID = staffID;
         this.name = name;
         this.role = role;
         this.gender = gender;
         this.age = age;
         this.branch = branch;
+        this.staffView = new StaffView();
     }
 
-    public Staff(UUID id, String staffID, String name, StaffRoles role, char gender, int age, String branch) {
+    public Staff(UUID id, String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
         this.id = id;
         this.staffID = staffID;
         this.name = name;
@@ -36,11 +39,12 @@ public class Staff implements IXlsxSerializable {
         this.gender = gender;
         this.age = age;
         this.branch = branch;
+        this.staffView = new StaffView();
     }
 
     // Serialization to XLSX
     public String[] toXlsx() {
-        return new String[] { String.valueOf(id), name, staffID, role.toString(), String.valueOf(gender), String.valueOf(age), branch };
+        return new String[] { String.valueOf(id), name, staffID, role.toString(), String.valueOf(gender), String.valueOf(age), branch.getName() };
     }
 
     /**
@@ -75,11 +79,15 @@ public class Staff implements IXlsxSerializable {
         return age;
     }
 
-    public String getBranch() {
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Branch getBranch() {
         return this.branch;
     }
 
-    public void setBranch(String branch) {
+    public void setBranch(Branch branch) {
         this.branch = branch;
     }
 
@@ -105,9 +113,9 @@ public class Staff implements IXlsxSerializable {
 
     /* MANAGING ORDER PURPOSES */
     // New orders for Test Case 9 and 11
-    public void getNewOrders(String branchName) {
+    public void getNewOrders(Branch branch) {
         OrderQueue queue = OrderQueue.getInstance();
-        queue.displayNewOrders(branchName);
+        queue.displayNewOrders(branch.getName());
     }
 
     // Specific order

@@ -52,12 +52,16 @@ public class Branch implements IXlsxSerializable {
         return id;
     }
 
-    public String getBranchName() {
+    public String getName() {
         return this.name;
     }
 
-    public void setBranchName(String name) {
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     public int getStaffQuota() {
@@ -72,7 +76,4 @@ public class Branch implements IXlsxSerializable {
         return this.managerQuota;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
 }

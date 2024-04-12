@@ -1,5 +1,7 @@
 package utils;
 
+import branch.Branch;
+import branch.BranchDirectory;
 import staff.Admin;
 import staff.Manager;
 import staff.Staff;
@@ -47,6 +49,7 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
     public ArrayList<Staff> readFromXlsx() {
         // Initialise a list
         ArrayList<Staff> staffList = new ArrayList<>();
+        BranchDirectory branchDirectory = BranchDirectory.getInstance();
 
         // Deserialize records
         List<String[]> XlsxData = deserializeRecords(this.staffXlsx, this.header,7, 1);
@@ -61,19 +64,19 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
             // Convert to respective datatype
             String name = data[1];
             String staffId = data[2];
-            String role = data[3];
+            char role = data[3].charAt(0);
             char gender = data[4].charAt(0);
             int age = (int) Double.parseDouble(data[5]);
-            String branch = data[6];
+            Branch branch = branchDirectory.getBranchByName(data[6]);
 
             switch (role) {
-                case "S":
+                case 'S':
                     staffList.add(new Staff(id, staffId, name, StaffRoles.STAFF, gender, age, branch));
                     break;
-                case "M":
+                case 'M':
                     staffList.add(new Manager(id, staffId, name, StaffRoles.MANAGER, gender, age, branch));
                     break;
-                case "A":
+                case 'A':
                     staffList.add(new Admin(id, staffId, name, StaffRoles.ADMIN, gender, age));
                     break;
             }
