@@ -1,5 +1,6 @@
 package utils;
 
+import exceptions.ItemNotFoundException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -57,10 +58,15 @@ public class BaseXlsxHelper {
      * @return Row index of the record
      */
     private static int getIndexById(XSSFSheet sheet, UUID id) {
-        for (int row = 1; row < sheet.getLastRowNum(); row++){
-            if(sheet.getRow(row).getCell(0).toString().equalsIgnoreCase(String.valueOf(id))){
-                return row;
+        try {
+            for (int row = 1; row < sheet.getLastRowNum(); row++) {
+                if (sheet.getRow(row).getCell(0).toString().equalsIgnoreCase(String.valueOf(id))) {
+                    return row;
+                }
             }
+            throw new ItemNotFoundException("Record cannot be found in storage.");
+        } catch (ItemNotFoundException e) {
+            System.out.println(e.getMessage());
         }
         return -1;
     }
@@ -73,10 +79,15 @@ public class BaseXlsxHelper {
      * @return Row index of the record
      */
     private static int getIndexById(XSSFSheet sheet, String id) {
-        for (int row = 1; row < sheet.getLastRowNum(); row++){
-            if(sheet.getRow(row).getCell(0).toString().equalsIgnoreCase(id)){
-                return row;
+        try {
+            for (int row = 1; row < sheet.getLastRowNum(); row++){
+                if(sheet.getRow(row).getCell(0).toString().equalsIgnoreCase(id)){
+                    return row;
+                }
             }
+            throw new ItemNotFoundException("Record cannot be found in storage.");
+        } catch (ItemNotFoundException e) {
+            System.out.println(e.getMessage());
         }
         return -1;
     }
@@ -108,8 +119,8 @@ public class BaseXlsxHelper {
             FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName);
             // Write to file
             workbook.write(fileOut);
-        } catch (IOException ioException) {
-            System.out.println("Error: unable to add header.");
+        } catch (IOException e) {
+            System.out.println("Unable to add record. Please check with admin on the file storage.");
         }
     }
 
@@ -128,8 +139,8 @@ public class BaseXlsxHelper {
             FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName);
             // Write to file
             workbook.write(fileOut);
-        } catch (IOException ioException) {
-            System.out.println("Error: unable to add header.");
+        } catch (IOException e) {
+            System.out.println("Unable to update record. Please check with admin on the file storage.");
         }
     }
 
@@ -141,8 +152,8 @@ public class BaseXlsxHelper {
             FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName);
             // Write to file
             workbook.write(fileOut);
-        } catch (IOException ioException) {
-            System.out.println("Error: unable to add header.");
+        } catch (IOException e) {
+            System.out.println("Unable to update record. Please check with admin on the file storage.");
         }
     }
 
@@ -164,8 +175,8 @@ public class BaseXlsxHelper {
                 // Write to file
                 workbook.write(fileOut);
             }
-        } catch (IOException ioException) {
-            System.out.println("Error: unable to add header.");
+        } catch (IOException e) {
+            System.out.println("Unable to delete record. Please check with admin on the file storage.");
         }
 
     }

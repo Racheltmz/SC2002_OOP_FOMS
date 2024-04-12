@@ -63,7 +63,8 @@ public class ManagerActions {
                     String description = sc.next();
                     branchMenu.updateItem(itemToUpdate, price, description);
                     success = true;
-                    System.out.println("Item successfully updated in menu!");
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Invalid value, please enter again.");
                 } catch (InputMismatchException e) {
                     System.out.println("Error: " + e.getMessage());
                 }
@@ -84,7 +85,6 @@ public class ManagerActions {
             int itemIndex = validateInt("Enter the number of the item you want to remove: ") - 1;
             MenuItem itemToRmv = branchMenu.getMenuItems().get(itemIndex);
             branchMenu.removeItem(itemToRmv);
-            System.out.println("Item successfully removed from menu!");
         }
     }
 }

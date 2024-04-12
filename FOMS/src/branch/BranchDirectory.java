@@ -66,7 +66,7 @@ public class BranchDirectory {
                 int branchIndex = validateInt("Select Branch: ");
                 branchName = branches.get(branchIndex - 1).getBranchName();
                 success = true;
-            } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+            } catch (IndexOutOfBoundsException e) {
                 System.out.println("Invalid value, please enter again.");
             }
         } while (!success);

@@ -63,6 +63,7 @@ public class StaffDirectory {
     // Filters
     public ArrayList<Staff> filterBranch(String branch) {
         StaffActions toFilter = new StaffActions();
+        System.out.println(branch);
         return toFilter.getStaffBranch(this.staffDirectory, branch);
     }
 

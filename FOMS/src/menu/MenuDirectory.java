@@ -34,13 +34,13 @@ public class MenuDirectory {
     public boolean menusExist() {
         try {
             if (this.menuDirectory.isEmpty())
-                return false;
-            else
                 throw new EmptyListException("There are no menus. Please approach the staff for assistance.");
+            else
+                return true;
         } catch (EmptyListException e) {
             System.out.println(e.getMessage());
         }
-        return true;
+        return false;
     }
 
     public Menu getMenu(String branchName) {

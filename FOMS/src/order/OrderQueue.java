@@ -40,13 +40,13 @@ public class OrderQueue {
     public boolean ordersExist() {
         try {
             if (this.orders.isEmpty())
-                return false;
-            else
                 throw new EmptyListException("Order queue is empty.");
+            else
+                return true;
         } catch (EmptyListException e) {
             System.out.println(e.getMessage());
         }
-        return true;
+        return false;
     }
 
     // Get order by ID

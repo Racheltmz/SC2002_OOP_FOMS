@@ -89,19 +89,15 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
      * @param item MenuItem record to add
      * @param numExistingRecords Number of existing menuItem records
      */
-    public void writeToXlsx(MenuItem item, int numExistingRecords) {
-        try {
-            MenuDirectory menuDirectory = MenuDirectory.getInstance();
-            boolean isExisting = menuDirectory
-                    .getMenu(item.getBranch())
-                    .itemExistsByName(item.getName());
-            if (!isExisting) {
-                serializeRecord(this.menuItemXlsx, item.toXlsx(), numExistingRecords);
-            } else {
-                throw new DuplicateEntryException("Record not inserted: Duplicate item entered.");
-            }
-        } catch (DuplicateEntryException e) {
-            System.out.println(e.getMessage());
+    public void writeToXlsx(MenuItem item, int numExistingRecords) throws DuplicateEntryException {
+        MenuDirectory menuDirectory = MenuDirectory.getInstance();
+        boolean isExisting = menuDirectory
+                .getMenu(item.getBranch())
+                .itemExistsByName(item.getName());
+        if (!isExisting) {
+            serializeRecord(this.menuItemXlsx, item.toXlsx(), numExistingRecords);
+        } else {
+            throw new DuplicateEntryException("Record not inserted: Duplicate item entered.");
         }
     }
 

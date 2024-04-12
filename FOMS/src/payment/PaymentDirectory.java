@@ -40,13 +40,13 @@ public class PaymentDirectory {
     public boolean methodsExist() {
         try {
             if (this.paymentDirectory.isEmpty())
-                return false;
-            else
                 throw new EmptyListException("No payment methods.");
+            else
+                return true;
         } catch (EmptyListException e) {
             System.out.println(e.getMessage());
         }
-        return true;
+        return false;
     }
 
     // Get a specific payment method

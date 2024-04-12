@@ -5,22 +5,14 @@ import exceptions.InvalidInputException;
 
 public class StaffActions {
     public ArrayList<Staff> getStaffBranch(ArrayList<Staff> staffList, String branch) {
-        try {
-            if (branch == null || branch.isEmpty()) {
-                throw new InvalidInputException("Invalid branch. Please select a valid branch.");
-            }
-            ArrayList<Staff> filteredList = new ArrayList<>();
+        ArrayList<Staff> filteredList = new ArrayList<>();
 
-            for (Staff staff : staffList) {
-                if (staff.getBranch().equalsIgnoreCase(branch)) {
-                    filteredList.add(staff);
-                }
+        for (Staff staff : staffList) {
+            if (staff.getRole() != StaffRoles.ADMIN && staff.getBranch().equalsIgnoreCase(branch)) {
+                filteredList.add(staff);
             }
-            return filteredList;
-        } catch (InvalidInputException e) {
-            System.out.println(e.getMessage());
         }
-        return null;
+        return filteredList;
     }
 
     public ArrayList<Staff> getStaffAge(ArrayList<Staff> staffList, int age)
