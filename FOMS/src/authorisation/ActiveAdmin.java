@@ -64,19 +64,16 @@ public class ActiveAdmin implements ActiveUser {
             case 8:
                 this.getActiveStaff().transferStaff(this.activeStaff.getRole());
                 break;
-//            this.getActiveStaff().assignManager(this.activeStaff.getRole());
-//                this.getActiveStaff().promoteStaff(this.activeStaff);
-//
-
-//                this.getActiveStaff().addBranch(this.activeStaff);
-//
-
-//                this.getActiveStaff().addPayment(this.activeStaff);
-//                this.getActiveStaff().removePayment(this.activeStaff);
+            case 9:
+//                this.getActiveStaff().addPayment(this.activeStaff.getRole());
+                break;
             case 10:
-                this.getActiveStaff().changePassword();
+//                this.getActiveStaff().removePayment(this.activeStaff.getRole());
                 break;
             case 11:
+                this.getActiveStaff().changePassword();
+                break;
+            case 12:
                 this.logout();
                 break;
             default:

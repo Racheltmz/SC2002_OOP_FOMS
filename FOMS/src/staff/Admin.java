@@ -61,12 +61,6 @@ public class Admin extends Staff {
         }
     }
 
-    public void assignManager(StaffRoles auth) {
-        if (authoriseAdmin(auth)) {
-            adminActions.assignManager(auth);
-        }
-    }
-//
     public void promoteStaff(StaffRoles auth){
         if (authoriseAdmin(auth)) {
             adminActions.promoteStaff(auth);

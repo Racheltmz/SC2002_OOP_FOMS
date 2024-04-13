@@ -3,6 +3,7 @@ package staff;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import branch.Branch;
 import exceptions.ItemNotFoundException;
 import utils.InputScanner;
 import utils.StaffXlsxHelper;
@@ -131,11 +132,12 @@ public class StaffDirectory {
     }
 
     // Get number of managers to check quota
-    public int getNumManagers(StaffRoles auth) {
+    // TODO: AFREEN can consider shortening the name but rmb to ensure consistency throughout all files
+    public int getNumManagersByBranch(Branch branch, StaffRoles auth) {
         int count = 0;
         if (authoriseAdmin(auth)) {
             for (Staff staff: this.staffDirectory) {
-                if (staff.getRole() == StaffRoles.MANAGER) {
+                if (staff.getRole() == StaffRoles.MANAGER && staff.getBranch().equals(branch)) {
                     count++;
                 }
             }
