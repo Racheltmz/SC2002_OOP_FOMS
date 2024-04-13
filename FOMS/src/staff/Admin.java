@@ -1,15 +1,11 @@
 package staff;
 
-import utils.InputScanner;
-
 import java.util.UUID;
 
 import static authorisation.Authorisation.authoriseAdmin;
 
 public class Admin extends Staff {
     private final AdminActions adminActions;
-    InputScanner sc = InputScanner.getInstance();
-
 
     public Admin(String staffID, String name, StaffRoles role, char gender, int age){
         super(staffID, name, role, gender, age, null);
@@ -30,16 +26,6 @@ public class Admin extends Staff {
         this.adminActions = new AdminActions();
     }
 
-    private Staff getStaffToChange(StaffRoles auth) {
-        StaffDirectory staffDirectory = StaffDirectory.getInstance();
-        // Display all staff
-        staffDirectory.displayAllStaff(auth);
-        // Get item to update by name
-        System.out.println("Enter staff ID: ");
-        String staffId = sc.next();
-        return staffDirectory.getStaff(staffId);
-    }
-
     // Add menu item
     public void addStaff(StaffRoles auth) {
         if (authoriseAdmin(auth)){
@@ -50,16 +36,14 @@ public class Admin extends Staff {
     // Update menu item
     public void updateStaff(StaffRoles auth) {
         if (authoriseAdmin(auth)){
-            Staff staffToUpdate = getStaffToChange(auth);
-            adminActions.updateStaff(staffToUpdate, auth);
+            adminActions.updateStaff(auth);
         }
     }
 
     // Remove menu item
     public void removeStaff(StaffRoles auth) {
         if (authoriseAdmin(auth)){
-            Staff staffToRmv = getStaffToChange(auth);
-            adminActions.removeStaff(staffToRmv, auth);
+            adminActions.removeStaff(auth);
         }
     }
 

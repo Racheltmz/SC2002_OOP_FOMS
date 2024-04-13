@@ -29,27 +29,27 @@ public class Authentication {
      */
     public static Staff login(StaffDirectory staffDirectory) {
         InputScanner sc = InputScanner.getInstance();
-        while (true) {
-            System.out.print("\nEnter staffID: ");
-            String inputStaffID = sc.next();
+//        while (true) {
+//            System.out.print("\nEnter staffID: ");
+//            String inputStaffID = sc.next();
             // Get staff by id
-            Staff staff = staffDirectory.getStaff(inputStaffID);
-            if (staff != null) {
-                while (true) {
-                    System.out.print("Enter password: ");
-                    String inputPassword = sc.next();
-                    String securePassword = genHash(inputPassword);
-                    if (!verifyPassword(staff, securePassword)) {
-                        System.out.println("Incorrect password, please try again.");
-                    } else {
-                        System.out.println("Logged in!\n");
-                        return staff;
-                    }
+            Staff staff = staffDirectory.getStaff(); //inputStaffID
+//            if (staff != null) {
+            while (true) {
+                System.out.print("Enter password: ");
+                String inputPassword = sc.next();
+                String securePassword = genHash(inputPassword);
+                if (!verifyPassword(staff, securePassword)) {
+                    System.out.println("Incorrect password, please try again.");
+                } else {
+                    System.out.println("Logged in!\n");
+                    return staff;
                 }
-            } else {
-                System.out.println("Invalid staffID, please try again.");
             }
-        }
+//            } else {
+//                System.out.println("Invalid staffID, please try again.");
+//            }
+//        }
     }
 
     /**

@@ -2,16 +2,16 @@ package staff;
 
 // Staff Roles
 public enum StaffRoles {
-    STAFF("Staff"),
-    MANAGER("Manager"),
-    ADMIN("Admin");
+    STAFF("S"),
+    MANAGER("M"),
+    ADMIN("A");
     private final String roleName;
 
     private StaffRoles(String value) {
         roleName = value;
     }
 
-    public String getName() {
+    public String getAcronym() {
         return roleName;
     }
 }

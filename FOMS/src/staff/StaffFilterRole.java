@@ -8,7 +8,8 @@ public class StaffFilterRole implements StaffFilter {
         ArrayList<Staff> filteredList = new ArrayList<>();
 
         for (Staff staff : staffList) {
-            if(staff.getRole().getName().equalsIgnoreCase(role)){
+            // TODO: Use acronym instead
+            if(staff.getRole().getAcronym().equalsIgnoreCase(role)){
                 filteredList.add(staff);
             }
         }

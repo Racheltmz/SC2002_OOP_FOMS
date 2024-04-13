@@ -2,11 +2,9 @@ package staff;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.UUID;
 
-import branch.BranchDirectory;
 import exceptions.ItemNotFoundException;
-import menu.Menu;
+import utils.InputScanner;
 import utils.StaffXlsxHelper;
 
 import static authorisation.Authorisation.authoriseAdmin;
@@ -36,32 +34,35 @@ public class StaffDirectory {
     }
 
     // Display staff details
-    public void displayAllStaff(StaffRoles auth) {
-        if (authoriseAdmin(auth)) {
-            // Print details
-            System.out.println("Staff Details:");
-            System.out.printf("| %-10s | %-20s | %-10s | %-10s | %-8s | %-5s |\n", "StaffID", "Name", "Branch", "Role", "Gender", "Age");
-            System.out.println("-".repeat(80));
-            for (Staff curStaff : this.staffDirectory) {
-                curStaff.getStaffDetails();
-            }
+    public void displayAllStaff() {
+        // Print details
+        System.out.println("Staff Details:");
+        System.out.printf("| %-10s | %-20s | %-10s | %-10s | %-8s | %-5s |\n", "StaffID", "Name", "Branch", "Role", "Gender", "Age");
+        System.out.println("-".repeat(80));
+        for (Staff curStaff : this.staffDirectory) {
+            curStaff.getStaffDetails();
         }
     }
 
     // Get staff based on staff ID
-    public Staff getStaff(String staffId) {
-        try {
-            // Return staff object if it can be found
-            for (Staff curStaff : this.staffDirectory) {
-                if (Objects.equals(curStaff.getStaffID(), staffId))
-                    return curStaff;
+    public Staff getStaff() {
+        InputScanner sc = InputScanner.getInstance();
+        while (true) {
+            // Get staff id
+            System.out.print("\nEnter staff ID: ");
+            String staffId = sc.next();
+            try {
+                // Return staff object if it can be found
+                for (Staff curStaff : this.staffDirectory) {
+                    if (Objects.equals(curStaff.getStaffID(), staffId))
+                        return curStaff;
+                }
+                // Throw exception if staff cannot be found
+                throw new ItemNotFoundException("Staff does not exist. Please enter a valid staffID.");
+            } catch (ItemNotFoundException e) {
+                System.out.println(e.getMessage());
             }
-            // Return null if staff cannot be found
-            throw new ItemNotFoundException("Staff does not exist. Please enter a valid staffID.");
-        } catch (ItemNotFoundException e) {
-            System.out.println(e.getMessage());
         }
-        return null;
     }
 
     // Add staff (admin purposes)
@@ -69,7 +70,6 @@ public class StaffDirectory {
         if (authoriseAdmin(auth)) {
             StaffXlsxHelper staffXlsxHelper = StaffXlsxHelper.getInstance();
             this.staffDirectory.add(staff);
-            System.out.println(staff.getStaffID());
             staffXlsxHelper.writeToXlsx(staff, numExistingStaff);
         }
     }
@@ -81,12 +81,12 @@ public class StaffDirectory {
         }
     }
 
-    // Remove staff (admin purposes) (TO CHECK)
-    public void rmvStaff(UUID recordID, String staffID, StaffRoles auth) {
+    // Remove staff (admin purposes)
+    public void rmvStaff(Staff staffToRmv, StaffRoles auth) {
         if (authoriseAdmin(auth)) {
             StaffXlsxHelper staffXlsxHelper = StaffXlsxHelper.getInstance();
-            this.staffDirectory.remove(this.getStaff(staffID));
-            staffXlsxHelper.removeXlsx(recordID);
+            this.staffDirectory.remove(staffToRmv);
+            staffXlsxHelper.removeXlsx(staffToRmv.getId());
         }
     }
 

@@ -66,8 +66,10 @@ public class AdminActions {
     }
 
     // Update menu item
-    public void updateStaff(Staff staffToUpdate, StaffRoles auth) {
+    public void updateStaff(StaffRoles auth) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
+        staffDirectory.displayAllStaff();
+        Staff staffToUpdate = staffDirectory.getStaff();
         boolean success = false;
         do {
             try {
@@ -85,9 +87,11 @@ public class AdminActions {
     }
 
     // Remove staff
-    public void removeStaff(Staff staffToRmv, StaffRoles auth) {
+    public void removeStaff(StaffRoles auth) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
-        staffDirectory.rmvStaff(staffToRmv.getId(), staffToRmv.getStaffID(), auth);
+        staffDirectory.displayAllStaff();
+        Staff staffToRmv = staffDirectory.getStaff();
+        staffDirectory.rmvStaff(staffToRmv, auth);
     }
 
 //    // Setter for updating role of staff member

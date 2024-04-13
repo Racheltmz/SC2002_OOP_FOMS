@@ -39,7 +39,6 @@ public class BranchDirectory {
             if (Objects.equals(branch.getName(), name))
                 return branch;
         }
-        // Return null if branch cannot be found
         return null;
     }
 

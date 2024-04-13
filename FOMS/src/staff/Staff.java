@@ -44,7 +44,7 @@ public class Staff implements IXlsxSerializable {
 
     // Serialization to XLSX
     public String[] toXlsx() {
-        return new String[] { String.valueOf(id), name, staffID, role.toString(), String.valueOf(gender), String.valueOf(age), branch.getName() };
+        return new String[] { String.valueOf(id), name, staffID, role.getAcronym(), String.valueOf(gender), String.valueOf(age), branch.getName() };
     }
 
     /**
