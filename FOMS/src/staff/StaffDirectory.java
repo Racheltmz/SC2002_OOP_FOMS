@@ -1,9 +1,12 @@
 package staff;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import branch.Branch;
 import exceptions.ItemNotFoundException;
+import utils.Filter;
 import utils.InputScanner;
 import utils.StaffXlsxHelper;
 
@@ -40,7 +43,7 @@ public class StaffDirectory {
         System.out.printf("| %-10s | %-20s | %-10s | %-10s | %-8s | %-5s |\n", "StaffID", "Name", "Branch", "Role", "Gender", "Age");
         System.out.println("-".repeat(80));
         for (Staff curStaff : this.staffDirectory) {
-            curStaff.getStaffDetails();
+            curStaff.printStaffDetails();
         }
     }
 
@@ -85,21 +88,43 @@ public class StaffDirectory {
     public void rmvStaff(Staff staffToRmv, StaffRoles auth) {
         if (authoriseAdmin(auth)) {
             StaffXlsxHelper staffXlsxHelper = StaffXlsxHelper.getInstance();
-            this.staffDirectory.remove(staffToRmv);
+            this.staffDirectory.removeIf(staff -> staff.getName().equals(staffToRmv.getName()));
             staffXlsxHelper.removeXlsx(staffToRmv.getId());
         }
     }
 
-    // Filters
-    public ArrayList<Staff> filterBranch(String branch) {
-        StaffActions toFilter = new StaffActions();
-        return toFilter.getStaffBranch(this.staffDirectory, branch);
+    public void rmvStaffByBranch(ArrayList<Staff> staffListRmv, StaffRoles auth) {
+        if (authoriseAdmin(auth)) {
+            StaffXlsxHelper staffXlsxHelper = StaffXlsxHelper.getInstance();
+            for (Staff staffToRmv: staffListRmv) {
+                this.staffDirectory.removeIf(staff -> staff.getName().equals(staffToRmv.getName()));
+                staffXlsxHelper.removeXlsx(staffToRmv.getId());
+            }
+        }
     }
 
-    public ArrayList<Staff> filterRole(StaffRoles role) {
-        StaffActions toFilter = new StaffActions();
-        return toFilter.getStaffRole(this.staffDirectory, role);
+    public void upgradeCredentials(Staff staff, StaffRoles auth) {
+        if (authoriseAdmin(auth)) {
+            // Create new manager object
+            Manager staffToManager = new Manager(staff.getStaffID(), staff.getName(), StaffRoles.MANAGER, staff.getGender(), staff.getAge(), staff.getBranch());
+            // Remove staff
+            rmvStaff(staff, auth);
+            // Add staff as a manager
+            addStaff(staffToManager, this.getNumStaff(), auth);
+        }
     }
+
+    // TODO: Discuss filters
+    // // Filters
+    // public ArrayList<Staff> filterBranch(String branch) {
+    //     StaffActions toFilter = new StaffActions();
+    //     return toFilter.getStaffBranch(this.staffDirectory, branch);
+    // }
+
+    // public ArrayList<Staff> filterRole(StaffRoles role) {
+    //     StaffActions toFilter = new StaffActions();
+    //     return toFilter.getStaffRole(this.staffDirectory, role);
+    // }
 
     // Get number of staff
     public int getNumStaff() {
@@ -108,8 +133,14 @@ public class StaffDirectory {
 
     // Get number of managers to check quota
     public int getNumManagers(StaffRoles auth) {
-        if (authoriseAdmin(auth))
-            return this.filterRole(StaffRoles.MANAGER).size();
-        return 0;
+        int count = 0;
+        if (authoriseAdmin(auth)) {
+            for (Staff staff: this.staffDirectory) {
+                if (staff.getRole() == StaffRoles.MANAGER) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 }

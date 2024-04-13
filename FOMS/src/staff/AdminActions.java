@@ -1,7 +1,7 @@
 package staff;
 
-import static utils.ValidateHelper.validateDouble;
 import static utils.ValidateHelper.validateInt;
+import static utils.ValidateHelper.validateIntRange;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,25 +10,19 @@ import java.util.Map;
 
 import branch.Branch;
 import branch.BranchDirectory;
-import menu.Menu;
-import menu.MenuDirectory;
-import menu.MenuItem;
-import payment.Payment;
-import payment.PaymentDirectory;
+import utils.Filter;
 import utils.InputScanner;
-import utils.StaffXlsxHelper;
 
 // Class containing actions that admin can perform
+// TODO: convert files to apply DIP for admin, split functions based on functionalities (staff account, staff role, branch, payment)
 public class AdminActions {
     // Map to store staff roles
     private Map<String, StaffRoles> staffRolesMap = new HashMap<>();
     InputScanner sc = InputScanner.getInstance();
     BranchDirectory branchDirectory = BranchDirectory.getInstance();
-    MenuDirectory menuDirectory = MenuDirectory.getInstance();
-    StaffXlsxHelper staffXlsxHelper = StaffXlsxHelper.getInstance();
 
     // Add menu item
-    public void addStaff(StaffRoles auth) {
+    protected void addStaff(StaffRoles auth) {
         try {
             StaffDirectory staffDirectory = StaffDirectory.getInstance();
             int numExistingStaff = staffDirectory.getNumStaff();
@@ -37,16 +31,15 @@ public class AdminActions {
             String name = sc.next();
             System.out.println("Enter staff ID: ");
             String staffId = sc.next();
-            // TODO: validate if its S/M/A
-            System.out.println("Enter role (S/M/A):\nS: Staff\nM: Manager\nA: Admin");
+            // TODO: AFREEN validate if its S/M
+            System.out.println("Enter role (S/M):\nS: Staff\nM: Manager");
             char role = sc.next().charAt(0);
-            // TODO: validate if its M or F
+            // TODO: AFREEN validate if its M or F
             System.out.println("Enter gender (M/F): ");
             char gender = sc.next().charAt(0);
             int age = validateInt("Enter age: ");
             System.out.println("Select branch: ");
-            String branchName = branchDirectory.getBranchByUserInput();
-            Branch branch = branchDirectory.getBranchByName(branchName);
+            Branch branch = branchDirectory.getBranchByUserInput();
 
             // Add the new menu item to the menu
             switch (role) {
@@ -66,7 +59,7 @@ public class AdminActions {
     }
 
     // Update menu item
-    public void updateStaff(StaffRoles auth) {
+    protected void updateStaff(StaffRoles auth) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         staffDirectory.displayAllStaff();
         Staff staffToUpdate = staffDirectory.getStaff();
@@ -87,14 +80,207 @@ public class AdminActions {
     }
 
     // Remove staff
-    public void removeStaff(StaffRoles auth) {
+    protected void removeStaff(StaffRoles auth) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         staffDirectory.displayAllStaff();
         Staff staffToRmv = staffDirectory.getStaff();
         staffDirectory.rmvStaff(staffToRmv, auth);
     }
 
-//    // Setter for updating role of staff member
+    // TODO: confirm design of filter
+    // TODO: AFREEN, VALIDATE USER INPUT (WHETHER ITS ACTL M/F ETC)
+    // TODO: AFREEN linked to AdminActions file (i need essentially another getBranchByUserInput from branchdirectory) for staff, gender
+    protected void filterStaff(StaffFilterOptions option) {
+        switch (option) {
+            case BRANCH:
+                String branch = branchDirectory.getBranchByUserInput().getName();
+                filterByBranch(branch);
+                break;
+            case ROLE:
+                System.out.println("Select role (S/M):\nS: Staff\nM: Manager");
+                String roleChoice = sc.next();
+                filterByRole(roleChoice);
+                break;
+            case GENDER:
+                System.out.println("Select gender (M/F):");
+                String genderChoice = sc.next();
+                filterByGender(genderChoice);
+                break;
+            case AGE:
+                System.out.println("Enter age:");
+                int ageChoice = sc.nextInt();
+                filterByAge(ageChoice);
+                break;
+        }
+    }
+
+    private void filterByBranch(String branch) {
+        Filter staffFilterBranch = new StaffFilterBranch();
+        staffFilterBranch.filter(branch);
+    }
+
+    private void filterByRole(String role) {
+        Filter staffFilterRole = new StaffFilterRole();
+        staffFilterRole.filter(role);
+    }
+
+    private void filterByGender(String gender) {
+        Filter staffFilterGender = new StaffFilterGender();
+        staffFilterGender.filter(gender);
+    }
+
+    // TODO: AFREEN, we should filter by less than/equal/more than a certain age (more informative)
+    private void filterByAge(int age) {
+        Filter staffFilterAge = new StaffFilterAge();
+        staffFilterAge.filter(String.valueOf(age));
+    }
+
+    private void checkQuota() {
+
+    }
+
+//    protected void assignManager(){
+//        StaffDirectory staffDirectory = StaffDirectory.getInstance();
+//        // Display all managers
+//        filterByRole(StaffRoles.MANAGER.getAcronym());
+//
+//        // Get number of managers
+//        int numManagers = staffDirectory.getNumManagers(StaffRoles.ADMIN);
+//
+//        int numManagersInBranch = 0;
+//        ArrayList<Staff> allStaff = staffDirectory.getStaffDirectory();
+//        int numStaff = allStaff.size() - numManagers;
+//
+//        for(Staff staff : allStaff){
+//            if(staff.getRole() == StaffRoles.MANAGER){
+//                numManagersInBranch++;
+//            }
+//        }
+//
+//        int quota = 0;
+//        if(numStaff >= 9 && numStaff <= 15){
+//            quota = 3;
+//        }
+//        else if(numStaff >= 5 && numStaff <= 8){
+//            quota = 2;
+//        }
+//        else if(numStaff >= 1 && numStaff <= 4){
+//            quota = 1;
+//        }
+//
+//        if(numManagersInBranch < quota){
+//            System.out.println("Manager is assigned to the Branch: " + Branch);
+//        }
+//        else{
+//            System.out.println("Cannot assign any more Managers. Quota reached for Branch. \n");
+//        }
+//    }
+
+    protected void promoteStaff(StaffRoles auth){
+        StaffDirectory staffDirectory = StaffDirectory.getInstance();
+        // TODO: AFREEN, improve the ui
+        System.out.println("Promote Staff");
+        filterByRole(StaffRoles.STAFF.getAcronym());
+        Staff staff = staffDirectory.getStaff();
+        StaffRoles currentRole = staff.getRole();
+        switch (currentRole) {
+            case STAFF:
+                staffDirectory.upgradeCredentials(staff, auth);
+                System.out.println("Staff member with ID " + staff.getStaffID() + " has been promoted to Manager.");
+                break;
+            case MANAGER:
+                System.out.println("Manager cannot be promoted.");
+                break;
+            case ADMIN:
+                System.out.println("Admin cannot be promoted.");
+                break;
+        }
+    }
+//
+//    protected void transferStaff(String staffID, String Branch){
+//        StaffDirectory staffDirectory = StaffDirectory.getInstance();
+//        BranchDirectory branchDirectory = BranchDirectory.getInstance();
+//        Staff staff = staffDirectory.getStaff(staffID);
+//
+//        if(staff != null){
+//            boolean newBranchExists = false;
+//            for(Branch branch : branchDirectory.getBranchDirectory()){
+//                if(branch.getName().equals(Branch)){
+//                    newBranchExists = true;
+//                    branch.setName(Branch);
+//                    System.out.println("Staff member with ID " + staffID + " has been transferred to " + Branch + " successfully");
+//                    break;
+//                }
+//            }
+//            if(!newBranchExists){
+//                System.out.println("This branch does not exist");
+//            }
+//        }
+//        else{
+//            System.out.println("Staff member with ID " + staffID + " not found");
+//        }
+//    }
+
+    protected void addBranch(StaffRoles auth) {
+        try {
+            // Get branch name
+            System.out.print("Enter branch name: ");
+            String name = sc.nextLine();
+            // Get location
+            System.out.print("Enter branch location: ");
+            String location = sc.nextLine();
+            // Get staff quota
+            int quota = validateIntRange("Enter staff quota: ", 1, 15);
+            Branch newBranch = new Branch(name, location, quota);
+            branchDirectory.addBranch(newBranch, auth);
+        } catch (InputMismatchException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    protected void closeBranch(StaffRoles auth) {
+        // Get branch by name
+        Branch branchToRmv = branchDirectory.getBranchByUserInput();
+        branchDirectory.rmvBranch(branchToRmv, auth);
+    }
+
+
+//    protected String addPayment(String method){
+//        PaymentDirectory paymentDirectory = PaymentDirectory.getInstance();
+//        Payment payment;
+//
+//        switch(method){
+//            case "Credit/Debit Card":
+//                payment = new Payment(method);
+//                paymentDirectory.addPaymentMtd(payment, StaffRoles.ADMIN); //since only admins can add payment methods
+//                break;
+//            case "Paypal":
+//                payment = new Payment(method);
+//                paymentDirectory.addPaymentMtd(payment, StaffRoles.ADMIN);
+//                break;
+//            default:
+//                throw new IllegalArgumentException("Unsupported payment method: " + method);
+//        }
+//        return "Payment method added successfully";
+//    }
+//
+//    protected String removePayment(String method){
+//        PaymentDirectory paymentDirectory = PaymentDirectory.getInstance();
+//        if (paymentDirectory.getPaymentDirectory().isEmpty()) {
+//            return "No payment methods available to remove";
+//        }
+//
+//        Payment payment = paymentDirectory.getPaymentMtd(method);
+//        if(payment != null){
+//            paymentDirectory.rmvPaymentMtd(method, StaffRoles.ADMIN);
+//            return "Payment method has been removed successfully";
+//        }
+//        return "Payment method not found.";
+//    }
+
+
+    // TEMP
+    //    // Setter for updating role of staff member
 //    public void setRole(String staffID, String branch){
 //        String staffIDFromObject = this.getStaffID();
 //        if(staffIDFromObject != null && staffIDFromObject.equals(staffID)){
@@ -143,177 +329,5 @@ public class AdminActions {
 //        else{
 //            System.out.println("Staff member not found");
 //        }
-//    }
-//
-//    protected void addBranch(String Branch){
-//        // Initialise scanner
-//        InputScanner sc = getInstance();
-//        System.out.print("Enter branch name: ");
-//        String branchName = sc.nextLine();
-//        System.out.print("Enter staff quota: ");
-//        int quota = sc.nextInt();
-//        while (!(1 <= quota && quota <= 15)) {
-//            System.out.println("Invalid staff quota! Please re-enter.");
-//            System.out.print("Enter staff quota: ");
-//            quota = sc.nextInt();
-//        }
-//        System.out.print("Enter branch location: ");
-//        String location = sc.next();
-//        location += sc.nextLine();
-//        Branch branch = new Branch(branchName, location, quota);
-//        System.out.printf("New branch created. Its details are:\nName: %s\nStaff quota: %d\nManager Quota: %d\nLocation: %s\n", branchName, quota, branch.getManagerQuota(), location);
-//    }
-//
-//    protected void closeBranch(String Branch){
-//        // Initialise scanner
-//        InputScanner sc = getInstance();
-//        BranchDirectory branchDirectory = BranchDirectory.getInstance();
-//        StaffDirectory staffDirectory = StaffDirectory.getInstance();
-//
-//        // Get branch name and location
-//        System.out.println("Enter branch name: ");
-//        String branchName = sc.nextLine();
-//
-//        System.out.println("Enter branch location: ");
-//        String branchLocation = sc.next();
-//
-//        Branch branch = branchDirectory.getBranchByName(branchName);
-//
-//        if(branch != null && branch.getName().equals(branchName)){
-//            if(authoriseAdmin(StaffRoles.ADMIN)){
-//                branchDirectory.rmvBranch(branchName, StaffRoles.ADMIN);
-//
-//                ArrayList<Staff> staffToRemove = staffDirectory.filterBranch(branchName);
-//                for(Staff staff : staffToRemove){
-//                    staffDirectory.rmvStaff(staff.getStaffID(), StaffRoles.ADMIN);
-//                }
-//                System.out.println("Branch " + branchName + " at " + branchLocation + " has been closed.");
-//            }
-//            else{
-//                System.out.println("You are not authorised to perform this action");
-//            }
-//        }
-//        else{
-//            System.out.println("Branch " + branchName + " at location " + branchLocation + " does not exist");
-//        }
-//    }
-//
-//    protected void assignManager(String staffId, String Branch){
-//        StaffDirectory staffDirectory = StaffDirectory.getInstance();
-//        if(authoriseAdmin(StaffRoles.ADMIN)){
-//            int numManagers = staffDirectory.getNumManagers(StaffRoles.ADMIN);
-//            int numManagersInBranch = 0;
-//            ArrayList<Staff> allStaff = staffDirectory.getStaffDirectory();
-//            int numStaff = allStaff.size() - numManagers;
-//
-//            for(Staff staff : allStaff){
-//                if(staff.getRole() == StaffRoles.MANAGER){
-//                    numManagersInBranch++;
-//                }
-//            }
-//
-//            int quota = 0;
-//            if(numStaff >= 9 && numStaff <= 15){
-//                quota = 3;
-//            }
-//            else if(numStaff >= 5 && numStaff <= 8){
-//                quota = 2;
-//            }
-//            else if(numStaff >= 1 && numStaff <= 4){
-//                quota = 1;
-//            }
-//
-//            if(numManagersInBranch < quota){
-//                System.out.println("Manager is assigned to the Branch: " + Branch);
-//            }
-//            else{
-//                System.out.println("Cannot assign any more Managers. Quota reached for Branch. \n");
-//            }
-//        }
-//        else{
-//            System.out.println("You are not authorised to perform this action");
-//        }
-//    }
-//
-//    protected void promoteStaff(String staffID, String Branch){
-//        StaffDirectory staffDirectory = StaffDirectory.getInstance();
-//        Staff staff = staffDirectory.getStaff(staffID);
-//
-//        if(staff != null){
-//            StaffRoles currentRole = staff.getRole();
-//
-//            switch(currentRole){
-//                case STAFF:
-//                    staffRolesMap.put(staffID, StaffRoles.MANAGER);
-//                    System.out.println("Staff member with ID " + staffID + " has been promoted to Manager");
-//                    break;
-//                case MANAGER:
-//                    System.out.println("Manager cannot be promoted");
-//                    break;
-//                case ADMIN:
-//                    System.out.println("Admin cannot be promoted");
-//                    break;
-//            }
-//        }
-//        else{
-//            System.out.println("Staff member with ID " + staffID + " not found");
-//        }
-//    }
-//
-//    protected void transferStaff(String staffID, String Branch){
-//        StaffDirectory staffDirectory = StaffDirectory.getInstance();
-//        BranchDirectory branchDirectory = BranchDirectory.getInstance();
-//        Staff staff = staffDirectory.getStaff(staffID);
-//
-//        if(staff != null){
-//            boolean newBranchExists = false;
-//            for(Branch branch : branchDirectory.getBranchDirectory()){
-//                if(branch.getName().equals(Branch)){
-//                    newBranchExists = true;
-//                    branch.setName(Branch);
-//                    System.out.println("Staff member with ID " + staffID + " has been transferred to " + Branch + " successfully");
-//                    break;
-//                }
-//            }
-//            if(!newBranchExists){
-//                System.out.println("This branch does not exist");
-//            }
-//        }
-//        else{
-//            System.out.println("Staff member with ID " + staffID + " not found");
-//        }
-//    }
-//
-//    protected String addPayment(String method){
-//        PaymentDirectory paymentDirectory = PaymentDirectory.getInstance();
-//        Payment payment;
-//
-//        switch(method){
-//            case "Credit/Debit Card":
-//                payment = new Payment(method);
-//                paymentDirectory.addPaymentMtd(payment, StaffRoles.ADMIN); //since only admins can add payment methods
-//                break;
-//            case "Paypal":
-//                payment = new Payment(method);
-//                paymentDirectory.addPaymentMtd(payment, StaffRoles.ADMIN);
-//                break;
-//            default:
-//                throw new IllegalArgumentException("Unsupported payment method: " + method);
-//        }
-//        return "Payment method added successfully";
-//    }
-//
-//    protected String removePayment(String method){
-//        PaymentDirectory paymentDirectory = PaymentDirectory.getInstance();
-//        if (paymentDirectory.getPaymentDirectory().isEmpty()) {
-//            return "No payment methods available to remove";
-//        }
-//
-//        Payment payment = paymentDirectory.getPaymentMtd(method);
-//        if(payment != null){
-//            paymentDirectory.rmvPaymentMtd(method, StaffRoles.ADMIN);
-//            return "Payment method has been removed successfully";
-//        }
-//        return "Payment method not found.";
 //    }
 }

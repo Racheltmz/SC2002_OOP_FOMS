@@ -88,16 +88,15 @@ public class FOMSApp {
                                     staffChoice = sc.nextInt();
                                     sc.nextLine(); // Consume newline character
                                     if (staffChoice == 1) {
+                                        // Login
                                         staff = login(staffDirectory);
                                         // Set active staff
-                                        if (staff != null) {
-                                            if (staff.getRole() == StaffRoles.STAFF) {
-                                                activeStaff = staffFactory.initActive(staff);
-                                            } else if (staff.getRole() == StaffRoles.MANAGER) {
-                                                activeManager = managerFactory.initActive(staff);
-                                            } else if (staff.getRole() == StaffRoles.ADMIN) {
-                                                activeAdmin = adminFactory.initActive(staff);
-                                            }
+                                        if (staff.getRole() == StaffRoles.STAFF) {
+                                            activeStaff = staffFactory.initActive(staff);
+                                        } else if (staff.getRole() == StaffRoles.MANAGER) {
+                                            activeManager = managerFactory.initActive(staff);
+                                        } else if (staff.getRole() == StaffRoles.ADMIN) {
+                                            activeAdmin = adminFactory.initActive(staff);
                                         }
                                     } else if (staffChoice < 1 || staffChoice > 2)
                                         System.out.print("Invalid choice, please re-enter\n");

@@ -7,7 +7,7 @@ public enum StaffRoles {
     ADMIN("A");
     private final String roleName;
 
-    private StaffRoles(String value) {
+    StaffRoles(String value) {
         roleName = value;
     }
 

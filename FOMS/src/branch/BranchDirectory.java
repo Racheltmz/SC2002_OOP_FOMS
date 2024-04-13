@@ -1,5 +1,7 @@
 package branch;
 
+import staff.Staff;
+import staff.StaffDirectory;
 import staff.StaffRoles;
 import utils.BranchXlsxHelper;
 
@@ -51,37 +53,57 @@ public class BranchDirectory {
     }
 
     // Get branch name by user selection
-    public String getBranchByUserInput() {
+    public Branch getBranchByUserInput() {
         // Display branches
         displayBranches();
         // Handle invalid branch names by checking if index out of bounds
-        String branchName = null;
+        Branch branch = null;
         boolean success = false;
         do {
             try {
                 // Get user's selection
                 int branchIndex = validateInt("Select Branch: ");
-                branchName = this.branchDirectory.get(branchIndex - 1).getName();
+                branch = this.branchDirectory.get(branchIndex - 1);
                 success = true;
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Invalid value, please enter again.");
             }
         } while (!success);
-        return branchName;
+        return branch;
     }
 
-    // Add branch (admin purposes)
+    // Add branch
     public void addBranch(Branch branch, StaffRoles auth) {
         if (authoriseAdmin(auth)) {
+            int numExistingBranches = this.branchDirectory.size();
             this.branchDirectory.add(branch);
             BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
-            branchXlsxHelper.writeToXlsx(branch, this.branchDirectory.size());
+            branchXlsxHelper.writeToXlsx(branch, numExistingBranches);
+            System.out.println("Branch successfully created!");
         }
     }
 
-    // Remove branch (admin purposes)
-    public void rmvBranch(String branchName, StaffRoles auth) {
-        if (authoriseAdmin(auth))
-            this.branchDirectory.remove(this.getBranchByName(branchName));
+    // Remove branch
+    public void rmvBranch(Branch branchToRmv, StaffRoles auth) {
+        if (authoriseAdmin(auth)) {
+            StaffDirectory staffDirectory = StaffDirectory.getInstance();
+            // Remove staff under the branch
+            ArrayList<Staff> staffToRmv = new ArrayList<>();
+            for (Staff staff: staffDirectory.getStaffDirectory()) {
+                if (staff.getRole() != StaffRoles.ADMIN && staff.getBranch().equals(branchToRmv)) {
+                    staffToRmv.add(staff);
+                }
+            }
+            staffDirectory.rmvStaffByBranch(staffToRmv, auth);
+            // Remove branch
+            this.branchDirectory.removeIf(branch -> branch.getName().equals(branchToRmv.getName()));
+            BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
+            branchXlsxHelper.removeXlsx(branchToRmv.getId());
+            System.out.println("Branch successfully closed and staff records for this branch have been deleted.");
+        }
+    }
+
+    public int getNumBranches() {
+        return branchDirectory.size();
     }
 }

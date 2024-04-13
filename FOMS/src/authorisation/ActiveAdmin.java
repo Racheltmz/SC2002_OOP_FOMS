@@ -35,6 +35,7 @@ public class ActiveAdmin implements ActiveUser {
         System.out.println("1. Change Password\n2. Logout");
         int staffChoice = sc.nextInt();
         sc.nextLine();
+        // TODO: AFREEN: can we make sub switch statements so we further divide the functionality
         switch (staffChoice) {
             case 1:
                 // add staff
@@ -49,23 +50,33 @@ public class ActiveAdmin implements ActiveUser {
                 this.getActiveStaff().removeStaff(this.activeStaff.getRole());
                 break;
             case 4:
-//                this.getActiveStaff().setRole(this.activeStaff);
-//                this.getActiveStaff().setBranch(this.activeStaff);
-//                this.getActiveStaff().setStaffID(this.activeStaff);
-//                this.getActiveStaff().filterStaff(this.activeStaff);
-//                this.getActiveStaff().assignManager(this.activeStaff);
+                this.getActiveStaff().filterStaff(this.activeStaff.getRole());
+                break;
+            case 5:
+                this.getActiveStaff().addBranch(this.activeStaff.getRole());
+                break;
+            case 6:
+                this.getActiveStaff().closeBranch(this.activeStaff.getRole());
+                break;
+            case 7:
+                this.getActiveStaff().promoteStaff(this.activeStaff.getRole());
+                break;
+            case 8:
+                this.getActiveStaff().transferStaff(this.activeStaff.getRole());
+                break;
+//            this.getActiveStaff().assignManager(this.activeStaff.getRole());
 //                this.getActiveStaff().promoteStaff(this.activeStaff);
-//                this.getActiveStaff().transferStaff(this.activeStaff);
+//
 
 //                this.getActiveStaff().addBranch(this.activeStaff);
-//                this.getActiveStaff().closeBranch(this.activeStaff);
+//
 
 //                this.getActiveStaff().addPayment(this.activeStaff);
 //                this.getActiveStaff().removePayment(this.activeStaff);
-
-                this.getActiveStaff().changePassword(this.activeStaff);
+            case 10:
+                this.getActiveStaff().changePassword();
                 break;
-            case 5:
+            case 11:
                 this.logout();
                 break;
             default:

@@ -59,7 +59,7 @@ public class MenuDirectory {
 
     public void displayMenuByBranch() {
         BranchDirectory branchDirectory = BranchDirectory.getInstance();
-        String branch = branchDirectory.getBranchByUserInput();
+        String branch = branchDirectory.getBranchByUserInput().getName();
         Menu menu = getMenu(branch);
         System.out.println("Menu items in branch " + branch + ":");
         menu.displayItems();

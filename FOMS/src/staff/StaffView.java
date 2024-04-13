@@ -1,8 +1,8 @@
 package staff;
 
 public class StaffView {
-//    public void displayStaffInfo() {
+//    public void displayStaffDetails(Staff staff) {
 //        System.out.printf("| %-10s | %-20s | %-10s | %-8s | %-5s |\n",
-//                this.staffID, this.name, this.role, this.gender, this.age);
+//                staff.getStaffID(), staff.getName(), staff.getRole(), staff.getGender(), staff.getAge());
 //    }
 }

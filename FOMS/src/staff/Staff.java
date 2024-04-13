@@ -3,8 +3,8 @@ package staff;
 import branch.Branch;
 import order.OrderQueue;
 import utils.IXlsxSerializable;
+import utils.InputScanner;
 
-import static authentication.Authentication.setNewPassword;
 import static authentication.Hashing.genHash;
 
 import java.util.UUID;
@@ -19,7 +19,7 @@ public class Staff implements IXlsxSerializable {
     private int age;
     private Branch branch;
     private String password = genHash("password");
-    private final StaffView staffView;
+    private final StaffView staffView = new StaffView();
 
     public Staff(String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
         this.staffID = staffID;
@@ -28,7 +28,6 @@ public class Staff implements IXlsxSerializable {
         this.gender = gender;
         this.age = age;
         this.branch = branch;
-        this.staffView = new StaffView();
     }
 
     public Staff(UUID id, String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
@@ -39,7 +38,6 @@ public class Staff implements IXlsxSerializable {
         this.gender = gender;
         this.age = age;
         this.branch = branch;
-        this.staffView = new StaffView();
     }
 
     // Serialization to XLSX
@@ -59,8 +57,8 @@ public class Staff implements IXlsxSerializable {
         return this.staffID;
     }
 
-    public void setStaffID(String staffID) {
-        this.staffID = staffID;
+    public String getName() {
+        return name;
     }
 
     public StaffRoles getRole() {
@@ -100,13 +98,38 @@ public class Staff implements IXlsxSerializable {
     }
 
     /* MANAGING PERSONAL DETAILS PURPOSES */
-    public void changePassword(Staff activeStaff) {
-        setNewPassword(activeStaff);
+    /**
+     * Verify if the user entered the right password for the account
+     *
+     * @param password Password inputted
+     * @return Boolean value of whether the password matches
+     */
+    public boolean verifyPassword(String password) {
+        return password.equals(this.getPassword());
+    }
+
+    /**
+     * Change password
+     */
+    // TODO: AFREEN (whether to create a view)
+    public void changePassword() {
+        InputScanner sc = InputScanner.getInstance();
+        System.out.print("\nPlease enter new password: ");
+        String newPassword = sc.next();
+        // Check if user entered a password or if they entered the same password as they had in the past
+        while (newPassword.isEmpty() || this.verifyPassword(genHash(newPassword))) {
+            System.out.println("Password change unsuccessful, please try again. Ensure that it differs from your previous password.");
+            System.out.print("Please enter new password: ");
+            newPassword = sc.next();
+        }
+        setPassword(genHash(newPassword));
+        System.out.println("Password successfully changed!");
     }
 
     /* MANAGING STAFF PURPOSES */
     // Display staff details
-    public void getStaffDetails() {
+    // TODO: AFREEN (whether to create a view)
+    public void printStaffDetails() {
         System.out.printf("| %-10s | %-20s | %-10s | %-8s | %-5s |\n",
                 this.staffID, this.name, this.role, this.gender, this.age);
     }

@@ -5,6 +5,8 @@ import java.util.UUID;
 import static authorisation.Authorisation.authoriseAdmin;
 
 public class Admin extends Staff {
+    // TODO: AFREEN use DIP by creating an interface for adminView, adminActions
+    private final AdminView adminView = new AdminView();
     private final AdminActions adminActions = new AdminActions();
 
     public Admin(String staffID, String name, StaffRoles role, char gender, int age){
@@ -45,25 +47,49 @@ public class Admin extends Staff {
         }
     }
 
-//    protected void assignManager(String staffId, String Branch){
-//        adminActions.assignManager(staffId, Branch);
+    /**
+     * Filter staff records
+     *
+     * @param auth Admin role required
+     */
+
+    public void filterStaff(StaffRoles auth) {
+        if (authoriseAdmin(auth)){
+            // Get field to filter staff records
+            StaffFilterOptions option = adminView.getFieldToFilter();
+            adminActions.filterStaff(option);
+        }
+    }
+
+//    public void assignManager(StaffRoles auth) {
+//        if (authoriseAdmin(auth)) {
+//            adminActions.assignManager();
+//        }
 //    }
 //
-//    protected void promoteStaff(String staffID, String Branch){
-//        adminActions.promoteStaff(staffID, Branch);
-//    }
-//
-//    protected void transferStaff(String staffID, String Branch){
-//        adminActions.transferStaff(staffID, Branch);
-//    }
-//
-//    protected void addBranch(String Branch){
-//        adminActions.addBranch(Branch);
-//    }
-//
-//    protected void closeBranch(String Branch){
-//        adminActions.closeBranch(Branch);
-//    }
+    public void promoteStaff(StaffRoles auth){
+        if (authoriseAdmin(auth)) {
+            adminActions.promoteStaff(auth);
+        }
+    }
+
+    public void transferStaff(StaffRoles auth){
+        if (authoriseAdmin(auth)) {
+            adminActions.transferStaff(auth);
+        }
+    }
+
+    public void addBranch(StaffRoles auth){
+        if (authoriseAdmin(auth)) {
+            adminActions.addBranch(auth);
+        }
+    }
+
+    public void closeBranch(StaffRoles auth){
+        if (authoriseAdmin(auth)) {
+            adminActions.closeBranch(auth);
+        }
+    }
 //
 //    protected String addPayment(String method){
 //        return adminActions.addPayment(method);

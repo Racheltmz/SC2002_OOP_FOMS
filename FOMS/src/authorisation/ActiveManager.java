@@ -63,7 +63,7 @@ public class ActiveManager implements ActiveUser {
                 this.getActiveStaff().setOrderReady();
                 break;
             case 8:
-                this.getActiveStaff().changePassword(this.activeStaff);
+                this.getActiveStaff().changePassword();
                 break;
             case 9:
                 this.logout();

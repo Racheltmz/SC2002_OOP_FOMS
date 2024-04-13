@@ -50,7 +50,7 @@ public class ActiveStaff implements ActiveUser {
                 this.getActiveStaff().setOrderReady();
                 break;
             case 4:
-                this.getActiveStaff().changePassword(this.activeStaff);
+                this.getActiveStaff().changePassword();
                 break;
             case 5:
                 this.logout();

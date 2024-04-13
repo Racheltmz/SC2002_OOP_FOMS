@@ -20,7 +20,7 @@ public class ManagerActionsMenu implements ManagerActions {
     public void addMenuItem() {
         try {
             // Get branch by user input
-            String branch = branchDirectory.getBranchByUserInput();
+            String branch = branchDirectory.getBranchByUserInput().getName();
 
             // Get details of new menu item
             System.out.println("Enter name: ");
@@ -42,7 +42,7 @@ public class ManagerActionsMenu implements ManagerActions {
     // Update menu item
     public void updateMenuItem() {
         // Get menu by branch
-        String branch = branchDirectory.getBranchByUserInput();
+        String branch = branchDirectory.getBranchByUserInput().getName();
         Menu branchMenu = menuDirectory.getMenu(branch);
         // Display items in branch
         branchMenu.displayItems();
@@ -69,7 +69,7 @@ public class ManagerActionsMenu implements ManagerActions {
     // Remove menu item
     public void removeMenuItem() {
         // Get menu by branch
-        String branch = branchDirectory.getBranchByUserInput();
+        String branch = branchDirectory.getBranchByUserInput().getName();
         Menu branchMenu = menuDirectory.getMenu(branch);
         // Display items in branch
         branchMenu.displayItems();
