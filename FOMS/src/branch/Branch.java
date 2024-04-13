@@ -1,7 +1,7 @@
 package branch;
 
 // Branch details
-public class Branch implements BranchProvider {
+public class Branch {
     // Attributes
     public String name;
     public String location;
@@ -25,7 +25,6 @@ public class Branch implements BranchProvider {
     }
 
     // Getters and setters
-    @Override
     public String getBranchName() {
         return this.name;
     }

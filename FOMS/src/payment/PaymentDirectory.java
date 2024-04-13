@@ -12,7 +12,7 @@ import static authorisation.Authorisation.authoriseAdmin;
 
 public class PaymentDirectory {
     // Attributes
-    private ArrayList<Payment> paymentDirectory;
+    private static ArrayList<Payment> paymentDirectory;
 
     // Constructor
     public PaymentDirectory(ArrayList<Payment> paymentDirectory) {
@@ -36,15 +36,13 @@ public class PaymentDirectory {
         return null;
     }
 
-    // Add payment method
-    public void addPaymentMtd(Payment payment, StaffRoles auth) {
-        if (authoriseAdmin(auth))
-            this.paymentDirectory.add(payment);
-    }
-
-    // Remove payment method
-    public void rmvPaymentMtd(String paymentMtd, StaffRoles auth) {
-        if (authoriseAdmin(auth))
-            this.paymentDirectory.remove(this.getPaymentMtd(paymentMtd));
+    public static void displayPaymentMethods()
+    {
+        int counter = 1;
+        for (Payment payment : paymentDirectory)
+        {
+            System.out.println(counter + ". " + payment.getPaymentMethod());
+            counter++;
+        }
     }
 }

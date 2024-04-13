@@ -35,22 +35,21 @@ public class ValidateDataType {
     // Check option
     public static int validateOption(String msg, int initial, int end) {
         InputScanner sc = getInstance();
-        boolean success = false;
-        int input = 0;
         do {
             try {
                 System.out.println(msg);
-                input = sc.nextInt();
-                if (input >= initial && input <= end)
-                {
-                    success = true;
+                int input = sc.nextInt();
+                while (input > end || input < initial) {
+                    System.out.println("Please enter a valid integer.");
+                    System.out.println(msg);
+                    input = sc.nextInt();
                 }
-            }  catch (InputMismatchException inputMismatchException) {
-                System.out.println("Please enter a valid integer.\n");
+                return input;
+            } catch (InputMismatchException inputMismatchException) {
+                System.out.println("Please enter an integer.");
                 sc.nextLine();
             }
-        } while (!success);
-        return input;
+        } while (true);
     }
 
     // Check double

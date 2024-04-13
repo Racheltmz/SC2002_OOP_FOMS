@@ -1,7 +1,7 @@
 package payment;
 
 // Payment Method Details
-public class Payment implements PaymentService {
+public class Payment {
     // Attributes
     private String paymentMethod;
 
@@ -11,7 +11,6 @@ public class Payment implements PaymentService {
     }
 
     // Getter
-    @Override
     public String getPaymentMethod() {
         return paymentMethod;
     }

@@ -1,5 +1,5 @@
-package payment;
-
-public interface PaymentService {
-    public String getPaymentMethod();
-}
+//package payment;
+//
+//public interface PaymentService {
+//    public String getPaymentMethod();
+//}

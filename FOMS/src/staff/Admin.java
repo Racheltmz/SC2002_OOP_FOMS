@@ -8,7 +8,7 @@ public class Admin extends Staff {
         super(staffID, name, role, gender, age, branch);
     }
 
-    public static void displayPaymentMethods() { AdminActions.displayPaymentMethods(); }
+    public static void displayPaymentMethods(Company company) { AdminActions.displayPaymentMethods(company); }
 
     public void setStaffID(Company company, String staffID, String newStaffID) {
         AdminActions.setStaffID(company, staffID, newStaffID);

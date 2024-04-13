@@ -136,7 +136,7 @@ public class OrderQueue {
     }
 
     // Process order placement
-    public void placeOrder(Order order, double amountPaid){
-        order.placeOrder(amountPaid);
+    public void placeOrder(Order order){
+        order.placeOrder();
     }
 }

@@ -1,16 +1,10 @@
 package authorisation;
 
-import branch.Branch;
-import payment.PaymentManager;
-import staff.Staff;
-import staff.StaffList;
 import utils.InputScanner;
 import staff.Admin;
 import management.Company;
 import order.OrderQueue;
 import staff.AdminActions;
-
-import java.util.ArrayList;
 
 import static utils.InputScanner.getInstance;
 import static validation.ValidateDataType.validateOption;
@@ -91,14 +85,20 @@ public class ActiveAdmin implements ActiveUser {
                 Admin.transferStaff(company, staffid, Branch);
                 break;
             case 7:
-                AdminActions.addPaymentMethod();
+                System.out.print("Enter name of new payment method: ");
+                String newMethod = sc.next();
+                newMethod += sc.nextLine();
+                AdminActions.addPayment(company, newMethod);
                 System.out.println("Updated list of payment methods is: ");
-                Admin.displayPaymentMethods();
+                Admin.displayPaymentMethods(company);
                 break;
             case 8:
-                AdminActions.removePaymentMethod();
+                System.out.print("Enter name of payment method to remove: ");
+                String methodToRemove = sc.next();
+                methodToRemove += sc.nextLine();
+                AdminActions.removePayment(company, methodToRemove);
                 System.out.println("Updated list of payment methods is: ");
-                Admin.displayPaymentMethods();
+                Admin.displayPaymentMethods(company);
                 break;
             case 9:
                 Admin.addBranch(company);

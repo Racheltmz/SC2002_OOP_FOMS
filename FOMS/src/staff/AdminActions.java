@@ -3,16 +3,12 @@ package staff;
 import branch.Branch;
 import management.Company;
 import payment.Payment;
-import payment.PaymentManager;
-import payment.PaymentService;
+import payment.PaymentDirectory;
 import utils.InputScanner;
-
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-import java.util.ServiceLoader;
 
+import static authorisation.Authorisation.authoriseAdmin;
 import static staff.StaffRoles.*;
 import static staff.StaffRoles.ADMIN;
 import static utils.InputScanner.getInstance;
@@ -20,20 +16,6 @@ import static validation.ValidateDataType.validateInt;
 import static validation.ValidateDataType.validateOption;
 
 public class AdminActions {
-    public static void addPaymentMethod()
-    {
-        PaymentManager.addPaymentMethod(ADMIN);
-    }
-
-    public static void removePaymentMethod()
-    {
-        PaymentManager.removePaymentMethod(ADMIN);
-    }
-
-    public static void displayPaymentMethods()
-    {
-        PaymentManager.displayPaymentMethods();
-    }
     protected static boolean setRole(Company company, String staffID, String branch) {
         Staff staff = company.getStaffDirectory().getStaff(staffID);
         Branch Branch = company.getBranchDirectory().getBranchByName(branch);
@@ -249,16 +231,16 @@ public class AdminActions {
         }
     }
 
-    protected static String addPayment(Company company, String method) {
+    public static String addPayment(Company company, String method) {
         Payment payment;
         switch (method) {
             case "Credit/Debit Card":
                 payment = new Payment(method);
-                company.getPaymentDirectory().addPaymentMtd(payment, ADMIN); //since only admins can add payment methods
+                AdminActions.addPaymentMtd(payment, ADMIN, company); //since only admins can add payment methods
                 break;
             case "Paypal":
                 payment = new Payment(method);
-                company.getPaymentDirectory().addPaymentMtd(payment, ADMIN);
+                AdminActions.addPaymentMtd(payment, ADMIN, company);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported payment method: " + method);
@@ -266,14 +248,14 @@ public class AdminActions {
         return "Payment method added successfully";
     }
 
-    protected static String removePayment(Company company, String method){
+    public static String removePayment(Company company, String method){
         if (company.getPaymentDirectory().getPaymentDirectory().isEmpty()) {
             return "No payment methods available to remove.";
         }
 
         for (Payment payment : company.getPaymentDirectory().getPaymentDirectory()) {
             if (payment.getPaymentMethod().equals(method)) {
-                company.getPaymentDirectory().rmvPaymentMtd(payment.getPaymentMethod(), ADMIN); // Assuming removePaymentMtd method is available in Company class
+                AdminActions.rmvPaymentMtd(payment.getPaymentMethod(), ADMIN, company); // Assuming removePaymentMtd method is available in Company class
                 return "Payment method removed successfully.";
             }
         }
@@ -362,5 +344,21 @@ public class AdminActions {
             case 5:
                 break;
         }
+    }
+
+    // Add payment method
+    protected static void addPaymentMtd(Payment payment, StaffRoles auth, Company company) {
+        if (authoriseAdmin(auth))
+            company.getPaymentDirectory().getPaymentDirectory().add(payment);
+    }
+
+    // Remove payment method
+    protected static void rmvPaymentMtd(String paymentMtd, StaffRoles auth, Company company) {
+        if (authoriseAdmin(auth))
+            company.getPaymentDirectory().getPaymentDirectory().remove(paymentMtd);
+    }
+
+    public static void displayPaymentMethods(Company company) {
+        PaymentDirectory.displayPaymentMethods();
     }
 }
