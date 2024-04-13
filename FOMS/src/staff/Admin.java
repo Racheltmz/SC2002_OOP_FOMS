@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import static authorisation.Authorisation.authoriseAdmin;
 
+// TODO: AFREEN use DIP by creating an interface for adminView, adminActions
 public class Admin extends Staff {
-    // TODO: AFREEN use DIP by creating an interface for adminView, adminActions
     private final AdminView adminView = new AdminView();
     private final AdminActions adminActions = new AdminActions();
 
@@ -61,11 +61,11 @@ public class Admin extends Staff {
         }
     }
 
-//    public void assignManager(StaffRoles auth) {
-//        if (authoriseAdmin(auth)) {
-//            adminActions.assignManager();
-//        }
-//    }
+    public void assignManager(StaffRoles auth) {
+        if (authoriseAdmin(auth)) {
+            adminActions.assignManager(auth);
+        }
+    }
 //
     public void promoteStaff(StaffRoles auth){
         if (authoriseAdmin(auth)) {

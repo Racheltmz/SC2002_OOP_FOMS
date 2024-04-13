@@ -3,7 +3,6 @@ package staff;
 import static utils.ValidateHelper.validateInt;
 import static utils.ValidateHelper.validateIntRange;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Map;
@@ -14,6 +13,7 @@ import utils.Filter;
 import utils.InputScanner;
 
 // Class containing actions that admin can perform
+// TODO: AFREEN, improve the ui
 // TODO: convert files to apply DIP for admin, split functions based on functionalities (staff account, staff role, branch, payment)
 public class AdminActions {
     // Map to store staff roles
@@ -21,7 +21,8 @@ public class AdminActions {
     InputScanner sc = InputScanner.getInstance();
     BranchDirectory branchDirectory = BranchDirectory.getInstance();
 
-    // Add menu item
+    // Add staff
+    // TODO, pls rmv but all staff will be added as Staff Role
     protected void addStaff(StaffRoles auth) {
         try {
             StaffDirectory staffDirectory = StaffDirectory.getInstance();
@@ -31,9 +32,6 @@ public class AdminActions {
             String name = sc.next();
             System.out.println("Enter staff ID: ");
             String staffId = sc.next();
-            // TODO: AFREEN validate if its S/M
-            System.out.println("Enter role (S/M):\nS: Staff\nM: Manager");
-            char role = sc.next().charAt(0);
             // TODO: AFREEN validate if its M or F
             System.out.println("Enter gender (M/F): ");
             char gender = sc.next().charAt(0);
@@ -41,27 +39,17 @@ public class AdminActions {
             System.out.println("Select branch: ");
             Branch branch = branchDirectory.getBranchByUserInput();
 
-            // Add the new menu item to the menu
-            switch (role) {
-                case 'S':
-                    staffDirectory.addStaff(new Staff(staffId, name, StaffRoles.STAFF, gender, age, branch), numExistingStaff, auth);
-                    break;
-                case 'M':
-                    staffDirectory.addStaff(new Manager(staffId, name, StaffRoles.MANAGER, gender, age, branch), numExistingStaff, auth);
-                    break;
-                case 'A':
-                    staffDirectory.addStaff(new Admin(staffId, name, StaffRoles.ADMIN, gender, age), numExistingStaff, auth);
-                    break;
-            }
+            // Add new staff
+            staffDirectory.addStaff(new Staff(staffId, name, StaffRoles.STAFF, gender, age, branch), numExistingStaff, auth);
         } catch (InputMismatchException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
-    // Update menu item
+    // Update staff
     protected void updateStaff(StaffRoles auth) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
-        staffDirectory.displayAllStaff();
+        staffDirectory.displayAllStaff(auth);
         Staff staffToUpdate = staffDirectory.getStaff();
         boolean success = false;
         do {
@@ -82,7 +70,7 @@ public class AdminActions {
     // Remove staff
     protected void removeStaff(StaffRoles auth) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
-        staffDirectory.displayAllStaff();
+        staffDirectory.displayAllStaff(auth);
         Staff staffToRmv = staffDirectory.getStaff();
         staffDirectory.rmvStaff(staffToRmv, auth);
     }
@@ -139,7 +127,7 @@ public class AdminActions {
 
     }
 
-//    protected void assignManager(){
+    protected void assignManager(StaffRoles auth) {
 //        StaffDirectory staffDirectory = StaffDirectory.getInstance();
 //        // Display all managers
 //        filterByRole(StaffRoles.MANAGER.getAcronym());
@@ -156,7 +144,7 @@ public class AdminActions {
 //                numManagersInBranch++;
 //            }
 //        }
-//
+
 //        int quota = 0;
 //        if(numStaff >= 9 && numStaff <= 15){
 //            quota = 3;
@@ -167,19 +155,17 @@ public class AdminActions {
 //        else if(numStaff >= 1 && numStaff <= 4){
 //            quota = 1;
 //        }
-//
+
 //        if(numManagersInBranch < quota){
 //            System.out.println("Manager is assigned to the Branch: " + Branch);
 //        }
 //        else{
 //            System.out.println("Cannot assign any more Managers. Quota reached for Branch. \n");
 //        }
-//    }
+    }
 
     protected void promoteStaff(StaffRoles auth){
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
-        // TODO: AFREEN, improve the ui
-        System.out.println("Promote Staff");
         filterByRole(StaffRoles.STAFF.getAcronym());
         Staff staff = staffDirectory.getStaff();
         StaffRoles currentRole = staff.getRole();
@@ -196,30 +182,16 @@ public class AdminActions {
                 break;
         }
     }
-//
-//    protected void transferStaff(String staffID, String Branch){
-//        StaffDirectory staffDirectory = StaffDirectory.getInstance();
-//        BranchDirectory branchDirectory = BranchDirectory.getInstance();
-//        Staff staff = staffDirectory.getStaff(staffID);
-//
-//        if(staff != null){
-//            boolean newBranchExists = false;
-//            for(Branch branch : branchDirectory.getBranchDirectory()){
-//                if(branch.getName().equals(Branch)){
-//                    newBranchExists = true;
-//                    branch.setName(Branch);
-//                    System.out.println("Staff member with ID " + staffID + " has been transferred to " + Branch + " successfully");
-//                    break;
-//                }
-//            }
-//            if(!newBranchExists){
-//                System.out.println("This branch does not exist");
-//            }
-//        }
-//        else{
-//            System.out.println("Staff member with ID " + staffID + " not found");
-//        }
-//    }
+
+    // TODO: Afreen, ensure they don't transfer to the branch they were originally in
+    protected void transferStaff(StaffRoles auth){
+        StaffDirectory staffDirectory = StaffDirectory.getInstance();
+        staffDirectory.displayAllStaff(auth);
+        Staff staff = staffDirectory.getStaff();
+        Branch branchToTransfer = branchDirectory.getBranchByUserInput();
+        staff.setBranch(branchToTransfer);
+        System.out.println("Staff member with ID " + staff.getStaffID() + " has been transferred to " + branchToTransfer.getName() + " successfully");
+    }
 
     protected void addBranch(StaffRoles auth) {
         try {

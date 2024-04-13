@@ -1,12 +1,9 @@
 package staff;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import branch.Branch;
 import exceptions.ItemNotFoundException;
-import utils.Filter;
 import utils.InputScanner;
 import utils.StaffXlsxHelper;
 
@@ -37,13 +34,15 @@ public class StaffDirectory {
     }
 
     // Display staff details
-    public void displayAllStaff() {
-        // Print details
-        System.out.println("Staff Details:");
-        System.out.printf("| %-10s | %-20s | %-10s | %-10s | %-8s | %-5s |\n", "StaffID", "Name", "Branch", "Role", "Gender", "Age");
-        System.out.println("-".repeat(80));
-        for (Staff curStaff : this.staffDirectory) {
-            curStaff.printStaffDetails();
+    public void displayAllStaff(StaffRoles auth) {
+        if (authoriseAdmin(auth)) {
+            // Print details
+            System.out.println("Staff Details:");
+            System.out.printf("| %-10s | %-20s | %-10s | %-10s | %-8s | %-5s |\n", "StaffID", "Name", "Branch", "Role", "Gender", "Age");
+            System.out.println("-".repeat(80));
+            for (Staff curStaff : this.staffDirectory) {
+                curStaff.printStaffDetails();
+            }
         }
     }
 
