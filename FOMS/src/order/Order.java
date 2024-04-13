@@ -4,8 +4,11 @@ import menu.MenuItem;
 import payment.Payment;
 import payment.PaymentLoader;
 import payment.PaymentDirectory;
+import payment.PaymentManager;
 
 import java.util.ArrayList;
+
+import static validation.ValidateDataType.validateOption;
 
 // TODO: STRUCT: PRINT RECEIPT UNDER VIEW (DONE)
 // TODO: UNIQUE AND AUTO INCREMENTED ID (DONE)
@@ -91,26 +94,11 @@ public class Order {
     // Display payment methods and customer makes payment
     public void pay(double amountPaid) {
         // Display payment methods
-        PaymentLoader.loadMethods();
-
+        System.out.println("Available payment methods:");
+        PaymentManager.displayPaymentMethods();
         double total = calculateTotal();
-        // Check if payment method exists
-        if (paymentDirectory.getPaymentMtd(payment.getPaymentMethod()) != null){
-            if (amountPaid == total){
-                System.out.println("Payment successful.");
-                processOrder();
-            }
-            else if (amountPaid > total){
-                System.out.printf("Change is $%.2f ", amountPaid - total);
-                processOrder();
-            }
-            else if (amountPaid < total){
-                System.out.println("Payment unsuccessful.");
-            }
-        }
-        else{
-            System.out.println("Payment method does not exist.");
-        }
+        int paymentOption = validateOption("How would you like to pay?", 1, PaymentManager.displayPaymentMethods());
+        System.out.println("Thank you for dining with us!");
     }
 
     // Process the order

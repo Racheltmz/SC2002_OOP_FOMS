@@ -22,15 +22,15 @@ import static validation.ValidateDataType.validateOption;
 public class AdminActions {
     public static void addPaymentMethod()
     {
-        PaymentManager.addPaymentMethod();
+        PaymentManager.addPaymentMethod(ADMIN);
     }
 
     public static void removePaymentMethod()
     {
-        PaymentManager.removePaymentMethod();
+        PaymentManager.removePaymentMethod(ADMIN);
     }
 
-    protected static void displayPaymentMethods()
+    public static void displayPaymentMethods()
     {
         PaymentManager.displayPaymentMethods();
     }
