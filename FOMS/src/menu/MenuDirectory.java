@@ -45,7 +45,7 @@ public class MenuDirectory {
         int size = items.size();
         MenuItem selection = null;
         // Get user's selection
-        int menuItemIndex = validateOption("Select item (" + (size+1) + "to quit): ", 1, size+1);
+        int menuItemIndex = validateOption("Select item (" + (size+1) + " to quit): ", 1, size+1);
         if (menuItemIndex != size+1) {
             selection = items.get(menuItemIndex - 1);
         }
