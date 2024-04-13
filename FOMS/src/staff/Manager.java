@@ -9,20 +9,16 @@ import static authorisation.Authorisation.authoriseManager;
 // Manager details
 public class Manager extends Staff  {
     // Attributes
-    private final ManagerView managerView;
-    private final ManagerActions managerActions;
+    private final ManagerView managerView = new ManagerView();;
+    private final ManagerActions managerActions = new ManagerActions();;
 
     // Constructor
     public Manager(String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
         super(staffID, name, role, gender, age, branch);
-        this.managerView = new ManagerView();
-        this.managerActions = new ManagerActions();
     }
 
     public Manager(UUID id, String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
         super(id, staffID, name, role, gender, age, branch);
-        this.managerView = new ManagerView();
-        this.managerActions = new ManagerActions();
     }
 
     // Display staff list by branch
