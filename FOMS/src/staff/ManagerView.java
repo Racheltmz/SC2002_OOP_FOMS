@@ -4,6 +4,7 @@ import branch.Branch;
 
 import java.util.ArrayList;
 
+// TODO: combine with filter
 // Boundary for staff information
 public class ManagerView {
     public void displayStaffByBranch(Branch branch) {
