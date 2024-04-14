@@ -16,8 +16,6 @@ import utils.InputScanner;
 // TODO: AFREEN, improve the ui
 // TODO: AFREEN, SRP create more files & split functions based on functionalities (staff account, staff role, branch, payment)
 public class AdminActions {
-    // Map to store staff roles
-    private Map<String, StaffRoles> staffRolesMap = new HashMap<>();
     InputScanner sc = InputScanner.getInstance();
     BranchDirectory branchDirectory = BranchDirectory.getInstance();
 
