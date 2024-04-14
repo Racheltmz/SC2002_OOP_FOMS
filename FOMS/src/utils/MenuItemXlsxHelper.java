@@ -97,7 +97,7 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
         if (!isExisting) {
             serializeRecord(this.menuItemXlsx, item.toXlsx(), numExistingRecords);
         } else {
-            throw new DuplicateEntryException("Record not inserted: Duplicate item entered.");
+            throw new DuplicateEntryException("Menu item not inserted, there is a duplicate item.");
         }
     }
 

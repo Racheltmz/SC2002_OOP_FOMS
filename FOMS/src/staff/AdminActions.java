@@ -3,12 +3,11 @@ package staff;
 import static utils.ValidateHelper.validateInt;
 import static utils.ValidateHelper.validateIntRange;
 
-import java.util.HashMap;
 import java.util.InputMismatchException;
-import java.util.Map;
 
 import branch.Branch;
 import branch.BranchDirectory;
+import exceptions.DuplicateEntryException;
 import utils.Filter;
 import utils.InputScanner;
 
@@ -27,8 +26,23 @@ public class AdminActions {
             // Get details of staff
             System.out.println("Enter name: ");
             String name = sc.next();
-            System.out.println("Enter staff ID: ");
-            String staffId = sc.next();
+
+            String staffId = null;
+            // Keep getting user input until they enter a valid staff id
+            do {
+                try {
+                    System.out.println("Enter staff ID: ");
+                    staffId = sc.next();
+                    boolean isExisting = staffDirectory.staffExistsByStaffID(staffId);
+                    if (isExisting) {
+                        staffId = null;
+                        throw new DuplicateEntryException("Staff not inserted: Duplicate staff entered.");
+                    }
+                } catch (DuplicateEntryException e) {
+                    System.out.println(e.getMessage());
+                }
+            } while (staffId == null);
+
             // TODO: AFREEN validate if its M or F
             System.out.println("Enter gender (M/F): ");
             char gender = sc.next().charAt(0);
@@ -47,7 +61,7 @@ public class AdminActions {
                 staffDirectory.addStaff(new Staff(staffId, name, StaffRoles.STAFF, gender, age, branch), numExistingStaff, auth);
             }
         } catch (InputMismatchException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -62,7 +76,7 @@ public class AdminActions {
                 // Update details
                 int age = validateInt("Enter age: ");
                 staffToUpdate.setAge(age);
-                staffDirectory.updateStaff(staffToUpdate, auth);
+                staffDirectory.updateStaff(staffToUpdate);
                 success = true;
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Invalid value, please enter again.");

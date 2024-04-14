@@ -18,7 +18,7 @@ public class Staff implements IXlsxSerializable {
     private char gender;
     private int age;
     private Branch branch;
-    private String password = genHash("password");
+    private String password;
     private final StaffView staffView = new StaffView();
 
     public Staff(String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
@@ -28,9 +28,10 @@ public class Staff implements IXlsxSerializable {
         this.gender = gender;
         this.age = age;
         this.branch = branch;
+        this.password = genHash("password");
     }
 
-    public Staff(UUID id, String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
+    public Staff(UUID id, String staffID, String name, StaffRoles role, char gender, int age, Branch branch, String password) {
         this.id = id;
         this.staffID = staffID;
         this.name = name;
@@ -38,11 +39,14 @@ public class Staff implements IXlsxSerializable {
         this.gender = gender;
         this.age = age;
         this.branch = branch;
+        this.password = password;
     }
 
     // Serialization to XLSX
     public String[] toXlsx() {
-        return new String[] { String.valueOf(id), name, staffID, role.getAcronym(), String.valueOf(gender), String.valueOf(age), branch.getName() };
+        return new String[] {
+                String.valueOf(id), name, staffID, role.getAcronym(), String.valueOf(gender),
+                String.valueOf(age), branch.getName(), password };
     }
 
     /**
@@ -122,6 +126,8 @@ public class Staff implements IXlsxSerializable {
             newPassword = sc.next();
         }
         setPassword(genHash(newPassword));
+        StaffDirectory staffDirectory = StaffDirectory.getInstance();
+        staffDirectory.updateStaff(this);
         System.out.println("Password successfully changed!");
     }
 

@@ -17,8 +17,8 @@ public class Manager extends Staff  {
         super(staffID, name, role, gender, age, branch);
     }
 
-    public Manager(UUID id, String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
-        super(id, staffID, name, role, gender, age, branch);
+    public Manager(UUID id, String staffID, String name, StaffRoles role, char gender, int age, Branch branch, String password) {
+        super(id, staffID, name, role, gender, age, branch, password);
     }
 
     // Display staff list by branch

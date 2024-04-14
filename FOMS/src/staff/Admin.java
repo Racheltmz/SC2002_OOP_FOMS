@@ -22,8 +22,8 @@ public class Admin extends Staff {
      * @param gender Gender of admin
      * @param age Age of admin
      */
-    public Admin(UUID id, String staffID, String name, StaffRoles role, char gender, int age){
-        super(id, staffID, name, role, gender, age, null);
+    public Admin(UUID id, String staffID, String name, StaffRoles role, char gender, int age, String password){
+        super(id, staffID, name, role, gender, age, null, password);
     }
 
     // Add menu item

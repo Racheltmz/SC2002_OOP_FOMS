@@ -2,11 +2,8 @@ package utils;
 
 import branch.Branch;
 import branch.BranchDirectory;
-import staff.Admin;
-import staff.Manager;
-import staff.Staff;
-
-import staff.StaffRoles;
+import exceptions.DuplicateEntryException;
+import staff.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +49,7 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
         BranchDirectory branchDirectory = BranchDirectory.getInstance();
 
         // Deserialize records
-        List<String[]> XlsxData = deserializeRecords(this.staffXlsx, this.header,7, 1);
+        List<String[]> XlsxData = deserializeRecords(this.staffXlsx, this.header,8, 1);
         if(XlsxData.isEmpty()) {
             serializeHeader(this.staffXlsx, this.header);
             return staffList;
@@ -68,16 +65,17 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
             char gender = data[4].charAt(0);
             int age = (int) Double.parseDouble(data[5]);
             Branch branch = branchDirectory.getBranchByName(data[6]);
+            String password = data[7];
 
             switch (role) {
                 case 'S':
-                    staffList.add(new Staff(id, staffId, name, StaffRoles.STAFF, gender, age, branch));
+                    staffList.add(new Staff(id, staffId, name, StaffRoles.STAFF, gender, age, branch, password));
                     break;
                 case 'M':
-                    staffList.add(new Manager(id, staffId, name, StaffRoles.MANAGER, gender, age, branch));
+                    staffList.add(new Manager(id, staffId, name, StaffRoles.MANAGER, gender, age, branch, password));
                     break;
                 case 'A':
-                    staffList.add(new Admin(id, staffId, name, StaffRoles.ADMIN, gender, age));
+                    staffList.add(new Admin(id, staffId, name, StaffRoles.ADMIN, gender, age, password));
                     break;
             }
         });

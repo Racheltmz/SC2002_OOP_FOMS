@@ -68,6 +68,21 @@ public class StaffDirectory {
         }
     }
 
+    /**
+     * Check if staffID exists ensure unique staff records.
+     *
+     * @param staffID Staff ID to check.
+     * @return Boolean of whether staff exists.
+     */
+    public boolean staffExistsByStaffID(String staffID) {
+        for (Staff staff : this.staffDirectory) {
+            if (staff.getStaffID().equals(staffID)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Add staff (admin purposes)
     public void addStaff(Staff staff, int numExistingStaff, StaffRoles auth) {
         if (authoriseAdmin(auth)) {
@@ -77,11 +92,9 @@ public class StaffDirectory {
         }
     }
 
-    public void updateStaff(Staff staffToUpdate, StaffRoles auth) {
-        if (authoriseAdmin(auth)) {
-            StaffXlsxHelper staffXlsxHelper = StaffXlsxHelper.getInstance();
-            staffXlsxHelper.updateXlsx(staffToUpdate);
-        }
+    public void updateStaff(Staff staffToUpdate) {
+        StaffXlsxHelper staffXlsxHelper = StaffXlsxHelper.getInstance();
+        staffXlsxHelper.updateXlsx(staffToUpdate);
     }
 
     // Remove staff (admin purposes)
