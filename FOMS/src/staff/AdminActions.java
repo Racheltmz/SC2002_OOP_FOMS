@@ -218,7 +218,7 @@ public class AdminActions {
     }
 
     protected void removePayment() {
-
+        PaymentDirectory.removePaymentMtd(ADMIN);
     }
 
 //    protected String addPayment(String method){
