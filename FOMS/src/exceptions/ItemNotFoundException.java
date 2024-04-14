@@ -1,7 +1,11 @@
 package exceptions;
 
 public class ItemNotFoundException extends Exception {
-    public ItemNotFoundException(String message) {
-        super(message);
+    public ItemNotFoundException() {
+        super("Item not found");
+    }
+    public ItemNotFoundException(String msg){
+        super(msg);
     }
 }
+

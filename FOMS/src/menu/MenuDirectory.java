@@ -1,13 +1,12 @@
 package menu;
 
-import branch.BranchDirectory;
-import exceptions.ItemNotFoundException;
-import exceptions.MenuItemNotFoundException;
+import static branch.BranchDirectory.*;
+import static utils.Initialisation.*;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static branch.BranchDirectory.getBranchByUserInput;
-import static utils.Initialisation.initialiseMenuRecords;
+import branch.BranchDirectory;
 
 public class MenuDirectory {
     private ArrayList<Menu> menuDirectory;
@@ -45,11 +44,7 @@ public class MenuDirectory {
 //            }
         System.out.println("Menu items in branch " + branch + ":");
         menu.displayItems();
-//        } catch (MenuItemNotFoundException e) {
-//            System.out.println(e.getMessage());
-//        } catch (ItemNotFoundException e) {
-//            System.out.println(e.getMessage());
-//        }
+
     }
 
     public int getNumAllMenuItems() {
@@ -60,19 +55,10 @@ public class MenuDirectory {
         return count;
     }
     public int getNumMenuItems(String branch) {
-//        try {
+
             Menu menu = getMenu(branch);
-//            if (menu == null) {
-//                throw new ItemNotFoundException("Menu is empty for branch " + branch);
-//            }
+
             return menu.getMenuItems().size();
-//        }
-//        catch (MenuItemNotFoundException e) {
-//            System.out.println(e.getMessage());
-//            return 0;
-//        } catch (ItemNotFoundException e) {
-//            System.out.println(e.getMessage());
-//            return 0;
-//        }
+
     }
 }

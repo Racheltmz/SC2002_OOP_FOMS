@@ -2,7 +2,7 @@ package exceptions;
 
 public class AuthorizationException extends Exception {
     public AuthorizationException() {
-        super();
+        super("Authourisation error!");
     }
 
     public AuthorizationException(String message) {

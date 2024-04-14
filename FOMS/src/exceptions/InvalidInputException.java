@@ -2,7 +2,7 @@ package exceptions;
 
 public class InvalidInputException extends Exception {
     public InvalidInputException() {
-        super();
+        super("Input is invalid. Please enter value again");
     }
 
     public InvalidInputException(String message) {
