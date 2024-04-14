@@ -75,53 +75,44 @@ public class PaymentDirectory {
 
     // Add payment method
     // TODO: RACHEL HELP TO TEST NEW PERSISTENCE METHOD
-    public static void addPaymentMtd(StaffRoles auth) {
-        if (authoriseAdmin(auth)) {
-            InputScanner sc = InputScanner.getInstance();
+    public static void addPaymentMtd() {
+        InputScanner sc = InputScanner.getInstance();
 
-            // Read payment method data
-            ArrayList<String> paymentMethodList = readPaymentMethods();
-            printPaymentMethods();
+        // Read payment method data
+        ArrayList<String> paymentMethodList = readPaymentMethods();
+        printPaymentMethods();
 
-            // Add a new method
-            System.out.print("Please enter name of new payment method: ");
-            String newPaymentMethod = sc.next();
-            paymentMethodList.add(newPaymentMethod);
+        // Add a new method
+        System.out.print("Please enter name of new payment method: ");
+        String newPaymentMethod = sc.next();
+        paymentMethodList.add(newPaymentMethod);
 
-            // Save data
-            writePaymentMethod(paymentMethodList);
+        // Save data
+        writePaymentMethod(paymentMethodList);
 
-            // Display updated payment method data
-            System.out.println("Updated list of payment methods are: ");
-            printPaymentMethods();
-        }
-        else {
-            System.out.println("You are not authorised to perform this action.");
-        }
+        // Display updated payment method data
+        System.out.println("Updated list of payment methods are: ");
+        printPaymentMethods();
     }
 
-    public static void removePaymentMtd(StaffRoles auth) {
-        if (authoriseAdmin(auth)) {
-            InputScanner sc = InputScanner.getInstance();
+    public static void removePaymentMtd() {
+        InputScanner sc = InputScanner.getInstance();
 
-            // Read payment method data
-            ArrayList<String> paymentMethodList = readPaymentMethods();
-            printPaymentMethods();
+        // Read payment method data
+        ArrayList<String> paymentMethodList = readPaymentMethods();
+        printPaymentMethods();
 
-            // Remove method via integer user input
-            int index = validateIntRange("Please enter option of which payment method to remove: ", 1, paymentMethodList.size());
-            String paymentMethodToRemove = paymentMethodList.get(index - 1);
-            paymentMethodList.remove(paymentMethodToRemove);
+        // Remove method via integer user input
+        int index = validateIntRange("Please enter option of which payment method to remove: ", 1, paymentMethodList.size());
+        String paymentMethodToRemove = paymentMethodList.get(index - 1);
+        paymentMethodList.remove(paymentMethodToRemove);
 
-            // Save new payment method data
-            writePaymentMethod(paymentMethodList);
+        // Save new payment method data
+        writePaymentMethod(paymentMethodList);
 
-            // Display updated payment method data
-            System.out.println("Payment method removed successfully.\nUpdated list of payment methods:");
-            printPaymentMethods();
-        } else {
-            System.out.println("You are not authorised to perform this action.");
-        }
+        // Display updated payment method data
+        System.out.println("Payment method removed successfully.\nUpdated list of payment methods:");
+        printPaymentMethods();
     }
 
     // Remove payment method

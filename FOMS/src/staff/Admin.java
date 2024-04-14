@@ -84,14 +84,17 @@ public class Admin extends Staff {
             adminActions.closeBranch(auth);
         }
     }
-//
-//    protected String addPayment(String method){
-//        return adminActions.addPayment(method);
-//    }
-//
-//    protected String removePayment(String method){
-//        return adminActions.removePayment(method);
-//    }
+    public void addPayment(StaffRoles auth){
+        if (authoriseAdmin(auth)) {
+            adminActions.addPayment();
+        }
+    }
+
+    public void removePayment(StaffRoles auth){
+        if (authoriseAdmin(auth)) {
+            adminActions.removePayment();
+        }
+    }
 }
 
 

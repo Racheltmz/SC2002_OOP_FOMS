@@ -214,11 +214,11 @@ public class AdminActions {
     }
 
     protected void addPayment() {
-        PaymentDirectory.addPaymentMtd(ADMIN);
+        PaymentDirectory.addPaymentMtd();
     }
 
     protected void removePayment() {
-        PaymentDirectory.removePaymentMtd(ADMIN);
+        PaymentDirectory.removePaymentMtd();
     }
 
 //    protected String addPayment(String method){
