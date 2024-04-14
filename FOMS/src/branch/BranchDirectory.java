@@ -3,7 +3,7 @@ package branch;
 import staff.Staff;
 import staff.StaffDirectory;
 import staff.StaffRoles;
-import utils.BranchXlsxHelper;
+import io.BranchXlsxHelper;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -44,6 +44,7 @@ public class BranchDirectory {
         return null;
     }
 
+    // TODO: can move to a view
     // Display branches
     public void displayBranches() {
         System.out.println("Branches: ");

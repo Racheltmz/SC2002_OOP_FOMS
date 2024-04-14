@@ -1,6 +1,6 @@
 package menu;
 
-import utils.IXlsxSerializable;
+import io.IXlsxSerializable;
 
 import java.util.UUID;
 

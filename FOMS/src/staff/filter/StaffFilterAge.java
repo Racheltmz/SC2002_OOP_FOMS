@@ -1,10 +1,14 @@
-package staff;
+package staff.filter;
 
-import utils.Filter;
+import staff.Staff;
+import staff.StaffDirectory;
+import utils.IFilter;
 
 import java.util.ArrayList;
 
-public class StaffFilterAge implements Filter {
+import static staff.StaffView.displayStaffDetails;
+
+public class StaffFilterAge implements IFilter {
     @Override
     public void filter(String age) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
@@ -17,9 +21,6 @@ public class StaffFilterAge implements Filter {
         }
         // Print details
         System.out.printf("Staff Details of staff age %s\n", age);
-        System.out.printf("| %-10s | %-20s | %-10s | %-8s | %-5s |\n", "StaffID", "Name", "Role", "Gender", "Age");
-        System.out.println("-".repeat(70));
-        for (Staff staff : filteredList)
-            staff.printStaffDetails();
+        displayStaffDetails(filteredList);
     }
 }

@@ -1,6 +1,6 @@
 package branch;
 
-import utils.IXlsxSerializable;
+import io.IXlsxSerializable;
 
 import java.util.UUID;
 
@@ -18,7 +18,7 @@ public class Branch implements IXlsxSerializable {
         this.name = name;
         this.location = location;
         this.staffQuota = staffQuota;
-        // TODO: NEW ensure in main that (1 <= staffQuota <= 15) as this will affect
+
         if (staffQuota >= 1 && staffQuota <= 4) {
             this.managerQuota = 1;
         } else if (staffQuota >= 5 && staffQuota <= 8) {

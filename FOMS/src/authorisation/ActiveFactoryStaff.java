@@ -5,11 +5,11 @@ import staff.Staff;
 // Active factory for staff
 public class ActiveFactoryStaff implements ActiveFactory {
     @Override
-    public ActiveUser initInactive() {
+    public IActiveUser initInactive() {
         return new ActiveStaff();
     }
     @Override
-    public ActiveUser initActive(Staff staff) {
+    public IActiveUser initActive(Staff staff) {
         return new ActiveStaff(staff);
     }
 }

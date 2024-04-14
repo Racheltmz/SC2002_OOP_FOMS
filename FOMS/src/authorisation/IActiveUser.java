@@ -3,7 +3,7 @@ package authorisation;
 import staff.Staff;
 
 // Active user interface
-public interface ActiveUser {
+public interface IActiveUser {
     // Get active staff
     Staff getActiveStaff();
     // Show options

@@ -6,11 +6,11 @@ import staff.Staff;
 // Active factory for manager
 public class ActiveFactoryManager implements ActiveFactory {
     @Override
-    public ActiveUser initInactive() {
+    public IActiveUser initInactive() {
         return new ActiveManager();
     }
     @Override
-    public ActiveUser initActive(Staff staff) {
+    public IActiveUser initActive(Staff staff) {
         return new ActiveManager((Manager) staff);
     }
 }

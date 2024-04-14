@@ -1,16 +1,17 @@
 package staff;
 
 import branch.Branch;
-import utils.Filter;
+import staff.filter.StaffFilterBranch;
+import utils.IFilter;
 
 import java.util.UUID;
 
 import static authorisation.Authorisation.authoriseManager;
 
 // Manager details
-public class Manager extends Staff  {
+public class Manager extends Staff {
     // Attributes
-    private final ManagerActions managerActions = new ManagerActionsMenu();;
+    private final IManagerActionsMenu managerActions = new ManagerActionsMenu();
 
     // Constructor
     public Manager(String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
@@ -24,7 +25,7 @@ public class Manager extends Staff  {
     // Display staff list by branch
     public void displayStaffList(StaffRoles auth, Branch branch) {
         if (authoriseManager(auth)) {
-            Filter staffFilterBranch = new StaffFilterBranch();
+            IFilter staffFilterBranch = new StaffFilterBranch();
             staffFilterBranch.filter(branch.getName());
         }
     }

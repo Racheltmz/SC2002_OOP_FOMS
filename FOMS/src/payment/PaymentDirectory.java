@@ -8,15 +8,13 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import static authorisation.Authorisation.authoriseAdmin;
-import static utils.Initialisation.initialisePaymentRecords;
 
 // Records of payment methods
 public class PaymentDirectory {
     // Attributes
-    private final ArrayList<Payment> paymentDirectory;
+    private final ArrayList<Payment> paymentDirectory = null;
     private static PaymentDirectory paymentSingleton = null;
     private PaymentDirectory() {
-        this.paymentDirectory = initialisePaymentRecords();
     }
 
     public static PaymentDirectory getInstance() {

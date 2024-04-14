@@ -1,5 +1,7 @@
 package staff;
 
+import staff.filter.StaffFilterOptions;
+
 import java.util.UUID;
 
 import static authorisation.Authorisation.authoriseAdmin;

@@ -6,11 +6,11 @@ import staff.Staff;
 // Active factory for admin
 public class ActiveFactoryAdmin implements ActiveFactory {
     @Override
-    public ActiveUser initInactive() {
+    public IActiveUser initInactive() {
         return new ActiveAdmin();
     }
     @Override
-    public ActiveUser initActive(Staff staff) {
+    public IActiveUser initActive(Staff staff) {
         return new ActiveAdmin((Admin) staff);
     }
 }

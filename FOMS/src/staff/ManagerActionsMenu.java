@@ -11,7 +11,7 @@ import static utils.ValidateHelper.validateDouble;
 import static utils.ValidateHelper.validateInt;
 
 // Manager's permissions
-public class ManagerActionsMenu implements ManagerActions {
+public class ManagerActionsMenu implements IManagerActionsMenu {
     InputScanner sc = InputScanner.getInstance();
     BranchDirectory branchDirectory = BranchDirectory.getInstance();
     MenuDirectory menuDirectory = MenuDirectory.getInstance();

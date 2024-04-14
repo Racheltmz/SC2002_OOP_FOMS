@@ -1,6 +1,12 @@
 package staff;
 
+import staff.filter.StaffFilterOptions;
 import utils.InputScanner;
+
+import java.util.ArrayList;
+
+import static authorisation.Authorisation.authoriseAdmin;
+import static staff.StaffView.displayStaffDetails;
 
 public class AdminView {
     InputScanner sc = InputScanner.getInstance();
@@ -13,5 +19,19 @@ public class AdminView {
         System.out.println("4. Age");
         int adminChoice = sc.nextInt();
         return StaffFilterOptions.of(adminChoice);
+    }
+
+    public static void displayAllStaff(ArrayList<Staff> staffDirectory, StaffRoles auth) {
+        if (authoriseAdmin(auth)) {
+            // Print details
+            System.out.println("Staff Details:");
+            ArrayList<Staff> staffList = new ArrayList<>();
+            for (Staff staff : staffDirectory) {
+                if (staff.getRole() != StaffRoles.ADMIN) {
+                    staffList.add(staff);
+                }
+            }
+            displayStaffDetails(staffList);
+        }
     }
 }

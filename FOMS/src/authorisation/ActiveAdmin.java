@@ -4,7 +4,7 @@ import utils.InputScanner;
 import staff.Admin;
 
 // Authorised operations for active user with an admin role
-public class ActiveAdmin implements ActiveUser {
+public class ActiveAdmin implements IActiveUser {
     private Admin activeStaff;
 
     public ActiveAdmin() { this.activeStaff = null; }

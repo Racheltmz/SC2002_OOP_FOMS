@@ -4,7 +4,7 @@ import utils.InputScanner;
 import staff.Staff;
 
 // Authorised operations for active user with a staff role
-public class ActiveStaff implements ActiveUser {
+public class ActiveStaff implements IActiveUser {
     // Attribute
     private Staff activeStaff;
 

@@ -1,5 +1,5 @@
 package utils;
 
-public interface Filter {
+public interface IFilter {
     void filter(String filterVal);
 }

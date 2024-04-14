@@ -1,6 +1,6 @@
 package staff;
 
-public interface ManagerActions {
+public interface IManagerActionsMenu {
     void addMenuItem();
     void updateMenuItem();
     void removeMenuItem();

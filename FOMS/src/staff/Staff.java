@@ -1,8 +1,7 @@
 package staff;
 
 import branch.Branch;
-import order.OrderQueue;
-import utils.IXlsxSerializable;
+import io.IXlsxSerializable;
 import utils.InputScanner;
 
 import static authentication.Hashing.genHash;
@@ -19,7 +18,7 @@ public class Staff implements IXlsxSerializable {
     private int age;
     private Branch branch;
     private String password;
-    private final StaffView staffView = new StaffView();
+    private final IStaffActionsOrder staffActionsOrder = new StaffActionsOrder();
 
     public Staff(String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
         this.staffID = staffID;
@@ -112,6 +111,8 @@ public class Staff implements IXlsxSerializable {
         return password.equals(this.getPassword());
     }
 
+    /* MANAGING STAFF PURPOSES */
+
     /**
      * Change password
      */
@@ -125,36 +126,25 @@ public class Staff implements IXlsxSerializable {
             System.out.print("Please enter new password: ");
             newPassword = sc.next();
         }
-        setPassword(genHash(newPassword));
+        this.setPassword(genHash(newPassword));
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
-        staffDirectory.updateStaff(this);
+        staffDirectory.updateStaff(staffDirectory.getStaffById(this.staffID));
         System.out.println("Password successfully changed!");
-    }
-
-    /* MANAGING STAFF PURPOSES */
-    // Display staff details
-    // TODO: AFREEN (whether to create a view)
-    public void printStaffDetails() {
-        System.out.printf("| %-10s | %-20s | %-10s | %-8s | %-5s |\n",
-                this.staffID, this.name, this.role, this.gender, this.age);
     }
 
     /* MANAGING ORDER PURPOSES */
     // New orders for Test Case 9 and 11
     public void getNewOrders(Branch branch) {
-        OrderQueue queue = OrderQueue.getInstance();
-        queue.displayNewOrders(branch.getName());
+        staffActionsOrder.getNewOrders(branch);
     }
 
     // Specific order
     public void getOrderDetails() {
-        OrderQueue queue = OrderQueue.getInstance();
-        queue.displayOrder();
+        staffActionsOrder.getOrderDetails();
     }
 
     // Update order status to ready to pickup for Test Case 10 and 12
     public void setOrderReady() {
-        OrderQueue queue = OrderQueue.getInstance();
-        queue.updateStatusToReady();
+        staffActionsOrder.setOrderReady();
     }
 }

@@ -4,7 +4,7 @@ import utils.InputScanner;
 import staff.Manager;
 
 // Authorised operations for active user with a manager role
-public class ActiveManager implements ActiveUser {
+public class ActiveManager implements IActiveUser {
     // Attribute
     private Manager activeStaff;
 

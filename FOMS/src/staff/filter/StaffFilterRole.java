@@ -1,11 +1,15 @@
-package staff;
+package staff.filter;
 
-import utils.Filter;
+import staff.Staff;
+import staff.StaffDirectory;
+import utils.IFilter;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class StaffFilterRole implements Filter {
+import static staff.StaffView.displayStaffDetails;
+
+public class StaffFilterRole implements IFilter {
     @Override
     public void filter(String role) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
@@ -24,9 +28,6 @@ public class StaffFilterRole implements Filter {
             System.out.println("Manager Details");
         else if (Objects.equals(role, "A"))
             System.out.println("Admin Details");
-        System.out.printf("| %-10s | %-20s | %-10s | %-8s | %-5s |\n", "StaffID", "Name", "Role", "Gender", "Age");
-        System.out.println("-".repeat(70));
-        for (Staff staff : filteredList)
-            staff.printStaffDetails();
+        displayStaffDetails(filteredList);
     }
 }

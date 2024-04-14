@@ -1,5 +1,6 @@
 package staff;
 
+import static staff.AdminView.displayAllStaff;
 import static utils.ValidateHelper.validateInt;
 import static utils.ValidateHelper.validateIntRange;
 
@@ -8,7 +9,8 @@ import java.util.InputMismatchException;
 import branch.Branch;
 import branch.BranchDirectory;
 import exceptions.DuplicateEntryException;
-import utils.Filter;
+import staff.filter.*;
+import utils.IFilter;
 import utils.InputScanner;
 
 // Class containing actions that admin can perform
@@ -49,17 +51,9 @@ public class AdminActions {
             int age = validateInt("Enter age: ");
             System.out.println("Select branch: ");
             Branch branch = branchDirectory.getBranchByUserInput();
-            // TODO: AFREEN validate if its Y or N
-            System.out.println("Do you want to assign staff as branch manager? (Y/N): ");
-            char toAssign = sc.next().charAt(0);
 
-            if (toAssign == 'Y' && assignManager(branch, auth)) {
-                // Add new manager
-                staffDirectory.addStaff(new Manager(staffId, name, StaffRoles.MANAGER, gender, age, branch), numExistingStaff, auth);
-            } else {
-                // Add new staff
-                staffDirectory.addStaff(new Staff(staffId, name, StaffRoles.STAFF, gender, age, branch), numExistingStaff, auth);
-            }
+            // Add new staff
+            staffDirectory.addStaff(new Staff(staffId, name, StaffRoles.STAFF, gender, age, branch), numExistingStaff, auth);
         } catch (InputMismatchException e) {
             System.out.println(e.getMessage());
         }
@@ -68,7 +62,7 @@ public class AdminActions {
     // Update staff
     protected void updateStaff(StaffRoles auth) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
-        staffDirectory.displayAllStaff(auth);
+        displayAllStaff(staffDirectory.getStaffDirectory(), auth);
         Staff staffToUpdate = staffDirectory.getStaff();
         boolean success = false;
         do {
@@ -89,7 +83,7 @@ public class AdminActions {
     // Remove staff
     protected void removeStaff(StaffRoles auth) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
-        staffDirectory.displayAllStaff(auth);
+        displayAllStaff(staffDirectory.getStaffDirectory(), auth);
         Staff staffToRmv = staffDirectory.getStaff();
         staffDirectory.rmvStaff(staffToRmv, auth);
     }
@@ -121,23 +115,23 @@ public class AdminActions {
     }
 
     private void filterByBranch(String branch) {
-        Filter staffFilterBranch = new StaffFilterBranch();
+        IFilter staffFilterBranch = new StaffFilterBranch();
         staffFilterBranch.filter(branch);
     }
 
     private void filterByRole(String role) {
-        Filter staffFilterRole = new StaffFilterRole();
+        IFilter staffFilterRole = new StaffFilterRole();
         staffFilterRole.filter(role);
     }
 
     private void filterByGender(String gender) {
-        Filter staffFilterGender = new StaffFilterGender();
+        IFilter staffFilterGender = new StaffFilterGender();
         staffFilterGender.filter(gender);
     }
 
     // TODO: AFREEN, we should filter by less than/equal/more than a certain age (more informative)
     private void filterByAge(int age) {
-        Filter staffFilterAge = new StaffFilterAge();
+        IFilter staffFilterAge = new StaffFilterAge();
         staffFilterAge.filter(String.valueOf(age));
     }
 
@@ -147,10 +141,10 @@ public class AdminActions {
         int numManagers = staffDirectory.getNumManagersByBranch(branch, auth);
         // Check if the manager quota has exceeded
         if (numManagers < branch.getManagerQuota()) {
-            System.out.println("Able to assign staff as a manager. The manager quota for " + branch.getName() + " has not been met.");
+            System.out.println("Able to assign staff as a manager. The manager quota for " + branch.getLocation() + " has not been met.");
             return true;
         } else {
-            System.out.println("Unable to assign staff as a manager. The manager quota for " + branch.getName() + " is already met.");
+            System.out.println("Unable to assign staff as a manager. The manager quota for " + branch.getLocation() + " is already met.");
             return false;
         }
     }
@@ -179,12 +173,14 @@ public class AdminActions {
     // TODO: Afreen, ensure they don't transfer to the branch they were originally in
     protected void transferStaff(StaffRoles auth){
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
-        staffDirectory.displayAllStaff(auth);
+        displayAllStaff(staffDirectory.getStaffDirectory(), auth);
         Staff staff = staffDirectory.getStaff();
         Branch branchToTransfer = branchDirectory.getBranchByUserInput();
-        if (assignManager(staff.getBranch(), auth)) {
+        if (staff.getRole() == StaffRoles.STAFF ||
+                (staff.getRole() == StaffRoles.MANAGER && assignManager(branchToTransfer, auth))) {
             staff.setBranch(branchToTransfer);
-            System.out.println("Staff member with ID " + staff.getStaffID() + " has been transferred to " + branchToTransfer.getName() + " successfully");
+            staffDirectory.updateStaff(staff);
+            System.out.println("Staff member with ID " + staff.getStaffID() + " has been transferred to " + branchToTransfer.getLocation() + " successfully");
         }
     }
 

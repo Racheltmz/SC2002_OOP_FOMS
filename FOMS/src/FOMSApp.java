@@ -64,11 +64,11 @@ public class FOMSApp {
                         /* STAFF INTERFACE */
                         // Initialise staff
                         ActiveFactory staffFactory = new ActiveFactoryStaff();
-                        ActiveUser activeStaff = staffFactory.initInactive();
+                        IActiveUser activeStaff = staffFactory.initInactive();
                         ActiveFactory managerFactory = new ActiveFactoryManager();
-                        ActiveUser activeManager = managerFactory.initInactive();
+                        IActiveUser activeManager = managerFactory.initInactive();
                         ActiveFactory adminFactory = new ActiveFactoryAdmin();
-                        ActiveUser activeAdmin = adminFactory.initInactive();
+                        IActiveUser activeAdmin = adminFactory.initInactive();
                         Staff staff;
 
                         // Iterate until user successfully logs in
