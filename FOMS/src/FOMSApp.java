@@ -2,6 +2,7 @@ import java.util.InputMismatchException;
 
 import authorisation.*;
 import menu.MenuDirectory;
+import order.CustomerActions;
 import staff.StaffDirectory;
 import utils.InputScanner;
 import staff.Staff;
@@ -9,6 +10,7 @@ import staff.StaffRoles;
 import order.OrderQueue;
 
 import static authentication.Authentication.login;
+import static utils.ValidateHelper.validateIntRange;
 
 /**
  * Main App File
@@ -30,35 +32,12 @@ public class FOMSApp {
                 System.out.println("|       Welcome to Popeyes!      |");
                 System.out.println("==================================");
                 System.out.println("Please select option");
-                System.out.println("1. Customer\n2. Staff\n3: Quit");
-                choice = sc.nextInt();
-                sc.nextLine(); // Consume newline character
+                choice = validateIntRange("1. Customer\n2. Staff\n3: Quit", 1, 3);
 
                 switch (choice) {
                     case 1:
                         /* CUSTOMER INTERFACE */
-                        try {
-                            System.out.println("==================================");
-                            System.out.println("|              Menu              |");
-                            System.out.println("|        Welcome Customer!       |");
-                            System.out.println("==================================");
-                            // Ask customer to select branch
-                            menuDirectory.displayMenuByBranch();
-
-                            // Customer Options @gwen (test case 4-8, 18)
-                            System.out.println("Please select option");
-                            System.out.println("1. Browse Menu\n2. Check Order Status\n3. Return back");
-                            // Iterate until customer is done using functionalities
-                            // int customerChoice = 0;
-//                            do {
-//                                // Menu Browsing
-//
-//                                // Check order status
-//                            } while (customerChoice != 3);
-                        } catch (InputMismatchException inputMismatchException) {
-                            System.out.println("Please enter a valid integer only.\n");
-                            sc.nextLine();
-                        }
+                        CustomerActions.showOptions();
                         break;
                     case 2:
                         /* STAFF INTERFACE */

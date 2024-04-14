@@ -8,6 +8,8 @@ import payment.PaymentDirectory;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static utils.ValidateHelper.validateIntRange;
+
 // Order details
 public class Order {
     // Attributes
@@ -67,13 +69,14 @@ public class Order {
         this.status = status;
     }
 
+    public void setPaymentMtd(Payment payment) { this.payment = payment; }
+
     // Functionalities
     // Place order
-    public void placeOrder(double amountPaid) {
+    public void placeOrder() {
         if (payment != null) {
             System.out.println("Order placed successfully.");
             setStatus(OrderStatus.NEW);
-            pay(amountPaid);
         } else {
             System.out.println("Payment method not set. Cannot place order.");
         }
@@ -89,25 +92,17 @@ public class Order {
     }
 
     // Display payment methods and customer makes payment
-    public void pay(double amountPaid) {
-        // Display payment methods
-        PaymentView.displayPaymentMethods(paymentDirectory.getPaymentDirectory());
+    public static Payment pay() {
+        // Initialise directory
+        PaymentDirectory paymentDirectory = PaymentDirectory.getInstance();
 
-        double total = calculateTotal();
-        // Check if payment method exists
-        if (paymentDirectory.getPaymentMtd(payment.getPaymentMethod()) != null) {
-            if (amountPaid == total) {
-                System.out.println("Payment successful.");
-                processOrder();
-            } else if (amountPaid > total) {
-                System.out.printf("Change is $%.2f ", amountPaid - total);
-                processOrder();
-            } else if (amountPaid < total) {
-                System.out.println("Payment unsuccessful.");
-            }
-        } else {
-            System.out.println("Payment method does not exist.");
-        }
+        // Display payment methods
+        ArrayList<Payment> paymentMethods = paymentDirectory.getPaymentDirectory();
+        System.out.println("Available payment methods:");
+        paymentDirectory.displayPaymentMethods();
+        int choice = validateIntRange("How would you like to pay?", 1, paymentMethods.size());
+        Payment paymentOption = paymentMethods.get(choice - 1);
+        return paymentOption;
     }
 
     // Process the order

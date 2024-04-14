@@ -8,6 +8,8 @@ import utils.MenuItemXlsxHelper;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static utils.ValidateHelper.validateIntRange;
+
 public class MenuDirectory {
     private final ArrayList<Menu> menuDirectory;
     private static MenuDirectory menuSingleton = null;
@@ -57,12 +59,13 @@ public class MenuDirectory {
         return null;
     }
 
-    public void displayMenuByBranch() {
+    public String displayMenuByBranch() {
         BranchDirectory branchDirectory = BranchDirectory.getInstance();
         String branch = branchDirectory.getBranchByUserInput().getName();
         Menu menu = getMenu(branch);
         System.out.println("Menu items in branch " + branch + ":");
         menu.displayItems();
+        return branch;
     }
 
     public int getNumAllMenuItems() {
@@ -76,5 +79,18 @@ public class MenuDirectory {
     public int getNumMenuItems(String branch) {
         Menu menu = getMenu(branch);
         return menu.getMenuItems().size();
+    }
+
+    public MenuItem selectItem(String branchName) {
+        // Get branches
+        ArrayList<MenuItem> items = this.getMenu(branchName).getMenuItems();
+        int size = items.size();
+        MenuItem selection = null;
+        // Get user's selection
+        int menuItemIndex = validateIntRange("Select item (" + (size+1) + " to quit): ", 1, size+1);
+        if (menuItemIndex != size+1) {
+            selection = items.get(menuItemIndex - 1);
+        }
+        return selection;
     }
 }

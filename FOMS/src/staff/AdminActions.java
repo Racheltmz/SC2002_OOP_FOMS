@@ -1,5 +1,6 @@
 package staff;
 
+import static staff.StaffRoles.ADMIN;
 import static utils.ValidateHelper.validateInt;
 import static utils.ValidateHelper.validateIntRange;
 
@@ -8,6 +9,7 @@ import java.util.InputMismatchException;
 import branch.Branch;
 import branch.BranchDirectory;
 import exceptions.DuplicateEntryException;
+import payment.PaymentDirectory;
 import utils.Filter;
 import utils.InputScanner;
 
@@ -211,6 +213,13 @@ public class AdminActions {
         branchDirectory.rmvBranch(branchToRmv, auth);
     }
 
+    protected void addPayment() {
+        PaymentDirectory.addPaymentMtd(ADMIN);
+    }
+
+    protected void removePayment() {
+
+    }
 
 //    protected String addPayment(String method){
 //        PaymentDirectory paymentDirectory = PaymentDirectory.getInstance();

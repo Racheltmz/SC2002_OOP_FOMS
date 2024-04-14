@@ -117,8 +117,8 @@ public class OrderQueue {
     }
 
     // Process order placement
-    public void placeOrder(Order order, double amountPaid) {
-        order.placeOrder(amountPaid);
+    public void placeOrder(Order order) {
+        order.placeOrder();
     }
 
     // Update order status to ready when food is ready or when customer collects order

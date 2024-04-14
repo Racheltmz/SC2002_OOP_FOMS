@@ -31,7 +31,7 @@ public class BranchDirectory {
     // Functionalities
     // Get all branches
     public ArrayList<Branch> getBranchDirectory() {
-        return branchDirectory;
+        return this.branchDirectory;
     }
 
     // Get branch based on branch name
@@ -55,7 +55,7 @@ public class BranchDirectory {
     // Get branch name by user selection
     public Branch getBranchByUserInput() {
         // Display branches
-        displayBranches();
+        this.displayBranches();
         // Handle invalid branch names by checking if index out of bounds
         Branch branch = null;
         boolean success = false;
