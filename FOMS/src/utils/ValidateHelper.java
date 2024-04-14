@@ -14,7 +14,6 @@ public class ValidateHelper {
             try {
                 System.out.println(msg);
                 input = sc.nextInt();
-                // TODO: NEW Check implementation and Improve implementation of handling negative values
                 if (input >= 0)
                     success = true;
                 else
@@ -56,7 +55,6 @@ public class ValidateHelper {
             try {
                 System.out.println(msg);
                 input = sc.nextDouble();
-                // TODO: NEW: Check implementation and Improve implementation of handling negative values
                 if (input >= 0)
                     success = true;
                 else

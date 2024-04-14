@@ -14,7 +14,7 @@ import utils.InputScanner;
 
 // Class containing actions that admin can perform
 // TODO: AFREEN, improve the ui
-// TODO: convert files to apply DIP for admin, split functions based on functionalities (staff account, staff role, branch, payment)
+// TODO: AFREEN, SRP create more files & split functions based on functionalities (staff account, staff role, branch, payment)
 public class AdminActions {
     // Map to store staff roles
     private Map<String, StaffRoles> staffRolesMap = new HashMap<>();
@@ -22,7 +22,6 @@ public class AdminActions {
     BranchDirectory branchDirectory = BranchDirectory.getInstance();
 
     // Add staff
-    // TODO, pls rmv but all staff will be added as Staff Role
     protected void addStaff(StaffRoles auth) {
         try {
             StaffDirectory staffDirectory = StaffDirectory.getInstance();
@@ -85,7 +84,6 @@ public class AdminActions {
 
     // TODO: confirm design of filter
     // TODO: AFREEN, VALIDATE USER INPUT (WHETHER ITS ACTL M/F ETC)
-    // TODO: AFREEN linked to AdminActions file (i need essentially another getBranchByUserInput from branchdirectory) for staff, gender
     protected void filterStaff(StaffFilterOptions option) {
         switch (option) {
             case BRANCH:

@@ -111,7 +111,6 @@ public class Staff implements IXlsxSerializable {
     /**
      * Change password
      */
-    // TODO: AFREEN (whether to create a view)
     public void changePassword() {
         InputScanner sc = InputScanner.getInstance();
         System.out.print("\nPlease enter new password: ");
