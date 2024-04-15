@@ -115,14 +115,6 @@ public class PaymentDirectory {
         printPaymentMethods();
     }
 
-    // Remove payment method
-    public void rmvPaymentMtd(String paymentMtd, StaffRoles auth) {
-        if (authoriseAdmin(auth)) {
-            if (methodsExist())
-                this.paymentDirectory.remove(getPaymentMtd(paymentMtd));
-        }
-    }
-
     public void displayPaymentMethods()
     {
         int counter = 1;

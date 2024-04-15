@@ -4,6 +4,8 @@ import exceptions.InvalidStaffQuotaException;
 
 import java.util.InputMismatchException;
 
+import static utils.InputScanner.getInstance;
+
 public class ValidateHelper {
     // Check integer
     public static int validateInt(String msg) {
@@ -27,22 +29,12 @@ public class ValidateHelper {
     }
 
     public static int validateIntRange(String msg, int start, int end) {
-        InputScanner sc = InputScanner.getInstance();
-        boolean success = false;
-        int input = 0;
-        do {
-            try {
-                input = validateInt(msg);
-                if (start <= input && input <= end) {
-                    success = true;
-                } else {
-                    throw new InvalidStaffQuotaException("Invalid range! Please re-enter.");
-                }
-            }  catch (InvalidStaffQuotaException e) {
-                System.out.println(e.getMessage());
-                sc.nextLine();
-            }
-        } while (!success);
+        InputScanner sc = getInstance();
+        int input = validateInt(msg);
+        while (input > end || input < start) {
+            System.out.println("Please enter a valid integer.\n");
+            input = validateInt(msg);
+        }
         return input;
     }
 
