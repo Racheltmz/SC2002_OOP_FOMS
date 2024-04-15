@@ -1,18 +1,22 @@
+import static authentication.Authentication.*;
+
 import java.security.NoSuchAlgorithmException;
 import java.util.InputMismatchException;
 
-import authorisation.*;
+import authorisation.ActiveFactory;
+import authorisation.ActiveFactoryAdmin;
+import authorisation.ActiveFactoryManager;
+import authorisation.ActiveFactoryStaff;
+import authorisation.ActiveUser;
 import exceptions.EmptyListException;
 import exceptions.ItemNotFoundException;
 import exceptions.MenuItemNotFoundException;
 import menu.MenuDirectory;
-import staff.StaffDirectory;
-import utils.InputScanner;
-import staff.Staff;
-import staff.StaffRoles;
 import order.OrderQueue;
-
-import static authentication.Authentication.login;
+import staff.Staff;
+import staff.StaffDirectory;
+import staff.StaffRoles;
+import utils.InputScanner;
 
 // Main app file
 public class FOMSApp {

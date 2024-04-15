@@ -1,8 +1,8 @@
 package order;
 
-import menu.MenuItem;
-
 import java.util.ArrayList;
+
+import menu.MenuItem;
 
 // TODO: STRUCT: PRINT RECEIPT UNDER VIEW
 // TODO: UNIQUE AND AUTO INCREMENTED ID
@@ -56,11 +56,19 @@ public class Order {
     // Functionalities
     // Customer makes payment
     public void pay(String paymentMethod) {
-        this.setStatus(OrderStatus.NEW);
+        try {
+            // Payment processing logic
+            // Assuming payment is successful
+            this.status = OrderStatus.NEW;
+        } catch (Exception e) {
+            // Handle payment failure
+            System.out.println("Payment failed: " + e.getMessage());
+            this.status = OrderStatus.NEW;
+        }
     }
-
-    // Receipt information
-    public void printReceipt() {
+// Receipt information
+public void printReceipt() {
+    try {
         System.out.println("Your order ID is " + this.orderID);
         System.out.println("Your order is: ");
         for (MenuItem item : this.items) {
@@ -76,24 +84,33 @@ public class Order {
             System.out.println("You chose to dine in");
         }
         System.out.println("Thank you for shopping at " + branch);
+    } catch (Exception e) {
+        // Handle printing failure
+        System.out.println("Failed to print receipt: " + e.getMessage());
     }
+}
 
     // Print order details
     public void printOrderDetails() {
-        System.out.println("Your order ID is " + this.orderID);
-        System.out.println("Items:");
-        for (MenuItem item : this.items) {
-            System.out.println("- " + item.getName());
-        }
-        System.out.println("Customisations: ");
-        for (String customization : this.customisation) {
-            System.out.println("- " + customization);
-        }
-        System.out.print("Takeaway or Dine In: ");
-        if (this.takeaway) {
-            System.out.println("Takeaway");
-        } else {
-            System.out.println("Dine In");
+        try {
+            System.out.println("Your order ID is " + this.orderID);
+            System.out.println("Items:");
+            for (MenuItem item : this.items) {
+                System.out.println("- " + item.getName());
+            }
+            System.out.println("Customisations: ");
+            for (String customization : this.customisation) {
+                System.out.println("- " + customization);
+            }
+            System.out.print("Takeaway or Dine In: ");
+            if (this.takeaway) {
+                System.out.println("Takeaway");
+            } else {
+                System.out.println("Dine In");
+            }
+        } catch (Exception e) {
+            // Handle printing failure
+            System.out.println("Failed to print order details: " + e.getMessage());
         }
     }
 }

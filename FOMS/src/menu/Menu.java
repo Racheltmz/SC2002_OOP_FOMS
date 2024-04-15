@@ -37,7 +37,7 @@ public class Menu {
             System.out.printf("| %-3d | %-10s | %-20s | %-10s |\n", i+1, item.getCategory(), item.getName(), item.getPrice());
         }
     } catch (Exception e) {
-        System.out.println("An error occurred while displaying menu items:" + e.getMessage());
+        System.out.println("Unable to display menu items:" + e.getMessage());
     }
     }
 
@@ -46,7 +46,7 @@ public class Menu {
         try{
         menuItems.add(menuItem);
         }catch (Exception e) {
-            System.out.println("An error occured while adding a menu item: " + e.getMessage());
+            System.out.println("Unable to add a menu item: " + e.getMessage());
         }
     }
 

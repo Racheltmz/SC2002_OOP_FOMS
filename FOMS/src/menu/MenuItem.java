@@ -21,14 +21,17 @@ public class MenuItem implements IXlsxSerializable {
 
     // Constructor for deserialization from XLSX data
     public MenuItem(String[] data) throws IllegalArgumentException {
-        System.out.println(data.length);
-        if (data.length != 4) {
-            throw new IllegalArgumentException("Invalid data format for MenuItem");
+        try {
+            if (data.length != 4) {
+                throw new IllegalArgumentException("Invalid data format for MenuItem");
+            }
+            this.name = data[0];
+            this.price = Double.parseDouble(data[1]);
+            this.branch = data[2];
+            this.category = data[3];
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid price format for MenuItem: " + e.getMessage());
         }
-        this.name = data[0];
-        this.price = Double.parseDouble(data[1]);
-        this.branch = data[2];
-        this.category = data[3];
     }
 
     // Serialization to XLSX
