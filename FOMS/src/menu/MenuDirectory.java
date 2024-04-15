@@ -77,4 +77,58 @@ public class MenuDirectory {
         Menu menu = getMenu(branch);
         return menu.getMenuItems().size();
     }
+    
+    // get categories from menu items
+    public ArrayList<String> getCategories(){
+        ArrayList<String> categories = new ArrayList<>();
+        for (Menu menu: menuDirectory){
+            for (MenuItem item : menu.getMenuItems()){
+                if (!categories.contains(item.getCategory())){
+                    categories.add(item.getCategory());
+                }
+            }
+        }
+        return categories;
+    }
+
+    public void displayCategories(){
+        ArrayList<String> categories = getCategories();
+
+        if (categories.isEmpty()){
+            System.out.println("No categories available.");
+            return;
+        }
+
+        // display categories
+        System.out.println("Categories:");
+        for (int i = 0; i < categories.size(); i++){
+            System.out.printf("%d. %s\n", i + 1, categories.get(i));
+        }
+
+    }
+
+    public String getCategoryByUserInput(){
+        ArrayList<String> categories = getCategories();
+        if(categories.isEmpty()){
+            System.out.println("No categories available to select.");
+            return null;
+        }
+        
+        displayCategories();
+
+        String selectedCategory = null;
+        boolean success = false;
+
+        do {
+            try {
+                // Get user's selection
+                int categoryIndex = validateInt("Select Category: ");
+                selectedCategory = categories.get(categoryIndex - 1);
+                success = true;
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Invalid value, please enter again.");
+            }
+        } while (!success);
+        return selectedCategory;
+    } 
 }
