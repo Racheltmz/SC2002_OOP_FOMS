@@ -15,6 +15,7 @@ import java.util.Timer;
 
 import static utils.InputScanner.getInstance;
 import static utils.ValidateHelper.validateIntRange;
+import static utils.ValidateHelper.validateString;
 
 public class CustomerActions {
     public static void showOptions() {
@@ -55,12 +56,24 @@ public class CustomerActions {
                     }
 
                     // Customisations
-                    System.out.println("What customisations would you like? (enter quit to exit)");
-                    String customisationInput = sc.nextLine();
+                    int size = selectedItems.size();
+                    ArrayList <String> customisations = new ArrayList<>();
+                    boolean customise = true;
                     do {
-                        customisationInput += sc.nextLine();
-                    } while (!customisationInput.equalsIgnoreCase("quit"));
-                    String[] customisations = customisationInput.split(",");
+                        for (int i = 0; i < size; i++)
+                        {
+                            System.out.println((i+1) + ". " + selectedItems.get(i).getName());
+                        }
+                        int customisationOption = validateIntRange(("Which item would you like to customise? (enter " + (size+1) + " to quit)"), 1, size + 1);
+                        if (customisationOption == size+1)
+                        {
+                            customise = false;
+                            break;
+                        }
+                        MenuItem itemToCustomise = selectedItems.get(customisationOption - 1);
+                        String customisationInput = validateString("What customisation would you like?");
+                        customisations.add(itemToCustomise.getName() + " : " + customisationInput);
+                    } while (customise);
 
                     // Dining Options
                     boolean takeaway = false;
@@ -83,10 +96,10 @@ public class CustomerActions {
                         order.placeOrder();
                         order.printReceipt();
 
-                        // Start Timer for Order Cancellation
-                        Timer timer = new Timer();
-                        // 5 Minutes in Milliseconds
-                        timer.schedule(new OrderTimerTask(timer, order), 3000000);
+//                        // Start Timer for Order Cancellation
+//                        Timer timer = new Timer();
+//                        // 5 Minutes in Milliseconds
+//                        timer.schedule(new OrderTimerTask(timer, order), 3000000);
                     }
                     break;
 
