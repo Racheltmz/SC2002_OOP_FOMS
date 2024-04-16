@@ -1,6 +1,7 @@
 package staff;
 
 import static staff.AdminView.displayAllStaff;
+import static utils.LetterCaseHelper.toProperCase;
 import static utils.ValidateHelper.validateInt;
 import static utils.ValidateHelper.validateIntRange;
 
@@ -14,8 +15,6 @@ import utils.IFilter;
 import utils.InputScanner;
 
 // Class containing actions that admin can perform
-// TODO: AFREEN, improve the ui
-// TODO: AFREEN, SRP create more files & split functions based on functionalities (staff account, staff role, branch, payment)
 public class AdminActions {
     InputScanner sc = InputScanner.getInstance();
     BranchDirectory branchDirectory = BranchDirectory.getInstance();
@@ -27,7 +26,7 @@ public class AdminActions {
             int numExistingStaff = staffDirectory.getNumStaff();
             // Get details of staff
             System.out.println("Enter name: ");
-            String name = sc.next();
+            String name = toProperCase(sc.next());
 
             String staffId = null;
             // Keep getting user input until they enter a valid staff id
@@ -45,21 +44,25 @@ public class AdminActions {
                 }
             } while (staffId == null);
 
-            // TODO: AFREEN validate if its M or F
             System.out.println("Enter gender (M/F): ");
             char gender = sc.next().charAt(0);
+
             int age = validateInt("Enter age: ");
             System.out.println("Select branch: ");
             Branch branch = branchDirectory.getBranchByUserInput();
 
             // Add new staff
-            staffDirectory.addStaff(new Staff(staffId, name, StaffRoles.STAFF, gender, age, branch), numExistingStaff, auth);
+            staffDirectory.addStaff(new Staff(staffId, name, StaffRoles.STAFF, gender, age, branch), numExistingStaff);
         } catch (InputMismatchException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    // Update staff
+    /**
+     * Update staff record.
+     *
+     * @param auth Need to be an admin to update staff record.
+     */
     protected void updateStaff(StaffRoles auth) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         displayAllStaff(staffDirectory.getStaffDirectory(), auth);
@@ -80,12 +83,16 @@ public class AdminActions {
         } while (!success);
     }
 
-    // Remove staff
+    /**
+     * Remove staff record.
+     *
+     * @param auth Need to be an admin to remove staff record.
+     */
     protected void removeStaff(StaffRoles auth) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         displayAllStaff(staffDirectory.getStaffDirectory(), auth);
         Staff staffToRmv = staffDirectory.getStaff();
-        staffDirectory.rmvStaff(staffToRmv, auth);
+        staffDirectory.rmvStaff(staffToRmv);
     }
 
     // TODO: confirm design of filter
@@ -194,7 +201,7 @@ public class AdminActions {
             String location = sc.nextLine();
             // Get staff quota
             int quota = validateIntRange("Enter staff quota: ", 1, 15);
-            Branch newBranch = new Branch(name, location, quota);
+            Branch newBranch = new Branch(name.toUpperCase(), toProperCase(location), quota);
             branchDirectory.addBranch(newBranch, auth);
         } catch (InputMismatchException e) {
             System.out.println("Error: " + e.getMessage());

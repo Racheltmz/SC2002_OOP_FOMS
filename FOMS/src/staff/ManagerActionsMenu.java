@@ -7,6 +7,7 @@ import menu.MenuItem;
 import menu.Menu;
 import java.util.InputMismatchException;
 
+import static utils.LetterCaseHelper.toProperCase;
 import static utils.ValidateHelper.validateDouble;
 import static utils.ValidateHelper.validateInt;
 
@@ -24,12 +25,15 @@ public class ManagerActionsMenu implements IManagerActionsMenu {
 
             // Get details of new menu item
             System.out.println("Enter name: ");
-            String name = sc.next();
+            String name = toProperCase(sc.next());
+
             double price = validateDouble("Enter price ($): ");
+
             System.out.println("Enter category: ");
-            String category = sc.next();
+            String category = toProperCase(sc.next());
+
             System.out.println("Enter description: ");
-            String description = sc.next();
+            String description = toProperCase(sc.next());
 
             // Add the new menu item to the menu
             MenuItem newItem = new MenuItem(name, price, branch, category, description);
@@ -52,10 +56,13 @@ public class ManagerActionsMenu implements IManagerActionsMenu {
                 // Get item to update by name
                 int itemIndex = validateInt("Enter the number of the item you want to update: ") - 1;
                 MenuItem itemToUpdate = branchMenu.getMenuItems().get(itemIndex);
+
                 // Update price and description
                 double price = validateDouble("Enter price ($): ");
+
                 System.out.println("Enter description: ");
-                String description = sc.next();
+                String description = toProperCase(sc.next());
+
                 branchMenu.updateItem(itemToUpdate, price, description);
                 success = true;
             } catch (IndexOutOfBoundsException e) {
