@@ -104,6 +104,19 @@ public class BranchDirectory {
         }
     }
 
+    public void updateBranch(Branch updatedBranch){
+        Branch branch = getBranchByName(updatedBranch.getName()); 
+        if(branch != null){
+            branch.setName(updatedBranch.getName()); 
+            branch.setLocation(updatedBranch.getLocation());
+            branch.setStaffQuota(updatedBranch.getStaffQuota());
+            System.out.print("Branch has been updated successfully");
+        }
+        else{
+            System.out.print("Branch not found. Update unsuccessful.");
+        }
+    }
+
     public int getNumBranches() {
         return branchDirectory.size();
     }

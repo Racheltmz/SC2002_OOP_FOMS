@@ -34,4 +34,47 @@ public class AdminBranchActions {
         Branch branchToRmv = branchDirectory.getBranchByUserInput();
         branchDirectory.rmvBranch(branchToRmv, auth);
     }
+
+    protected void updateBranch(StaffRoles auth) {
+        try{
+            System.out.print("Enter branch name to update: ");
+            String branchName = sc.nextLine(); 
+            Branch branchToUpdate = branchDirectory.getBranchByName(branchName); 
+
+            if(branchToUpdate != null){
+                System.out.print("Enter new branch name(leave blank to keep current name): ");
+                String newName = sc.nextLine(); 
+                if(!newName.isEmpty()){
+                    branchToUpdate.setName(newName);
+                }
+
+                System.out.print("Enter new branch location(leave blank to keep current location): ");
+                String newLocation = sc.nextLine(); 
+                if(!newLocation.isEmpty()){
+                    branchToUpdate.setLocation(newLocation); 
+                }
+
+                System.out.print("Enter new staff quota(leave blank to keep current quota): ");
+                String quotaInput = sc.nextLine(); 
+                if(!quotaInput.isEmpty()){
+                    try{
+                        int newQuota = Integer.parseInt(quotaInput); 
+                        branchToUpdate.setStaffQuota(newQuota);
+                    }
+                    catch(NumberFormatException e){
+                        System.out.print("Invalid number format for quota. Please enter a valid integer.");
+                    }
+                }
+
+                branchDirectory.updateBranch(branchToUpdate);
+                System.out.print("Branch updated successfully.");
+            }
+            else{
+                System.out.print("Branch not found");
+            }
+        }
+        catch(InputMismatchException | NumberFormatException e){
+            System.out.print("Invalid input. Please try again.");
+        }
+    }
 }
