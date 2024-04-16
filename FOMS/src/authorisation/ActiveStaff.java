@@ -3,6 +3,8 @@ package authorisation;
 import utils.InputScanner;
 import staff.Staff;
 
+import static authorisation.ActiveView.displayMenu;
+
 // Authorised operations for active user with a staff role
 public class ActiveStaff implements IActiveUser {
     // Attribute
@@ -30,15 +32,16 @@ public class ActiveStaff implements IActiveUser {
 
     public void showOptions() {
         InputScanner sc = InputScanner.getInstance();
-        System.out.println("-".repeat(30));
+
+        System.out.println("=".repeat(30));
         System.out.printf("| StaffID: %s\n| Role: %s\n", getActiveStaff().getStaffID(),
                 getActiveStaff().getRole());
-        System.out.println("-".repeat(30));
-        System.out.println("Please select option (3 to quit): ");
-        System.out.println(
-                "1. Display new orders\n2. View details of an order\n3. Set Order as Ready\n4. Change Password\n5. Logout");
+        System.out.println("=".repeat(30));
+
+        displayMenu("1. Display new orders\n2. View details of an order\n3. Set Order as Ready\n4. Change Password\n5. Logout");
         int staffChoice = sc.nextInt();
         sc.nextLine();
+
         switch (staffChoice) {
             case 1:
                 this.getActiveStaff().getNewOrders(this.activeStaff.getBranch());

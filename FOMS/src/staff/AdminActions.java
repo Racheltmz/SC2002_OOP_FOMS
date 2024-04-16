@@ -48,7 +48,7 @@ public class AdminActions {
             // TODO: AFREEN validate if its M or F
             System.out.println("Enter gender (M/F): ");
             char gender = sc.next().charAt(0);
-            int age = validateInt("Enter age: ");
+            int age = validateIntRange("Enter age: ", 16, 80);
             System.out.println("Select branch: ");
             Branch branch = branchDirectory.getBranchByUserInput();
 

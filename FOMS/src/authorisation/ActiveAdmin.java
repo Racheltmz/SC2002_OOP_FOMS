@@ -3,42 +3,70 @@ package authorisation;
 import utils.InputScanner;
 import staff.Admin;
 
-// Authorised operations for active user with an admin role
+import static authorisation.ActiveView.displayMenu;
+
+/**
+ * Authorised operations for active user with an admin role
+ */
 public class ActiveAdmin implements IActiveUser {
+    /**
+     * The staff record of the active admin staff.
+     */
     private Admin activeStaff;
 
+    /**
+     * Constructor for ActiveAdmin, initialises the activeStaff to null.
+     */
     public ActiveAdmin() { this.activeStaff = null; }
-    
+
+    /**
+     * Constructor for ActiveAdmin, updates the active admin if they log in.
+     */
     public ActiveAdmin(Admin activeStaff) {
         this.activeStaff = activeStaff;
     }
 
+    /**
+     * Gets the active admin staff record.
+     *
+     * @return Admin staff record.
+     */
     public Admin getActiveStaff() {
         return this.activeStaff;
     }
 
+    /**
+     * Sets the active admin staff record.
+     */
     public void setActiveStaff(Admin activeStaff) {
         this.activeStaff = activeStaff;
     }
 
+    /**
+     * Logouts by setting the active staff to null.
+     */
     public void logout() {
         setActiveStaff(null);
     }
 
+    /**
+     * Displays the permissions the admin is authorised to do.
+     */
     public void showOptions() {
         InputScanner sc = InputScanner.getInstance();
-        System.out.println("-".repeat(30));
+
+        System.out.println("=".repeat(30));
         System.out.printf("| StaffID: %s\n| Role: %s\n", getActiveStaff().getStaffID(),
                 getActiveStaff().getRole());
-        System.out.println("-".repeat(30));
-        System.out.println("Please select option (3 to quit): ");
-        System.out.println("1. Change Password\n2. Logout");
+        System.out.println("=".repeat(30));
+
+        displayMenu("1. Staff Account Options\n2. Staff Transfer and Promotion\n3. Branch Options\n4. My Account");
         int categoryChoice = sc.nextInt();
         sc.nextLine();
-        // TODO: AFREEN: can we make sub switch statements so we further divide the functionality(done)
+
         switch(categoryChoice){
             case 1:
-                System.out.print("1. Add Staff \n2. Update Staff\n3. Remove Staff");
+                displayMenu("1. Add Staff \n2. Update Staff\n3. Remove Staff");
                 int staffChoice = sc.nextInt();
                 sc.nextLine();
                 switch (staffChoice) {
@@ -58,10 +86,26 @@ public class ActiveAdmin implements IActiveUser {
                         System.out.print("Invalid choice, please re-enter: ");
                         break; 
                 }
-                break; 
-            case 2:
-                System.out.print("1. Add branch\n2. Close Branch");
-                int branchChoice = sc.nextInt(); 
+                break;
+            case 2: // Staff Changes
+                displayMenu("1. Promote Staff\n2. Transfer Staff");
+                int changeChoice = sc.nextInt();
+                sc.nextLine();
+                switch (changeChoice) {
+                    case 1:
+                        this.getActiveStaff().promoteStaff(this.activeStaff.getRole());
+                        break;
+                    case 2:
+                        this.getActiveStaff().transferStaff(this.activeStaff.getRole());
+                        break;
+                    default:
+                        System.out.println("Invalid choice, please re-enter: ");
+                        break;
+                }
+                break;
+            case 3:
+                displayMenu("1. Add branch\n2. Close Branch");
+                int branchChoice = sc.nextInt();
                 sc.nextLine();
                 switch(branchChoice){
                     case 1:
@@ -75,27 +119,11 @@ public class ActiveAdmin implements IActiveUser {
                     break;
             }
             break;
-        case 3: // Staff Changes
-            System.out.println("1. Promote Staff\n2. Transfer Staff");
-            int changeChoice = sc.nextInt();
+        case 4: // Account
+            displayMenu("1. Change Password\n2. Logout");
+            int accChoice = sc.nextInt();
             sc.nextLine();
-            switch (changeChoice) {
-                case 1:
-                    this.getActiveStaff().promoteStaff(this.activeStaff.getRole());
-                    break;
-                case 2:
-                    this.getActiveStaff().transferStaff(this.activeStaff.getRole());
-                    break;
-                default:
-                    System.out.println("Invalid choice, please re-enter: ");
-                    break;
-            }
-            break;
-        case 4: // Miscellaneous
-            System.out.println("1. Change Password\n2. Logout");
-            int miscChoice = sc.nextInt();
-            sc.nextLine();
-            switch (miscChoice) {
+            switch (accChoice) {
                 case 1:
                     this.getActiveStaff().changePassword();
                     break;

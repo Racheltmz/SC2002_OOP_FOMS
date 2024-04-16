@@ -32,7 +32,7 @@ public class Menu {
     // Display information
     public void displayItems() {
         System.out.printf("| No. | %-10s | %-20s | %-10s | %-50s |\n", "Category", "Name", "Price ($)", "Description");
-        System.out.println("-".repeat(110));
+        System.out.println("=".repeat(110));
         for (int i = 0; i < this.menuItems.size(); i++) {
             MenuItem item = this.menuItems.get(i);
             System.out.printf("| %-3d | %-10s | %-20s | %-10s | %-50s |\n", i + 1, item.getCategory(), item.getName(),
