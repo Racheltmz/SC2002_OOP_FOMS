@@ -1,10 +1,15 @@
 package utils;
 
+import menu.Menu;
+import menu.MenuDirectory;
 import menu.MenuItem;
 import order.Order;
 import order.OrderQueue;
+import order.OrderStatus;
+import payment.Payment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,12 +17,12 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
     /**
      * Path to Order XLSX File in the data folder. Defaults to order_list.xlsx.
      */
-    private final String orderXlsx = "order_lists.xlsx";
+    private final String orderXlsx = "order_list.xlsx";
 
     /**
      * Headers for order.
      */
-    private final String[] header = {"id", "name", "price", "branch", "category", "description"};
+    private final String[] header = {"id", "branch", "items", "customisations", "pickup option", "status", "payment method"};
 
     /**
      * Default Constructor.
@@ -48,10 +53,9 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
     public ArrayList<Order> readFromXlsx() {
         // Initialise a list
         ArrayList<Order> orders = new ArrayList<>();
-        OrderQueue orderQueue = OrderQueue.getInstance();
 
         // Deserialize records
-        List<String[]> XlsxData = deserializeRecords(this.orderXlsx, this.header, 5, 1);
+        List<String[]> XlsxData = deserializeRecords(this.orderXlsx, this.header, 7, 1);
         if (XlsxData.isEmpty()) {
             serializeHeader(this.orderXlsx, this.header);
             return orders;
@@ -61,9 +65,33 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
         XlsxData.forEach((data) -> {
             String orderID = data[0];
             String branch = data[1];
+            String[] itemStrings = data[2].split(", ");
+            String[] customisations = data[3].split(", ");
+            boolean takeaway = Boolean.parseBoolean(data[4]);
+            OrderStatus status = OrderStatus.valueOf(data[5]);
+            String paymentMtd = data[6];
 
+            MenuDirectory menuDirectory = MenuDirectory.getInstance();
 
-//            orders.add(new Order(orderID, branch, ));
+            // Construct MenuItem objects from itemStrings
+            ArrayList<MenuItem> items = new ArrayList<>();
+            for (String itemString : itemStrings) {
+                // Construct MenuItem object using itemString (you need to implement this logic)
+                MenuItem item = new MenuItem(itemString, menuDirectory.getPriceByNameAndBranch(itemString, branch), branch, menuDirectory.getCategoryByNameAndBranch(itemString, branch), menuDirectory.getDescriptionByNameAndBranch(itemString, branch));
+                items.add(item);
+            }
+
+            // Convert customisations array to ArrayList<String>
+            ArrayList<String> customisationsList = new ArrayList<>(Arrays.asList(customisations));
+
+            //Convert payment method to Payment object
+            Payment paymentMethod = new Payment(paymentMtd);
+
+            // Construct Order object using retrieved data
+            Order order = new Order(orderID, items, customisationsList, takeaway, paymentMethod);
+            order.setStatus(status);
+
+            orders.add(order);
         });
         return orders;
     }
@@ -92,7 +120,7 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
      *
      * @param id ID of Order record to delete
      */
-    public void removeXlsx(UUID id) {
-        deleteRecord(this.orderXlsx, id);
+    public void removeXlsx(String id) {
+        deleteRecord(this.orderXlsx, UUID.fromString(id));
     }
 }

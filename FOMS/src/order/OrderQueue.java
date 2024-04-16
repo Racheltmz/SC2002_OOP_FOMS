@@ -6,6 +6,7 @@ import java.util.Timer;
 import exceptions.EmptyListException;
 import exceptions.ItemNotFoundException;
 import utils.InputScanner;
+import utils.OrderXlsxHelper;
 
 /**
  * Records of all orders made by customers
@@ -17,7 +18,8 @@ public class OrderQueue {
 
     // Constructor
     public OrderQueue() {
-        this.orders = new ArrayList<>();
+        OrderXlsxHelper orderXlsxHelper = OrderXlsxHelper.getInstance();
+        this.orders = orderXlsxHelper.readFromXlsx();
     }
 
     public static OrderQueue getInstance() {
@@ -107,40 +109,45 @@ public class OrderQueue {
     public void getStatusById() {
         if (ordersExist()) {
             Order order = getOrderById();
-            System.out.printf("Status of Order ID: %s is %s", order.getOrderID(), order.getStatus());
+            System.out.printf("Status of Order ID: %s is %s\n", order.getOrderID(), order.getStatus());
         }
     }
 
     // Add order
     public void addOrder(Order order) {
+        int numExistingOrders = this.orders.size();
         this.orders.add(order);
+        OrderXlsxHelper orderXlsxHelper = OrderXlsxHelper.getInstance();
+        orderXlsxHelper.writeToXlsx(order, numExistingOrders);
     }
 
     // Process order placement
-    public void placeOrder(Order order) {
-        order.placeOrder();
-    }
+//    public void placeOrder(Order order) {
+//        order.placeOrder();
+//    }
 
     // Update order status to ready when food is ready or when customer collects order
     public void updateStatusToReady() {
         if (ordersExist()) {
+            OrderXlsxHelper orderXlsxHelper = OrderXlsxHelper.getInstance();
             // Get order
             Order order = getOrderById();
             // Set timer
             Timer timer = new Timer();
             OrderTimerTask orderTask = new OrderTimerTask(timer, order);
-            int seconds = 5;
+            int seconds = 20;
             timer.schedule(orderTask, seconds * 1000);
             order.setStatus(OrderStatus.READY);
+            orderXlsxHelper.updateXlsx(order);
             System.out.println("Order status updated from NEW to READY for order ID: " + order.getOrderID());
         }
     }
 
     // Remove order
-    public void rmvOrder() {
-        if (ordersExist()) {
-            this.orders.remove(getOrderById());
-            System.out.println("Order removed successfully.");
-        }
-    }
+//    public void rmvOrder() {
+//        if (ordersExist()) {
+//            this.orders.remove(getOrderById());
+//            System.out.println("Order removed successfully.");
+//        }
+//    }
 }

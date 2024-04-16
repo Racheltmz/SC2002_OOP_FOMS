@@ -64,6 +64,45 @@ public class MenuDirectory {
         return null;
     }
 
+    public double getPriceByNameAndBranch(String name, String branch) {
+        if (menusExist()) {
+            for (Menu menu : this.menuDirectory) {
+                for (MenuItem menuitem : menu.getMenuItems()) {
+                    if (Objects.equals(menuitem.getName(), name) && Objects.equals(menuitem.getBranch(), branch)) {
+                        return menuitem.getPrice();
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    public String getCategoryByNameAndBranch(String name, String branch) {
+        if (menusExist()) {
+            for (Menu menu : this.menuDirectory) {
+                for (MenuItem menuitem : menu.getMenuItems()) {
+                    if (Objects.equals(menuitem.getName(), name) && Objects.equals(menuitem.getBranch(), branch)) {
+                        return menuitem.getCategory();
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public String getDescriptionByNameAndBranch(String name, String branch) {
+        if (menusExist()) {
+            for (Menu menu : this.menuDirectory) {
+                for (MenuItem menuitem : menu.getMenuItems()) {
+                    if (Objects.equals(menuitem.getName(), name) && Objects.equals(menuitem.getBranch(), branch)) {
+                        return menuitem.getDescription();
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     public String displayMenuByBranch() {
         BranchDirectory branchDirectory = BranchDirectory.getInstance();
         String branch = branchDirectory.getBranchByUserInput().getName();

@@ -82,16 +82,15 @@ public class CustomerActions {
                         takeaway = true;
                     }
 
+                    // Payment Information
+                    Payment paymentMethod = Order.pay();
+
                     // Order Processing and Bill
-                    Order order = new Order(branchName, selectedItems, customisations, takeaway, null);
+                    Order order = new Order(branchName, selectedItems, customisations, takeaway, paymentMethod);
                     orderQueue.addOrder(order);
                     System.out.println("Total is " + order.calculateTotal());
 
-                    // Payment Information
-                    Payment paymentMethod = Order.pay();
                     if (paymentMethod != null) {
-                        order.setPaymentMtd(paymentMethod);
-
                         // Verify Order and Payment
                         order.placeOrder();
                         order.printReceipt();

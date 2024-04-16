@@ -3,7 +3,9 @@ package order;
 import menu.MenuItem;
 import payment.Payment;
 import payment.PaymentDirectory;
+import utils.IXlsxSerializable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.text.DecimalFormat;
 
@@ -11,7 +13,7 @@ import static payment.PaymentDirectory.readPaymentMethods;
 import static utils.ValidateHelper.validateIntRange;
 
 // Order details
-public class Order {
+public class Order implements IXlsxSerializable {
     // Attributes
     private String orderID;
     private String branch;
@@ -36,8 +38,18 @@ public class Order {
 
     // Serialization to XLSX
     public String[] toXlsx() {
-        return new String[] { orderID, branch, String.valueOf(items), String.valueOf(customisation),
-                String.valueOf(takeaway), String.valueOf(status), payment.getPaymentMethod() };
+        ArrayList<String> itemNames = new ArrayList<>();
+        for (MenuItem item : items) {
+            itemNames.add(item.getName());
+        }
+        // Convert items ArrayList to a comma-separated string
+        String itemsString = convertArrayListToString(itemNames);
+
+        // Convert customisations ArrayList to a comma-separated string
+        String customisationsString = convertArrayListToString(customisation);
+
+        return new String[] { orderID, branch, itemsString, customisationsString,
+                String.valueOf(takeaway), String.valueOf(status), null };
     }
 
     // Getters and Setters
@@ -123,4 +135,14 @@ public class Order {
         OrderView.printReceipt(this);
     }
 
+    private String convertArrayListToString(ArrayList<?> arrayList) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < arrayList.size(); i++) {
+            sb.append(arrayList.get(i));
+            if (i < arrayList.size() - 1) {
+                sb.append(", ");
+            }
+        }
+        return sb.toString();
+    }
 }
