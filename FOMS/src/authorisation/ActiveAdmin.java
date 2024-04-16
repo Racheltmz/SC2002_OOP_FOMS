@@ -1,5 +1,6 @@
 package authorisation;
 
+import staff.StaffRoles;
 import utils.InputScanner;
 import staff.Admin;
 
@@ -55,18 +56,16 @@ public class ActiveAdmin implements IActiveUser {
     public void showOptions() {
         InputScanner sc = InputScanner.getInstance();
 
-        System.out.println("=".repeat(30));
-        System.out.printf("| StaffID: %s\n| Role: %s\n", getActiveStaff().getStaffID(),
-                getActiveStaff().getRole());
-        System.out.println("=".repeat(30));
+        String staffID = getActiveStaff().getStaffID();
+        StaffRoles role = getActiveStaff().getRole();
 
-        displayMenu("1. Staff Account Options\n2. Staff Transfer and Promotion\n3. Branch Options\n4. My Account");
+        displayMenu("1. Staff Account Options\n2. Staff Transfer and Promotion\n3. Branch Options\n4. My Account", staffID, role);
         int categoryChoice = sc.nextInt();
         sc.nextLine();
 
         switch(categoryChoice){
             case 1:
-                displayMenu("1. Add Staff \n2. Update Staff\n3. Remove Staff");
+                displayMenu("1. Add Staff \n2. Update Staff\n3. Remove Staff", staffID, role);
                 int staffChoice = sc.nextInt();
                 sc.nextLine();
                 switch (staffChoice) {
@@ -88,7 +87,7 @@ public class ActiveAdmin implements IActiveUser {
                 }
                 break;
             case 2: // Staff Changes
-                displayMenu("1. Promote Staff\n2. Transfer Staff");
+                displayMenu("1. Promote Staff\n2. Transfer Staff", staffID, role);
                 int changeChoice = sc.nextInt();
                 sc.nextLine();
                 switch (changeChoice) {
@@ -104,7 +103,7 @@ public class ActiveAdmin implements IActiveUser {
                 }
                 break;
             case 3:
-                displayMenu("1. Add branch\n2. Close Branch");
+                displayMenu("1. Add branch\n2. Close Branch", staffID, role);
                 int branchChoice = sc.nextInt();
                 sc.nextLine();
                 switch(branchChoice){
@@ -120,7 +119,7 @@ public class ActiveAdmin implements IActiveUser {
             }
             break;
         case 4: // Account
-            displayMenu("1. Change Password\n2. Logout");
+            displayMenu("1. Change Password\n2. Logout", staffID, role);
             int accChoice = sc.nextInt();
             sc.nextLine();
             switch (accChoice) {

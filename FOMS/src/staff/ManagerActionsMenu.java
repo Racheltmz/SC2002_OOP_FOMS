@@ -1,5 +1,6 @@
 package staff;
 
+import branch.Branch;
 import branch.BranchDirectory;
 import menu.MenuDirectory;
 import utils.InputScanner;
@@ -7,6 +8,7 @@ import menu.MenuItem;
 import menu.Menu;
 import java.util.InputMismatchException;
 
+import static utils.LetterCaseHelper.toProperCase;
 import static utils.ValidateHelper.validateDouble;
 import static utils.ValidateHelper.validateInt;
 
@@ -17,33 +19,35 @@ public class ManagerActionsMenu implements IManagerActionsMenu {
     MenuDirectory menuDirectory = MenuDirectory.getInstance();
 
     // Add menu item
-    public void addMenuItem() {
+    public void addMenuItem(Branch branch) {
         try {
-            // Get branch by user input
-            String branch = branchDirectory.getBranchByUserInput().getName();
+            String branchName = branch.getName();
 
             // Get details of new menu item
             System.out.println("Enter name: ");
-            String name = sc.next();
+            String name = toProperCase(sc.next());
+
             double price = validateDouble("Enter price ($): ");
+
             System.out.println("Enter category: ");
-            String category = sc.next();
+            String category = toProperCase(sc.next());
+
             System.out.println("Enter description: ");
             String description = sc.next();
 
             // Add the new menu item to the menu
-            MenuItem newItem = new MenuItem(name, price, branch, category, description);
-            menuDirectory.getMenu(branch).addItem(newItem, menuDirectory.getNumAllMenuItems(), false);
+            MenuItem newItem = new MenuItem(name, price, branchName, category, description);
+            menuDirectory.getMenu(branchName).addItem(newItem, menuDirectory.getNumAllMenuItems(), false);
         } catch (InputMismatchException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
     // Update menu item
-    public void updateMenuItem() {
+    public void updateMenuItem(Branch branch) {
         // Get menu by branch
-        String branch = branchDirectory.getBranchByUserInput().getName();
-        Menu branchMenu = menuDirectory.getMenu(branch);
+        String branchName = branch.getName();
+        Menu branchMenu = menuDirectory.getMenu(branchName);
         // Display items in branch
         branchMenu.displayItems();
         boolean success = false;
@@ -52,10 +56,13 @@ public class ManagerActionsMenu implements IManagerActionsMenu {
                 // Get item to update by name
                 int itemIndex = validateInt("Enter the number of the item you want to update: ") - 1;
                 MenuItem itemToUpdate = branchMenu.getMenuItems().get(itemIndex);
+
                 // Update price and description
                 double price = validateDouble("Enter price ($): ");
+
                 System.out.println("Enter description: ");
                 String description = sc.next();
+
                 branchMenu.updateItem(itemToUpdate, price, description);
                 success = true;
             } catch (IndexOutOfBoundsException e) {
@@ -67,10 +74,10 @@ public class ManagerActionsMenu implements IManagerActionsMenu {
     }
 
     // Remove menu item
-    public void removeMenuItem() {
+    public void removeMenuItem(Branch branch) {
         // Get menu by branch
-        String branch = branchDirectory.getBranchByUserInput().getName();
-        Menu branchMenu = menuDirectory.getMenu(branch);
+        String branchName = branch.getName();
+        Menu branchMenu = menuDirectory.getMenu(branchName);
         // Display items in branch
         branchMenu.displayItems();
 

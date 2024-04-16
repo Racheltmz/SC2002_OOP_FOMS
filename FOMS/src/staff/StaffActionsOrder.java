@@ -10,13 +10,13 @@ public class StaffActionsOrder implements IStaffActionsOrder {
     }
 
     // Specific order
-    public void getOrderDetails() {
+    public void getOrderDetails(Branch branch) {
         OrderQueue queue = OrderQueue.getInstance();
         queue.displayOrder();
     }
 
     // Update order status to ready to pickup for Test Case 10 and 12
-    public void setOrderReady() {
+    public void setOrderReady(Branch branch) {
         OrderQueue queue = OrderQueue.getInstance();
         queue.updateStatusToReady();
     }

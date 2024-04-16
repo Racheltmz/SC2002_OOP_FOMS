@@ -31,23 +31,23 @@ public class Manager extends Staff {
     }
 
     // Add menu item
-    public void addMenuItem(StaffRoles auth) {
+    public void addMenuItem(StaffRoles auth, Branch branch) {
         if (authoriseManager(auth)){
-            managerActions.addMenuItem();
+            managerActions.addMenuItem(branch);
         }
     }
 
     // Update menu item
-    public void updateMenuItem(StaffRoles auth) {
+    public void updateMenuItem(StaffRoles auth, Branch branch) {
         if (authoriseManager(auth)){
-            managerActions.updateMenuItem();
+            managerActions.updateMenuItem(branch);
         }
     }
 
     // Remove menu item
-    public void removeMenuItem(StaffRoles auth) {
+    public void removeMenuItem(StaffRoles auth, Branch branch) {
         if (authoriseManager(auth)){
-            managerActions.removeMenuItem();
+            managerActions.removeMenuItem(branch);
         }
     }
 }
