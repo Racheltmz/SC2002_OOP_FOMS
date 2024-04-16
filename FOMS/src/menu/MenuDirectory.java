@@ -8,6 +8,7 @@ import utils.MenuItemXlsxHelper;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static utils.ValidateHelper.validateInt;
 import static utils.ValidateHelper.validateIntRange;
 
 public class MenuDirectory {
@@ -24,6 +25,10 @@ public class MenuDirectory {
             menuSingleton = new MenuDirectory();
         }
         return menuSingleton;
+    }
+
+    public ArrayList<Menu> getMenuDirectory() {
+        return this.menuDirectory;
     }
 
     /**
@@ -79,6 +84,61 @@ public class MenuDirectory {
     public int getNumMenuItems(String branch) {
         Menu menu = getMenu(branch);
         return menu.getMenuItems().size();
+    }
+
+    // get categories from menu items
+    public static ArrayList<String> getCategories(){
+        ArrayList<String> categories = new ArrayList<>();
+        ArrayList<Menu> menudirectory = MenuDirectory.getInstance().getMenuDirectory();
+        for (Menu menu : menudirectory){
+            for (MenuItem item : menu.getMenuItems()){
+                if (!categories.contains(item.getCategory())){
+                    categories.add(item.getCategory());
+                }
+            }
+        }
+        return categories;
+    }
+
+    public static void displayCategories(){
+        ArrayList<String> categories = getCategories();
+
+        if (categories.isEmpty()){
+            System.out.println("No categories available.");
+            return;
+        }
+
+        // display categories
+        System.out.println("Categories:");
+        for (int i = 0; i < categories.size(); i++){
+            System.out.printf("%d. %s\n", i + 1, categories.get(i));
+        }
+
+    }
+
+    public static String getCategoryByUserInput(){
+        ArrayList<String> categories = getCategories();
+        if(categories.isEmpty()){
+            System.out.println("No categories available to select.");
+            return null;
+        }
+
+        displayCategories();
+
+        String selectedCategory = null;
+        boolean success = false;
+
+        do {
+            try {
+                // Get user's selection
+                int categoryIndex = validateInt("Select Category: ");
+                selectedCategory = categories.get(categoryIndex - 1);
+                success = true;
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Invalid value, please enter again.");
+            }
+        } while (!success);
+        return selectedCategory;
     }
 
     public MenuItem selectItem(String branchName) {

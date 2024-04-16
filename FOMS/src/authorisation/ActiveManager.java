@@ -36,7 +36,7 @@ public class ActiveManager implements ActiveUser {
         System.out.printf("| StaffID: %s\n| Role: %s\n", getActiveStaff().getStaffID(),
                 getActiveStaff().getRole());
         System.out.println("-".repeat(30));
-        System.out.println("Please select option (3 to quit): ");
+        System.out.println("Please select option: ");
         System.out.println("1. Display Staff List\n2. Add Menu Item\n3. Update Menu Item\n4. Remove Menu Item\n5. Display new orders\n6. View details of an order\n7. Set Order as Ready\n8. Change Password\n9. Logout");
         int staffChoice = sc.nextInt();
         sc.nextLine();
