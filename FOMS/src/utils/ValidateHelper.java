@@ -1,5 +1,7 @@
 package utils;
 
+import exceptions.InputStringMismatch;
+import exceptions.InvalidInputException;
 import exceptions.InvalidStaffQuotaException;
 
 import java.util.InputMismatchException;
@@ -58,4 +60,31 @@ public class ValidateHelper {
         } while (!success);
         return input;
     }
+
+    public static String validateString(String msg) {
+        InputScanner sc = InputScanner.getInstance();
+        boolean success = false;
+        String input = null;
+        do {
+            try {
+                System.out.println(msg);
+                input = sc.next();
+                input += sc.nextLine();
+                if (input == null) {
+                    System.out.println("Please enter a valid input.\n");
+                }
+                else if (input != null) {
+                    success = true;
+                }
+                else if (!input.matches("[a-zA-Z]+")) {
+                    throw new InputStringMismatch();
+                }
+            }  catch (InputStringMismatch e) {
+                System.out.println("Please enter a valid input.\n");
+                sc.nextLine();
+            }
+        } while (!success);
+        return input;
+    }
+
 }

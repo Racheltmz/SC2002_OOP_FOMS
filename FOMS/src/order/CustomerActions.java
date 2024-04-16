@@ -57,15 +57,17 @@ public class CustomerActions {
                     // Customisations
                     System.out.println("What customisations would you like? (enter quit to exit)");
                     String customisationInput = sc.nextLine();
-                    while (!customisationInput.equalsIgnoreCase("quit")) {
+                    do {
                         customisationInput += sc.nextLine();
-                    }
+                    } while (!customisationInput.equalsIgnoreCase("quit"));
                     String[] customisations = customisationInput.split(",");
 
                     // Dining Options
-                    System.out.println("Are you dining in? Y/N");
-                    sc.nextLine();
-                    boolean takeaway = !sc.next().equalsIgnoreCase("Y");
+                    boolean takeaway = false;
+                    int input = validateIntRange("Please select pickup option:\n1. Takeaway\n2. Pickup", 1, 2);
+                    if (input == 1) {
+                        takeaway = true;
+                    }
 
                     // Order Processing and Bill
                     Order order = new Order(branchName, selectedItems, customisations, takeaway, null);
@@ -74,16 +76,18 @@ public class CustomerActions {
 
                     // Payment Information
                     Payment paymentMethod = Order.pay();
-                    order.setPaymentMtd(paymentMethod);
+                    if (paymentMethod != null) {
+                        order.setPaymentMtd(paymentMethod);
 
-                    // Verify Order and Payment
-                    order.placeOrder();
-                    order.printReceipt();
+                        // Verify Order and Payment
+                        order.placeOrder();
+                        order.printReceipt();
 
-                    // Start Timer for Order Cancellation
-                    Timer timer = new Timer();
-                    // 5 Minutes in Milliseconds
-                    timer.schedule(new OrderTimerTask(timer, order), 3000000);
+                        // Start Timer for Order Cancellation
+                        Timer timer = new Timer();
+                        // 5 Minutes in Milliseconds
+                        timer.schedule(new OrderTimerTask(timer, order), 3000000);
+                    }
                     break;
 
                 case 2:

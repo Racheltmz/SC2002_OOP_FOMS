@@ -15,6 +15,7 @@ import java.util.Scanner;
 import static authorisation.Authorisation.authoriseAdmin;
 import static utils.Initialisation.initialisePaymentRecords;
 import static utils.ValidateHelper.validateIntRange;
+import static utils.ValidateHelper.validateString;
 
 // Records of payment methods
 public class PaymentDirectory {
@@ -83,8 +84,8 @@ public class PaymentDirectory {
         printPaymentMethods();
 
         // Add a new method
-        System.out.print("Please enter name of new payment method: ");
-        String newPaymentMethod = sc.next();
+        String newPaymentMethod = validateString("Please enter name of new payment method: ");
+        newPaymentMethod = Character.toUpperCase(newPaymentMethod.charAt(0)) + newPaymentMethod.substring(1);
         paymentMethodList.add(newPaymentMethod);
 
         // Save data
@@ -100,19 +101,21 @@ public class PaymentDirectory {
 
         // Read payment method data
         ArrayList<String> paymentMethodList = readPaymentMethods();
-        printPaymentMethods();
 
-        // Remove method via integer user input
-        int index = validateIntRange("Please enter option of which payment method to remove: ", 1, paymentMethodList.size());
-        String paymentMethodToRemove = paymentMethodList.get(index - 1);
-        paymentMethodList.remove(paymentMethodToRemove);
+        // Request for which to remove if payment methods exist
+        if (printPaymentMethods()) {
+            // Remove method via integer user input
+            int index = validateIntRange("Please enter option of which payment method to remove: ", 1, paymentMethodList.size());
+            String paymentMethodToRemove = paymentMethodList.get(index - 1);
+            paymentMethodList.remove(paymentMethodToRemove);
 
-        // Save new payment method data
-        writePaymentMethod(paymentMethodList);
+            // Save new payment method data
+            writePaymentMethod(paymentMethodList);
 
-        // Display updated payment method data
-        System.out.println("Payment method removed successfully.\nUpdated list of payment methods:");
-        printPaymentMethods();
+            // Display updated payment method data
+            System.out.println("Payment method removed successfully.\nUpdated list of payment methods:");
+            printPaymentMethods();
+        }
     }
 
     public void displayPaymentMethods()
@@ -125,7 +128,7 @@ public class PaymentDirectory {
         }
     }
 
-    private static ArrayList<String> readPaymentMethods(){
+    public static ArrayList<String> readPaymentMethods(){
         ArrayList<String> list = new ArrayList<>();
         try {
             // Create the Scanner with the data file
@@ -153,16 +156,20 @@ public class PaymentDirectory {
         }
     }
 
-    private static void printPaymentMethods() {
+    public static boolean printPaymentMethods() {
         ArrayList<String> paymentList = readPaymentMethods();
         if (!paymentList.isEmpty()) {
             int counter = 1;
             System.out.println("Available payment methods: ");
             for (String item : paymentList) {
-                System.out.println(counter + ". " + item + "payment");
+                System.out.println(counter + ". " + item + " payment");
                 counter++;
             }
             System.out.println();
+            return true;
+        } else {
+            System.out.println("No payment methods exist currently.");
+            return false;
         }
     }
 }

@@ -8,6 +8,7 @@ import payment.PaymentDirectory;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static payment.PaymentDirectory.readPaymentMethods;
 import static utils.ValidateHelper.validateIntRange;
 
 // Order details
@@ -95,14 +96,18 @@ public class Order {
     public static Payment pay() {
         // Initialise directory
         PaymentDirectory paymentDirectory = PaymentDirectory.getInstance();
+        ArrayList<String> paymentMethodList = readPaymentMethods();
 
         // Display payment methods
-        ArrayList<Payment> paymentMethods = paymentDirectory.getPaymentDirectory();
-        System.out.println("Available payment methods:");
-        paymentDirectory.displayPaymentMethods();
-        int choice = validateIntRange("How would you like to pay?", 1, paymentMethods.size());
-        Payment paymentOption = paymentMethods.get(choice - 1);
-        return paymentOption;
+        if (paymentDirectory.printPaymentMethods())
+        {
+            int choice = validateIntRange("How would you like to pay?", 1, paymentMethodList.size());
+            String paymentOption = paymentMethodList.get(choice - 1);
+            Payment paymentOpt = new Payment(paymentOption);
+            return paymentOpt;
+        }
+        System.out.println("Please approach staff for assistance.");
+        return null;
     }
 
     // Process the order
