@@ -16,8 +16,8 @@ import staff.filter.*;
 
 // Class containing actions that admin can perform
 // TODO: AFREEN, improve the ui
-// TODO: AFREEN, SRP create more files & split functions based on functionalities (staff account, staff role, branch, payment)
-public class AdminActions {
+// TODO: AFREEN, SRP create more files & split functions based on functionalities (staff account, staff role, branch, payment) (done)
+public class AdminActions implements IAdminActions{
     private StaffFilterActions staffFilterActions; 
     private AdminBranchActions adminBranchActions; 
     private StaffAccountActions staffAccountActions; 
@@ -31,7 +31,8 @@ public class AdminActions {
     }
 
     // Add staff
-    protected void addStaff(StaffRoles auth) {
+    @Override 
+    public void addStaff(StaffRoles auth) {
         staffAccountActions.addStaff(auth); 
         // try {
         //     StaffDirectory staffDirectory = StaffDirectory.getInstance();
@@ -81,7 +82,7 @@ public class AdminActions {
     }
 
     // Update staff
-    protected void updateStaff(StaffRoles auth) {
+    public void updateStaff(StaffRoles auth) {
         staffAccountActions.updateStaff(auth); 
     //     StaffDirectory staffDirectory = StaffDirectory.getInstance();
     //     displayAllStaff(staffDirectory.getStaffDirectory(), auth);
@@ -103,7 +104,7 @@ public class AdminActions {
     }
 
     // Remove staff
-    protected void removeStaff(StaffRoles auth) {
+    public void removeStaff(StaffRoles auth) {
         staffAccountActions.removeStaff(auth); 
         // StaffDirectory staffDirectory = StaffDirectory.getInstance();
         // displayAllStaff(staffDirectory.getStaffDirectory(), auth);
@@ -113,7 +114,7 @@ public class AdminActions {
 
     // TODO: confirm design of filter
     // TODO: AFREEN, VALIDATE USER INPUT (WHETHER ITS ACTL M/F ETC) (done)
-    protected void filterStaff(StaffFilterOptions option) { 
+    public void filterStaff(StaffFilterOptions option) { 
         switch(option){
             case BRANCH:
                 staffFilterActions.applyBranchFilter(null);
@@ -203,7 +204,7 @@ public class AdminActions {
     //     staffFilterAge.filter(String.valueOf(age));
     // }
 
-    protected boolean assignManager(Branch branch, StaffRoles auth) {
+    public boolean assignManager(Branch branch, StaffRoles auth) {
         return staffAccountActions.assignManager(branch, auth); 
         // StaffDirectory staffDirectory = StaffDirectory.getInstance();
         // // Get number of managers
@@ -218,7 +219,7 @@ public class AdminActions {
         // }
     }
 
-    protected void promoteStaff(StaffRoles auth){
+    public void promoteStaff(StaffRoles auth){
         staffRoleChanges.promoteStaff(auth); 
         // StaffDirectory staffDirectory = StaffDirectory.getInstance();
         // filterByRole(StaffRoles.STAFF.getAcronym());
@@ -241,7 +242,7 @@ public class AdminActions {
     }
 
     // TODO: Afreen, ensure they don't transfer to the branch they were originally in(done)
-    protected void transferStaff(StaffRoles auth){
+    public void transferStaff(StaffRoles auth){
         staffAccountActions.transferStaff(auth); 
         // Scanner sc = new Scanner(System.in); 
         // StaffDirectory staffDirectory = StaffDirectory.getInstance();
@@ -266,7 +267,7 @@ public class AdminActions {
         // }
     }
 
-    protected void addBranch(StaffRoles auth) {
+    public void addBranch(StaffRoles auth) {
         adminBranchActions.addBranch(auth); 
         // try {
         //     // Get branch name
@@ -284,7 +285,7 @@ public class AdminActions {
         // }
     }
 
-    protected void closeBranch(StaffRoles auth) {
+    public void closeBranch(StaffRoles auth) {
         adminBranchActions.closeBranch(auth);
         // Get branch by name
         // Branch branchToRmv = branchDirectory.getBranchByUserInput();

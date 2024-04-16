@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import static authorisation.Authorisation.authoriseAdmin;
 import static staff.StaffView.displayStaffDetails;
 
-public class AdminView {
-    InputScanner sc = InputScanner.getInstance();
+public class AdminView implements IAdminView{
+    private InputScanner sc = InputScanner.getInstance();
 
+    @Override
     public StaffFilterOptions getFieldToFilter() {
         System.out.println("Enter the number for the field you want to filter the staff list by: ");
         System.out.println("1. Branch");
@@ -21,7 +22,8 @@ public class AdminView {
         return StaffFilterOptions.of(adminChoice);
     }
 
-    public static void displayAllStaff(ArrayList<Staff> staffDirectory, StaffRoles auth) {
+    @Override 
+    public void displayAllStaff(ArrayList<Staff> staffDirectory, StaffRoles auth) {
         if (authoriseAdmin(auth)) {
             // Print details
             System.out.println("Staff Details:");
