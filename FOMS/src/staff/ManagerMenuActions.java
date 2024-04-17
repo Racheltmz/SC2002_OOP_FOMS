@@ -1,7 +1,6 @@
 package staff;
 
 import branch.Branch;
-import branch.BranchDirectory;
 import menu.MenuDirectory;
 import utils.InputScanner;
 import menu.MenuItem;
@@ -13,9 +12,8 @@ import static utils.ValidateHelper.validateDouble;
 import static utils.ValidateHelper.validateInt;
 
 // Manager's permissions
-public class ManagerActionsMenu implements IManagerActionsMenu {
+public class ManagerMenuActions implements IManagerMenuActions {
     InputScanner sc = InputScanner.getInstance();
-    BranchDirectory branchDirectory = BranchDirectory.getInstance();
     MenuDirectory menuDirectory = MenuDirectory.getInstance();
 
     // Add menu item

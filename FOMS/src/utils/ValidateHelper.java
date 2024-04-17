@@ -1,5 +1,6 @@
 package utils;
 
+import exceptions.InvalidInputException;
 import exceptions.InvalidStaffQuotaException;
 
 import java.util.InputMismatchException;
@@ -26,13 +27,20 @@ public class ValidateHelper {
         return input;
     }
 
-    public static int validateIntRange(String msg, int start, int end) {
+    public static int validateIntRange(String msg, int start, int end, boolean ignoreBlank) {
         InputScanner sc = InputScanner.getInstance();
         boolean success = false;
         int input = 0;
         do {
             try {
+//                if (ignoreBlank) {
+//                    System.out.println(msg);
+//                    if (sc.hasNextInt()) {
+//
+//                    }
+//                } else {
                 input = validateInt(msg);
+//                }
                 if (start <= input && input <= end) {
                     success = true;
                 } else {
@@ -65,5 +73,41 @@ public class ValidateHelper {
             }
         } while (!success);
         return input;
+    }
+
+    private static String validateCategories(String msg, String[] categories, String errMsg) {
+        InputScanner sc = InputScanner.getInstance();
+        boolean success = false;
+        String input = null;
+        do {
+            try {
+                System.out.print(msg);
+                input = sc.next().toUpperCase();
+                for (String category : categories) {
+                    if (input.equalsIgnoreCase(category)) {
+                        success = true;
+                        break;
+                    }
+                }
+                throw new InvalidInputException(errMsg);
+            }  catch (InvalidInputException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (!success);
+        return input;
+    }
+
+    public static String validateGender() {
+        String msg = "Enter gender (M/F): ";
+        String[] genderCategory = {"M", "F"};
+        String errMsg = "Invalid input. Please enter M or F";
+        return validateCategories(msg, genderCategory, errMsg);
+    }
+
+    public static String validateRole() {
+        String msg = "Enter role (S/M):\nS: Staff\nM: Manager\n";
+        String[] roleCategory = {"S", "M"};
+        String errMsg = "Invalid input. Please enter S or M";
+        return validateCategories(msg, roleCategory, errMsg);
     }
 }

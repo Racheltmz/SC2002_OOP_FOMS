@@ -20,7 +20,6 @@ public class StaffFilterRole implements IFilter {
                 filteredList.add(staff);
             }
         }
-        // TODO: AFREEN work out smtg with the StaffRoles enum such that this can be done in a single print statement (map the acronym and the name as well)
         // Print details
         if (Objects.equals(role, "S"))
             System.out.println("Staff Details");

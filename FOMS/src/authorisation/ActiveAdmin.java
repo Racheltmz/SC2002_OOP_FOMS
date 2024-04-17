@@ -65,7 +65,7 @@ public class ActiveAdmin implements IActiveUser {
 
         switch(categoryChoice){
             case 1:
-                displayMenu("1. Add Staff \n2. Update Staff\n3. Remove Staff", staffID, role);
+                displayMenu("1. Add Staff \n2. Update Staff\n3. Remove Staff\n4. Filter Accounts", staffID, role);
                 int staffChoice = sc.nextInt();
                 sc.nextLine();
                 switch (staffChoice) {
@@ -81,6 +81,10 @@ public class ActiveAdmin implements IActiveUser {
                         // remove staff
                         this.getActiveStaff().removeStaff(this.activeStaff.getRole());
                         break;
+                    case 4:
+                        // filter staff records
+                        this.getActiveStaff().filterStaff(this.activeStaff.getRole());
+                        break;
                     default:
                         System.out.print("Invalid choice, please re-enter: ");
                         break; 
@@ -92,9 +96,11 @@ public class ActiveAdmin implements IActiveUser {
                 sc.nextLine();
                 switch (changeChoice) {
                     case 1:
+                        // promote staff
                         this.getActiveStaff().promoteStaff(this.activeStaff.getRole());
                         break;
                     case 2:
+                        // transfer staff
                         this.getActiveStaff().transferStaff(this.activeStaff.getRole());
                         break;
                     default:
@@ -103,19 +109,25 @@ public class ActiveAdmin implements IActiveUser {
                 }
                 break;
             case 3:
-                displayMenu("1. Add branch\n2. Close Branch", staffID, role);
+                displayMenu("1. Add branch\n2. Update Branch\n3. Close Branch", staffID, role);
                 int branchChoice = sc.nextInt();
                 sc.nextLine();
                 switch(branchChoice){
                     case 1:
-                    this.getActiveStaff().addBranch(this.activeStaff.getRole());
-                    break;
-                case 2:
-                    this.getActiveStaff().closeBranch(this.activeStaff.getRole());
-                    break;
-                default:
-                    System.out.println("Invalid choice, please re-enter: ");
-                    break;
+                        // add branch
+                        this.getActiveStaff().addBranch(this.activeStaff.getRole());
+                        break;
+                    case 2:
+                        // edit branch
+                        this.getActiveStaff().updateBranch(this.activeStaff.getRole());
+                        break;
+                    case 3:
+                        // close branch
+                        this.getActiveStaff().closeBranch(this.activeStaff.getRole());
+                        break;
+                    default:
+                        System.out.println("Invalid choice, please re-enter: ");
+                        break;
             }
             break;
         case 4: // Account
@@ -124,9 +136,11 @@ public class ActiveAdmin implements IActiveUser {
             sc.nextLine();
             switch (accChoice) {
                 case 1:
+                    // change password
                     this.getActiveStaff().changePassword();
                     break;
                 case 2:
+                    // logout
                     this.logout();
                     break;
                 default:

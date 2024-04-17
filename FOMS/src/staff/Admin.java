@@ -6,10 +6,10 @@ import java.util.UUID;
 
 import static authorisation.Authorisation.authoriseAdmin;
 
-// TODO: AFREEN use DIP by creating an interface for adminView, adminActions
 public class Admin extends Staff {
-    private final AdminView adminView = new AdminView();
-    private final AdminActions adminActions = new AdminActions();
+    private final IAdminView adminView = new AdminView();
+    private final IAdminStaffActions adminStaffActions = new AdminStaffActions();
+    private final IAdminBranchActions adminBranchActions = new AdminBranchActions();
 
     public Admin(String staffID, String name, StaffRoles role, char gender, int age){
         super(staffID, name, role, gender, age, null);
@@ -31,21 +31,21 @@ public class Admin extends Staff {
     // Add menu item
     public void addStaff(StaffRoles auth) {
         if (authoriseAdmin(auth)){
-            adminActions.addStaff(auth);
+            adminStaffActions.addStaff();
         }
     }
 
     // Update menu item
     public void updateStaff(StaffRoles auth) {
         if (authoriseAdmin(auth)){
-            adminActions.updateStaff(auth);
+            adminStaffActions.updateStaff();
         }
     }
 
     // Remove menu item
     public void removeStaff(StaffRoles auth) {
         if (authoriseAdmin(auth)){
-            adminActions.removeStaff(auth);
+            adminStaffActions.removeStaff();
         }
     }
 
@@ -59,31 +59,37 @@ public class Admin extends Staff {
         if (authoriseAdmin(auth)){
             // Get field to filter staff records
             StaffFilterOptions option = adminView.getFieldToFilter();
-            adminActions.filterStaff(option);
+            adminStaffActions.filterStaff(option);
         }
     }
 
     public void promoteStaff(StaffRoles auth){
         if (authoriseAdmin(auth)) {
-            adminActions.promoteStaff(auth);
+            adminStaffActions.promoteStaff();
         }
     }
 
     public void transferStaff(StaffRoles auth){
         if (authoriseAdmin(auth)) {
-            adminActions.transferStaff(auth);
+            adminStaffActions.transferStaff();
         }
     }
 
     public void addBranch(StaffRoles auth){
         if (authoriseAdmin(auth)) {
-            adminActions.addBranch(auth);
+            adminBranchActions.addBranch();
+        }
+    }
+
+    public void updateBranch(StaffRoles auth){
+        if (authoriseAdmin(auth)) {
+            adminBranchActions.updateBranch();
         }
     }
 
     public void closeBranch(StaffRoles auth){
         if (authoriseAdmin(auth)) {
-            adminActions.closeBranch(auth);
+            adminBranchActions.closeBranch();
         }
     }
 //

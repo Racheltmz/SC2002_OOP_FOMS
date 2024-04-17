@@ -3,7 +3,7 @@ package staff;
 import branch.Branch;
 import order.OrderQueue;
 
-public class StaffActionsOrder implements IStaffActionsOrder {
+public class StaffOrderActions implements IStaffOrderActions {
     public void getNewOrders(Branch branch) {
         OrderQueue queue = OrderQueue.getInstance();
         queue.displayNewOrders(branch.getName());

@@ -11,7 +11,8 @@ import static authorisation.Authorisation.authoriseManager;
 // Manager details
 public class Manager extends Staff {
     // Attributes
-    private final IManagerActionsMenu managerActions = new ManagerActionsMenu();
+    private final IManagerMenuActions managerActions = new ManagerMenuActions();
+    StaffFilterActions filterActions = new StaffFilterActions();
 
     // Constructor
     public Manager(String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
@@ -25,8 +26,7 @@ public class Manager extends Staff {
     // Display staff list by branch
     public void displayStaffList(StaffRoles auth, Branch branch) {
         if (authoriseManager(auth)) {
-            IFilter staffFilterBranch = new StaffFilterBranch();
-            staffFilterBranch.filter(branch.getName());
+            filterActions.applyBranchFilter(branch.getName());
         }
     }
 

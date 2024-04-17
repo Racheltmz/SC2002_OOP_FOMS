@@ -7,8 +7,6 @@ import exceptions.ItemNotFoundException;
 import utils.InputScanner;
 import io.StaffXlsxHelper;
 
-import static authorisation.Authorisation.authoriseAdmin;
-
 /**
  * Handles operations on staff records.
  */
@@ -133,15 +131,12 @@ public class StaffDirectory {
      * Remove staff by branch.
      *
      * @param staffListRmv List of staff records to remove.
-     * @param auth Needs to be an admin to use this function.
      */
-    public void rmvStaffByBranch(ArrayList<Staff> staffListRmv, StaffRoles auth) {
-        if (authoriseAdmin(auth)) {
-            StaffXlsxHelper staffXlsxHelper = StaffXlsxHelper.getInstance();
-            for (Staff staffToRmv: staffListRmv) {
-                this.staffDirectory.removeIf(staff -> staff.getName().equals(staffToRmv.getName()));
-                staffXlsxHelper.removeXlsx(staffToRmv.getId());
-            }
+    public void rmvStaffByBranch(ArrayList<Staff> staffListRmv) {
+        StaffXlsxHelper staffXlsxHelper = StaffXlsxHelper.getInstance();
+        for (Staff staffToRmv: staffListRmv) {
+            this.staffDirectory.removeIf(staff -> staff.getName().equals(staffToRmv.getName()));
+            staffXlsxHelper.removeXlsx(staffToRmv.getId());
         }
     }
 
@@ -149,17 +144,14 @@ public class StaffDirectory {
      * Update staff's role from Staff to Manager.
      *
      * @param staff Staff record to update.
-     * @param auth Needs to be an admin to upgrade the credentials.
      */
-    public void upgradeCredentials(Staff staff, StaffRoles auth) {
-        if (authoriseAdmin(auth)) {
-            // Create new manager object
-            Manager staffToManager = new Manager(staff.getStaffID(), staff.getName(), StaffRoles.MANAGER, staff.getGender(), staff.getAge(), staff.getBranch());
-            // Remove staff
-            rmvStaff(staff);
-            // Add staff as a manager
-            addStaff(staffToManager, this.getNumStaff());
-        }
+    public void upgradeCredentials(Staff staff) {
+        // Create new manager object
+        Manager staffToManager = new Manager(staff.getStaffID(), staff.getName(), StaffRoles.MANAGER, staff.getGender(), staff.getAge(), staff.getBranch());
+        // Remove staff
+        rmvStaff(staff);
+        // Add staff as a manager
+        addStaff(staffToManager, this.getNumStaff());
     }
 
     /**
@@ -173,15 +165,12 @@ public class StaffDirectory {
      * Get the number of managers currently in the branch to check quota.
      *
      * @param branch Branch to check the manager quota from.
-     * @param auth Needs to be an admin to check the number of managers.
      */
-    public int getNumManagersByBranch(Branch branch, StaffRoles auth) {
+    public int getNumStaffBranchRole(Branch branch, StaffRoles role) {
         int count = 0;
-        if (authoriseAdmin(auth)) {
-            for (Staff staff: this.staffDirectory) {
-                if (staff.getRole() == StaffRoles.MANAGER && staff.getBranch().equals(branch)) {
-                    count++;
-                }
+        for (Staff staff: this.staffDirectory) {
+            if (staff.getBranch().equals(branch) && staff.getRole() == role) {
+                count++;
             }
         }
         return count;

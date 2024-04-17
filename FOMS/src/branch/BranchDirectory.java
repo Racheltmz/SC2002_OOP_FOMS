@@ -74,34 +74,37 @@ public class BranchDirectory {
     }
 
     // Add branch
-    public void addBranch(Branch branch, StaffRoles auth) {
-        if (authoriseAdmin(auth)) {
-            int numExistingBranches = this.branchDirectory.size();
-            this.branchDirectory.add(branch);
-            BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
-            branchXlsxHelper.writeToXlsx(branch, numExistingBranches);
-            System.out.println("Branch successfully created!");
-        }
+    public void addBranch(Branch branch) {
+        int numExistingBranches = this.branchDirectory.size();
+        this.branchDirectory.add(branch);
+        BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
+        branchXlsxHelper.writeToXlsx(branch, numExistingBranches);
+        System.out.println("Branch successfully created!");
+    }
+
+    public void updateBranch(Branch updatedBranch){
+        Branch branch = getBranchByName(updatedBranch.getName());
+        branch.setName(updatedBranch.getName());
+        branch.setLocation(updatedBranch.getLocation());
+        branch.setStaffQuota(updatedBranch.getStaffQuota());
     }
 
     // Remove branch
-    public void rmvBranch(Branch branchToRmv, StaffRoles auth) {
-        if (authoriseAdmin(auth)) {
-            StaffDirectory staffDirectory = StaffDirectory.getInstance();
-            // Remove staff under the branch
-            ArrayList<Staff> staffToRmv = new ArrayList<>();
-            for (Staff staff: staffDirectory.getStaffDirectory()) {
-                if (staff.getRole() != StaffRoles.ADMIN && staff.getBranch().equals(branchToRmv)) {
-                    staffToRmv.add(staff);
-                }
+    public void rmvBranch(Branch branchToRmv) {
+        StaffDirectory staffDirectory = StaffDirectory.getInstance();
+        // Remove staff under the branch
+        ArrayList<Staff> staffToRmv = new ArrayList<>();
+        for (Staff staff: staffDirectory.getStaffDirectory()) {
+            if (staff.getRole() != StaffRoles.ADMIN && staff.getBranch().equals(branchToRmv)) {
+                staffToRmv.add(staff);
             }
-            staffDirectory.rmvStaffByBranch(staffToRmv, auth);
-            // Remove branch
-            this.branchDirectory.removeIf(branch -> branch.getName().equals(branchToRmv.getName()));
-            BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
-            branchXlsxHelper.removeXlsx(branchToRmv.getId());
-            System.out.println("Branch successfully closed and staff records for this branch have been deleted.");
         }
+        staffDirectory.rmvStaffByBranch(staffToRmv);
+        // Remove branch
+        this.branchDirectory.removeIf(branch -> branch.getName().equals(branchToRmv.getName()));
+        BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
+        branchXlsxHelper.removeXlsx(branchToRmv.getId());
+        System.out.println("Branch successfully closed and staff records for this branch have been deleted.");
     }
 
     public int getNumBranches() {

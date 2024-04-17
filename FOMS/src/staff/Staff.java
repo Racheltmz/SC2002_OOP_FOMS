@@ -18,7 +18,7 @@ public class Staff implements IXlsxSerializable {
     private int age;
     private Branch branch;
     private String password;
-    private final IStaffActionsOrder staffActionsOrder = new StaffActionsOrder();
+    private final IStaffOrderActions staffActionsOrder = new StaffOrderActions();
 
     public Staff(String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
         this.staffID = staffID;
