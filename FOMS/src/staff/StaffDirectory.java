@@ -1,14 +1,15 @@
 package staff;
 
+import static authorisation.Authorisation.*;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
 import branch.Branch;
+import exceptions.ExcelFileNotFound;
 import exceptions.ItemNotFoundException;
-import utils.InputScanner;
 import io.StaffXlsxHelper;
-
-import static authorisation.Authorisation.authoriseAdmin;
+import utils.InputScanner;
 
 // Records of staff
 public class StaffDirectory {
@@ -16,12 +17,12 @@ public class StaffDirectory {
     private final ArrayList<Staff> staffDirectory;
     private static StaffDirectory staffSingleton = null;
 
-    private StaffDirectory() {
+    private StaffDirectory() throws ExcelFileNotFound {
         StaffXlsxHelper staffXlsxHelper = StaffXlsxHelper.getInstance();
         this.staffDirectory = staffXlsxHelper.readFromXlsx();
     }
 
-    public static StaffDirectory getInstance() {
+    public static StaffDirectory getInstance() throws ExcelFileNotFound {
         if (staffSingleton == null) {
             staffSingleton = new StaffDirectory();
         }
@@ -106,7 +107,7 @@ public class StaffDirectory {
         }
     }
 
-    public void upgradeCredentials(Staff staff, StaffRoles auth) {
+    public void upgradeCredentials(Staff staff, StaffRoles auth) throws Exception {
         if (authoriseAdmin(auth)) {
             // Create new manager object
             Manager staffToManager = new Manager(staff.getStaffID(), staff.getName(), StaffRoles.MANAGER, staff.getGender(), staff.getAge(), staff.getBranch());

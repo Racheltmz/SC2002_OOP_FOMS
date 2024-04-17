@@ -1,33 +1,35 @@
 package branch;
 
-import staff.Staff;
-import staff.StaffDirectory;
-import staff.StaffRoles;
-import io.BranchXlsxHelper;
+import static authorisation.Authorisation.*;
+import static utils.ValidateHelper.*;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static authorisation.Authorisation.authoriseAdmin;
-import static utils.ValidateHelper.validateInt;
+import exceptions.ExcelFileNotFound;
+import io.BranchXlsxHelper;
+import staff.Staff;
+import staff.StaffDirectory;
+import staff.StaffRoles;
 
 // Records of branch
 public class BranchDirectory {
     // Attribute
-    private final ArrayList<Branch> branchDirectory;
+    private ArrayList<Branch> branchDirectory;
     private static BranchDirectory branchSingleton = null;
 
-    private BranchDirectory() {
+    private BranchDirectory()  {
         BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
         this.branchDirectory = branchXlsxHelper.readFromXlsx();
     }
 
-    public static BranchDirectory getInstance() {
+    public static BranchDirectory getInstance() throws ExcelFileNotFound {
         if (branchSingleton == null) {
             branchSingleton = new BranchDirectory();
         }
         return branchSingleton;
     }
+
     // Functionalities
     // Get all branches
     public ArrayList<Branch> getBranchDirectory() {
@@ -85,7 +87,7 @@ public class BranchDirectory {
     }
 
     // Remove branch
-    public void rmvBranch(Branch branchToRmv, StaffRoles auth) {
+    public void rmvBranch(Branch branchToRmv, StaffRoles auth) throws ExcelFileNotFound {
         if (authoriseAdmin(auth)) {
             StaffDirectory staffDirectory = StaffDirectory.getInstance();
             // Remove staff under the branch

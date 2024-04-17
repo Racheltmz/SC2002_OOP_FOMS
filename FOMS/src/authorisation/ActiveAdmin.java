@@ -1,7 +1,8 @@
 package authorisation;
 
-import utils.InputScanner;
+import exceptions.ExcelFileNotFound;
 import staff.Admin;
+import utils.InputScanner;
 
 // Authorised operations for active user with an admin role
 public class ActiveAdmin implements IActiveUser {
@@ -39,15 +40,27 @@ public class ActiveAdmin implements IActiveUser {
         switch (staffChoice) {
             case 1:
                 // add staff
-                this.getActiveStaff().addStaff(this.activeStaff.getRole());
+                try {
+                    this.getActiveStaff().addStaff(this.activeStaff.getRole());
+                } catch (ExcelFileNotFound e) {
+                    System.out.println("Error: Unable to add staff");
+                }
                 break;
             case 2:
                 // edit staff
-                this.getActiveStaff().updateStaff(this.activeStaff.getRole());
+                try {
+                    this.getActiveStaff().updateStaff(this.activeStaff.getRole());
+                } catch (ExcelFileNotFound e) {
+                    System.out.println("Error: Unable to update Staff details ");
+                }
                 break;
             case 3:
                 // remove staff
-                this.getActiveStaff().removeStaff(this.activeStaff.getRole());
+                try {
+                    this.getActiveStaff().removeStaff(this.activeStaff.getRole());
+                } catch (ExcelFileNotFound e) {
+                    System.out.println("Error: Unable to remove staff");
+                }
                 break;
             case 4:
                 this.getActiveStaff().filterStaff(this.activeStaff.getRole());
@@ -59,10 +72,18 @@ public class ActiveAdmin implements IActiveUser {
                 this.getActiveStaff().closeBranch(this.activeStaff.getRole());
                 break;
             case 7:
-                this.getActiveStaff().promoteStaff(this.activeStaff.getRole());
+                try {
+                    this.getActiveStaff().promoteStaff(this.activeStaff.getRole());
+                } catch (Exception e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
                 break;
             case 8:
-                this.getActiveStaff().transferStaff(this.activeStaff.getRole());
+                try {
+                    this.getActiveStaff().transferStaff(this.activeStaff.getRole());
+                } catch (ExcelFileNotFound e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
                 break;
             case 9:
 //                this.getActiveStaff().addPayment(this.activeStaff.getRole());
@@ -71,7 +92,11 @@ public class ActiveAdmin implements IActiveUser {
 //                this.getActiveStaff().removePayment(this.activeStaff.getRole());
                 break;
             case 11:
-                this.getActiveStaff().changePassword();
+                try {
+                    this.getActiveStaff().changePassword();
+                } catch (ExcelFileNotFound e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
                 break;
             case 12:
                 this.logout();

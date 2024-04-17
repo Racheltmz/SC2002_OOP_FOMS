@@ -1,15 +1,16 @@
 package io;
 
-import branch.Branch;
-import branch.BranchDirectory;
-import staff.*;
-import staff.Admin;
-import staff.Manager;
-import staff.Staff;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import branch.Branch;
+import branch.BranchDirectory;
+import exceptions.ExcelFileNotFound;
+import staff.Admin;
+import staff.Manager;
+import staff.Staff;
+import staff.StaffRoles;
 
 // Helper class for staff
 public class StaffXlsxHelper extends BaseXlsxHelper {
@@ -44,8 +45,9 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
      * On initialisation, reads the XLSX file and parses it into an ArrayList of Staff objects
      *
      * @return ArrayList of Staff objects
+     * @throws ExcelFileNotFound 
      */
-    public ArrayList<Staff> readFromXlsx() {
+    public ArrayList<Staff> readFromXlsx() throws ExcelFileNotFound {
         // Initialise a list
         ArrayList<Staff> staffList = new ArrayList<>();
         BranchDirectory branchDirectory = BranchDirectory.getInstance();
@@ -74,10 +76,20 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
                     staffList.add(new Staff(id, staffId, name, StaffRoles.STAFF, gender, age, branch, password));
                     break;
                 case 'M':
-                    staffList.add(new Manager(id, staffId, name, StaffRoles.MANAGER, gender, age, branch, password));
+                    try {
+                        staffList.add(new Manager(id, staffId, name, StaffRoles.MANAGER, gender, age, branch, password));
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                     break;
                 case 'A':
-                    staffList.add(new Admin(id, staffId, name, StaffRoles.ADMIN, gender, age, password));
+                    try {
+                        staffList.add(new Admin(id, staffId, name, StaffRoles.ADMIN, gender, age, password));
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                     break;
             }
         });

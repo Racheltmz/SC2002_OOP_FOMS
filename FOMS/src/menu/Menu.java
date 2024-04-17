@@ -1,11 +1,12 @@
 package menu;
 
+import java.util.ArrayList;
+
 import branch.Branch;
 import exceptions.DuplicateEntryException;
 import exceptions.EmptyListException;
+import exceptions.ExcelFileNotFound;
 import io.MenuItemXlsxHelper;
-
-import java.util.ArrayList;
 
 // Menu details
 public class Menu {
@@ -63,7 +64,7 @@ public class Menu {
     }
 
     // Add menu item
-    public void addItem(MenuItem menuItem, int numExistingItems, boolean stored) {
+    public void addItem(MenuItem menuItem, int numExistingItems, boolean stored) throws ExcelFileNotFound {
         try {
             if (!stored) {
                 MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();

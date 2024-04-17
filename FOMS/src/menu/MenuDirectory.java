@@ -1,23 +1,24 @@
 package menu;
 
-import branch.BranchDirectory;
-import exceptions.EmptyListException;
-import exceptions.ItemNotFoundException;
-import io.MenuItemXlsxHelper;
-
 import java.util.ArrayList;
 import java.util.Objects;
+
+import branch.BranchDirectory;
+import exceptions.EmptyListException;
+import exceptions.ExcelFileNotFound;
+import exceptions.ItemNotFoundException;
+import io.MenuItemXlsxHelper;
 
 public class MenuDirectory {
     private final ArrayList<Menu> menuDirectory;
     private static MenuDirectory menuSingleton = null;
 
-    private MenuDirectory() {
+    private MenuDirectory() throws ExcelFileNotFound {
         MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
         this.menuDirectory = menuItemXlsxHelper.readFromXlsx();
     }
 
-    public static MenuDirectory getInstance() {
+    public static MenuDirectory getInstance() throws ExcelFileNotFound {
         if (menuSingleton == null) {
             menuSingleton = new MenuDirectory();
         }
@@ -57,7 +58,7 @@ public class MenuDirectory {
         return null;
     }
 
-    public void displayMenuByBranch() {
+    public void displayMenuByBranch() throws ExcelFileNotFound {
         BranchDirectory branchDirectory = BranchDirectory.getInstance();
         String branch = branchDirectory.getBranchByUserInput().getName();
         Menu menu = getMenu(branch);

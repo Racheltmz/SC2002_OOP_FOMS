@@ -1,7 +1,8 @@
 package authorisation;
 
-import utils.InputScanner;
+import exceptions.ExcelFileNotFound;
 import staff.Manager;
+import utils.InputScanner;
 
 // Authorised operations for active user with a manager role
 public class ActiveManager implements IActiveUser {
@@ -63,7 +64,11 @@ public class ActiveManager implements IActiveUser {
                 this.getActiveStaff().setOrderReady();
                 break;
             case 8:
-                this.getActiveStaff().changePassword();
+                try {
+                    this.getActiveStaff().changePassword();
+                } catch (ExcelFileNotFound e) {
+                    System.out.println("Error: Excel file not found");
+                }
                 break;
             case 9:
                 this.logout();

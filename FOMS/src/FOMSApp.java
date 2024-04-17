@@ -1,21 +1,27 @@
+import static authentication.Authentication.*;
+
+import java.nio.file.FileSystemNotFoundException;
 import java.util.InputMismatchException;
 
-import authorisation.*;
+import authorisation.ActiveFactory;
+import authorisation.ActiveFactoryAdmin;
+import authorisation.ActiveFactoryManager;
+import authorisation.ActiveFactoryStaff;
+import authorisation.IActiveUser;
+import exceptions.ExcelFileNotFound;
 import menu.MenuDirectory;
-import staff.StaffDirectory;
-import utils.InputScanner;
-import staff.Staff;
-import staff.StaffRoles;
 import order.OrderQueue;
-
-import static authentication.Authentication.login;
+import staff.Staff;
+import staff.StaffDirectory;
+import staff.StaffRoles;
+import utils.InputScanner;
 
 /**
  * Main App File
  * @author Afreen, Gwen, Priya, Rachel, Sanjana
  */
 public class FOMSApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExcelFileNotFound {
         // Initialise scanner, directories, and order queue
         InputScanner sc = InputScanner.getInstance();
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
@@ -57,6 +63,10 @@ public class FOMSApp {
 //                            } while (customerChoice != 3);
                         } catch (InputMismatchException inputMismatchException) {
                             System.out.println("Please enter a valid integer only.\n");
+                            sc.nextLine();
+                        }
+                        catch (FileSystemNotFoundException fileNotFoundException) {
+                            System.out.println("File not found. Please check the data folder.\n");
                             sc.nextLine();
                         }
                         break;

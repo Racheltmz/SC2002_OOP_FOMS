@@ -1,20 +1,30 @@
 package staff;
 
-import branch.BranchDirectory;
-import menu.MenuDirectory;
-import utils.InputScanner;
-import menu.MenuItem;
-import menu.Menu;
+import static utils.ValidateHelper.*;
+
 import java.util.InputMismatchException;
 
-import static utils.ValidateHelper.validateDouble;
-import static utils.ValidateHelper.validateInt;
+import branch.BranchDirectory;
+import exceptions.ExcelFileNotFound;
+import menu.Menu;
+import menu.MenuDirectory;
+import menu.MenuItem;
+import utils.InputScanner;
 
 // Manager's permissions
 public class ManagerActionsMenu implements IManagerActionsMenu {
     InputScanner sc = InputScanner.getInstance();
-    BranchDirectory branchDirectory = BranchDirectory.getInstance();
-    MenuDirectory menuDirectory = MenuDirectory.getInstance();
+    BranchDirectory branchDirectory;
+    MenuDirectory menuDirectory;
+
+    public ManagerActionsMenu() throws Exception {
+        try {
+            branchDirectory = BranchDirectory.getInstance();
+            menuDirectory = MenuDirectory.getInstance();
+        } catch (Exception e) {
+            throw new Exception("Error initializing BranchDirectory or MenuDirectory: " + e.getMessage());
+        }
+    }
 
     // Add menu item
     public void addMenuItem() {
@@ -34,7 +44,7 @@ public class ManagerActionsMenu implements IManagerActionsMenu {
             // Add the new menu item to the menu
             MenuItem newItem = new MenuItem(name, price, branch, category, description);
             menuDirectory.getMenu(branch).addItem(newItem, menuDirectory.getNumAllMenuItems(), false);
-        } catch (InputMismatchException e) {
+        } catch (InputMismatchException | ExcelFileNotFound e) {
             System.out.println("Error: " + e.getMessage());
         }
     }

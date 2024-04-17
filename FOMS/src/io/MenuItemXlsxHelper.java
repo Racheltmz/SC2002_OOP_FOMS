@@ -1,16 +1,17 @@
 package io;
 
-import branch.Branch;
-import branch.BranchDirectory;
-import exceptions.DuplicateEntryException;
-import menu.Menu;
-import menu.MenuDirectory;
-import menu.MenuItem;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
+import branch.Branch;
+import branch.BranchDirectory;
+import exceptions.DuplicateEntryException;
+import exceptions.ExcelFileNotFound;
+import menu.Menu;
+import menu.MenuDirectory;
+import menu.MenuItem;
 
 public class MenuItemXlsxHelper extends BaseXlsxHelper {
     /**
@@ -48,8 +49,9 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
      * On initialisation, reads the XLSX file and parses it into an array list of menu item objects.
      *
      * @return ArrayList of Menu Item Objects.
+     * @throws ExcelFileNotFound 
      */
-    public ArrayList<Menu> readFromXlsx() {
+    public ArrayList<Menu> readFromXlsx() throws ExcelFileNotFound {
         // Initialise a list
         ArrayList<Menu> menuList = new ArrayList<>();
         BranchDirectory branchDirectory = BranchDirectory.getInstance();
@@ -76,7 +78,11 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
             // Add new item
             for (Menu menu : menuList) {
                 if (Objects.equals(menu.getBranch().getName(), branch)) {
-                    menu.addItem(new MenuItem(id, name, price, branch, category, description), -1, true);
+                    try {
+                        menu.addItem(new MenuItem(id, name, price, branch, category, description), -1, true);
+                    } catch (ExcelFileNotFound e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                 }
             }
         });
@@ -88,8 +94,9 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
      *
      * @param item MenuItem record to add
      * @param numExistingRecords Number of existing menuItem records
+     * @throws ExcelFileNotFound 
      */
-    public void writeToXlsx(MenuItem item, int numExistingRecords) throws DuplicateEntryException {
+    public void writeToXlsx(MenuItem item, int numExistingRecords) throws DuplicateEntryException, ExcelFileNotFound {
         MenuDirectory menuDirectory = MenuDirectory.getInstance();
         boolean isExisting = menuDirectory
                 .getMenu(item.getBranch())

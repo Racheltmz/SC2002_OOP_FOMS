@@ -1,25 +1,34 @@
 package staff;
 
-import branch.Branch;
-import staff.filter.StaffFilterBranch;
-import utils.IFilter;
+import static authorisation.Authorisation.*;
 
 import java.util.UUID;
 
-import static authorisation.Authorisation.authoriseManager;
+import branch.Branch;
+import exceptions.ExcelFileNotFound;
+import staff.filter.StaffFilterBranch;
+import utils.IFilter;
 
 // Manager details
 public class Manager extends Staff {
     // Attributes
-    private final IManagerActionsMenu managerActions = new ManagerActionsMenu();
+    private final IManagerActionsMenu managerActions;
 
     // Constructor
-    public Manager(String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
+    public Manager(String staffID, String name, StaffRoles role, char gender, int age, Branch branch) throws Exception {
         super(staffID, name, role, gender, age, branch);
+        managerActions = new ManagerActionsMenu();
+
     }
 
-    public Manager(UUID id, String staffID, String name, StaffRoles role, char gender, int age, Branch branch, String password) {
+    public Manager(UUID id, String staffID, String name, StaffRoles role, char gender, int age, Branch branch, String password) throws Exception {
         super(id, staffID, name, role, gender, age, branch, password);
+        try{
+            managerActions = new ManagerActionsMenu();
+        }catch(ExcelFileNotFound e){
+            throw new ExcelFileNotFound("Error initialising ManaagerActions: " + e.getMessage());
+        }
+
     }
 
     // Display staff list by branch

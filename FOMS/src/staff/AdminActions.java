@@ -1,15 +1,19 @@
 package staff;
 
-import static staff.AdminView.displayAllStaff;
-import static utils.ValidateHelper.validateInt;
-import static utils.ValidateHelper.validateIntRange;
+import static staff.AdminView.*;
+import static utils.ValidateHelper.*;
 
 import java.util.InputMismatchException;
 
 import branch.Branch;
 import branch.BranchDirectory;
 import exceptions.DuplicateEntryException;
-import staff.filter.*;
+import exceptions.ExcelFileNotFound;
+import staff.filter.StaffFilterAge;
+import staff.filter.StaffFilterBranch;
+import staff.filter.StaffFilterGender;
+import staff.filter.StaffFilterOptions;
+import staff.filter.StaffFilterRole;
 import utils.IFilter;
 import utils.InputScanner;
 
@@ -18,10 +22,16 @@ import utils.InputScanner;
 // TODO: AFREEN, SRP create more files & split functions based on functionalities (staff account, staff role, branch, payment)
 public class AdminActions {
     InputScanner sc = InputScanner.getInstance();
-    BranchDirectory branchDirectory = BranchDirectory.getInstance();
-
+    BranchDirectory branchDirectory;
+    public AdminActions() throws Exception {
+        try {
+            branchDirectory = BranchDirectory.getInstance();
+        } catch (Exception e) {
+            throw new Exception("Error initializing BranchDirectory: " + e.getMessage());
+        }
+    }
     // Add staff
-    protected void addStaff(StaffRoles auth) {
+    protected void addStaff(StaffRoles auth) throws ExcelFileNotFound {
         try {
             StaffDirectory staffDirectory = StaffDirectory.getInstance();
             int numExistingStaff = staffDirectory.getNumStaff();
@@ -60,7 +70,7 @@ public class AdminActions {
     }
 
     // Update staff
-    protected void updateStaff(StaffRoles auth) {
+    protected void updateStaff(StaffRoles auth) throws ExcelFileNotFound {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         displayAllStaff(staffDirectory.getStaffDirectory(), auth);
         Staff staffToUpdate = staffDirectory.getStaff();
@@ -81,7 +91,7 @@ public class AdminActions {
     }
 
     // Remove staff
-    protected void removeStaff(StaffRoles auth) {
+    protected void removeStaff(StaffRoles auth) throws ExcelFileNotFound {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         displayAllStaff(staffDirectory.getStaffDirectory(), auth);
         Staff staffToRmv = staffDirectory.getStaff();
@@ -135,7 +145,7 @@ public class AdminActions {
         staffFilterAge.filter(String.valueOf(age));
     }
 
-    protected boolean assignManager(Branch branch, StaffRoles auth) {
+    protected boolean assignManager(Branch branch, StaffRoles auth) throws ExcelFileNotFound {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         // Get number of managers
         int numManagers = staffDirectory.getNumManagersByBranch(branch, auth);
@@ -149,7 +159,7 @@ public class AdminActions {
         }
     }
 
-    protected void promoteStaff(StaffRoles auth){
+    protected void promoteStaff(StaffRoles auth) throws Exception{
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         filterByRole(StaffRoles.STAFF.getAcronym());
         Staff staff = staffDirectory.getStaff();
@@ -171,7 +181,7 @@ public class AdminActions {
     }
 
     // TODO: Afreen, ensure they don't transfer to the branch they were originally in
-    protected void transferStaff(StaffRoles auth){
+    protected void transferStaff(StaffRoles auth) throws ExcelFileNotFound{
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         displayAllStaff(staffDirectory.getStaffDirectory(), auth);
         Staff staff = staffDirectory.getStaff();
@@ -201,7 +211,7 @@ public class AdminActions {
         }
     }
 
-    protected void closeBranch(StaffRoles auth) {
+    protected void closeBranch(StaffRoles auth) throws ExcelFileNotFound {
         // Get branch by name
         Branch branchToRmv = branchDirectory.getBranchByUserInput();
         branchDirectory.rmvBranch(branchToRmv, auth);

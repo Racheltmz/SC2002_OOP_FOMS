@@ -1,12 +1,13 @@
 package staff;
 
-import branch.Branch;
-import io.IXlsxSerializable;
-import utils.InputScanner;
-
-import static authentication.Hashing.genHash;
+import static authentication.Hashing.*;
 
 import java.util.UUID;
+
+import branch.Branch;
+import exceptions.ExcelFileNotFound;
+import io.IXlsxSerializable;
+import utils.InputScanner;
 
 // Staff Details
 public class Staff implements IXlsxSerializable {
@@ -115,8 +116,9 @@ public class Staff implements IXlsxSerializable {
 
     /**
      * Change password
+     * @throws ExcelFileNotFound 
      */
-    public void changePassword() {
+    public void changePassword() throws ExcelFileNotFound {
         InputScanner sc = InputScanner.getInstance();
         System.out.print("\nPlease enter new password: ");
         String newPassword = sc.next();
