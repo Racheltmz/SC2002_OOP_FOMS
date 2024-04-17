@@ -169,7 +169,7 @@ public class StaffDirectory {
     public int getNumStaffBranchRole(Branch branch, StaffRoles role) {
         int count = 0;
         for (Staff staff: this.staffDirectory) {
-            if (staff.getBranch().equals(branch) && staff.getRole() == role) {
+            if (staff.getBranch() != null && staff.getBranch().equals(branch) && staff.getRole() == role) {
                 count++;
             }
         }

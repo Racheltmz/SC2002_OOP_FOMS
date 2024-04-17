@@ -117,7 +117,7 @@ public class AdminStaffActions implements IAdminStaffActions {
         int numStaff = staffDirectory.getNumStaffBranchRole(branch, StaffRoles.STAFF);
         // Check if the staff quota has exceeded
         if (numStaff == branch.getStaffQuota()) {
-            System.out.print("The staff quota for " + branch.getLocation() + " is already met.");
+            System.out.println("The staff quota for " + branch.getLocation() + " is already met.");
             return false;
         } else {
             System.out.print("The staff quota for " + branch.getLocation() + " has not been met.");
@@ -131,10 +131,10 @@ public class AdminStaffActions implements IAdminStaffActions {
         int numManagers = staffDirectory.getNumStaffBranchRole(branch, StaffRoles.MANAGER);
         // Check if the manager quota has exceeded
         if (numManagers == branch.getManagerQuota()) {
-            System.out.print("Unable to assign staff as a manager. The manager quota for " + branch.getLocation() + " is already met.");
+            System.out.println("Unable to assign staff as a manager. The manager quota for " + branch.getLocation() + " is already met.");
             return false;
         } else {
-            System.out.print("Able to assign staff as a manager. The manager quota for " + branch.getLocation() + " has not been met.");
+            System.out.println("Able to assign staff as a manager. The manager quota for " + branch.getLocation() + " has not been met.");
             return true;
         }
     }
@@ -148,11 +148,11 @@ public class AdminStaffActions implements IAdminStaffActions {
             case STAFF:
                 if (assignManager(staff.getBranch())) {
                     staffDirectory.upgradeCredentials(staff);
-                    System.out.print("Staff member with ID " + staff.getStaffID() + " has been promoted to Manager.");
+                    System.out.println("Staff member with ID " + staff.getStaffID() + " has been promoted to Manager.");
                 }
                 break;
             case MANAGER:
-                System.out.print("Manager cannot be promoted.");
+                System.out.println("Manager cannot be promoted.");
                 break;
             case ADMIN:
                 System.out.println("Admin cannot be promoted.");
