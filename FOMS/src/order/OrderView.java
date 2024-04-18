@@ -22,8 +22,8 @@ public class OrderView {
         System.out.println("|                                      |");
         String totalString = String.format("| Total: %.2f", order.calculateTotal());
         System.out.println(formatString(totalString, 39) + "|");
+        System.out.println("|                                      |");
         if (order.isTakeaway()) {
-            System.out.println("|                                      |");
             System.out.println("| Pickup option: Takeaway              |");
         } else {
             System.out.println("| Pickup option: Dine-in               |");

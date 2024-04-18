@@ -6,8 +6,8 @@ public class Payment {
     private String paymentMethod;
 
     // Constructor
-    public Payment(String paymentMethod){
-        this.paymentMethod = paymentMethod;
+    public Payment(String method){
+        this.paymentMethod = method;
     }
 
     // Getter
