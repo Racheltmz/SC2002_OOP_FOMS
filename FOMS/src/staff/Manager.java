@@ -11,7 +11,8 @@ import static authorisation.Authorisation.authoriseManager;
 // Manager details
 public class Manager extends Staff {
     // Attributes
-    private final IManagerActionsMenu managerActions = new ManagerActionsMenu();
+    private final IManagerMenuActions managerActions = new ManagerMenuActions();
+    StaffFilterActions filterActions = new StaffFilterActions();
 
     // Constructor
     public Manager(String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
@@ -25,29 +26,28 @@ public class Manager extends Staff {
     // Display staff list by branch
     public void displayStaffList(StaffRoles auth, Branch branch) {
         if (authoriseManager(auth)) {
-            IFilter staffFilterBranch = new StaffFilterBranch();
-            staffFilterBranch.filter(branch.getName());
+            filterActions.applyBranchFilter(branch.getName());
         }
     }
 
     // Add menu item
-    public void addMenuItem(StaffRoles auth) {
+    public void addMenuItem(StaffRoles auth, Branch branch) {
         if (authoriseManager(auth)){
-            managerActions.addMenuItem();
+            managerActions.addMenuItem(branch);
         }
     }
 
     // Update menu item
-    public void updateMenuItem(StaffRoles auth) {
+    public void updateMenuItem(StaffRoles auth, Branch branch) {
         if (authoriseManager(auth)){
-            managerActions.updateMenuItem();
+            managerActions.updateMenuItem(branch);
         }
     }
 
     // Remove menu item
-    public void removeMenuItem(StaffRoles auth) {
+    public void removeMenuItem(StaffRoles auth, Branch branch) {
         if (authoriseManager(auth)){
-            managerActions.removeMenuItem();
+            managerActions.removeMenuItem(branch);
         }
     }
 }

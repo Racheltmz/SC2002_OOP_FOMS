@@ -3,7 +3,7 @@ package order;
 import menu.MenuItem;
 import payment.Payment;
 import payment.PaymentDirectory;
-import utils.IXlsxSerializable;
+import io.IXlsxSerializable;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -111,7 +111,7 @@ public class Order implements IXlsxSerializable {
         // Display payment methods
         if (paymentDirectory.printPaymentMethods())
         {
-            int choice = validateIntRange("How would you like to pay?", 1, paymentMethodList.size());
+            int choice = validateIntRange("How would you like to pay?", 1, paymentMethodList.size(), true);
             String paymentOption = paymentMethodList.get(choice - 1);
             Payment paymentOpt = new Payment(paymentOption);
             return paymentOpt;

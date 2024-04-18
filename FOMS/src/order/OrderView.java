@@ -5,22 +5,6 @@ import menu.MenuItem;
 public class OrderView {
     // Receipt information for customer
     public static void printReceipt(Order order) {
-//        System.out.println("==========================");
-//        System.out.println("|   " + "Your order ID is " + order.getOrderID() + "   |");
-//        System.out.println("|" + "Your order is: " + "|");
-//        for (MenuItem item : order.getItems()) {
-//            System.out.println("- " + item.getName());
-//        }
-//        System.out.println("Your customisations are: ");
-//        for (String customization : order.getCustomisation()) {
-//            System.out.println("- " + customization);
-//        }
-//        if (order.isTakeaway()) {
-//            System.out.println("You chose to takeaway");
-//        } else {
-//            System.out.println("You chose to dine in");
-//        }
-//        System.out.println("Thank you for shopping at " + order.getBranch() + "!");
         System.out.println("========================================");
         System.out.println("|            Order Receipt             |");
         System.out.println("========================================");
@@ -36,9 +20,8 @@ public class OrderView {
             System.out.println("|   - " + formatString(customization, 33) + "|");
         }
         System.out.println("|                                      |");
-        System.out.printf("| Total: %.2f", order.calculateTotal());
-        System.out.println("                          |");
-        System.out.println("|                                      |");
+        String totalString = String.format("| Total: %.2f", order.calculateTotal());
+        System.out.println(formatString(totalString, 39) + "|");
         if (order.isTakeaway()) {
             System.out.println("|                                      |");
             System.out.println("| Pickup option: Takeaway              |");

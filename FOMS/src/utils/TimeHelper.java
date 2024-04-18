@@ -12,7 +12,7 @@ import java.util.Date;
  * time class for conversion of Calendar values to printable String values
  * <p>
  * Time class also contains validation methods for validating whether a certain date is valid
-*/
+ */
 
 public class TimeHelper {
 
@@ -149,4 +149,3 @@ public class TimeHelper {
 
 
 }
-

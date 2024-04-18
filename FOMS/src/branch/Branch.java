@@ -67,6 +67,8 @@ public class Branch implements IXlsxSerializable {
         return location;
     }
 
+    public void setLocation(String location){ this.location = location; }
+
     public int getStaffQuota() {
         return this.staffQuota;
     }

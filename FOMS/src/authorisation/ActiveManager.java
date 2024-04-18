@@ -45,22 +45,22 @@ public class ActiveManager implements IActiveUser {
                 this.getActiveStaff().displayStaffList(this.activeStaff.getRole(), this.activeStaff.getBranch());
                 break;
             case 2:
-                this.getActiveStaff().addMenuItem(this.activeStaff.getRole());
+                this.getActiveStaff().addMenuItem(this.activeStaff.getRole(), this.activeStaff.getBranch());
                 break;
             case 3:
-                this.getActiveStaff().updateMenuItem(this.activeStaff.getRole());
+                this.getActiveStaff().updateMenuItem(this.activeStaff.getRole(), this.activeStaff.getBranch());
                 break;
             case 4:
-                this.getActiveStaff().removeMenuItem(this.activeStaff.getRole());
+                this.getActiveStaff().removeMenuItem(this.activeStaff.getRole(), this.activeStaff.getBranch());
                 break;
             case 5:
                 this.getActiveStaff().getNewOrders(this.activeStaff.getBranch());
                 break;
             case 6:
-                this.getActiveStaff().getOrderDetails();
+                this.getActiveStaff().getOrderDetails(this.activeStaff.getBranch());
                 break;
             case 7:
-                this.getActiveStaff().setOrderReady();
+                this.getActiveStaff().setOrderReady(this.activeStaff.getBranch());
                 break;
             case 8:
                 this.getActiveStaff().changePassword();

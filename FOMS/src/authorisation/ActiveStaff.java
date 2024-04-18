@@ -44,10 +44,10 @@ public class ActiveStaff implements IActiveUser {
                 this.getActiveStaff().getNewOrders(this.activeStaff.getBranch());
                 break;
             case 2:
-                this.getActiveStaff().getOrderDetails();
+                this.getActiveStaff().getOrderDetails(this.activeStaff.getBranch());
                 break;
             case 3:
-                this.getActiveStaff().setOrderReady();
+                this.getActiveStaff().setOrderReady(this.activeStaff.getBranch());
                 break;
             case 4:
                 this.getActiveStaff().changePassword();

@@ -1,5 +1,6 @@
 package authorisation;
 
+import payment.PaymentDirectory;
 import utils.InputScanner;
 import staff.Admin;
 
@@ -65,10 +66,10 @@ public class ActiveAdmin implements IActiveUser {
                 this.getActiveStaff().transferStaff(this.activeStaff.getRole());
                 break;
             case 9:
-                this.getActiveStaff().addPayment(this.activeStaff.getRole());
+                PaymentDirectory.addPaymentMtd();
                 break;
             case 10:
-                this.getActiveStaff().removePayment(this.activeStaff.getRole());
+                PaymentDirectory.removePaymentMtd();
                 break;
             case 11:
                 this.getActiveStaff().changePassword();

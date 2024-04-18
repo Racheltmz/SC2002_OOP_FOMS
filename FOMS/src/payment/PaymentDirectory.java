@@ -9,22 +9,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
-import static authorisation.Authorisation.authoriseAdmin;
-import static utils.Initialisation.initialisePaymentRecords;
 import static utils.ValidateHelper.validateIntRange;
 import static utils.ValidateHelper.validateString;
 
 // Records of payment methods
 public class PaymentDirectory {
     // Attributes
-    private final ArrayList<Payment> paymentDirectory;
     private static PaymentDirectory paymentSingleton = null;
-    private PaymentDirectory() {
-        this.paymentDirectory = initialisePaymentRecords();
-    }
 
     public static PaymentDirectory getInstance() {
         if (paymentSingleton == null) {
@@ -35,44 +28,44 @@ public class PaymentDirectory {
 
     // Functionalities
     // Get all payment methods
-    public ArrayList<Payment> getPaymentDirectory() {
-        return this.paymentDirectory;
-    }
+//    public ArrayList<Payment> getPaymentDirectory() {
+//        return this.paymentDirectory;
+//    }
 
     /**
      * Check if there are any existing payment methods
      *
      * @return boolean
      */
-    public boolean methodsExist() {
-        try {
-            if (this.paymentDirectory.isEmpty())
-                throw new EmptyListException("No payment methods.");
-            else
-                return true;
-        } catch (EmptyListException e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
+//    public boolean methodsExist() {
+//        try {
+//            if (this.paymentDirectory.isEmpty())
+//                throw new EmptyListException("No payment methods.");
+//            else
+//                return true;
+//        } catch (EmptyListException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return false;
+//    }
 
     // Get a specific payment method
     // TODO: NEW: Review if we shld do something similar to OrderQueue getOrderById
-    public Payment getPaymentMtd(String method) {
-        if (methodsExist()) {
-            try {
-                // Return payment object if it can be found
-                for (Payment payment : this.paymentDirectory) {
-                    if (Objects.equals(payment.getPaymentMethod(), method))
-                        return payment;
-                }
-                throw new ItemNotFoundException("Payment method cannot be found ");
-            } catch (ItemNotFoundException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        return null;
-    }
+//    public Payment getPaymentMtd(String method) {
+//        if (methodsExist()) {
+//            try {
+//                // Return payment object if it can be found
+//                for (Payment payment : this.paymentDirectory) {
+//                    if (Objects.equals(payment.getPaymentMethod(), method))
+//                        return payment;
+//                }
+//                throw new ItemNotFoundException("Payment method cannot be found ");
+//            } catch (ItemNotFoundException e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
+//        return null;
+//    }
 
     // Add payment method
     // TODO: RACHEL HELP TO TEST NEW PERSISTENCE METHOD
@@ -105,7 +98,7 @@ public class PaymentDirectory {
         // Request for which to remove if payment methods exist
         if (printPaymentMethods()) {
             // Remove method via integer user input
-            int index = validateIntRange("Please enter option of which payment method to remove: ", 1, paymentMethodList.size());
+            int index = validateIntRange("Please enter option of which payment method to remove: ", 1, paymentMethodList.size(), true);
             String paymentMethodToRemove = paymentMethodList.get(index - 1);
             paymentMethodList.remove(paymentMethodToRemove);
 
@@ -118,15 +111,15 @@ public class PaymentDirectory {
         }
     }
 
-    public void displayPaymentMethods()
-    {
-        int counter = 1;
-        for (Payment payment : paymentDirectory)
-        {
-            System.out.println(counter + ". " + payment.getPaymentMethod());
-            counter++;
-        }
-    }
+//    public void displayPaymentMethods()
+//    {
+//        int counter = 1;
+//        for (Payment payment : paymentDirectory)
+//        {
+//            System.out.println(counter + ". " + payment.getPaymentMethod());
+//            counter++;
+//        }
+//    }
 
     public static ArrayList<String> readPaymentMethods(){
         ArrayList<String> list = new ArrayList<>();
