@@ -56,7 +56,7 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
         ArrayList<Order> orders = new ArrayList<>();
 
         // Deserialize records
-        List<String[]> XlsxData = deserializeRecords(this.orderXlsx, this.header, 7, 1);
+        List<String[]> XlsxData = deserializeRecords(this.orderXlsx, 7, 1);
         if (XlsxData.isEmpty()) {
             serializeHeader(this.orderXlsx, this.header);
             return orders;
