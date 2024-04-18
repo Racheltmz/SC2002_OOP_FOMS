@@ -1,5 +1,8 @@
 package branch;
 
+import menu.Menu;
+import menu.MenuDirectory;
+import menu.MenuItem;
 import staff.Staff;
 import staff.StaffDirectory;
 import staff.StaffRoles;
@@ -92,6 +95,8 @@ public class BranchDirectory {
     // Remove branch
     public void rmvBranch(Branch branchToRmv) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
+        MenuDirectory menuDirectory = MenuDirectory.getInstance();
+
         // Remove staff under the branch
         ArrayList<Staff> staffToRmv = new ArrayList<>();
         for (Staff staff: staffDirectory.getStaffDirectory()) {
@@ -100,6 +105,12 @@ public class BranchDirectory {
             }
         }
         staffDirectory.rmvStaffByBranch(staffToRmv);
+
+        // Remove menu items under the branch
+        String branchName = branchToRmv.getName();
+        ArrayList <MenuItem> menuItems = menuDirectory.getMenu(branchName).getMenuItems();
+        menuDirectory.rmvMenuByBranch(menuItems, branchName);
+
         // Remove branch
         this.branchDirectory.removeIf(branch -> branch.getName().equals(branchToRmv.getName()));
         BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();

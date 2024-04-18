@@ -4,6 +4,8 @@ import branch.BranchDirectory;
 import exceptions.EmptyListException;
 import exceptions.ItemNotFoundException;
 import io.MenuItemXlsxHelper;
+import io.StaffXlsxHelper;
+import staff.Staff;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -191,5 +193,13 @@ public class MenuDirectory {
             selection = items.get(menuItemIndex - 1);
         }
         return selection;
+    }
+
+    public void rmvMenuByBranch(ArrayList<MenuItem> menuItems, String branchName) {
+        MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
+        for (MenuItem menuItemToRmv: menuItems) {
+            this.menuDirectory.removeIf(menuItem -> menuItem.getBranch().equals(branchName));
+            menuItemXlsxHelper.removeXlsx(menuItemToRmv.getId());
+        }
     }
 }

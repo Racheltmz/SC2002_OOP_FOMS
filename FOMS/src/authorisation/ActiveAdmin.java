@@ -32,8 +32,9 @@ public class ActiveAdmin implements IActiveUser {
         System.out.printf("| StaffID: %s\n| Role: %s\n", getActiveStaff().getStaffID(),
                 getActiveStaff().getRole());
         System.out.println("-".repeat(30));
-        System.out.println("Please select option (3 to quit): ");
-        System.out.println("1. Change Password\n2. Logout");
+        System.out.println("Please select option (12 to quit): ");
+        System.out.println("1. Add staff account\n2. Update staff details\n3. Remove staff account\n4. Filter staff\n5. Open branch\n6. Close branch\n" +
+                "7. Promote staff\n8. Transfer staff\n9. Add new payment method\n10. Remove payment method\n11. Change password\n12. Logout");
         int staffChoice = sc.nextInt();
         sc.nextLine();
         // TODO: AFREEN: can we make sub switch statements so we further divide the functionality
