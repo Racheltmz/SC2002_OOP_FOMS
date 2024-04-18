@@ -16,7 +16,6 @@ public class OrderTimerTask extends TimerTask {
     public void run() {
         assert this.order.getStatus() == OrderStatus.READY;
         this.order.setStatus(OrderStatus.CANCELLED);
-        System.out.println(this.order.getOrderID() + " Order " + this.order.getStatus());
         this.timer.cancel();
     }
 }

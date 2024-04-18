@@ -3,18 +3,27 @@ package payment;
 import exceptions.ItemNotFoundException;
 import staff.StaffRoles;
 import exceptions.EmptyListException;
+import utils.InputScanner;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Scanner;
 
 import static authorisation.Authorisation.authoriseAdmin;
+import static utils.Initialisation.initialisePaymentRecords;
+import static utils.ValidateHelper.validateIntRange;
+import static utils.ValidateHelper.validateString;
 
 // Records of payment methods
 public class PaymentDirectory {
     // Attributes
-    private final ArrayList<Payment> paymentDirectory = null;
+    private final ArrayList<Payment> paymentDirectory;
     private static PaymentDirectory paymentSingleton = null;
     private PaymentDirectory() {
+        this.paymentDirectory = initialisePaymentRecords();
     }
 
     public static PaymentDirectory getInstance() {
@@ -66,18 +75,101 @@ public class PaymentDirectory {
     }
 
     // Add payment method
-    public void addPaymentMtd(Payment payment, StaffRoles auth) {
-        if (authoriseAdmin(auth)) {
-            if (methodsExist())
-                this.paymentDirectory.add(payment);
+    // TODO: RACHEL HELP TO TEST NEW PERSISTENCE METHOD
+    public static void addPaymentMtd() {
+        InputScanner sc = InputScanner.getInstance();
+
+        // Read payment method data
+        ArrayList<String> paymentMethodList = readPaymentMethods();
+        printPaymentMethods();
+
+        // Add a new method
+        String newPaymentMethod = validateString("Please enter name of new payment method: ");
+        newPaymentMethod = Character.toUpperCase(newPaymentMethod.charAt(0)) + newPaymentMethod.substring(1);
+        paymentMethodList.add(newPaymentMethod);
+
+        // Save data
+        writePaymentMethod(paymentMethodList);
+
+        // Display updated payment method data
+        System.out.println("Updated list of payment methods are: ");
+        printPaymentMethods();
+    }
+
+    public static void removePaymentMtd() {
+        InputScanner sc = InputScanner.getInstance();
+
+        // Read payment method data
+        ArrayList<String> paymentMethodList = readPaymentMethods();
+
+        // Request for which to remove if payment methods exist
+        if (printPaymentMethods()) {
+            // Remove method via integer user input
+            int index = validateIntRange("Please enter option of which payment method to remove: ", 1, paymentMethodList.size());
+            String paymentMethodToRemove = paymentMethodList.get(index - 1);
+            paymentMethodList.remove(paymentMethodToRemove);
+
+            // Save new payment method data
+            writePaymentMethod(paymentMethodList);
+
+            // Display updated payment method data
+            System.out.println("Payment method removed successfully.\nUpdated list of payment methods:");
+            printPaymentMethods();
         }
     }
 
-    // Remove payment method
-    public void rmvPaymentMtd(String paymentMtd, StaffRoles auth) {
-        if (authoriseAdmin(auth)) {
-            if (methodsExist())
-                this.paymentDirectory.remove(getPaymentMtd(paymentMtd));
+    public void displayPaymentMethods()
+    {
+        int counter = 1;
+        for (Payment payment : paymentDirectory)
+        {
+            System.out.println(counter + ". " + payment.getPaymentMethod());
+            counter++;
+        }
+    }
+
+    public static ArrayList<String> readPaymentMethods(){
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            // Create the Scanner with the data file
+            Scanner fileIn = new Scanner(new File("payment_methods.txt"));
+            while (fileIn.hasNext()) {
+                // Add to the ArrayList
+                list.add(fileIn.nextLine());
+            }
+            fileIn.close();
+        } catch (IOException e) {
+            System.out.println("No payment methods exist currently.");
+        }
+        return list;
+    }
+
+    private static void writePaymentMethod(ArrayList<String> paymentMethodList) {
+        try {
+            PrintWriter fileOut = new PrintWriter("payment_methods.txt");
+            for (String method : paymentMethodList) {
+                fileOut.println(method);
+            }
+            fileOut.close();
+        } catch (IOException e) {
+            System.out.println("Unable to add payment method.");
+        }
+    }
+
+    public static boolean printPaymentMethods() {
+        ArrayList<String> paymentList = readPaymentMethods();
+        if (!paymentList.isEmpty()) {
+            int counter = 1;
+            System.out.println("Available payment methods: ");
+            for (String item : paymentList) {
+                System.out.println(counter + ". " + item + " payment");
+                counter++;
+            }
+            System.out.println();
+            return true;
+        } else {
+            System.out.println("No payment methods exist currently.");
+            return false;
         }
     }
 }

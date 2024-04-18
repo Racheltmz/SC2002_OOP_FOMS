@@ -7,8 +7,7 @@ import menu.MenuItem;
 import menu.Menu;
 import java.util.InputMismatchException;
 
-import static utils.ValidateHelper.validateDouble;
-import static utils.ValidateHelper.validateInt;
+import static utils.ValidateHelper.*;
 
 // Manager's permissions
 public class ManagerActionsMenu implements IManagerActionsMenu {
@@ -23,13 +22,10 @@ public class ManagerActionsMenu implements IManagerActionsMenu {
             String branch = branchDirectory.getBranchByUserInput().getName();
 
             // Get details of new menu item
-            System.out.println("Enter name: ");
-            String name = sc.next();
+            String name = validateString("Enter name: ");
             double price = validateDouble("Enter price ($): ");
-            System.out.println("Enter category: ");
-            String category = sc.next();
-            System.out.println("Enter description: ");
-            String description = sc.next();
+            String category = MenuDirectory.getCategoryByUserInput();
+            String description = validateString("Enter description: ");
 
             // Add the new menu item to the menu
             MenuItem newItem = new MenuItem(name, price, branch, category, description);

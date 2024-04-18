@@ -59,7 +59,7 @@ public class BaseXlsxHelper {
      */
     private static int getIndexById(XSSFSheet sheet, UUID id) {
         try {
-            for (int row = 1; row < sheet.getLastRowNum(); row++) {
+            for (int row = 1; row <= sheet.getLastRowNum(); row++) {
                 if (sheet.getRow(row).getCell(0).toString().equalsIgnoreCase(String.valueOf(id))) {
                     return row;
                 }
@@ -80,7 +80,7 @@ public class BaseXlsxHelper {
      */
     private static int getIndexById(XSSFSheet sheet, String id) {
         try {
-            for (int row = 1; row < sheet.getLastRowNum(); row++){
+            for (int row = 1; row <= sheet.getLastRowNum(); row++){
                 if(sheet.getRow(row).getCell(0).toString().equalsIgnoreCase(id)){
                     return row;
                 }

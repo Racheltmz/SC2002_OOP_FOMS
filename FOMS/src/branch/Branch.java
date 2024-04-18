@@ -42,6 +42,9 @@ public class Branch implements IXlsxSerializable {
         }
     }
 
+    public static void displayBranches() {
+    }
+
     // Serialization to XLSX
     public String[] toXlsx() {
         return new String[] { String.valueOf(id), name, location, String.valueOf(staffQuota) };

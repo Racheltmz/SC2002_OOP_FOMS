@@ -1,8 +1,12 @@
 package utils;
 
+import exceptions.InputStringMismatch;
+import exceptions.InvalidInputException;
 import exceptions.InvalidStaffQuotaException;
 
 import java.util.InputMismatchException;
+
+import static utils.InputScanner.getInstance;
 
 public class ValidateHelper {
     // Check integer
@@ -27,22 +31,12 @@ public class ValidateHelper {
     }
 
     public static int validateIntRange(String msg, int start, int end) {
-        InputScanner sc = InputScanner.getInstance();
-        boolean success = false;
-        int input = 0;
-        do {
-            try {
-                input = validateInt(msg);
-                if (start <= input && input <= end) {
-                    success = true;
-                } else {
-                    throw new InvalidStaffQuotaException("Invalid range! Please re-enter.");
-                }
-            }  catch (InvalidStaffQuotaException e) {
-                System.out.println(e.getMessage());
-                sc.nextLine();
-            }
-        } while (!success);
+        InputScanner sc = getInstance();
+        int input = validateInt(msg);
+        while (input > end || input < start) {
+            System.out.println("Please enter a valid integer.\n");
+            input = validateInt(msg);
+        }
         return input;
     }
 
@@ -66,4 +60,31 @@ public class ValidateHelper {
         } while (!success);
         return input;
     }
+
+    public static String validateString(String msg) {
+        InputScanner sc = InputScanner.getInstance();
+        boolean success = false;
+        String input = null;
+        do {
+            try {
+                System.out.println(msg);
+                input = sc.next();
+                input += sc.nextLine();
+                if (input == null) {
+                    System.out.println("Please enter a valid input.\n");
+                }
+                else if (input != null) {
+                    success = true;
+                }
+                else if (!input.matches("[a-zA-Z]+")) {
+                    throw new InputStringMismatch();
+                }
+            }  catch (InputStringMismatch e) {
+                System.out.println("Please enter a valid input.\n");
+                sc.nextLine();
+            }
+        } while (!success);
+        return input;
+    }
+
 }
