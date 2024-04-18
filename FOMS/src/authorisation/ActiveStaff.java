@@ -1,44 +1,68 @@
 package authorisation;
 
+import staff.StaffRoles;
 import utils.InputScanner;
 import staff.Staff;
 
-// Authorised operations for active user with a staff role
+import static authorisation.ActiveView.displayMenu;
+
+/**
+ * Authorised operations for active user with a staff role
+ */
 public class ActiveStaff implements IActiveUser {
-    // Attribute
+    /**
+     * The staff record of the active staff.
+     */
     private Staff activeStaff;
 
-    // Constructor
+    /**
+     * Constructor for ActiveStaff, initialises the activeStaff to null.
+     */
     public ActiveStaff() { this.activeStaff = null; }
-    
+
+    /**
+     * Constructor for ActiveStaff, updates the active staff if they log in.
+     */
     public ActiveStaff(Staff activeStaff) {
         this.activeStaff = activeStaff;
     }
 
-    // Functionalities
+    /**
+     * Gets the active staff record.
+     *
+     * @return Staff record.
+     */
     public Staff getActiveStaff() {
         return activeStaff;
     }
 
+    /**
+     * Sets the active staff record.
+     */
     public void setActiveStaff(Staff activeStaff) {
         this.activeStaff = activeStaff;
     }
 
+    /**
+     * Logouts by setting the active staff to null.
+     */
     public void logout() {
         setActiveStaff(null);
     }
 
+    /**
+     * Displays the permissions the staff is authorised to do.
+     */
     public void showOptions() {
         InputScanner sc = InputScanner.getInstance();
-        System.out.println("-".repeat(30));
-        System.out.printf("| StaffID: %s\n| Role: %s\n", getActiveStaff().getStaffID(),
-                getActiveStaff().getRole());
-        System.out.println("-".repeat(30));
-        System.out.println("Please select option (3 to quit): ");
-        System.out.println(
-                "1. Display new orders\n2. View details of an order\n3. Set Order as Ready\n4. Change Password\n5. Logout");
+
+        String staffID = getActiveStaff().getStaffID();
+        StaffRoles role = getActiveStaff().getRole();
+
+        displayMenu("1. Display new orders\n2. View details of an order\n3. Set Order as Ready\n4. Change Password\n5. Logout", staffID, role);
         int staffChoice = sc.nextInt();
         sc.nextLine();
+
         switch (staffChoice) {
             case 1:
                 this.getActiveStaff().getNewOrders(this.activeStaff.getBranch());

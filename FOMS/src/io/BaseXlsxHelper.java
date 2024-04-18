@@ -20,32 +20,30 @@ public class BaseXlsxHelper {
      * Reads data from an Excel (XLSX) file and returns a List of String arrays representing rows and columns.
      *
      * @param sheetName The Sheet object representing the Excel sheet to read from.
-     * @param header Headers for the file
      * @param skip  How many rows in the file to skip (set 1 for header)
      * @return A list of string arrays containing all the Excel values
      */
-    protected List<String[]> deserializeRecords(String sheetName, String[] header, int numCols, int skip) {
+    protected List<String[]> deserializeRecords(String sheetName, int numCols, int skip) {
         List<String[]> result = new ArrayList<>();
         XSSFSheet sheet = getSheet(sheetName);
-        for (int i = skip; i < sheet.getPhysicalNumberOfRows(); i++) {
-            Row row = sheet.getRow(i);
-            if (row != null) {
-                List<String> rowData = new ArrayList<>();
-                for (int j = 0; j < row.getLastCellNum(); j++) {
-                    Cell cell = row.getCell(j);
-                    if (cell != null) {
-                        rowData.add(cell.toString());
-                    } else {
-                        rowData.add(""); // Empty cell
+        if (sheet != null) {
+            for (int i = skip; i < sheet.getPhysicalNumberOfRows(); i++) {
+                Row row = sheet.getRow(i);
+                if (row != null) {
+                    List<String> rowData = new ArrayList<>();
+                    for (int j = 0; j < row.getLastCellNum(); j++) {
+                        Cell cell = row.getCell(j);
+                        if (cell != null) {
+                            rowData.add(cell.toString());
+                        } else {
+                            rowData.add(""); // Empty cell
+                        }
                     }
+                    String[] record = rowData.toArray(new String[0]);
+                    if (record.length == numCols)
+                        result.add(record);
                 }
-                String[] record = rowData.toArray(new String[0]);
-                if (record.length == numCols)
-                    result.add(record);
             }
-        }
-        if (result.isEmpty()) {
-            serializeHeader(sheetName, header);
         }
         return result;
     }
@@ -99,8 +97,8 @@ public class BaseXlsxHelper {
             FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName);
             // Write to file
             workbook.write(fileOut);
-        } catch (IOException ioException) {
-            System.out.println("Error: unable to add header.");
+        } catch (IOException | NullPointerException e) {
+            System.out.println("Unable to add header. Please check the file storage.");
         }
     }
 
@@ -119,8 +117,8 @@ public class BaseXlsxHelper {
             FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName);
             // Write to file
             workbook.write(fileOut);
-        } catch (IOException e) {
-            System.out.println("Unable to add record. Please check with admin on the file storage.");
+        } catch (IOException | NullPointerException e) {
+            System.out.println("Unable to add record. Please check the file storage.");
         }
     }
 
@@ -140,7 +138,7 @@ public class BaseXlsxHelper {
             // Write to file
             workbook.write(fileOut);
         } catch (IOException e) {
-            System.out.println("Unable to update record. Please check with admin on the file storage.");
+            System.out.println("Unable to update record. Please check the file storage.");
         }
     }
 
@@ -153,7 +151,7 @@ public class BaseXlsxHelper {
             // Write to file
             workbook.write(fileOut);
         } catch (IOException e) {
-            System.out.println("Unable to update record. Please check with admin on the file storage.");
+            System.out.println("Unable to update record. Please check the file storage.");
         }
     }
 
@@ -176,7 +174,7 @@ public class BaseXlsxHelper {
                 workbook.write(fileOut);
             }
         } catch (IOException e) {
-            System.out.println("Unable to delete record. Please check with admin on the file storage.");
+            System.out.println("Unable to delete record. Please check the file storage.");
         }
 
     }

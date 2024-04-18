@@ -57,8 +57,8 @@ public class FileIOHelper {
     public static FileInputStream getFileInputStream(String name) {
         try {
             return new FileInputStream(getFile(name));
-        } catch (IOException ioException) {
-            System.out.println("Error: unable to add header.");
+        } catch (IOException | NullPointerException e) {
+            System.out.println("File does not exist. Please check the file path.");
         }
         return null;
     }
@@ -83,7 +83,7 @@ public class FileIOHelper {
         XSSFSheet sheet = null;
         try {
             // Reading file from local directory
-            FileInputStream file = FileIOHelper.getFileInputStream(filePath);
+            FileInputStream file = getFileInputStream(filePath);
 
             // Create Workbook instance holding reference to .xlsx file
             assert file != null;
@@ -95,10 +95,8 @@ public class FileIOHelper {
             // Closing workbook and file output streams
             workbook.close();
             file.close();
-        } catch (IOException ioException) {
-            System.out.println("Error reading the Excel file: " + ioException.getMessage());
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+        } catch (IOException | NullPointerException e) {
+            System.out.println("Unable to load records. Please check the file storage.");
         }
         return sheet;
     }
