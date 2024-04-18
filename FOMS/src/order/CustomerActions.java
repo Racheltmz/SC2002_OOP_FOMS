@@ -88,7 +88,6 @@ public class CustomerActions {
                     // Order Processing and Bill
                     Order order = new Order(branchName, selectedItems, customisations, takeaway, paymentMethod);
                     orderQueue.addOrder(order);
-                    System.out.println("Total is " + order.calculateTotal());
 
                     if (paymentMethod != null) {
                         // Verify Order and Payment

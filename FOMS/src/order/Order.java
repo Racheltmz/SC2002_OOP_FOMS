@@ -98,7 +98,7 @@ public class Order implements IXlsxSerializable {
         for (MenuItem item : items) {
             total += item.getPrice();
         }
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("0.00");
         return Double.parseDouble(df.format(total));
     }
 
