@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import exceptions.ExcelFileNotFound;
 import io.BranchXlsxHelper;
+import menu.MenuDirectory;
 import staff.Staff;
 import staff.StaffDirectory;
 import staff.StaffRoles;
@@ -86,26 +87,38 @@ public class BranchDirectory {
         }
     }
 
-    // Remove branch
     public void rmvBranch(Branch branchToRmv, StaffRoles auth) throws ExcelFileNotFound {
-        if (authoriseAdmin(auth)) {
-            StaffDirectory staffDirectory = StaffDirectory.getInstance();
-            // Remove staff under the branch
-            ArrayList<Staff> staffToRmv = new ArrayList<>();
-            for (Staff staff: staffDirectory.getStaffDirectory()) {
-                if (staff.getRole() != StaffRoles.ADMIN && staff.getBranch().equals(branchToRmv)) {
-                    staffToRmv.add(staff);
-                }
+        StaffDirectory staffDirectory = StaffDirectory.getInstance();
+        MenuDirectory menuDirectory = MenuDirectory.getInstance();
+    
+        // Remove staff under the branch
+        ArrayList<Staff> staffToRmv = new ArrayList<>();
+        for (Staff staff : staffDirectory.getStaffDirectory()) {
+            if (staff.getRole() != StaffRoles.ADMIN && staff.getBranch().equals(branchToRmv)) {
+                staffToRmv.add(staff);
             }
-            staffDirectory.rmvStaffByBranch(staffToRmv, auth);
-            // Remove branch
-            this.branchDirectory.removeIf(branch -> branch.getName().equals(branchToRmv.getName()));
-            BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
-            branchXlsxHelper.removeXlsx(branchToRmv.getId());
-            System.out.println("Branch successfully closed and staff records for this branch have been deleted.");
         }
+        staffDirectory.rmvStaffByBranch(staffToRmv, auth);
+    
+        // // Remove menu items associated with the branch
+        // Menu branchMenu = menuDirectory.getMenu(branchToRmv.getName());
+        // if (branchMenu != null) {
+        //     ArrayList<MenuItem> menuItemsToRemove = branchMenu.getMenuItems();
+        //     for (MenuItem menuItem : menuItemsToRemove) {
+        //         menuDirectory.rmvMenu(branchToRmv.getName()); // Pass branch name instead of undefined variable
+        //     }
+        // }
+        // Remove menu items associated with the branch
+         menuDirectory.rmvMenu(branchToRmv.getName());
+    
+        // Remove branch
+        this.branchDirectory.removeIf(branch -> branch.getName().equals(branchToRmv.getName()));
+        BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
+        branchXlsxHelper.removeXlsx(branchToRmv.getId());
+        System.out.println("Branch successfully closed and staff records for this branch have been deleted.");
     }
-
+    
+    
     public int getNumBranches() {
         return branchDirectory.size();
     }

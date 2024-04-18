@@ -78,4 +78,24 @@ public class MenuDirectory {
         Menu menu = getMenu(branch);
         return menu.getMenuItems().size();
     }
+
+
+        // Remove menu and associated menu items
+    public void rmvMenu(String branchName) {
+        MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
+        // Iterate through the menu directory to find menus associated with the branch
+        for (Menu menu : menuDirectory) {
+            if (menu.getBranch().getName().equals(branchName)) { 
+                // Remove all menu items associated with the menu
+                for (MenuItem menuItem : menu.getMenuItems()) {
+                    menuItemXlsxHelper.removeXlsx(menuItem.getId());
+                }
+                // Remove the menu itself from the menu directory
+                menuDirectory.remove(menu);
+                break; // Exit loop after removing the menu
+            }
+        }
+    }
+  
 }
+    
