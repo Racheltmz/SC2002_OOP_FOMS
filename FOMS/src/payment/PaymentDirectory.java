@@ -68,7 +68,6 @@ public class PaymentDirectory {
 //    }
 
     // Add payment method
-    // TODO: RACHEL HELP TO TEST NEW PERSISTENCE METHOD
     public static void addPaymentMtd() {
         InputScanner sc = InputScanner.getInstance();
 
