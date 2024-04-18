@@ -22,7 +22,6 @@ public class Order implements IXlsxSerializable {
     private boolean takeaway;
     private OrderStatus status;
     private Payment payment;
-    private PaymentDirectory paymentDirectory;
 
     // Constructor
     public Order(String branch, ArrayList<MenuItem> items, ArrayList <String> customisation, boolean takeaway,
@@ -48,8 +47,11 @@ public class Order implements IXlsxSerializable {
         // Convert customisations ArrayList to a comma-separated string
         String customisationsString = convertArrayListToString(customisation);
 
+        // Convert payment method to string
+        String paymentMethod = (payment.getPaymentMethod());
+
         return new String[] { orderID, branch, itemsString, customisationsString,
-                String.valueOf(takeaway), String.valueOf(status), null };
+                String.valueOf(takeaway), String.valueOf(status), paymentMethod };
     }
 
     // Getters and Setters
@@ -71,9 +73,7 @@ public class Order implements IXlsxSerializable {
         return this.items;
     }
 
-    public OrderStatus getStatus() {
-        return this.status;
-    }
+    public OrderStatus getStatus() { return this.status; }
 
     public void setStatus(OrderStatus status) {
         this.status = status;
@@ -85,7 +85,7 @@ public class Order implements IXlsxSerializable {
     // Place order
     public void placeOrder() {
         if (payment != null) {
-            System.out.println("Order placed successfully.");
+            System.out.println("Order placed successfully.\n");
             setStatus(OrderStatus.NEW);
         } else {
             System.out.println("Payment method not set. Cannot place order.");

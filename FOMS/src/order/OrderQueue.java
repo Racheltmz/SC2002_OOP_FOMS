@@ -8,6 +8,8 @@ import exceptions.ItemNotFoundException;
 import utils.InputScanner;
 import utils.OrderXlsxHelper;
 
+import static utils.ValidateHelper.validateString;
+
 /**
  * Records of all orders made by customers
  */
@@ -59,8 +61,10 @@ public class OrderQueue {
             while (true) {
                 try {
                     // Get user's input
-                    System.out.println("Enter orderID: ");
-                    String orderID = sc.next();
+                    String orderID = validateString("Enter orderID (enter quit to exit): ");
+                    if (orderID.equalsIgnoreCase("quit")) {
+                        break;
+                    }
                     // Return order object if it can be found
                     for (Order order : this.orders) {
                         if (Objects.equals(order.getOrderID(), orderID))
@@ -79,7 +83,9 @@ public class OrderQueue {
     public void displayOrder() {
         if (ordersExist()) {
             Order order = getOrderById();
-            OrderView.printOrderDetails(order);
+            if (order != null) {
+                OrderView.printOrderDetails(order);
+            }
         }
     }
 
@@ -96,11 +102,19 @@ public class OrderQueue {
     // Display new orders
     public void displayNewOrders(String branch) {
         if (ordersExist()) {
-            System.out.println("Orders in the queue:");
+            boolean printedHeader = false;
             for (Order order : this.orders) {
                 if (Objects.equals(order.getStatus(), OrderStatus.NEW) && Objects.equals(order.getBranch(), branch)) {
+                    if (!printedHeader) {
+                        System.out.println("New orders in the queue:");
+                        printedHeader = true;
+                    }
                     OrderView.printOrderDetails(order);
                 }
+            }
+            if (!printedHeader)
+            {
+                System.out.println("No new orders exist.");
             }
         }
     }
