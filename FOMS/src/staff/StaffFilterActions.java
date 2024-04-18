@@ -1,12 +1,10 @@
 package staff;
 
-import branch.BranchDirectory;
 import staff.filter.StaffFilterAge;
 import staff.filter.StaffFilterBranch;
 import staff.filter.StaffFilterGender;
 import staff.filter.StaffFilterRole;
 import utils.IFilter;
-import utils.InputScanner;
 
 public class StaffFilterActions {
     private void filterByBranch(String branch) {

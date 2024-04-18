@@ -5,9 +5,9 @@ import staff.filter.StaffFilterOptions;
 import java.util.UUID;
 
 import static authorisation.Authorisation.authoriseAdmin;
+import static staff.StaffView.getFieldToFilter;
 
 public class Admin extends Staff {
-    private final IAdminView adminView = new AdminView();
     private final IAdminStaffActions adminStaffActions = new AdminStaffActions();
     private final IAdminBranchActions adminBranchActions = new AdminBranchActions();
 
@@ -58,7 +58,7 @@ public class Admin extends Staff {
     public void filterStaff(StaffRoles auth) {
         if (authoriseAdmin(auth)){
             // Get field to filter staff records
-            StaffFilterOptions option = adminView.getFieldToFilter();
+            StaffFilterOptions option = getFieldToFilter();
             adminStaffActions.filterStaff(option);
         }
     }
