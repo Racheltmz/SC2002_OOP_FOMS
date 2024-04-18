@@ -1,6 +1,8 @@
 package payment;
 
 import exceptions.ItemNotFoundException;
+import io.MenuItemXlsxHelper;
+import menu.Menu;
 import staff.StaffRoles;
 import exceptions.EmptyListException;
 import utils.InputScanner;
@@ -17,7 +19,12 @@ import static utils.ValidateHelper.validateString;
 // Records of payment methods
 public class PaymentDirectory {
     // Attributes
+    private final ArrayList<String> paymentDirectory;
     private static PaymentDirectory paymentSingleton = null;
+
+    private PaymentDirectory() {
+        this.paymentDirectory = readPaymentMethods();
+    }
 
     public static PaymentDirectory getInstance() {
         if (paymentSingleton == null) {
@@ -124,7 +131,7 @@ public class PaymentDirectory {
         ArrayList<String> list = new ArrayList<>();
         try {
             // Create the Scanner with the data file
-            Scanner fileIn = new Scanner(new File("payment_methods.txt"));
+            Scanner fileIn = new Scanner(new File("./data/payment_methods.txt"));
             while (fileIn.hasNext()) {
                 // Add to the ArrayList
                 list.add(fileIn.nextLine());
@@ -138,7 +145,7 @@ public class PaymentDirectory {
 
     private static void writePaymentMethod(ArrayList<String> paymentMethodList) {
         try {
-            PrintWriter fileOut = new PrintWriter("payment_methods.txt");
+            PrintWriter fileOut = new PrintWriter("./data/payment_methods.txt");
             for (String method : paymentMethodList) {
                 fileOut.println(method);
             }
