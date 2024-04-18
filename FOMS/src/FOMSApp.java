@@ -31,7 +31,7 @@ public class FOMSApp {
                 System.out.println("==================================");
                 System.out.println("|       Welcome to Popeyes!      |");
                 System.out.println("==================================");
-                choice = validateIntRange("Please select option\n1. Customer\n2. Staff\n3: Quit", 1, 3, true);
+                choice = validateIntRange("Please select option\n1. Customer\n2. Staff\n3: Quit", 1, 3);
 
                 switch (choice) {
                     case 1:

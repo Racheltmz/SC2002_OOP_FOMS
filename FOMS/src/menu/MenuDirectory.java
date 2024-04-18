@@ -4,13 +4,10 @@ import branch.BranchDirectory;
 import exceptions.EmptyListException;
 import exceptions.ItemNotFoundException;
 import io.MenuItemXlsxHelper;
-import io.StaffXlsxHelper;
-import staff.Staff;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static utils.ValidateHelper.validateInt;
 import static utils.ValidateHelper.validateIntRange;
 
 public class MenuDirectory {
@@ -159,6 +156,8 @@ public class MenuDirectory {
 
     public static String getCategoryByUserInput(){
         ArrayList<String> categories = getCategories();
+        int size = categories.size();
+
         if(categories.isEmpty()){
             System.out.println("No categories available to select.");
             return null;
@@ -167,18 +166,10 @@ public class MenuDirectory {
         displayCategories();
 
         String selectedCategory = null;
-        boolean success = false;
 
-        do {
-            try {
-                // Get user's selection
-                int categoryIndex = validateInt("Select Category: ");
-                selectedCategory = categories.get(categoryIndex - 1);
-                success = true;
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Invalid value, please enter again.");
-            }
-        } while (!success);
+        // Get user's selection
+        int categoryIndex = validateIntRange("Select Category: ", 1, size);
+        selectedCategory = categories.get(categoryIndex - 1);
         return selectedCategory;
     }
 
@@ -188,7 +179,7 @@ public class MenuDirectory {
         int size = items.size();
         MenuItem selection = null;
         // Get user's selection
-        int menuItemIndex = validateIntRange("Select item (" + (size+1) + " to quit): ", 1, size+1, true);
+        int menuItemIndex = validateIntRange("Select item (" + (size+1) + " to quit): ", 1, size+1);
         if (menuItemIndex != size+1) {
             selection = items.get(menuItemIndex - 1);
         }

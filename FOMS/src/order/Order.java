@@ -106,7 +106,7 @@ public class Order implements IXlsxSerializable {
 
         // Display payment methods
         if (!paymentMethodList.isEmpty()) {
-            int choice = validateIntRange("How would you like to pay?", 1, paymentMethodList.size(), true);
+            int choice = validateIntRange("How would you like to pay?", 1, paymentMethodList.size());
             String paymentOption = paymentMethodList.get(choice - 1);
             return new Payment(paymentOption);
         }

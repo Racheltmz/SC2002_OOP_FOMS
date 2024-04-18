@@ -62,6 +62,8 @@ public class Staff implements IXlsxSerializable {
         return this.staffID;
     }
 
+    public void setStaffID(String staffID) { this.staffID = staffID; }
+
     public String getName() {
         return name;
     }
@@ -97,6 +99,7 @@ public class Staff implements IXlsxSerializable {
     public String getPassword() {
         return password;
     }
+    public void setName(String name) { this.name = name; }
 
     public void setPassword(String password) {
         this.password = password;
@@ -149,4 +152,5 @@ public class Staff implements IXlsxSerializable {
     public void setOrderReady(Branch branch) {
         staffActionsOrder.setOrderReady(branch);
     }
+
 }

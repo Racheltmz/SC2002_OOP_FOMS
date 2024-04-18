@@ -46,6 +46,8 @@ public class MenuItem implements IXlsxSerializable {
         return name;
     }
 
+    public void setName(String name) { this.name = name; }
+
     public double getPrice() {
         return price;
     }
@@ -69,4 +71,6 @@ public class MenuItem implements IXlsxSerializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public void setCategory(String category) { this.category = category; }
 }

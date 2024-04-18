@@ -25,8 +25,8 @@ public class AdminStaffActions implements IAdminStaffActions {
             StaffDirectory staffDirectory = StaffDirectory.getInstance();
             int numExistingStaff = staffDirectory.getNumStaff();
             // Get details of staff
-            System.out.print("Enter name: ");
-            String name = toProperCase(sc.next());
+            String name = validateString("Enter name: ");
+            name = toProperCase(name);
 
             // Get the staff ID. Keep getting user input until they enter a new staff id
             String staffId = null;
@@ -48,7 +48,7 @@ public class AdminStaffActions implements IAdminStaffActions {
             char gender = validateGender().charAt(0);
 
             // Get the age
-            int age = validateIntRange("Enter age: ", 16, 80, false);
+            int age = validateIntRange("Enter age: ", 16, 80);
 
             // Get the branch
             System.out.print("Select branch: ");
@@ -68,20 +68,32 @@ public class AdminStaffActions implements IAdminStaffActions {
         displayStaffDetails(staffDirectory.getStaffDirectory());
         Staff staffToUpdate = staffDirectory.getStaff();
         boolean success = false;
-        do {
-            try {
-                // Update details
-                int age = validateIntRange("Enter age: ", 16, 80, false);
-                staffToUpdate.setAge(age);
-                staffDirectory.updateStaff(staffToUpdate);
-                System.out.println("Successfully updated staff: " + staffToUpdate.getStaffID());
-                success = true;
-            } catch (IndexOutOfBoundsException e) {
-                System.out.print("Invalid value, please enter again.");
-            } catch (InputMismatchException e) {
-                System.out.print("Error: " + e.getMessage());
+        while (!success) {
+            int option = validateIntRange("1. Update name\n2. Update staff ID\n3. Update age\n\nSelect option (4 to quit): ", 1, 4);
+            switch (option) {
+                case 1:
+                    String name = validateString("Enter new name: ");
+                    staffToUpdate.setName(name);
+                    staffDirectory.updateStaff(staffToUpdate);
+                    System.out.println("Successfully updated staff's name to " + staffToUpdate.getName() + ".");
+                    break;
+                case 2:
+                    String staffID = validateString("Enter new staffID: ");
+                    staffToUpdate.setStaffID(staffID);
+                    staffDirectory.updateStaff(staffToUpdate);
+                    System.out.println("Successfully updated staff's ID to " + staffToUpdate.getStaffID() + ".");
+                    break;
+                case 3:
+                    int age = validateIntRange("Enter updated age: ", 16, 80);
+                    staffToUpdate.setAge(age);
+                    staffDirectory.updateStaff(staffToUpdate);
+                    System.out.println("Successfully updated staff's age to " + staffToUpdate.getAge() + ".");
+                    break;
+                case 4:
+                    success = true;
+                    break;
             }
-        } while (!success);
+        }
     }
 
     // Remove staff
@@ -108,7 +120,7 @@ public class AdminStaffActions implements IAdminStaffActions {
                 filterActions.applyGenderFilter(gender);
                 break;
             case AGE:
-                int age = validateIntRange("Enter age: ", 16, 80, false);
+                int age = validateIntRange("Enter age: ", 16, 80);
                 filterActions.applyAgeFilter(age);
                 break;
         }

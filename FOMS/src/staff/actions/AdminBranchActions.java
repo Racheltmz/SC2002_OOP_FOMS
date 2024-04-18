@@ -22,7 +22,7 @@ public class AdminBranchActions implements IAdminBranchActions {
             System.out.print("Enter branch location: ");
             String location = sc.nextLine();
             // Get staff quota
-            int quota = validateIntRange("Enter staff quota: ", 1, 15, false);
+            int quota = validateIntRange("Enter staff quota: ", 1, 15);
             Branch newBranch = new Branch(name.toUpperCase(), toProperCase(location), quota);
             branchDirectory.addBranch(newBranch);
         } catch (InputMismatchException e) {

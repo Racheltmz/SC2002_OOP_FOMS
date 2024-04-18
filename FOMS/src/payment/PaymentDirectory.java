@@ -5,6 +5,7 @@ import io.PaymentTxtHelper;
 import java.util.ArrayList;
 
 import static payment.PaymentView.displayPaymentMethods;
+import static utils.LetterCaseHelper.toProperCase;
 import static utils.ValidateHelper.validateIntRange;
 import static utils.ValidateHelper.validateString;
 
@@ -38,7 +39,7 @@ public class PaymentDirectory {
 
         // Add a new method
         String newPaymentMethod = validateString("Please enter name of new payment method: ");
-        newPaymentMethod = Character.toUpperCase(newPaymentMethod.charAt(0)) + newPaymentMethod.substring(1);
+        newPaymentMethod = toProperCase(newPaymentMethod) + " Payment";
         this.paymentDirectory.add(newPaymentMethod);
 
         // Save data
@@ -54,7 +55,7 @@ public class PaymentDirectory {
         // Request for which to remove if payment methods exist
         if (!this.paymentDirectory.isEmpty()) {
             // Remove method via integer user input
-            int index = validateIntRange("Please enter option of which payment method to remove: ", 1, this.paymentDirectory.size(), true);
+            int index = validateIntRange("Please enter option of which payment method to remove: ", 1, this.paymentDirectory.size());
             String paymentMethodToRemove = this.paymentDirectory.get(index - 1);
             this.paymentDirectory.remove(paymentMethodToRemove);
 

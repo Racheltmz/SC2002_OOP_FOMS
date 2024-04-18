@@ -43,7 +43,7 @@ public class ValidateHelper {
      * @param msg Message to be printed out for user input.
      * @return Integer from user input if valid.
      */
-    public static int validateIntRange(String msg, int start, int end, boolean ignoreBlank) {
+    public static int validateIntRange(String msg, int start, int end) {
         InputScanner sc = InputScanner.getInstance();
         boolean success = false;
         int input = 0;
@@ -53,7 +53,7 @@ public class ValidateHelper {
                 if (start <= input && input <= end) {
                     success = true;
                 } else {
-                    throw new InvalidStaffQuotaException("Invalid range! Please re-enter.");
+                    throw new InvalidStaffQuotaException("Invalid range! Please re-enter.\n");
                 }
             }  catch (InvalidStaffQuotaException e) {
                 System.out.println(e.getMessage());

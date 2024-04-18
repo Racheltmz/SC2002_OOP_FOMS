@@ -8,9 +8,9 @@ import menu.MenuItem;
 import menu.Menu;
 import java.util.InputMismatchException;
 
+import static menu.MenuDirectory.getCategoryByUserInput;
 import static utils.LetterCaseHelper.toProperCase;
-import static utils.ValidateHelper.validateDouble;
-import static utils.ValidateHelper.validateInt;
+import static utils.ValidateHelper.*;
 
 // Manager's permissions
 public class ManagerMenuActions implements IManagerMenuActions {
@@ -47,29 +47,50 @@ public class ManagerMenuActions implements IManagerMenuActions {
         // Get menu by branch
         String branchName = branch.getName();
         Menu branchMenu = menuDirectory.getMenu(branchName);
+        int size = branchMenu.getMenuItems().size();
+
         // Display items in branch
         branchMenu.displayItems();
         boolean success = false;
-        do {
-            try {
-                // Get item to update by name
-                int itemIndex = validateInt("Enter the number of the item you want to update: ") - 1;
-                MenuItem itemToUpdate = branchMenu.getMenuItems().get(itemIndex);
 
-                // Update price and description
-                double price = validateDouble("Enter price ($): ");
+        while (!success) {
+            // Get item to update by name
+            int itemIndex = validateIntRange("Enter the index of the item you want to update: ", 1, size);
+            MenuItem itemToUpdate = branchMenu.getMenuItems().get(itemIndex-1);
 
-                System.out.println("Enter description: ");
-                String description = sc.next();
+            int option = validateIntRange("1. Update name\n2. Update price\n3. Update category\n4. Update description\nSelect option (5 to quit): ", 1, 5);
 
-                branchMenu.updateItem(itemToUpdate, price, description);
-                success = true;
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Invalid value, please enter again.");
-            } catch (InputMismatchException e) {
-                System.out.println("Error: " + e.getMessage());
+            switch (option) {
+                case 1:
+                    String name = validateString("Enter new name of item: ");
+                    itemToUpdate.setName(name);
+                    branchMenu.updateItem(itemToUpdate);
+                    break;
+                case 2:
+                    double price = validateDouble("Enter price ($): ");
+                    itemToUpdate.setPrice(price);
+                    branchMenu.updateItem(itemToUpdate);
+                    break;
+                case 3:
+                    String category = getCategoryByUserInput();
+                    if (category != null) {
+                        itemToUpdate.setCategory(category);
+                        branchMenu.updateItem(itemToUpdate);
+                    }
+                    else {
+                        System.out.println("Unable to update category.");
+                    }
+                    break;
+                case 4:
+                    String description = validateString("Enter new description: ");
+                    itemToUpdate.setDescription(description);
+                    branchMenu.updateItem(itemToUpdate);
+                    break;
+                case 5:
+                    success = true;
+                    break;
             }
-        } while (!success);
+        }
     }
 
     // Remove menu item

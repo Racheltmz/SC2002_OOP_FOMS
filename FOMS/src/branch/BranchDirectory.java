@@ -12,30 +12,51 @@ import java.util.Objects;
 
 import static utils.ValidateHelper.validateInt;
 
-// Records of branches
+/**
+ * Represents an overall directory of branches.
+ */
 public class BranchDirectory {
-    // Attribute
+
+    /** The arraylist of branches in this BranchDirectory. */
     private final ArrayList<Branch> branchDirectory;
+
+    /** The singleton instance of this BranchDirectory. */
     private static BranchDirectory branchSingleton = null;
 
+    /**
+     * Constructs a BranchDirectory by reading data from the associated XLSX file, branch_list.xlsx.
+     */
     private BranchDirectory() {
         BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
         this.branchDirectory = branchXlsxHelper.readFromXlsx();
     }
 
+    /**
+     * Gets the singleton instance of this BranchDirectory.
+     * @return this BranchDirectory's singleton instance.
+     */
     public static BranchDirectory getInstance() {
         if (branchSingleton == null) {
             branchSingleton = new BranchDirectory();
         }
         return branchSingleton;
     }
-    // Functionalities
-    // Get all branches
+
+    /**
+     * Gets the arraylist of branches in this BranchDirectory.
+     *
+     * @return This BranchDirectory's arraylist of branches.
+     */
     public ArrayList<Branch> getBranchDirectory() {
         return branchDirectory;
     }
 
-    // Get branch based on branch name
+    /**
+     * Gets a branch from this BranchDirectory based on Branch name.
+     *
+     * @param name The name of the branch.
+     * @return The branch with the specified name, or null if not found.
+     */
     public Branch getBranchByName(String name) {
         // Return staff object if it can be found
         for (Branch branch : this.branchDirectory) {
