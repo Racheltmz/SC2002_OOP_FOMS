@@ -7,7 +7,9 @@ import io.IXlsxSerializable;
 
 import java.util.ArrayList;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 
+import static payment.PaymentView.displayPaymentMethods;
 import static utils.ValidateHelper.validateIntRange;
 
 // Order details
@@ -22,6 +24,16 @@ public class Order implements IXlsxSerializable {
     private Payment payment;
 
     // Constructor
+    public Order(String orderID, String branch, ArrayList<MenuItem> items, ArrayList <String> customisation, boolean takeaway,
+                 Payment payment) {
+        this.orderID = orderID;
+        this.branch = branch;
+        this.items = items;
+        this.customisation = customisation;
+        this.takeaway = takeaway;
+        this.status = OrderStatus.NEW;
+        this.payment = payment;
+    }
     public Order(String branch, ArrayList<MenuItem> items, ArrayList <String> customisation, boolean takeaway,
             Payment payment) {
         this.orderID = UniqueIdGenerator.generateUniqueID(takeaway);
@@ -106,6 +118,7 @@ public class Order implements IXlsxSerializable {
 
         // Display payment methods
         if (!paymentMethodList.isEmpty()) {
+            displayPaymentMethods(paymentMethodList);
             int choice = validateIntRange("How would you like to pay?", 1, paymentMethodList.size());
             String paymentOption = paymentMethodList.get(choice - 1);
             return new Payment(paymentOption);

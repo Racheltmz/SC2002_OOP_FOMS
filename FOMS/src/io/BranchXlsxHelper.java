@@ -14,14 +14,14 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
     private final String[] header = {"id", "name", "location", "manager"};
 
     /**
-     * Default Constructor.
-     */
-    public BranchXlsxHelper() {}
-
-    /**
      * Singleton instance of BranchXlsxHelper.
      */
     private static BranchXlsxHelper branchInstance;
+
+    /**
+     * Default Constructor.
+     */
+    public BranchXlsxHelper() {}
 
     /**
      * Gets the singleton instance of BranchXlsxHelper that reads from branch_list.xlsx

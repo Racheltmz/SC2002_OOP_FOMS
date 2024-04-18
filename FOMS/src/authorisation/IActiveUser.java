@@ -1,6 +1,6 @@
 package authorisation;
 
-import staff.Staff;
+import management.Staff;
 
 /**
  * Active user interface.

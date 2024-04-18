@@ -69,7 +69,7 @@ public class FileIOHelper {
      */
     public static FileOutputStream getFileOutputStream(String name) {
         try {
-            return new FileOutputStream(getFile(name), true); // TODO: check the append
+            return new FileOutputStream(getFile(name));
         } catch (IOException e) {
             System.out.println("Unable to output record.");
         }

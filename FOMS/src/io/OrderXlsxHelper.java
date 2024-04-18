@@ -20,7 +20,7 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
     /**
      * Headers for order.
      */
-    private final String[] header = {"id", "branch", "items", "customisations", "pickup option", "status", "payment method"};
+    private final String[] header = {"id", "branch", "items", "customisations", "takeaway", "status", "payment"};
 
     /**
      * Default Constructor.
@@ -85,7 +85,7 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
             Payment paymentMethod = new Payment(paymentMtd);
 
             // Construct Order object using retrieved data
-            Order order = new Order(orderID, items, customisationsList, takeaway, paymentMethod);
+            Order order = new Order(orderID, branch, items, customisationsList, takeaway, paymentMethod);
             order.setStatus(status);
 
             orders.add(order);

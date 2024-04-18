@@ -41,7 +41,7 @@ public class PaymentTxtHelper {
         ArrayList<String> list = new ArrayList<>();
         try {
             // Create the Scanner with the data file
-            Scanner fileIn = new Scanner(new File(this.paymentTxt));
+            Scanner fileIn = new Scanner(getFile(this.paymentTxt));
             while (fileIn.hasNext()) {
                 // Add to the ArrayList
                 list.add(fileIn.nextLine());

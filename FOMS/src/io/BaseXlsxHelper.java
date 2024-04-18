@@ -18,7 +18,7 @@ import static io.FileIOHelper.getFileInputStream;
 @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
 public class BaseXlsxHelper {
     // Get Excel spreadsheet by filename
-    public static XSSFSheet getSheet(String filePath) {
+    private static XSSFSheet getSheet(String filePath) {
         XSSFSheet sheet = null;
         try {
             // Reading file from local directory
@@ -209,7 +209,7 @@ public class BaseXlsxHelper {
      * @param header Header to add to the top of the file
      * @param row Row to add the record to
      */
-    protected void writeHeader(String[] header, Row row) {
+    private void writeHeader(String[] header, Row row) {
         for (int i = 0; i < header.length; i++) {
             Cell cell = row.createCell(i);
             cell.setCellValue(header[i]);
@@ -222,7 +222,7 @@ public class BaseXlsxHelper {
      * @param data Data record to add
      * @param row Row to add the record to
      */
-    protected void writeRow(String[] data, Row row) {
+    private void writeRow(String[] data, Row row) {
         for (int i = 0; i < data.length; i++) {
             Cell cell = row.createCell(i);
             cell.setCellValue(data[i]);

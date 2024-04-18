@@ -1,9 +1,9 @@
 package authorisation;
 
 import branch.Branch;
-import staff.StaffRoles;
+import management.StaffRoles;
 import utils.InputScanner;
-import staff.Manager;
+import management.Manager;
 
 import static authorisation.ActiveView.displayMenu;
 

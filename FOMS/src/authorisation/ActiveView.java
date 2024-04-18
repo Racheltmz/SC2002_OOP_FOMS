@@ -1,6 +1,6 @@
 package authorisation;
 
-import staff.StaffRoles;
+import management.StaffRoles;
 
 /**
  * View for the active staff records.

@@ -1,7 +1,7 @@
 package authorisation;
 
-import staff.Admin;
-import staff.Staff;
+import management.Admin;
+import management.Staff;
 
 /**
  * Factory for active admin.

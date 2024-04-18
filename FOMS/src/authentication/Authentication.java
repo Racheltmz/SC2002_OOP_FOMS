@@ -1,8 +1,8 @@
 package authentication;
 
-import staff.StaffDirectory;
+import management.StaffDirectory;
 import utils.InputScanner;
-import staff.Staff;
+import management.Staff;
 
 import static authentication.Hashing.genHash;
 

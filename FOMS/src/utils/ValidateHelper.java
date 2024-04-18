@@ -101,18 +101,16 @@ public class ValidateHelper {
         do {
             try {
                 System.out.println(msg);
-                input = sc.next();
-                input += sc.nextLine();
-                if (input.isBlank()) {
-                    System.out.println("Please enter a valid input.\n");
-                } else if (!input.matches("[a-zA-Z]+")) {
-                    throw new InputStringMismatch();
+                sc.nextLine();
+                input = sc.nextLine();
+                System.out.println(!input.matches("^[ A-Za-z]+$"));
+                if (input.isBlank() || !input.matches("^[ A-Za-z]+$")) {
+                    throw new InputStringMismatch("Please enter a valid input.\n");
                 } else {
                     success = true;
                 }
             }  catch (InputStringMismatch e) {
-                System.out.println("Please enter a valid input.\n");
-                sc.nextLine();
+                System.out.println(e.getMessage());
             }
         } while (!success);
         return input;
@@ -137,7 +135,8 @@ public class ValidateHelper {
                         break;
                     }
                 }
-                throw new InvalidInputException(errMsg);
+                if (!success)
+                    throw new InvalidInputException(errMsg);
             }  catch (InvalidInputException e) {
                 System.out.println(e.getMessage());
             }

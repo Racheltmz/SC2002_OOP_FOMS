@@ -2,10 +2,10 @@ package io;
 
 import branch.Branch;
 import branch.BranchDirectory;
-import staff.*;
-import staff.Admin;
-import staff.Manager;
-import staff.Staff;
+import management.*;
+import management.Admin;
+import management.Manager;
+import management.Staff;
 
 import java.util.ArrayList;
 import java.util.List;

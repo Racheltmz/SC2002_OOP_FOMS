@@ -1,7 +1,7 @@
 package authorisation;
 
 import exceptions.AuthorizationException;
-import staff.StaffRoles;
+import management.StaffRoles;
 
 /**
  * Authorisation checks for secure access to functions.

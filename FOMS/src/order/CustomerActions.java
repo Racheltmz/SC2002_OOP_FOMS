@@ -19,12 +19,13 @@ public class CustomerActions {
         System.out.println("|              Menu              |");
         System.out.println("|        Welcome Customer!       |");
         System.out.println("==================================");
+        // Ask customer to select branch
+        String branch = menuDirectory.displayMenuByBranch();
 
         boolean exit = false;
         do {
             InputScanner sc = InputScanner.getInstance();
 
-            // Customer Options @gwen (test case 4-8, 18)
             System.out.println("Please select option");
             int customerChoice = validateIntRange("1. Browse Menu\n2. Check Order Status\n3. Return back", 1, 3);
 
@@ -32,11 +33,10 @@ public class CustomerActions {
                 case 1:
                     // Menu Browsing
                     ArrayList<MenuItem> selectedItems = new ArrayList<>();
-                    String branchName = menuDirectory.displayMenuByBranch();
 
                     boolean done = false;
                     while (!done) {
-                        MenuItem selectedItem = menuDirectory.selectItem(branchName);
+                        MenuItem selectedItem = menuDirectory.selectItem(branch);
                         if (selectedItem != null) {
                             selectedItems.add(selectedItem);
                         } else {
@@ -50,21 +50,23 @@ public class CustomerActions {
 
                     // Customisations
                     int size = selectedItems.size();
-                    ArrayList <String> customisations = new ArrayList<>();
+                    ArrayList<String> customisations = new ArrayList<>();
                     boolean customise = true;
                     do {
-                        for (int i = 0; i < size; i++)
-                        {
-                            System.out.println((i+1) + ". " + selectedItems.get(i).getName());
+                        for (int i = 0; i < size; i++) {
+                            System.out.println((i + 1) + ". " + selectedItems.get(i).getName());
                         }
-                        int customisationOption = validateIntRange(("Which item would you like to customise? (enter " + (size+1) + " to quit)"), 1, size + 1);
-                        if (customisationOption == size+1)
-                        {
+                        int customisationOption = validateIntRange(
+                                ("Which item would you like to customise? (enter " + (size + 1) + " to quit)"), 1,
+                                size + 1);
+                        if (customisationOption == size + 1) {
                             customise = false;
                             break;
                         }
                         MenuItem itemToCustomise = selectedItems.get(customisationOption - 1);
-                        String customisationInput = validateString("What customisation would you like?");
+                        sc.nextLine();
+                        System.out.println("What customisation would you like?");
+                        String customisationInput = sc.nextLine();
                         customisations.add(itemToCustomise.getName() + " : " + customisationInput);
                     } while (customise);
 
@@ -79,7 +81,7 @@ public class CustomerActions {
                     Payment paymentMethod = Order.pay();
 
                     // Order Processing and Bill
-                    Order order = new Order(branchName, selectedItems, customisations, takeaway, paymentMethod);
+                    Order order = new Order(branch, selectedItems, customisations, takeaway, paymentMethod);
                     orderQueue.addOrder(order);
 
                     if (paymentMethod != null) {
@@ -87,16 +89,16 @@ public class CustomerActions {
                         order.placeOrder();
                         order.printReceipt();
 
-//                        // Start Timer for Order Cancellation
-//                        Timer timer = new Timer();
-//                        // 5 Minutes in Milliseconds
-//                        timer.schedule(new OrderTimerTask(timer, order), 3000000);
+                        // // Start Timer for Order Cancellation
+                        // Timer timer = new Timer();
+                        // // 5 Minutes in Milliseconds
+                        // timer.schedule(new OrderTimerTask(timer, order), 3000000);
                     }
                     break;
 
                 case 2:
                     // Check Order Status
-                    orderQueue.getStatusById();
+                    orderQueue.getStatusById(branch);
                     break;
 
                 case 3:

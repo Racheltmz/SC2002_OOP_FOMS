@@ -1,6 +1,7 @@
 package payment;
 
 import io.PaymentTxtHelper;
+import utils.InputScanner;
 
 import java.util.ArrayList;
 
@@ -34,12 +35,14 @@ public class PaymentDirectory {
 
     // Add payment method
     public void addPaymentMtd() {
+        InputScanner sc = InputScanner.getInstance();
         PaymentTxtHelper paymentTxtHelper = new PaymentTxtHelper();
         displayPaymentMethods(this.paymentDirectory);
 
         // Add a new method
-        String newPaymentMethod = validateString("Please enter name of new payment method: ");
-        newPaymentMethod = toProperCase(newPaymentMethod) + " Payment";
+        System.out.println("Please enter name of new payment method: ");
+        String newPaymentMethod = sc.next();
+        newPaymentMethod = toProperCase(newPaymentMethod);
         this.paymentDirectory.add(newPaymentMethod);
 
         // Save data
@@ -54,6 +57,7 @@ public class PaymentDirectory {
         PaymentTxtHelper paymentTxtHelper = new PaymentTxtHelper();
         // Request for which to remove if payment methods exist
         if (!this.paymentDirectory.isEmpty()) {
+            displayPaymentMethods(this.paymentDirectory);
             // Remove method via integer user input
             int index = validateIntRange("Please enter option of which payment method to remove: ", 1, this.paymentDirectory.size());
             String paymentMethodToRemove = this.paymentDirectory.get(index - 1);

@@ -2,9 +2,9 @@ package branch;
 
 import menu.MenuDirectory;
 import menu.MenuItem;
-import staff.Staff;
-import staff.StaffDirectory;
-import staff.StaffRoles;
+import management.Staff;
+import management.StaffDirectory;
+import management.StaffRoles;
 import io.BranchXlsxHelper;
 
 import java.util.ArrayList;

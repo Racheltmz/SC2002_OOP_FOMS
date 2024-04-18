@@ -1,9 +1,8 @@
 package authorisation;
 
-import payment.PaymentDirectory;
-import staff.StaffRoles;
+import management.StaffRoles;
 import utils.InputScanner;
-import staff.Admin;
+import management.Admin;
 
 import static authorisation.ActiveView.displayMenu;
 

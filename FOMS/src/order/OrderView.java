@@ -36,28 +36,22 @@ public class OrderView {
 
     // Print order details for OrderQueue
     public static void printOrderDetails(Order order) {
-        if (order != null) {
-            System.out.println("Order ID: " + order.getOrderID());
-            System.out.println("Items:");
-            for (MenuItem item : order.getItems()) {
-                System.out.println("- " + item.getName());
-            }
-            System.out.println();
-            System.out.println("Customisations: ");
-            for (String customization : order.getCustomisation()) {
-                System.out.println("- " + customization);
-            }
-            System.out.println();
-            System.out.print("Pickup option: ");
-            if (order.isTakeaway()) {
-                System.out.println("Takeaway");
-            } else {
-                System.out.println("Dine In");
-            }
+        System.out.println("Order ID: " + order.getOrderID());
+        System.out.println("Items:");
+        for (MenuItem item : order.getItems()) {
+            String customisation = String.join(", ", order.getCustomisation());
+            if (customisation.isBlank())
+                customisation = "none";
+            System.out.println("- " + item.getName() + ", customisations: " + customisation);
         }
-        else {
-            return;
+        System.out.println();
+        System.out.print("Pickup option: ");
+        if (order.isTakeaway()) {
+            System.out.println("Takeaway");
+        } else {
+            System.out.println("Dine In");
         }
+        System.out.println();
     }
 
     private static String formatString(String str, int maxLength) {

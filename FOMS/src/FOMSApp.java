@@ -3,10 +3,10 @@ import java.util.InputMismatchException;
 import authorisation.*;
 import menu.MenuDirectory;
 import order.CustomerActions;
-import staff.StaffDirectory;
+import management.StaffDirectory;
 import utils.InputScanner;
-import staff.Staff;
-import staff.StaffRoles;
+import management.Staff;
+import management.StaffRoles;
 import order.OrderQueue;
 
 import static authentication.Authentication.login;
@@ -21,8 +21,6 @@ public class FOMSApp {
         // Initialise scanner, directories, and order queue
         InputScanner sc = InputScanner.getInstance();
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
-        MenuDirectory menuDirectory = MenuDirectory.getInstance();
-        OrderQueue orderQueue = OrderQueue.getInstance();
 
         // Iterate until system receives a valid input
         int choice = 0;
