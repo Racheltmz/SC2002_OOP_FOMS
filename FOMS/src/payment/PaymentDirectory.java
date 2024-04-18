@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static utils.LetterCaseHelper.toProperCase;
 import static utils.ValidateHelper.validateIntRange;
 import static utils.ValidateHelper.validateString;
 
@@ -79,7 +80,7 @@ public class PaymentDirectory {
 
         // Add a new method
         String newPaymentMethod = validateString("Please enter name of new payment method: ");
-        newPaymentMethod = Character.toUpperCase(newPaymentMethod.charAt(0)) + newPaymentMethod.substring(1);
+        newPaymentMethod = toProperCase(newPaymentMethod) + " Payment";
         paymentMethodList.add(newPaymentMethod);
 
         // Save data
@@ -99,7 +100,7 @@ public class PaymentDirectory {
         // Request for which to remove if payment methods exist
         if (printPaymentMethods()) {
             // Remove method via integer user input
-            int index = validateIntRange("Please enter option of which payment method to remove: ", 1, paymentMethodList.size(), true);
+            int index = validateIntRange("Please enter option of which payment method to remove: ", 1, paymentMethodList.size());
             String paymentMethodToRemove = paymentMethodList.get(index - 1);
             paymentMethodList.remove(paymentMethodToRemove);
 
@@ -156,7 +157,7 @@ public class PaymentDirectory {
             int counter = 1;
             System.out.println("Available payment methods: ");
             for (String item : paymentList) {
-                System.out.println(counter + ". " + item + " payment");
+                System.out.println(counter + ". " + item);
                 counter++;
             }
             System.out.println();

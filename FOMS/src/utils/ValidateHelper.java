@@ -30,24 +30,17 @@ public class ValidateHelper {
         return input;
     }
 
-    public static int validateIntRange(String msg, int start, int end, boolean ignoreBlank) {
+    public static int validateIntRange(String msg, int start, int end) {
         InputScanner sc = InputScanner.getInstance();
         boolean success = false;
         int input = 0;
         do {
             try {
-//                if (ignoreBlank) {
-//                    System.out.println(msg);
-//                    if (sc.hasNextInt()) {
-//
-//                    }
-//                } else {
                 input = validateInt(msg);
-//                }
                 if (start <= input && input <= end) {
                     success = true;
                 } else {
-                    throw new InvalidStaffQuotaException("Invalid range! Please re-enter.");
+                    throw new InvalidStaffQuotaException("Invalid range! Please re-enter.\n");
                 }
             }  catch (InvalidStaffQuotaException e) {
                 System.out.println(e.getMessage());

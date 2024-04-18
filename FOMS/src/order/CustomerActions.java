@@ -33,7 +33,7 @@ public class CustomerActions {
 
             // Customer Options @gwen (test case 4-8, 18)
             System.out.println("Please select option");
-            int customerChoice = validateIntRange("1. Browse Menu\n2. Check Order Status\n3. Return back", 1, 3, true);
+            int customerChoice = validateIntRange("1. Browse Menu\n2. Check Order Status\n3. Return back", 1, 3);
 
             switch (customerChoice) {
                 case 1:
@@ -64,7 +64,7 @@ public class CustomerActions {
                         {
                             System.out.println((i+1) + ". " + selectedItems.get(i).getName());
                         }
-                        int customisationOption = validateIntRange(("Which item would you like to customise? (enter " + (size+1) + " to quit)"), 1, size + 1, true);
+                        int customisationOption = validateIntRange(("Which item would you like to customise? (enter " + (size+1) + " to quit)"), 1, size + 1);
                         if (customisationOption == size+1)
                         {
                             customise = false;
@@ -77,7 +77,7 @@ public class CustomerActions {
 
                     // Dining Options
                     boolean takeaway = false;
-                    int input = validateIntRange("Please select pickup option:\n1. Takeaway\n2. Pickup", 1, 2, true);
+                    int input = validateIntRange("Please select pickup option:\n1. Takeaway\n2. Pickup", 1, 2);
                     if (input == 1) {
                         takeaway = true;
                     }

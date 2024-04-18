@@ -77,10 +77,8 @@ public class Menu {
     }
 
     // Update menu item
-    public void updateItem(MenuItem itemToUpdate, double price, String description) {
+    public void updateItem(MenuItem itemToUpdate) {
         if (itemsExist()) {
-            itemToUpdate.setPrice(price);
-            itemToUpdate.setDescription(description);
             // Write the updated menu items to the Excel file
             MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
             menuItemXlsxHelper.updateXlsx(itemToUpdate);
