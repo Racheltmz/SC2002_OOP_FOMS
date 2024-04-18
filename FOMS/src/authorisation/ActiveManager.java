@@ -1,5 +1,6 @@
 package authorisation;
 
+import branch.Branch;
 import staff.StaffRoles;
 import utils.InputScanner;
 import staff.Manager;
@@ -7,7 +8,7 @@ import staff.Manager;
 import static authorisation.ActiveView.displayMenu;
 
 /**
- * Authorised operations for active user with a manager role
+ * Authorised operations for active user with a manager role.
  */
 public class ActiveManager implements IActiveUser {
     /**
@@ -58,40 +59,79 @@ public class ActiveManager implements IActiveUser {
     public void showOptions() {
         InputScanner sc = InputScanner.getInstance();
 
-        String staffID = getActiveStaff().getStaffID();
-        StaffRoles role = getActiveStaff().getRole();
+        String staffID = this.getActiveStaff().getStaffID();
+        StaffRoles role = this.getActiveStaff().getRole();
+        Branch branch = this.getActiveStaff().getBranch();
 
-        displayMenu("1. Display Staff List\n2. Add Menu Item\n3. Update Menu Item\n4. Remove Menu Item\n5. Display new orders\n6. View details of an order\n7. Set Order as Ready\n8. Change Password\n9. Logout", staffID, role);
-        int staffChoice = sc.nextInt();
+        displayMenu("1. Display Staff\n2. Menu Management\n3. Order Management\n4. My Account", staffID, role);
+        int categoryChoice = sc.nextInt();
         sc.nextLine();
 
-        switch (staffChoice) {
+        switch (categoryChoice) {
             case 1:
-                this.getActiveStaff().displayStaffList(this.activeStaff.getRole(), this.activeStaff.getBranch());
+                this.getActiveStaff().displayStaffList(role, branch);
                 break;
-            case 2:
-                this.getActiveStaff().addMenuItem(this.activeStaff.getRole(), this.activeStaff.getBranch());
+            case 2: // menu item details
+                displayMenu("1. Add Menu Item\n2. Update Menu Item\n3. Remove Menu Item", staffID, role);
+                int menuChoice = sc.nextInt();
+                sc.nextLine();
+                switch (menuChoice) {
+                    case 1:
+                        // add item
+                        this.getActiveStaff().addMenuItem(role, branch);
+                        break;
+                    case 2:
+                        // edit item
+                        this.getActiveStaff().updateMenuItem(role, branch);
+                        break;
+                    case 3:
+                        // remove item
+                        this.getActiveStaff().removeMenuItem(role, branch);
+                        break;
+                    default:
+                        System.out.println("Invalid choice, please re-enter: ");
+                        break;
+                }
                 break;
-            case 3:
-                this.getActiveStaff().updateMenuItem(this.activeStaff.getRole(), this.activeStaff.getBranch());
+            case 3: // customer order
+                displayMenu("1. Get New Orders\n2. Get Details of an Order\n3. Set Order as Ready", staffID, role);
+                int orderChoice = sc.nextInt();
+                sc.nextLine();
+                switch (orderChoice) {
+                    case 1:
+                        // get new orders
+                        this.getActiveStaff().getNewOrders(branch);
+                        break;
+                    case 2:
+                        // get details of an order
+                        this.getActiveStaff().getOrderDetails(branch);
+                        break;
+                    case 3:
+                        // set order as ready
+                        this.getActiveStaff().setOrderReady(branch);
+                        break;
+                    default:
+                        System.out.println("Invalid choice, please re-enter: ");
+                        break;
+                }
                 break;
-            case 4:
-                this.getActiveStaff().removeMenuItem(this.activeStaff.getRole(), this.activeStaff.getBranch());
-                break;
-            case 5:
-                this.getActiveStaff().getNewOrders(this.activeStaff.getBranch());
-                break;
-            case 6:
-                this.getActiveStaff().getOrderDetails(this.activeStaff.getBranch());
-                break;
-            case 7:
-                this.getActiveStaff().setOrderReady(this.activeStaff.getBranch());
-                break;
-            case 8:
-                this.getActiveStaff().changePassword();
-                break;
-            case 9:
-                this.logout();
+            case 4: // Account
+                displayMenu("1. Change Password\n2. Logout", staffID, role);
+                int accChoice = sc.nextInt();
+                sc.nextLine();
+                switch (accChoice) {
+                    case 1:
+                        // change password
+                        this.getActiveStaff().changePassword();
+                        break;
+                    case 2:
+                        // logout
+                        this.logout();
+                        break;
+                    default:
+                        System.out.println("Invalid choice, please re-enter: ");
+                        break;
+                }
                 break;
             default:
                 System.out.println("Invalid choice, please re-enter: ");

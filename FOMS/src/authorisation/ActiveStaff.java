@@ -7,7 +7,7 @@ import staff.Staff;
 import static authorisation.ActiveView.displayMenu;
 
 /**
- * Authorised operations for active user with a staff role
+ * Authorised operations for active user with a staff role.
  */
 public class ActiveStaff implements IActiveUser {
     /**

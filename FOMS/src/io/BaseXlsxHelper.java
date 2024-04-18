@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,10 +13,33 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import static io.FileIOHelper.getSheet;
+import static io.FileIOHelper.getFileInputStream;
 
 @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
 public class BaseXlsxHelper {
+    // Get Excel spreadsheet by filename
+    public static XSSFSheet getSheet(String filePath) {
+        XSSFSheet sheet = null;
+        try {
+            // Reading file from local directory
+            FileInputStream file = getFileInputStream(filePath);
+
+            // Create Workbook instance holding reference to .xlsx file
+            assert file != null;
+            XSSFWorkbook workbook = new XSSFWorkbook(file);
+
+            // Get first sheet from the workbook
+            sheet = workbook.getSheetAt(0);
+
+            // Closing workbook and file output streams
+            workbook.close();
+            file.close();
+        } catch (IOException | NullPointerException e) {
+            System.out.println("Unable to load records. Please check the file storage.");
+        }
+        return sheet;
+    }
+
     /**
      * Reads data from an Excel (XLSX) file and returns a List of String arrays representing rows and columns.
      *
@@ -91,7 +115,7 @@ public class BaseXlsxHelper {
     }
 
     protected void serializeHeader(String sheetName, String[] header) {
-        try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(FileIOHelper.getFileInputStream(sheetName)))) {
+        try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(getFileInputStream(sheetName)))) {
             XSSFSheet sheet = workbook.getSheetAt(0);
             writeHeader(header, sheet.createRow(0));
             FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName);
@@ -111,7 +135,7 @@ public class BaseXlsxHelper {
      * @param idxRecord Index to add / update record
      */
     protected void serializeRecord(String sheetName, String[] newRecord, int idxRecord) {
-        try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(FileIOHelper.getFileInputStream(sheetName)))) {
+        try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(getFileInputStream(sheetName)))) {
             XSSFSheet sheet = workbook.getSheetAt(0);
             writeRow(newRecord, sheet.createRow(idxRecord+1));
             FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName);
@@ -130,7 +154,7 @@ public class BaseXlsxHelper {
      * @param id ID of the record to be updated
      */
     protected void serializeUpdate(String sheetName, String[] record, UUID id) {
-        try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(FileIOHelper.getFileInputStream(sheetName)))) {
+        try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(getFileInputStream(sheetName)))) {
             XSSFSheet sheet = workbook.getSheetAt(0);
             // Update row by id
             writeRow(record, sheet.getRow(getIndexById(sheet, id)));
@@ -143,7 +167,7 @@ public class BaseXlsxHelper {
     }
 
     protected void serializeUpdate(String sheetName, String[] record, String id) {
-        try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(FileIOHelper.getFileInputStream(sheetName)))) {
+        try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(getFileInputStream(sheetName)))) {
             XSSFSheet sheet = workbook.getSheetAt(0);
             // Update row by id
             writeRow(record, sheet.getRow(getIndexById(sheet, id)));
@@ -162,7 +186,7 @@ public class BaseXlsxHelper {
      * @param id ID of record to delete
      */
     protected void deleteRecord(String sheetName, UUID id) {
-        try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(FileIOHelper.getFileInputStream(sheetName)))) {
+        try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(getFileInputStream(sheetName)))) {
             XSSFSheet sheet = workbook.getSheetAt(0);
             // Remove row by id
             int rowIdx = getIndexById(sheet, id);

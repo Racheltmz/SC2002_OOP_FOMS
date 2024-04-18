@@ -1,7 +1,8 @@
-package staff;
+package staff.actions;
 
 import branch.Branch;
 import menu.MenuDirectory;
+import staff.actions.IManagerMenuActions;
 import utils.InputScanner;
 import menu.MenuItem;
 import menu.Menu;

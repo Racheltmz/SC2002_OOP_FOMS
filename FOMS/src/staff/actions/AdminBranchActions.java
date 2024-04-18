@@ -1,4 +1,4 @@
-package staff;
+package staff.actions;
 
 import static utils.LetterCaseHelper.toProperCase;
 import static utils.ValidateHelper.validateIntRange;

@@ -6,10 +6,16 @@ import exceptions.InvalidStaffQuotaException;
 
 import java.util.InputMismatchException;
 
-import static utils.InputScanner.getInstance;
-
+/**
+ * Helper for validation of user input. The functions will keep asking for the user's input until it is valid.
+ */
 public class ValidateHelper {
-    // Check integer
+    /**
+     * Check if integer inputted is valid.
+     *
+     * @param msg Message to be printed out for user input.
+     * @return Integer from user input if valid.
+     */
     public static int validateInt(String msg) {
         InputScanner sc = InputScanner.getInstance();
         boolean success = false;
@@ -30,20 +36,20 @@ public class ValidateHelper {
         return input;
     }
 
+    // TODO: handle ignoreBlank
+    /**
+     * Check if integer inputted is valid and within a valid range.
+     *
+     * @param msg Message to be printed out for user input.
+     * @return Integer from user input if valid.
+     */
     public static int validateIntRange(String msg, int start, int end, boolean ignoreBlank) {
         InputScanner sc = InputScanner.getInstance();
         boolean success = false;
         int input = 0;
         do {
             try {
-//                if (ignoreBlank) {
-//                    System.out.println(msg);
-//                    if (sc.hasNextInt()) {
-//
-//                    }
-//                } else {
                 input = validateInt(msg);
-//                }
                 if (start <= input && input <= end) {
                     success = true;
                 } else {
@@ -57,7 +63,12 @@ public class ValidateHelper {
         return input;
     }
 
-    // Check double
+    /**
+     * Check if double inputted is valid.
+     *
+     * @param msg Message to be printed out for user input.
+     * @return Double from user input if valid.
+     */
     public static double validateDouble(String msg) {
         InputScanner sc = InputScanner.getInstance();
         boolean success = false;
@@ -78,6 +89,11 @@ public class ValidateHelper {
         return input;
     }
 
+    /**
+     * Validate the string to ensure it does not consist of invalid characters such as symbols.
+     *
+     * @return String if it is valid.
+     */
     public static String validateString(String msg) {
         InputScanner sc = InputScanner.getInstance();
         boolean success = false;
@@ -89,12 +105,10 @@ public class ValidateHelper {
                 input += sc.nextLine();
                 if (input.isBlank()) {
                     System.out.println("Please enter a valid input.\n");
-                }
-                else if (input != null) {
-                    success = true;
-                }
-                else if (!input.matches("[a-zA-Z]+")) {
+                } else if (!input.matches("[a-zA-Z]+")) {
                     throw new InputStringMismatch();
+                } else {
+                    success = true;
                 }
             }  catch (InputStringMismatch e) {
                 System.out.println("Please enter a valid input.\n");
@@ -103,6 +117,12 @@ public class ValidateHelper {
         } while (!success);
         return input;
     }
+
+    /**
+     * Validate if the user inputted a valid category.
+     *
+     * @return String of the category if valid.
+     */
     private static String validateCategories(String msg, String[] categories, String errMsg) {
         InputScanner sc = InputScanner.getInstance();
         boolean success = false;
@@ -125,6 +145,11 @@ public class ValidateHelper {
         return input;
     }
 
+    /**
+     * Validate if the user inputted a valid gender.
+     *
+     * @return String of either M or F.
+     */
     public static String validateGender() {
         String msg = "Enter gender (M/F): ";
         String[] genderCategory = {"M", "F"};
@@ -132,6 +157,11 @@ public class ValidateHelper {
         return validateCategories(msg, genderCategory, errMsg);
     }
 
+    /**
+     * Validate if the user inputted a valid role.
+     *
+     * @return String of either S or M.
+     */
     public static String validateRole() {
         String msg = "Enter role (S/M):\nS: Staff\nM: Manager\n";
         String[] roleCategory = {"S", "M"};

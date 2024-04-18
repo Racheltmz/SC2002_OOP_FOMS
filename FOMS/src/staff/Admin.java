@@ -1,5 +1,6 @@
 package staff;
 
+import staff.actions.*;
 import staff.filter.StaffFilterOptions;
 
 import java.util.UUID;
@@ -10,6 +11,7 @@ import static staff.StaffView.getFieldToFilter;
 public class Admin extends Staff {
     private final IAdminStaffActions adminStaffActions = new AdminStaffActions();
     private final IAdminBranchActions adminBranchActions = new AdminBranchActions();
+    private final IAdminPaymentActions adminPaymentActions = new AdminPaymentActions();
 
     public Admin(String staffID, String name, StaffRoles role, char gender, int age){
         super(staffID, name, role, gender, age, null);
@@ -92,12 +94,16 @@ public class Admin extends Staff {
             adminBranchActions.closeBranch();
         }
     }
-//
-//    protected String addPayment(String method){
-//        return adminActions.addPayment(method);
-//    }
-//
-//    protected String removePayment(String method){
-//        return adminActions.removePayment(method);
-//    }
+
+    public void addPayment(StaffRoles auth){
+        if (authoriseAdmin(auth)) {
+            adminPaymentActions.addPayment();
+        }
+    }
+
+    public void rmvPayment(StaffRoles auth){
+        if (authoriseAdmin(auth)) {
+            adminPaymentActions.rmvPayment();
+        }
+    }
 }

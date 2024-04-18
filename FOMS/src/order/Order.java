@@ -5,11 +5,9 @@ import payment.Payment;
 import payment.PaymentDirectory;
 import io.IXlsxSerializable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.text.DecimalFormat;
 
-import static payment.PaymentDirectory.readPaymentMethods;
 import static utils.ValidateHelper.validateIntRange;
 
 // Order details
@@ -79,8 +77,6 @@ public class Order implements IXlsxSerializable {
         this.status = status;
     }
 
-    public void setPaymentMtd(Payment payment) { this.payment = payment; }
-
     // Functionalities
     // Place order
     public void placeOrder() {
@@ -106,15 +102,13 @@ public class Order implements IXlsxSerializable {
     public static Payment pay() {
         // Initialise directory
         PaymentDirectory paymentDirectory = PaymentDirectory.getInstance();
-        ArrayList<String> paymentMethodList = readPaymentMethods();
+        ArrayList<String> paymentMethodList = paymentDirectory.getPaymentMtds();
 
         // Display payment methods
-        if (paymentDirectory.printPaymentMethods())
-        {
+        if (!paymentMethodList.isEmpty()) {
             int choice = validateIntRange("How would you like to pay?", 1, paymentMethodList.size(), true);
             String paymentOption = paymentMethodList.get(choice - 1);
-            Payment paymentOpt = new Payment(paymentOption);
-            return paymentOpt;
+            return new Payment(paymentOption);
         }
         System.out.println("Please approach staff for assistance.");
         return null;

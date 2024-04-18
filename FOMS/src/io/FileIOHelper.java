@@ -1,8 +1,5 @@
 package io;
 
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import java.io.*;
 
 /**
@@ -11,6 +8,7 @@ import java.io.*;
  * The data folder is where we will be storing the application data
 
  */
+// TODO: review implementation of io
 public class FileIOHelper {
 
     /**
@@ -31,7 +29,7 @@ public class FileIOHelper {
      * @param name File Name
      * @return true if exist
      */
-    public static boolean exists(String name) {
+    public static boolean fileExists(String name) {
         File folder = init();
         File f = new File(folder.getAbsolutePath() + File.separator + name);
         return f.exists();
@@ -71,33 +69,10 @@ public class FileIOHelper {
      */
     public static FileOutputStream getFileOutputStream(String name) {
         try {
-            return new FileOutputStream(getFile(name));
-        } catch (IOException ioException) {
-            System.out.println("Error: unable to add header.");
+            return new FileOutputStream(getFile(name), true); // TODO: check the append
+        } catch (IOException e) {
+            System.out.println("Unable to output record.");
         }
         return null;
-    }
-
-    // Get Excel spreadsheet by filename
-    public static XSSFSheet getSheet(String filePath) {
-        XSSFSheet sheet = null;
-        try {
-            // Reading file from local directory
-            FileInputStream file = getFileInputStream(filePath);
-
-            // Create Workbook instance holding reference to .xlsx file
-            assert file != null;
-            XSSFWorkbook workbook = new XSSFWorkbook(file);
-
-            // Get first sheet from the workbook
-            sheet = workbook.getSheetAt(0);
-
-            // Closing workbook and file output streams
-            workbook.close();
-            file.close();
-        } catch (IOException | NullPointerException e) {
-            System.out.println("Unable to load records. Please check the file storage.");
-        }
-        return sheet;
     }
 }

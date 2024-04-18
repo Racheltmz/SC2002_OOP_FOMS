@@ -5,6 +5,8 @@ foms.vpp.bak_*
 **/.idea/workspace.xml **/.idea/tasks.xml
 .idea
 *.iml
+out/
+
 .gradle
 build.gradle
 build

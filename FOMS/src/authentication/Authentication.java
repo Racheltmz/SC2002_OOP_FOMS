@@ -7,14 +7,14 @@ import staff.Staff;
 import static authentication.Hashing.genHash;
 
 /**
- * Authenticate staff based on their roles
+ * Authenticate staff based on their roles.
  */
 public class Authentication {
     /**
-     * Staff login into their account
+     * Staff login into their account.
      *
-     * @param staffDirectory List of staff records
-     * @return Nothing is returned
+     * @param staffDirectory List of staff records.
+     * @return Nothing is returned.
      */
     public static Staff login(StaffDirectory staffDirectory) {
         InputScanner sc = InputScanner.getInstance();

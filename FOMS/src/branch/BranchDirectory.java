@@ -1,6 +1,5 @@
 package branch;
 
-import menu.Menu;
 import menu.MenuDirectory;
 import menu.MenuItem;
 import staff.Staff;
@@ -11,10 +10,9 @@ import io.BranchXlsxHelper;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static authorisation.Authorisation.authoriseAdmin;
 import static utils.ValidateHelper.validateInt;
 
-// Records of branch
+// Records of branches
 public class BranchDirectory {
     // Attribute
     private final ArrayList<Branch> branchDirectory;
@@ -47,8 +45,6 @@ public class BranchDirectory {
         return null;
     }
 
-    // TODO: can move to a view
-    // Display branches
     public void displayBranches() {
         System.out.println("Branches: ");
         for (int i = 0; i < this.branchDirectory.size(); i++) {

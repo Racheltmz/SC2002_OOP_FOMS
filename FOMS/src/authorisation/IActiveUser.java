@@ -2,12 +2,23 @@ package authorisation;
 
 import staff.Staff;
 
-// Active user interface
+/**
+ * Active user interface.
+  */
 public interface IActiveUser {
-    // Get active staff
+    /**
+     * Get active staff.
+     * @return Active Staff object.
+     */
     Staff getActiveStaff();
-    // Show options
+
+    /**
+     * Display staff options.
+     */
     void showOptions();
-    // Logout of account
+
+    /**
+     * Logout of account.
+     */
     void logout();
 }

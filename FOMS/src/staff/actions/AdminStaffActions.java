@@ -1,8 +1,11 @@
-package staff;
+package staff.actions;
 
 import branch.Branch;
 import branch.BranchDirectory;
 import exceptions.DuplicateEntryException;
+import staff.Staff;
+import staff.StaffDirectory;
+import staff.StaffRoles;
 import staff.filter.StaffFilterOptions;
 import utils.InputScanner;
 

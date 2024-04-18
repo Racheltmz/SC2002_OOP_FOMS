@@ -1,7 +1,8 @@
-package staff;
+package staff.actions;
 
 import branch.Branch;
 import order.OrderQueue;
+import staff.actions.IStaffOrderActions;
 
 public class StaffOrderActions implements IStaffOrderActions {
     public void getNewOrders(Branch branch) {

@@ -1,8 +1,9 @@
 package staff;
 
 import branch.Branch;
-import staff.filter.StaffFilterBranch;
-import utils.IFilter;
+import staff.actions.IManagerMenuActions;
+import staff.actions.ManagerMenuActions;
+import staff.actions.StaffFilterActions;
 
 import java.util.UUID;
 
@@ -26,6 +27,7 @@ public class Manager extends Staff {
     // Display staff list by branch
     public void displayStaffList(StaffRoles auth, Branch branch) {
         if (authoriseManager(auth)) {
+            System.out.println(branch);
             filterActions.applyBranchFilter(branch.getName());
         }
     }

@@ -33,7 +33,7 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
     private static OrderXlsxHelper orderInstance;
 
     /**
-     * Gets the singleton instance of OrderXlsxHelper that reads from menu.xlsx
+     * Gets the singleton instance of OrderXlsxHelper that reads from menu_list.xlsx
      *
      * @return Instance of this class
      */
@@ -51,6 +51,7 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
     public ArrayList<Order> readFromXlsx() {
         // Initialise a list
         ArrayList<Order> orders = new ArrayList<>();
+        MenuDirectory menuDirectory = MenuDirectory.getInstance();
 
         // Deserialize records
         List<String[]> XlsxData = deserializeRecords(this.orderXlsx, 7, 1);
@@ -68,8 +69,6 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
             boolean takeaway = Boolean.parseBoolean(data[4]);
             OrderStatus status = OrderStatus.valueOf(data[5]);
             String paymentMtd = data[6];
-
-            MenuDirectory menuDirectory = MenuDirectory.getInstance();
 
             // Construct MenuItem objects from itemStrings
             ArrayList<MenuItem> items = new ArrayList<>();
@@ -111,14 +110,5 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
      */
     public void updateXlsx(Order order) {
         serializeUpdate(this.orderXlsx, order.toXlsx(), order.getOrderID());
-    }
-
-    /**
-     * Deletes an Order record in the XLSX File.
-     *
-     * @param id ID of Order record to delete
-     */
-    public void removeXlsx(String id) {
-        deleteRecord(this.orderXlsx, UUID.fromString(id));
     }
 }

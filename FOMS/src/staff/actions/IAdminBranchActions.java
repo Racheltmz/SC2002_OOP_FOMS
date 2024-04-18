@@ -1,4 +1,4 @@
-package staff;
+package staff.actions;
 
 public interface IAdminBranchActions {
     void addBranch();

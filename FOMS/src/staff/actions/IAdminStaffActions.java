@@ -1,4 +1,4 @@
-package staff;
+package staff.actions;
 
 import staff.filter.StaffFilterOptions;
 
