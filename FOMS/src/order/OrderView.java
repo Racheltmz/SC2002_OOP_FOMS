@@ -37,7 +37,8 @@ public class OrderView {
         }
         System.out.println("|                                      |");
         System.out.printf("| Total: %.2f", order.calculateTotal());
-        System.out.println("                          |\n");
+        System.out.println("                          |");
+        System.out.println("|                                      |");
         if (order.isTakeaway()) {
             System.out.println("|                                      |");
             System.out.println("| Pickup option: Takeaway              |");
