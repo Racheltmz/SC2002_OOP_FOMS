@@ -150,8 +150,8 @@ public class OrderQueue {
             Timer timer = new Timer();
             OrderTimerTask orderTask = new OrderTimerTask(timer, order);
             int seconds = 20;
-            timer.schedule(orderTask, seconds * 1000);
             order.setStatus(OrderStatus.READY);
+            timer.schedule(orderTask, seconds * 1000);
             orderXlsxHelper.updateXlsx(order);
             System.out.println("Order status updated from NEW to READY for order ID: " + order.getOrderID());
         }
