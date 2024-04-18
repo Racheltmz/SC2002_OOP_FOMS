@@ -44,7 +44,7 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
         ArrayList<Branch> branches = new ArrayList<>();
 
         // Deserialize records
-        List<String[]> XlsxData = deserializeRecords(this.branchXlsx, this.header, 4, 1);
+        List<String[]> XlsxData = deserializeRecords(this.branchXlsx, 4, 1);
         if (XlsxData.isEmpty()) {
             serializeHeader(this.branchXlsx, this.header);
             return branches;

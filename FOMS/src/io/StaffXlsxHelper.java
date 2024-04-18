@@ -51,7 +51,7 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
         BranchDirectory branchDirectory = BranchDirectory.getInstance();
 
         // Deserialize records
-        List<String[]> XlsxData = deserializeRecords(this.staffXlsx, this.header,8, 1);
+        List<String[]> XlsxData = deserializeRecords(this.staffXlsx,8, 1);
         if(XlsxData.isEmpty()) {
             serializeHeader(this.staffXlsx, this.header);
             return staffList;

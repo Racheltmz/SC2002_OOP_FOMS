@@ -59,8 +59,9 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
             menuList.add(new Menu(branch));
 
         // Deserialize records
-        List<String[]> XlsxData = deserializeRecords(this.menuItemXlsx, this.header,6, 1);
+        List<String[]> XlsxData = deserializeRecords(this.menuItemXlsx,6, 1);
         if (XlsxData.isEmpty()) {
+            serializeHeader(this.menuItemXlsx, this.header);
             return menuList;
         }
 
