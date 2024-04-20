@@ -25,16 +25,14 @@ public class AdminStaffActions implements IAdminStaffActions {
             StaffDirectory staffDirectory = StaffDirectory.getInstance();
             int numExistingStaff = staffDirectory.getNumStaff();
             // Get details of staff
-            // TODO: validateString
-            System.out.println("Enter name: ");
-            String name = toProperCase(sc.nextLine());
+            String name = validateString("Enter name: ");
+            name = toProperCase(name);
 
             // Get the staff ID. Keep getting user input until they enter a new staff id
             String staffId = null;
             do {
                 try {
-                    System.out.print("Enter staff ID: ");
-                    staffId = sc.next();
+                    staffId = validateString("Enter staff ID: ");
                     boolean isExisting = staffDirectory.staffExistsByStaffID(staffId);
                     if (isExisting) {
                         staffId = null;
@@ -52,7 +50,7 @@ public class AdminStaffActions implements IAdminStaffActions {
             int age = validateIntRange("Enter age: ", 16, 80);
 
             // Get the branch
-            System.out.print("Select branch: ");
+            System.out.println("Select branch: ");
             Branch branch = branchDirectory.getBranchByUserInput();
 
             // Add new staff
@@ -70,18 +68,18 @@ public class AdminStaffActions implements IAdminStaffActions {
         Staff staffToUpdate = staffDirectory.getStaff();
         boolean success = false;
         while (!success) {
-            int option = validateIntRange("1. Update name\n2. Update staff ID\n3. Update age\n\nSelect option (4 to quit): ", 1, 4);
+            int option = validateIntRange("1. Update name\n2. Update staff ID\n3. Update age\nSelect option (4 to quit): ", 1, 4);
+            System.out.println();
             switch (option) {
                 case 1:
-                    System.out.println("Enter new name: ");
-                    String name = toProperCase(sc.nextLine());
+                    String name = validateString("Enter new name: ");
+                    name = toProperCase(name);
                     staffToUpdate.setName(name);
                     staffDirectory.updateStaff(staffToUpdate);
                     System.out.println("Successfully updated staff's name to " + staffToUpdate.getName() + ".");
                     break;
                 case 2:
-                    System.out.println("Enter new staffID: ");
-                    String staffID = sc.next();
+                    String staffID = validateString("Enter new staffID: ");
                     staffToUpdate.setStaffID(staffID);
                     staffDirectory.updateStaff(staffToUpdate);
                     System.out.println("Successfully updated staff's ID to " + staffToUpdate.getStaffID() + ".");
@@ -197,7 +195,7 @@ public class AdminStaffActions implements IAdminStaffActions {
                 (staff.getRole() == StaffRoles.MANAGER && assignManager(branchToTransfer))) {
             staff.setBranch(branchToTransfer);
             staffDirectory.updateStaff(staff);
-            System.out.print("Staff member with ID " + staff.getStaffID() + " has been transferred to " + branchToTransfer.getLocation() + " successfully");
+            System.out.println("Staff member with ID " + staff.getStaffID() + " has been transferred to " + branchToTransfer.getLocation() + " successfully");
         }
     }
 }

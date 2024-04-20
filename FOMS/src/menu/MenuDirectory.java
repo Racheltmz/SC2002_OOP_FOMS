@@ -6,6 +6,8 @@ import exceptions.ItemNotFoundException;
 import io.MenuItemXlsxHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import static utils.ValidateHelper.validateIntRange;
@@ -13,6 +15,8 @@ import static utils.ValidateHelper.validateIntRange;
 public class MenuDirectory {
     private final ArrayList<Menu> menuDirectory;
     private static MenuDirectory menuSingleton = null;
+
+    private static final ArrayList<String> categories = new ArrayList<>(Arrays.asList("Side", "Burger", "Set meal", "Drink"));
 
     private MenuDirectory() {
         MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
@@ -102,13 +106,10 @@ public class MenuDirectory {
         return null;
     }
 
-    public String displayMenuByBranch() {
-        BranchDirectory branchDirectory = BranchDirectory.getInstance();
-        String branch = branchDirectory.getBranchByUserInput().getName();
+    public void displayMenuByBranch(String branch) {
         Menu menu = getMenu(branch);
         System.out.println("Menu items in branch " + branch + ":");
         menu.displayItems();
-        return branch;
     }
 
     public int getNumAllMenuItems() {
@@ -127,25 +128,11 @@ public class MenuDirectory {
     // get categories from menu items
     // TODO: fixed list
     public static ArrayList<String> getCategories(){
-        ArrayList<String> categories = new ArrayList<>();
-        ArrayList<Menu> menudirectory = MenuDirectory.getInstance().getMenuDirectory();
-        for (Menu menu : menudirectory){
-            for (MenuItem item : menu.getMenuItems()){
-                if (!categories.contains(item.getCategory())){
-                    categories.add(item.getCategory());
-                }
-            }
-        }
         return categories;
     }
 
     public static void displayCategories(){
         ArrayList<String> categories = getCategories();
-
-        if (categories.isEmpty()){
-            System.out.println("No categories available.");
-            return;
-        }
 
         // display categories
         System.out.println("Categories:");
@@ -159,18 +146,11 @@ public class MenuDirectory {
         ArrayList<String> categories = getCategories();
         int size = categories.size();
 
-        if(categories.isEmpty()){
-            System.out.println("No categories available to select.");
-            return null;
-        }
-
         displayCategories();
-
-        String selectedCategory = null;
 
         // Get user's selection
         int categoryIndex = validateIntRange("Select Category: ", 1, size);
-        selectedCategory = categories.get(categoryIndex - 1);
+        String selectedCategory = categories.get(categoryIndex - 1);
         return selectedCategory;
     }
 

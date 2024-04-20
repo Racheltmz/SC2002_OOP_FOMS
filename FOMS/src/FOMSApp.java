@@ -27,7 +27,8 @@ public class FOMSApp {
                 System.out.println("==================================");
                 System.out.println("|       Welcome to Popeyes!      |");
                 System.out.println("==================================");
-                choice = validateIntRange("Please select option\n1. Customer\n2. Staff\n3: Quit", 1, 3);
+                choice = validateIntRange("1. Customer\n2. Staff\n3: Quit\nPlease select option: ", 1, 3);
+                System.out.println();
 
                 switch (choice) {
                     case 1:
@@ -58,9 +59,8 @@ public class FOMSApp {
                                     System.out.println("|         Welcome Staff!         |");
                                     System.out.println("==================================");
                                     System.out.println("Please select option");
-                                    System.out.println("1. Login\n2. Return back");
-                                    staffChoice = sc.nextInt();
-                                    sc.nextLine(); // Consume newline character
+                                    staffChoice = validateIntRange("1. Login\n2. Return back\nPlease select option: ", 1, 2);
+                                    System.out.println();
                                     if (staffChoice == 1) {
                                         // Login
                                         staff = login(staffDirectory);

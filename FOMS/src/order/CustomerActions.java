@@ -1,5 +1,7 @@
 package order;
 
+import branch.BranchDirectory;
+import io.OrderXlsxHelper;
 import menu.MenuDirectory;
 import menu.MenuItem;
 import payment.Payment;
@@ -14,23 +16,26 @@ public class CustomerActions {
     public static void showOptions() {
         MenuDirectory menuDirectory = MenuDirectory.getInstance();
         OrderQueue orderQueue = OrderQueue.getInstance();
+        BranchDirectory branchDirectory = BranchDirectory.getInstance();
 
         System.out.println("==================================");
         System.out.println("|              Menu              |");
         System.out.println("|        Welcome Customer!       |");
         System.out.println("==================================");
 
-        // Ask customer to select branch
-        String branch = menuDirectory.displayMenuByBranch();
-
         boolean exit = false;
         do {
-            System.out.println("Please select option");
-            int customerChoice = validateIntRange("1. Browse Menu\n2. Check Order Status\n3. Return back", 1, 3);
+            int customerChoice = validateIntRange("1. Browse Menu\n2. Check Order Status\n3. Collect Order\n4. Return back\nPlease select option: ", 1, 4);
+            System.out.println();
 
             switch (customerChoice) {
                 case 1:
+                    // Ask customer to select branch
+                    String branch = branchDirectory.getBranchByUserInput().getName();
+                    System.out.println();
+
                     // Menu Browsing
+                    menuDirectory.displayMenuByBranch(branch);
                     ArrayList<MenuItem> selectedItems = new ArrayList<>();
 
                     boolean done = false;
@@ -57,7 +62,6 @@ public class CustomerActions {
                         for (int i = 0; i < size; i++) {
                             System.out.println((i + 1) + ". " + selectedItems.get(i).getName());
                         }
-                        System.out.println();
                         int customisationOption = validateIntRange(
                                 ("Which item would you like to customise? (enter " + (size + 1) + " to quit): "), 1,
                                 size + 1);
@@ -66,16 +70,19 @@ public class CustomerActions {
                             break;
                         }
                         MenuItem itemToCustomise = selectedItems.get(customisationOption - 1);
-                        String customisationInput = validateString("What customisation would you like?");
+                        String customisationInput = validateString("What customisation would you like? ");
                         customisations.add(itemToCustomise.getName() + " : " + customisationInput);
+                        System.out.println();
                     } while (customise);
 
                     // Dining Options
                     boolean takeaway = false;
-                    int input = validateIntRange("Please select pickup option:\n1. Takeaway\n2. Dine-In", 1, 2);
+                    System.out.println();
+                    int input = validateIntRange("1. Takeaway\n2. Dine-In\nPlease select pickup option: ", 1, 2);
                     if (input == 1) {
                         takeaway = true;
                     }
+                    System.out.println();
 
                     // Payment Information
                     Payment paymentMethod = Order.pay();
@@ -93,12 +100,35 @@ public class CustomerActions {
                     break;
 
                 case 2:
+                    // Ask customer to select branch
+                    branch = branchDirectory.getBranchByUserInput().getName();
+                    System.out.println();
+
                     // Check Order Status
                     orderQueue.getStatusById(branch);
                     System.out.println();
                     break;
 
                 case 3:
+                    OrderXlsxHelper orderXlsxHelper = OrderXlsxHelper.getInstance();
+
+                    // Ask customer to select branch
+                    branch = branchDirectory.getBranchByUserInput().getName();
+                    System.out.println();
+
+                    // Display ready orders
+                    ArrayList<Order> readyOrders = orderQueue.displayReadyOrders(branch);
+                    if (!(readyOrders == null)) {
+                        int listSize = readyOrders.size();
+                        int selectOrder = validateIntRange("Please select which order to pickup: ", 1, listSize);
+                        Order orderToPickup = readyOrders.get(selectOrder - 1);
+                        orderToPickup.setStatus(OrderStatus.COMPLETED);
+                        orderXlsxHelper.updateXlsx(orderToPickup);
+                        System.out.println("Order completed. Thank you for dining with us!");
+                    }
+                    break;
+
+                case 4:
                     // Exit customer interface
                     exit = true;
                     break;

@@ -19,8 +19,14 @@ public class StaffFilterAge implements IFilter {
                 filteredList.add(staff);
             }
         }
-        // Print details
-        System.out.printf("Staff Details of staff age %s\n", age);
-        displayStaffDetails(filteredList);
+
+        if (!filteredList.isEmpty()) {
+            // Print details
+            System.out.printf("Staff Details of staff age %s\n", age);
+            displayStaffDetails(filteredList);
+        }
+        else {
+            System.out.println("No current staff meet the filter requirements.");
+        }
     }
 }

@@ -62,6 +62,19 @@ public class OrderQueue {
         return newOrders;
     }
 
+    public ArrayList<Order> getReadyOrders(String branch) {
+        ArrayList<Order> branchOrders = getOrderBranch(branch);
+        ArrayList<Order> readyOrders = new ArrayList<>();
+        if (!branchOrders.isEmpty()) {
+            for (Order order : branchOrders) {
+                if (Objects.equals(order.getStatus(), OrderStatus.READY) && order.getBranch().equals(branch)) {
+                    readyOrders.add(order);
+                }
+            }
+        }
+        return readyOrders;
+    }
+
     // Get order by ID
     public Order getOrderById(String branch) {
         if (!getOrderBranch(branch).isEmpty()) {
@@ -110,6 +123,22 @@ public class OrderQueue {
         }
     }
 
+    public ArrayList<Order> displayReadyOrders(String branch) {
+        ArrayList<Order> readyOrders = this.getReadyOrders(branch);
+        if (readyOrders.isEmpty()) {
+            System.out.println("No orders are ready to pickup.\n");
+            return null;
+        } else {
+            int counter = 1;
+            System.out.println("Orders that are ready to pickup:");
+            for (Order order : readyOrders) {
+                System.out.println(counter + ". " + order.getOrderID());
+                counter++;
+            }
+            return readyOrders;
+        }
+    }
+
     // Get order status by order ID
     public void getStatusById(String branch) {
         if (!getOrderBranch(branch).isEmpty()) {
@@ -135,14 +164,16 @@ public class OrderQueue {
             OrderXlsxHelper orderXlsxHelper = OrderXlsxHelper.getInstance();
             // Get order
             Order order = getOrderById(branch);
-            // Set timer
-            Timer timer = new Timer();
-            OrderTimerTask orderTask = new OrderTimerTask(timer, order);
-            int seconds = 5;
-            order.setStatus(OrderStatus.READY);
-            timer.schedule(orderTask, seconds * 1000);
-            orderXlsxHelper.updateXlsx(order);
-            System.out.println("Order status updated from NEW to READY for order ID: " + order.getOrderID());
+            if (order != null) {
+                // Set timer
+                Timer timer = new Timer();
+                OrderTimerTask orderTask = new OrderTimerTask(timer, order);
+                int seconds = 5;
+                order.setStatus(OrderStatus.READY);
+                timer.schedule(orderTask, seconds * 1000);
+                orderXlsxHelper.updateXlsx(order);
+                System.out.println("Order status updated from NEW to READY for order ID: " + order.getOrderID());
+            }
         }
     }
 }

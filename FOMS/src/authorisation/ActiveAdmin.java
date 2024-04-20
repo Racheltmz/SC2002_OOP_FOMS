@@ -5,6 +5,8 @@ import utils.InputScanner;
 import management.Admin;
 
 import static authorisation.ActiveView.displayMenu;
+import static utils.ValidateHelper.validateInt;
+import static utils.ValidateHelper.validateIntRange;
 
 /**
  * Authorised operations for active user with an admin role.
@@ -60,14 +62,12 @@ public class ActiveAdmin implements IActiveUser {
         StaffRoles role = this.getActiveStaff().getRole();
 
         displayMenu("1. Staff Management\n2. Branch Management\n3. Payment Management\n4. My Account", staffID, role);
-        int categoryChoice = sc.nextInt();
-        sc.nextLine();
+        int categoryChoice = validateIntRange(1, 4);
 
         switch(categoryChoice){
             case 1: // staff details
                 displayMenu("1. Add Staff \n2. Update Staff\n3. Remove Staff\n4. Filter Accounts\n5. Promote Staff\n6. Transfer Staff", staffID, role);
-                int staffChoice = sc.nextInt();
-                sc.nextLine();
+                int staffChoice = validateIntRange(1, 6);
                 switch (staffChoice) {
                     case 1:
                         // add staff
@@ -93,37 +93,25 @@ public class ActiveAdmin implements IActiveUser {
                         // transfer staff
                         this.getActiveStaff().transferStaff(role);
                         break;
-                    default:
-                        System.out.println("Invalid choice, please re-enter: ");
-                        break;
                 }
                 break;
             case 2: // Branch details
-                displayMenu("1. Add branch\n2. Update Branch\n3. Close Branch", staffID, role);
-                int branchChoice = sc.nextInt();
-                sc.nextLine();
-                switch(branchChoice) {
+                displayMenu("1. Add branch\n2. Close Branch", staffID, role);
+                int branchChoice = validateIntRange(1, 2);
+                switch (branchChoice) {
                     case 1:
                         // add branch
                         this.getActiveStaff().addBranch(role);
                         break;
                     case 2:
-                        // edit branch
-                        this.getActiveStaff().updateBranch(role);
-                        break;
-                    case 3:
                         // close branch
                         this.getActiveStaff().closeBranch(role);
-                        break;
-                    default:
-                        System.out.println("Invalid choice, please re-enter: ");
                         break;
                 }
                 break;
             case 3: // Payment methods
                 displayMenu("1. Add Payment Method\n2. Remove Payment Method", staffID, role);
-                int paymentChoice = sc.nextInt();
-                sc.nextLine();
+                int paymentChoice = validateIntRange(1, 2);
                 switch (paymentChoice) {
                     case 1:
                         // add method
@@ -133,15 +121,11 @@ public class ActiveAdmin implements IActiveUser {
                         // remove method
                         this.getActiveStaff().rmvPayment(role);
                         break;
-                    default:
-                        System.out.println("Invalid choice, please re-enter: ");
-                        break;
                 }
                 break;
             case 4: // Account
                 displayMenu("1. Change Password\n2. Logout", staffID, role);
-                int accChoice = sc.nextInt();
-                sc.nextLine();
+                int accChoice = validateIntRange(1, 2);
                 switch (accChoice) {
                     case 1:
                         // change password
@@ -151,16 +135,7 @@ public class ActiveAdmin implements IActiveUser {
                         // logout
                         this.logout();
                         break;
-                    default:
-                        System.out.println("Invalid choice, please re-enter: ");
-                        break;
                 }
-                break;
-            case 5: // Quit
-                System.out.println("Exiting...");
-                break;
-            default:
-                System.out.println("Invalid choice, please re-enter: ");
                 break;
         }
     }

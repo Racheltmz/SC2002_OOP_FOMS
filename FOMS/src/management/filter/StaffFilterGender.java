@@ -20,12 +20,18 @@ public class StaffFilterGender implements IFilter {
                 filteredList.add(staff);
             }
         }
-        // Print details
-        if (Objects.equals(gender, "M"))
-            System.out.println("Male Staff Details");
-        else if (Objects.equals(gender, "F"))
-            System.out.println("Female Staff Details");
 
-        displayStaffDetails(filteredList);
+        if (!filteredList.isEmpty()) {
+            // Print details
+            if (Objects.equals(gender, "M"))
+                System.out.println("Male Staff Details");
+            else if (Objects.equals(gender, "F"))
+                System.out.println("Female Staff Details");
+
+            displayStaffDetails(filteredList);
+        }
+        else {
+            System.out.println("No current staff meet the filter requirements.");
+        }
     }
 }

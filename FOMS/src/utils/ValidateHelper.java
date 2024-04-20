@@ -22,7 +22,7 @@ public class ValidateHelper {
         int input = 0;
         do {
             try {
-                System.out.println(msg);
+                System.out.print(msg);
                 input = sc.nextInt();
                 if (input >= 0)
                     success = true;
@@ -36,7 +36,30 @@ public class ValidateHelper {
         return input;
     }
 
-    // TODO: handle ignoreBlank
+    /**
+     * Check if integer inputted is valid.
+     *
+     * @return Integer from user input if valid.
+     */
+    public static int validateInt() {
+        InputScanner sc = InputScanner.getInstance();
+        boolean success = false;
+        int input = 0;
+        do {
+            try {
+                input = sc.nextInt();
+                if (input >= 0)
+                    success = true;
+                else
+                    System.out.println("Negative values are invalid.");
+            }  catch (InputMismatchException e) {
+                System.out.println("Please enter a valid integer.\n");
+                sc.nextLine();
+            }
+        } while (!success);
+        return input;
+    }
+
     /**
      * Check if integer inputted is valid and within a valid range.
      *
@@ -63,6 +86,26 @@ public class ValidateHelper {
         return input;
     }
 
+    public static int validateIntRange(int start, int end) {
+        InputScanner sc = InputScanner.getInstance();
+        boolean success = false;
+        int input = 0;
+        do {
+            try {
+                input = sc.nextInt();
+                if (start <= input && input <= end) {
+                    success = true;
+                } else {
+                    System.out.print("Invalid range! Please re-enter: ");
+                }
+            }  catch (InputMismatchException e) {
+                System.out.print("Please enter a valid integer: ");
+                sc.nextLine();
+            }
+        } while (!success);
+        return input;
+    }
+
     /**
      * Check if double inputted is valid.
      *
@@ -75,7 +118,7 @@ public class ValidateHelper {
         double input = 0;
         do {
             try {
-                System.out.println(msg);
+                System.out.print(msg);
                 input = sc.nextDouble();
                 if (input >= 0)
                     success = true;
@@ -100,7 +143,7 @@ public class ValidateHelper {
         String input = null;
         do {
             try {
-                System.out.println(msg);
+                System.out.print(msg);
                 input = sc.next();
                 input += sc.nextLine();
                 if (input.isBlank() || input.matches("^[0-9]+$")) {

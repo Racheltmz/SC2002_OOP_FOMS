@@ -134,4 +134,6 @@ public class Branch implements IXlsxSerializable {
         return this.managerQuota;
     }
 
+    public void setManagerQuota(int quota) { this.managerQuota = quota; }
+
 }

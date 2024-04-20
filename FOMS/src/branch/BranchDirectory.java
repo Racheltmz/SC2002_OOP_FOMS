@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import static utils.ValidateHelper.validateInt;
+import static utils.ValidateHelper.validateIntRange;
 
 /**
  * Represents an overall directory of branches.
@@ -79,17 +80,11 @@ public class BranchDirectory {
         displayBranches();
         // Handle invalid branch names by checking if index out of bounds
         Branch branch = null;
-        boolean success = false;
-        do {
-            try {
-                // Get user's selection
-                int branchIndex = validateInt("Select Branch: ");
-                branch = this.branchDirectory.get(branchIndex - 1);
-                success = true;
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Invalid value, please enter again.");
-            }
-        } while (!success);
+        int size = this.branchDirectory.size();
+
+        // Get user's selection
+        int branchIndex = validateIntRange("Select Branch: ", 1, size);
+        branch = this.branchDirectory.get(branchIndex - 1);
         return branch;
     }
 
@@ -102,12 +97,12 @@ public class BranchDirectory {
         System.out.println("Branch successfully created!");
     }
 
-    public void updateBranch(Branch updatedBranch){
-        Branch branch = getBranchByName(updatedBranch.getName());
-        branch.setName(updatedBranch.getName());
-        branch.setLocation(updatedBranch.getLocation());
-        branch.setStaffQuota(updatedBranch.getStaffQuota());
-    }
+//    public void updateBranch(Branch updatedBranch){
+//        Branch branch = getBranchByName(updatedBranch.getName());
+//        branch.setName(updatedBranch.getName());
+//        branch.setLocation(updatedBranch.getLocation());
+//        branch.setStaffQuota(updatedBranch.getStaffQuota());
+//    }
 
     // Remove branch
     public void rmvBranch(Branch branchToRmv) {

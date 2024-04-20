@@ -20,8 +20,14 @@ public class StaffFilterBranch implements IFilter {
                 filteredList.add(staff);
             }
         }
-        // Print details
-        System.out.printf("Staff Details of %s branch\n", branch);
-        displayStaffDetails(filteredList);
+
+        if (!filteredList.isEmpty()) {
+            // Print details
+            System.out.printf("Staff Details of %s branch\n", branch);
+            displayStaffDetails(filteredList);
+        }
+        else {
+            System.out.println("No current staff meet the filter requirements.");
+        }
     }
 }

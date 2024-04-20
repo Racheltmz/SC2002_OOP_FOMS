@@ -20,13 +20,19 @@ public class StaffFilterRole implements IFilter {
                 filteredList.add(staff);
             }
         }
-        // Print details
-        if (Objects.equals(role, "S"))
-            System.out.println("Staff Details");
-        else if (Objects.equals(role, "M"))
-            System.out.println("Manager Details");
-        else if (Objects.equals(role, "A"))
-            System.out.println("Admin Details");
-        displayStaffDetails(filteredList);
+
+        if (!filteredList.isEmpty()) {
+            // Print details
+            if (Objects.equals(role, "S"))
+                System.out.println("Staff Details");
+            else if (Objects.equals(role, "M"))
+                System.out.println("Manager Details");
+            else if (Objects.equals(role, "A"))
+                System.out.println("Admin Details");
+            displayStaffDetails(filteredList);
+        }
+        else {
+            System.out.println("No current staff meet the filter requirements.");
+        }
     }
 }

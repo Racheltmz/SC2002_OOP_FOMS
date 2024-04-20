@@ -83,12 +83,6 @@ public class Admin extends Staff {
         }
     }
 
-    public void updateBranch(StaffRoles auth){
-        if (authoriseAdmin(auth)) {
-            adminBranchActions.updateBranch();
-        }
-    }
-
     public void closeBranch(StaffRoles auth){
         if (authoriseAdmin(auth)) {
             adminBranchActions.closeBranch();

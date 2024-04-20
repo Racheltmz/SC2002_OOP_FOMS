@@ -1,6 +1,7 @@
 package io;
 
 import branch.Branch;
+import menu.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,5 +81,9 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
      */
     public void removeXlsx(UUID id) {
         deleteRecord(this.branchXlsx, id);
+    }
+
+    public void updateXlsx(Branch branch) {
+        serializeUpdate(this.branchXlsx, branch.toXlsx(), branch.getId());
     }
 }

@@ -7,6 +7,7 @@ import management.actions.StaffOrderActions;
 import utils.InputScanner;
 
 import static authentication.Hashing.genHash;
+import static utils.ValidateHelper.validateString;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -132,8 +133,7 @@ public class Staff implements IXlsxSerializable {
         // Check if user entered a password or if they entered the same password as they had in the past
         while (newPassword.isEmpty() || this.verifyPassword(genHash(newPassword))) {
             System.out.println("Password change unsuccessful, please try again. Ensure that it differs from your previous password.");
-            System.out.print("Please enter new password: ");
-            newPassword = sc.next();
+            newPassword = validateString("Please enter new password: ");
         }
         this.setPassword(genHash(newPassword));
         StaffDirectory staffDirectory = StaffDirectory.getInstance();

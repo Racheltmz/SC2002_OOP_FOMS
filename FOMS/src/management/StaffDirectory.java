@@ -7,6 +7,8 @@ import exceptions.ItemNotFoundException;
 import utils.InputScanner;
 import io.StaffXlsxHelper;
 
+import static utils.ValidateHelper.validateString;
+
 /**
  * Handles operations on staff records.
  */
@@ -69,8 +71,7 @@ public class StaffDirectory {
         InputScanner sc = InputScanner.getInstance();
         while (true) {
             // Get staff id
-            System.out.print("\nEnter staff ID: ");
-            String staffId = sc.next();
+            String staffId = validateString("Enter staff ID: ");
             try {
                 Staff staffFound = this.getStaffById(staffId);
                 if (staffFound != null)

@@ -11,7 +11,6 @@ public class PaymentView {
                 System.out.println(counter + ". " + item + " payment");
                 counter++;
             }
-            System.out.println();
         } else {
             System.out.println("No payment methods exist currently.");
         }

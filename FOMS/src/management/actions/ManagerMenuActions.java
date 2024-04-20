@@ -14,7 +14,6 @@ import static utils.ValidateHelper.*;
 
 // Manager's permissions
 public class ManagerMenuActions implements IManagerMenuActions {
-    InputScanner sc = InputScanner.getInstance();
     MenuDirectory menuDirectory = MenuDirectory.getInstance();
 
     // Add menu item
@@ -23,16 +22,15 @@ public class ManagerMenuActions implements IManagerMenuActions {
             String branchName = branch.getName();
 
             // Get details of new menu item
-            System.out.println("Enter name: ");
-            String name = toProperCase(sc.next());
+            String name = validateString("Enter name: ");
+            name = toProperCase(name);
 
             double price = validateDouble("Enter price ($): ");
 
-            System.out.println("Enter category: ");
             String category = getCategoryByUserInput();
 
-            System.out.println("Enter description: ");
-            String description = capitalizeFirstLetter(sc.next());
+            String description = validateString("Enter description: ");
+            description = capitalizeFirstLetter(description);
 
             // Add the new menu item to the menu
             MenuItem newItem = new MenuItem(name, price, branchName, category, description);
@@ -59,11 +57,10 @@ public class ManagerMenuActions implements IManagerMenuActions {
 
         while (!success) {
             int option = validateIntRange("1. Update name\n2. Update price\n3. Update category\n4. Update description\nSelect option (5 to quit): ", 1, 5);
-            sc.nextLine();
             switch (option) {
                 case 1:
-                    System.out.println("Enter new name of item: ");
-                    String name = toProperCase(sc.next());
+                    String name = validateString("Enter new name of item: ");
+                    name = toProperCase(name);
                     itemToUpdate.setName(name);
                     break;
                 case 2:
@@ -80,8 +77,8 @@ public class ManagerMenuActions implements IManagerMenuActions {
                     }
                     break;
                 case 4:
-                    System.out.println("Enter new description: ");
-                    String description = capitalizeFirstLetter(sc.nextLine());
+                    String description = validateString("Enter new description: ");
+                    description = capitalizeFirstLetter(description);
                     itemToUpdate.setDescription(description);
                     break;
                 case 5:
