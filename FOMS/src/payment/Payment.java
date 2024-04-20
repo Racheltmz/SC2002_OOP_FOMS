@@ -1,18 +1,17 @@
 package payment;
 
-// Payment Method Details
-public class Payment {
-    // Attributes
-    private String paymentMethod;
+/**
+ * Abstract class for Payment Methods.
+ */
+public abstract class Payment {
+    /**
+     * Get payment method.
+     * @return String of the method name.
+     */
+    public abstract String getPaymentMethod();
 
-    // Constructor
-    public Payment(String method){
-        this.paymentMethod = method;
-    }
-
-    // Getter
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
+    /**
+     * Get details required by the payment method.
+     */
+    public abstract void getDetails();
 }

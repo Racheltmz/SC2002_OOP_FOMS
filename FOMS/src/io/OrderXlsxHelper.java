@@ -54,7 +54,7 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
         MenuDirectory menuDirectory = MenuDirectory.getInstance();
 
         // Deserialize records
-        List<String[]> XlsxData = deserializeRecords(this.orderXlsx, 7, 1);
+        List<String[]> XlsxData = deserializeRecords(this.orderXlsx, 8, 1);
         if (XlsxData.isEmpty()) {
             serializeHeader(this.orderXlsx, this.header);
             return orders;
@@ -67,8 +67,9 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
             String[] itemStrings = data[2].split(", ");
             String[] customisations = data[3].split(", ");
             boolean takeaway = Boolean.parseBoolean(data[4]);
-            OrderStatus status = OrderStatus.valueOf(data[5]);
+            double totalAmount = Double.parseDouble(data[5]);
             String paymentMtd = data[6];
+            OrderStatus status = OrderStatus.valueOf(data[7]);
 
             // Construct MenuItem objects from itemStrings
             ArrayList<MenuItem> items = new ArrayList<>();
@@ -81,11 +82,8 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
             // Convert customisations array to ArrayList<String>
             ArrayList<String> customisationsList = new ArrayList<>(Arrays.asList(customisations));
 
-            //Convert payment method to Payment object
-            Payment paymentMethod = new Payment(paymentMtd);
-
             // Construct Order object using retrieved data
-            Order order = new Order(orderID, branch, items, customisationsList, takeaway, paymentMethod);
+            Order order = new Order(orderID, branch, items, customisationsList, takeaway, totalAmount, paymentMtd);
             order.setStatus(status);
 
             orders.add(order);

@@ -3,7 +3,6 @@ package order;
 import menu.MenuDirectory;
 import menu.MenuItem;
 import payment.Payment;
-import utils.InputScanner;
 
 import java.util.ArrayList;
 
@@ -51,8 +50,7 @@ public class CustomerActions {
                     // Customisations
                     int size = selectedItems.size();
                     ArrayList<String> customisations = new ArrayList<>();
-                    boolean customise = true;
-                    do {
+                    while (true) {
                         System.out.println("Selected Items:");
                         for (int i = 0; i < size; i++) {
                             System.out.println((i + 1) + ". " + selectedItems.get(i).getName());
@@ -62,13 +60,12 @@ public class CustomerActions {
                                 ("Which item would you like to customise? (enter " + (size + 1) + " to quit): "), 1,
                                 size + 1);
                         if (customisationOption == size + 1) {
-                            customise = false;
                             break;
                         }
                         MenuItem itemToCustomise = selectedItems.get(customisationOption - 1);
                         String customisationInput = validateString("What customisation would you like?");
                         customisations.add(itemToCustomise.getName() + " : " + customisationInput);
-                    } while (customise);
+                    }
 
                     // Dining Options
                     boolean takeaway = false;
@@ -78,18 +75,16 @@ public class CustomerActions {
                     }
 
                     // Payment Information
-                    Payment paymentMethod = Order.pay();
+                    Payment payment = Order.pay();
 
-                    // Order Processing and Bill
-                    Order order = new Order(branch, selectedItems, customisations, takeaway, paymentMethod);
-                    orderQueue.addOrder(order);
-
-                    if (paymentMethod != null) {
+                    if (payment != null) {
+                        // Order Processing and Bill
+                        Order order = new Order(branch, selectedItems, customisations, takeaway, payment.getPaymentMethod());
+                        orderQueue.addOrder(order);
                         // Verify Order and Payment
                         order.placeOrder();
                         order.printReceipt();
                     }
-
                     break;
 
                 case 2:

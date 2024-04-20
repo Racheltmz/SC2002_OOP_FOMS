@@ -4,8 +4,8 @@ import payment.PaymentDirectory;
 
 public class AdminPaymentActions implements IAdminPaymentActions {
 
-    PaymentDirectory paymentDirectory = PaymentDirectory.getInstance();
 
+    PaymentDirectory paymentDirectory = new PaymentDirectory();
     public void addPayment() {
         paymentDirectory.addPaymentMtd();
     }

@@ -7,9 +7,9 @@ import io.IXlsxSerializable;
 
 import java.util.ArrayList;
 import java.text.DecimalFormat;
-import java.util.Arrays;
+import java.util.Iterator;
 
-import static payment.PaymentView.displayPaymentMethods;
+import static payment.PaymentDirectory.displayPaymentMethods;
 import static utils.ValidateHelper.validateIntRange;
 
 // Order details
@@ -20,29 +20,31 @@ public class Order implements IXlsxSerializable {
     private ArrayList<MenuItem> items;
     private ArrayList<String> customisation;
     private boolean takeaway;
+    private double totalAmount;
+    private String payment;
     private OrderStatus status;
-    private Payment payment;
 
     // Constructor
     public Order(String orderID, String branch, ArrayList<MenuItem> items, ArrayList <String> customisation, boolean takeaway,
-                 Payment payment) {
+                 double totalAmount, String payment) {
         this.orderID = orderID;
         this.branch = branch;
         this.items = items;
         this.customisation = customisation;
         this.takeaway = takeaway;
-        this.status = OrderStatus.NEW;
+        this.totalAmount = totalAmount;
         this.payment = payment;
+        this.status = OrderStatus.NEW;
     }
-    public Order(String branch, ArrayList<MenuItem> items, ArrayList <String> customisation, boolean takeaway,
-            Payment payment) {
+    public Order(String branch, ArrayList<MenuItem> items, ArrayList <String> customisation, boolean takeaway, String payment) {
         this.orderID = UniqueIdGenerator.generateUniqueID(takeaway);
         this.branch = branch;
         this.items = items;
         this.customisation = customisation;
         this.takeaway = takeaway;
-        this.status = OrderStatus.NEW;
+        this.totalAmount = this.calculateTotal();
         this.payment = payment;
+        this.status = OrderStatus.NEW;
     }
 
     // Serialization to XLSX
@@ -57,11 +59,8 @@ public class Order implements IXlsxSerializable {
         // Convert customisations ArrayList to a comma-separated string
         String customisationsString = convertArrayListToString(customisation);
 
-        // Convert payment method to string
-        String paymentMethod = (payment.getPaymentMethod());
-
         return new String[] { orderID, branch, itemsString, customisationsString,
-                String.valueOf(takeaway), String.valueOf(status), paymentMethod };
+                String.valueOf(takeaway), String.valueOf(totalAmount), payment, String.valueOf(status) };
     }
 
     // Getters and Setters
@@ -113,28 +112,25 @@ public class Order implements IXlsxSerializable {
     // Display payment methods and customer makes payment
     public static Payment pay() {
         // Initialise directory
-        PaymentDirectory paymentDirectory = PaymentDirectory.getInstance();
-        ArrayList<String> paymentMethodList = paymentDirectory.getPaymentMtds();
+        PaymentDirectory paymentDirectory = new PaymentDirectory();
+        ArrayList<Payment> paymentList = paymentDirectory.getPaymentMethods();
 
-        // Display payment methods
-        if (!paymentMethodList.isEmpty()) {
-            displayPaymentMethods(paymentMethodList);
-            int choice = validateIntRange("How would you like to pay?", 1, paymentMethodList.size());
-            String paymentOption = paymentMethodList.get(choice - 1);
-            return new Payment(paymentOption);
+        // If there are existing payment methods, get customer to choose one
+        if (!paymentList.isEmpty()) {
+            // Display payment methods
+            displayPaymentMethods(paymentList);
+
+            // Get customer's choice
+            int choice = validateIntRange("How would you like to pay?", 1, paymentList.size());
+            Payment payment = paymentList.get(choice - 1);
+            payment.getDetails();
+            System.out.println("Payment by " + payment.getPaymentMethod() + " is successful.");
+            return payment;
         }
+
+        // Else notify them to approach staff
         System.out.println("Please approach staff for assistance.");
         return null;
-    }
-
-    // Process the order
-    public void processOrder() {
-        if (items == null) {
-            System.out.println("Error: Cannot process order without selecting any items.");
-            return;
-        }
-        setStatus(OrderStatus.READY);
-        System.out.println("Order processed successfully.");
     }
 
     // Receipt information
