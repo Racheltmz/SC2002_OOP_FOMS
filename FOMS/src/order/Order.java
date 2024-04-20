@@ -7,9 +7,8 @@ import io.IXlsxSerializable;
 
 import java.util.ArrayList;
 import java.text.DecimalFormat;
-import java.util.Iterator;
 
-import static payment.PaymentDirectory.displayPaymentMethods;
+import static payment.PaymentView.displayPaymentMethods;
 import static utils.ValidateHelper.validateIntRange;
 
 // Order details
@@ -112,7 +111,7 @@ public class Order implements IXlsxSerializable {
     // Display payment methods and customer makes payment
     public static Payment pay() {
         // Initialise directory
-        PaymentDirectory paymentDirectory = new PaymentDirectory();
+        PaymentDirectory paymentDirectory = PaymentDirectory.getInstance();
         ArrayList<Payment> paymentList = paymentDirectory.getPaymentMethods();
 
         // If there are existing payment methods, get customer to choose one

@@ -67,7 +67,10 @@ public class Branch implements IXlsxSerializable {
         }
     }
 
-    // Serialization to XLSX
+    /**
+     * Convert object to string for serialisation.
+     * @return String array of object.
+     */
     public String[] toXlsx() {
         return new String[] { String.valueOf(id), name, location, String.valueOf(staffQuota) };
     }
