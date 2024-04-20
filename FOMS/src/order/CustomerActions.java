@@ -69,9 +69,7 @@ public class CustomerActions {
                             break;
                         }
                         MenuItem itemToCustomise = selectedItems.get(customisationOption - 1);
-                        sc.nextLine();
-                        System.out.println("What customisation would you like?");
-                        String customisationInput = sc.nextLine();
+                        String customisationInput = validateString("What customisation would you like?");
                         customisations.add(itemToCustomise.getName() + " : " + customisationInput);
                     } while (customise);
 

@@ -40,8 +40,7 @@ public class PaymentDirectory {
         displayPaymentMethods(this.paymentDirectory);
 
         // Add a new method
-        System.out.println("Please enter name of new payment method: ");
-        String newPaymentMethod = sc.next();
+        String newPaymentMethod = validateString("Please enter name of new payment method: ");
         newPaymentMethod = toProperCase(newPaymentMethod);
         this.paymentDirectory.add(newPaymentMethod);
 
