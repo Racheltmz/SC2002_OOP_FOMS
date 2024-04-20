@@ -52,7 +52,6 @@ public class PaymentDirectory {
 
     public void removePaymentMtd() {
         PaymentFileHelper paymentTxtHelper = new PaymentFileHelper();
-        // REMOVE BASED ON INDEX
 //        // Request for which to remove if payment methods exist
 //        if (!this.paymentDirectory.isEmpty()) {
 //            this.displayPaymentMethods();
