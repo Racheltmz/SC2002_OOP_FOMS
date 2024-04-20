@@ -72,7 +72,7 @@ public class CustomerActions {
 
                     // Dining Options
                     boolean takeaway = false;
-                    int input = validateIntRange("Please select pickup option:\n1. Takeaway\n2. Pickup", 1, 2);
+                    int input = validateIntRange("Please select pickup option:\n1. Takeaway\n2. Dine-In", 1, 2);
                     if (input == 1) {
                         takeaway = true;
                     }
