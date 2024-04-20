@@ -19,8 +19,10 @@ public class CustomerActions {
         System.out.println("|              Menu              |");
         System.out.println("|        Welcome Customer!       |");
         System.out.println("==================================");
+
         // Ask customer to select branch
         String branch = menuDirectory.displayMenuByBranch();
+        System.out.println();
 
         boolean exit = false;
         do {
@@ -41,6 +43,7 @@ public class CustomerActions {
                             selectedItems.add(selectedItem);
                         } else {
                             done = true;
+                            System.out.println();
                         }
                     }
 
@@ -53,11 +56,13 @@ public class CustomerActions {
                     ArrayList<String> customisations = new ArrayList<>();
                     boolean customise = true;
                     do {
+                        System.out.println("Selected Items:");
                         for (int i = 0; i < size; i++) {
                             System.out.println((i + 1) + ". " + selectedItems.get(i).getName());
                         }
+                        System.out.println();
                         int customisationOption = validateIntRange(
-                                ("Which item would you like to customise? (enter " + (size + 1) + " to quit)"), 1,
+                                ("Which item would you like to customise? (enter " + (size + 1) + " to quit): "), 1,
                                 size + 1);
                         if (customisationOption == size + 1) {
                             customise = false;
@@ -99,6 +104,7 @@ public class CustomerActions {
                 case 2:
                     // Check Order Status
                     orderQueue.getStatusById(branch);
+                    System.out.println();
                     break;
 
                 case 3:

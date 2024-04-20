@@ -66,18 +66,14 @@ public class OrderQueue {
     // Get order by ID
     public Order getOrderById(String branch) {
         if (!ordersInBranch(branch).isEmpty()) {
-            InputScanner sc = InputScanner.getInstance();
             // Iterate until user enters a valid id
             while (true) {
                 try {
                     // Get user's input
-                    // TODO: removed validate string, check this (doesn't work becuz of -)
-                    System.out.print("Enter orderID (enter quit to exit): ");
-                    String orderID = sc.nextLine();
-                    // TODO: check this
-//                    if (orderID.equalsIgnoreCase("quit")) {
-//                        break;
-//                    }
+                    String orderID = validateString("Enter orderID (enter quit to exit): ");
+                    if (orderID.equalsIgnoreCase("quit") || orderID.isBlank()) {
+                        return null;
+                    }
                     // Return order object if it can be found
                     for (Order order : getNewOrdersBranch(branch)) {
                         if (Objects.equals(order.getOrderID(), orderID))
@@ -119,6 +115,9 @@ public class OrderQueue {
     public void getStatusById(String branch) {
         if (!ordersInBranch(branch).isEmpty()) {
             Order order = getOrderById(branch);
+            if (order == null) {
+                return;
+            }
             System.out.printf("Status of Order ID: %s is %s\n", order.getOrderID(), order.getStatus());
         }
     }
