@@ -25,7 +25,6 @@ public class AdminStaffActions implements IAdminStaffActions {
             StaffDirectory staffDirectory = StaffDirectory.getInstance();
             int numExistingStaff = staffDirectory.getNumStaff();
             // Get details of staff
-            // TODO: validateString
             System.out.println("Enter name: ");
             String name = toProperCase(sc.nextLine());
 

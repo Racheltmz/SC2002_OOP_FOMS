@@ -3,12 +3,22 @@ package payment;
 import utils.InputScanner;
 
 /**
- * Credit/Debit Card Payment Method.
+ * Credit/Debit Card Payment Method. Extends Payment abstract class and implements IXlsxSerializable.
  */
 public class CreditDebitCard extends Payment {
+    /**
+     * Credit/Debit card payment category.
+     */
     private final String category = "Credit/Debit Card";
+
+    /**
+     * Payment method name.
+     */
     private final String paymentMethod;
 
+    /**
+     * Constructor for Credit/Debit card payment methods.
+     */
     public CreditDebitCard(String method) {
         this.paymentMethod = method;
     }
@@ -20,7 +30,7 @@ public class CreditDebitCard extends Payment {
     public String[] toXlsx() {return new String[] { category, paymentMethod }; }
 
     /**
-     * Get payment category
+     * Get payment category.
      */
     @Override
     public String getCategory() {
@@ -43,6 +53,7 @@ public class CreditDebitCard extends Payment {
         InputScanner sc = InputScanner.getInstance();
         String cardNum;
         String cardCVV;
+        // Validate inputs
         while (true) {
             System.out.print("Enter the card number: ");
             cardNum = sc.next();

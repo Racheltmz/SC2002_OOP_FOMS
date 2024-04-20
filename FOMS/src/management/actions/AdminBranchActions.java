@@ -49,7 +49,6 @@ public class AdminBranchActions implements IAdminBranchActions {
                     branchToUpdate.setLocation(newLocation);
                 }
 
-                // TODO: check range
                 System.out.print("Enter new staff quota (leave blank to keep current quota): ");
                 String quotaInput = sc.nextLine();
                 if(!quotaInput.isEmpty()) {

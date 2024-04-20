@@ -125,7 +125,6 @@ public class MenuDirectory {
     }
 
     // get categories from menu items
-    // TODO: fixed list
     public static ArrayList<String> getCategories(){
         ArrayList<String> categories = new ArrayList<>();
         ArrayList<Menu> menudirectory = MenuDirectory.getInstance().getMenuDirectory();

@@ -4,12 +4,22 @@ import io.IXlsxSerializable;
 import utils.InputScanner;
 
 /**
- * PayPal Payment Method.
+ * Online Payment Method. Extends Payment abstract class and implements IXlsxSerializable.
  */
 public class Online extends Payment implements IXlsxSerializable {
+    /**
+     * Online card payment category.
+     */
     private final String category = "Online";
+
+    /**
+     * Payment method name.
+     */
     private final String paymentMethod;
 
+    /**
+     * Constructor for Online card payment methods.
+     */
     public Online(String method) {
         this.paymentMethod = method;
     }
@@ -21,7 +31,7 @@ public class Online extends Payment implements IXlsxSerializable {
     public String[] toXlsx() {return new String[] { category, paymentMethod }; }
 
     /**
-     * Get payment category
+     * Get payment category.
      */
     @Override
     public String getCategory() {
@@ -42,6 +52,7 @@ public class Online extends Payment implements IXlsxSerializable {
     public void getDetails() {
         InputScanner sc = InputScanner.getInstance();
         String phoneNum;
+        // Validate input
         while (true) {
             System.out.print("Enter mobile number: ");
             phoneNum = sc.next();

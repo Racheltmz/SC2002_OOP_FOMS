@@ -9,6 +9,7 @@ public abstract class Payment {
      * @return String of the payment category.
      */
     public abstract String getCategory();
+
     /**
      * Get payment method.
      * @return String of the method name.
@@ -20,5 +21,9 @@ public abstract class Payment {
      */
     public abstract void getDetails();
 
+    /**
+     * Convert payment object to string for serialisation.
+     * @return String array of payment object.
+     */
     public abstract String[] toXlsx();
 }

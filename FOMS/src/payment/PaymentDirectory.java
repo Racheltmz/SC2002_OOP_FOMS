@@ -8,7 +8,9 @@ import static payment.PaymentView.displayPaymentMethods;
 import static utils.ValidateHelper.validateIntRange;
 import static utils.ValidateHelper.validateString;
 
-// Records of payment methods
+/**
+ * Records of payment methods. Created as a singleton.
+ */
 public class PaymentDirectory {
     // Attributes
     private final ArrayList<Payment> paymentDirectory;

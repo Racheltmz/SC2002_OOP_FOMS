@@ -36,7 +36,6 @@ public class ValidateHelper {
         return input;
     }
 
-    // TODO: handle ignoreBlank
     /**
      * Check if integer inputted is valid and within a valid range.
      *
