@@ -1,5 +1,7 @@
 package order;
 
+import io.OrderXlsxHelper;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -14,8 +16,10 @@ public class OrderTimerTask extends TimerTask {
 
     @Override
     public void run() {
+        OrderXlsxHelper orderXlsxHelper = OrderXlsxHelper.getInstance();
         assert this.order.getStatus() == OrderStatus.READY;
         this.order.setStatus(OrderStatus.CANCELLED);
+        orderXlsxHelper.updateXlsx(this.order);
         this.timer.cancel();
     }
 }

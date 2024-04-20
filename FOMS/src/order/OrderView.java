@@ -36,6 +36,8 @@ public class OrderView {
 
     // Print order details for OrderQueue
     public static void printOrderDetails(Order order) {
+        System.out.println("-".repeat(100));
+        System.out.println();
         System.out.println("Order ID: " + order.getOrderID());
         System.out.println("Items:");
         for (MenuItem item : order.getItems()) {
@@ -44,13 +46,13 @@ public class OrderView {
                 customisation = "none";
             System.out.println("- " + item.getName() + ", customisations: " + customisation);
         }
-        System.out.println();
         System.out.print("Pickup option: ");
         if (order.isTakeaway()) {
             System.out.println("Takeaway");
         } else {
             System.out.println("Dine In");
         }
+        System.out.println("Status: " + order.getStatus());
         System.out.println();
     }
 

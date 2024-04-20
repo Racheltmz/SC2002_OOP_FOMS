@@ -62,7 +62,7 @@ public class AdminBranchActions implements IAdminBranchActions {
                 }
 
                 branchDirectory.updateBranch(branchToUpdate);
-                System.out.print("Branch updated successfully.");
+                System.out.println("Branch updated successfully.");
             }
             else{
                 System.out.print("Branch not found");

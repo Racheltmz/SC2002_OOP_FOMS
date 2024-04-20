@@ -81,7 +81,7 @@ public class AdminStaffActions implements IAdminStaffActions {
                     break;
                 case 2:
                     System.out.println("Enter new staffID: ");
-                    String staffID = toProperCase(sc.next());
+                    String staffID = sc.next();
                     staffToUpdate.setStaffID(staffID);
                     staffDirectory.updateStaff(staffToUpdate);
                     System.out.println("Successfully updated staff's ID to " + staffToUpdate.getStaffID() + ".");
@@ -149,10 +149,10 @@ public class AdminStaffActions implements IAdminStaffActions {
         int numManagers = staffDirectory.getNumStaffBranchRole(branch, StaffRoles.MANAGER);
         // Check if the manager quota has exceeded
         if (numManagers == branch.getManagerQuota()) {
-            System.out.println("Unable to assign staff as a manager. The manager quota for " + branch.getLocation() + " is already met.");
+            System.out.println("The manager quota for " + branch.getLocation() + " is already met.");
             return false;
         } else {
-            System.out.println("Able to assign staff as a manager. The manager quota for " + branch.getLocation() + " has not been met.");
+            System.out.println("The manager quota for " + branch.getLocation() + " has not been met.");
             return true;
         }
     }

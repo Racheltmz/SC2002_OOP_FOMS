@@ -22,12 +22,9 @@ public class CustomerActions {
 
         // Ask customer to select branch
         String branch = menuDirectory.displayMenuByBranch();
-        System.out.println();
 
         boolean exit = false;
         do {
-            InputScanner sc = InputScanner.getInstance();
-
             System.out.println("Please select option");
             int customerChoice = validateIntRange("1. Browse Menu\n2. Check Order Status\n3. Return back", 1, 3);
 
@@ -37,19 +34,19 @@ public class CustomerActions {
                     ArrayList<MenuItem> selectedItems = new ArrayList<>();
 
                     boolean done = false;
-                    while (!done) {
+                    do {
                         MenuItem selectedItem = menuDirectory.selectItem(branch);
                         if (selectedItem != null) {
                             selectedItems.add(selectedItem);
                         } else {
-                            done = true;
-                            System.out.println();
+                            if (selectedItems.isEmpty()) {
+                                System.out.println("Please select at least one item.");
+                            } else {
+                                done = true;
+                                System.out.println();
+                            }
                         }
-                    }
-
-                    if (selectedItems.isEmpty()) {
-                        break;
-                    }
+                    } while (!done);
 
                     // Customisations
                     int size = selectedItems.size();
@@ -91,12 +88,8 @@ public class CustomerActions {
                         // Verify Order and Payment
                         order.placeOrder();
                         order.printReceipt();
-
-                        // // Start Timer for Order Cancellation
-                        // Timer timer = new Timer();
-                        // // 5 Minutes in Milliseconds
-                        // timer.schedule(new OrderTimerTask(timer, order), 3000000);
                     }
+
                     break;
 
                 case 2:

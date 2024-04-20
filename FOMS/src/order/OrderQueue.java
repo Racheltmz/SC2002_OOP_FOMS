@@ -38,7 +38,7 @@ public class OrderQueue {
      *
      * @return boolean
      */
-    public ArrayList<Order> ordersInBranch(String branch) {
+    public ArrayList<Order> getOrderBranch(String branch) {
         ArrayList<Order> filteredOrders = new ArrayList<>();
         for (Order order : this.orders) {
             if (order.getBranch().equals(branch)) {
@@ -48,10 +48,9 @@ public class OrderQueue {
         return filteredOrders;
     }
 
-
     // Get new orders in the branch
     public ArrayList<Order> getNewOrdersBranch(String branch) {
-        ArrayList<Order> branchOrders = ordersInBranch(branch);
+        ArrayList<Order> branchOrders = getOrderBranch(branch);
         ArrayList<Order> newOrders = new ArrayList<>();
         if (!branchOrders.isEmpty()) {
             for (Order order : branchOrders) {
@@ -65,7 +64,7 @@ public class OrderQueue {
 
     // Get order by ID
     public Order getOrderById(String branch) {
-        if (!ordersInBranch(branch).isEmpty()) {
+        if (!getOrderBranch(branch).isEmpty()) {
             // Iterate until user enters a valid id
             while (true) {
                 try {
@@ -75,7 +74,7 @@ public class OrderQueue {
                         return null;
                     }
                     // Return order object if it can be found
-                    for (Order order : getNewOrdersBranch(branch)) {
+                    for (Order order : getOrderBranch(branch)) {
                         if (Objects.equals(order.getOrderID(), orderID))
                             return order;
                     }
@@ -90,7 +89,7 @@ public class OrderQueue {
 
     // Display a specific order
     public void displayOrder(String branch) {
-        if (!ordersInBranch(branch).isEmpty()) {
+        if (!getOrderBranch(branch).isEmpty()) {
             Order order = getOrderById(branch);
             if (order != null) {
                 printOrderDetails(order);
@@ -113,7 +112,7 @@ public class OrderQueue {
 
     // Get order status by order ID
     public void getStatusById(String branch) {
-        if (!ordersInBranch(branch).isEmpty()) {
+        if (!getOrderBranch(branch).isEmpty()) {
             Order order = getOrderById(branch);
             if (order == null) {
                 return;
@@ -132,14 +131,14 @@ public class OrderQueue {
 
     // Update order status to ready when food is ready or when customer collects order
     public void updateStatusToReady(String branch) {
-        if (!ordersInBranch(branch).isEmpty()) {
+        if (!getOrderBranch(branch).isEmpty()) {
             OrderXlsxHelper orderXlsxHelper = OrderXlsxHelper.getInstance();
             // Get order
             Order order = getOrderById(branch);
             // Set timer
             Timer timer = new Timer();
             OrderTimerTask orderTask = new OrderTimerTask(timer, order);
-            int seconds = 20;
+            int seconds = 5;
             order.setStatus(OrderStatus.READY);
             timer.schedule(orderTask, seconds * 1000);
             orderXlsxHelper.updateXlsx(order);

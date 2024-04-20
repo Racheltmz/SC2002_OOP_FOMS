@@ -8,6 +8,7 @@ import menu.Menu;
 import java.util.InputMismatchException;
 
 import static menu.MenuDirectory.getCategoryByUserInput;
+import static utils.LetterCaseHelper.capitalizeFirstLetter;
 import static utils.LetterCaseHelper.toProperCase;
 import static utils.ValidateHelper.*;
 
@@ -31,7 +32,7 @@ public class ManagerMenuActions implements IManagerMenuActions {
             String category = getCategoryByUserInput();
 
             System.out.println("Enter description: ");
-            String description = sc.next();
+            String description = capitalizeFirstLetter(sc.next());
 
             // Add the new menu item to the menu
             MenuItem newItem = new MenuItem(name, price, branchName, category, description);
@@ -80,7 +81,7 @@ public class ManagerMenuActions implements IManagerMenuActions {
                     break;
                 case 4:
                     System.out.println("Enter new description: ");
-                    String description = sc.nextLine();
+                    String description = capitalizeFirstLetter(sc.nextLine());
                     itemToUpdate.setDescription(description);
                     break;
                 case 5:

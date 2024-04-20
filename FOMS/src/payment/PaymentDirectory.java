@@ -35,7 +35,6 @@ public class PaymentDirectory {
 
     // Add payment method
     public void addPaymentMtd() {
-        InputScanner sc = InputScanner.getInstance();
         PaymentTxtHelper paymentTxtHelper = new PaymentTxtHelper();
         displayPaymentMethods(this.paymentDirectory);
 
@@ -45,7 +44,7 @@ public class PaymentDirectory {
         this.paymentDirectory.add(newPaymentMethod);
 
         // Save data
-        paymentTxtHelper.writePaymentMethod(this.paymentDirectory); // newPaymentMethod
+        paymentTxtHelper.writePaymentMethod(this.paymentDirectory);
 
         // Display updated payment method data
         System.out.println("Updated list of payment methods are: ");
