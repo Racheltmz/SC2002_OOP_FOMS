@@ -1,5 +1,6 @@
 package order;
 
+import io.OrderXlsxHelper;
 import menu.MenuItem;
 import payment.Payment;
 import payment.PaymentDirectory;
@@ -8,6 +9,7 @@ import io.IXlsxSerializable;
 import java.util.ArrayList;
 import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.Objects;
 
 import static payment.PaymentView.displayPaymentMethods;
 import static utils.ValidateHelper.validateIntRange;
@@ -36,13 +38,29 @@ public class Order implements IXlsxSerializable {
     }
     public Order(String branch, ArrayList<MenuItem> items, ArrayList <String> customisation, boolean takeaway,
             Payment payment) {
-        this.orderID = UniqueIdGenerator.generateUniqueID(takeaway);
+        String newOrderID;
+        do {
+            newOrderID = UniqueIdGenerator.generateUniqueID(takeaway);
+        } while (isDuplicateOrderID(newOrderID)); // Check for duplicate IDs
+        this.orderID = newOrderID;
         this.branch = branch;
         this.items = items;
         this.customisation = customisation;
         this.takeaway = takeaway;
         this.status = OrderStatus.NEW;
         this.payment = payment;
+    }
+
+    private boolean isDuplicateOrderID(String orderID) {
+        OrderXlsxHelper orderXlsxHelper = OrderXlsxHelper.getInstance();
+        // Retrieve existing order IDs from the Excel file
+        ArrayList<Order> existingOrders = orderXlsxHelper.readFromXlsx(); // Implement this method
+        for (Order order : existingOrders) {
+            if (Objects.equals(order.getOrderID(), orderID)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Serialization to XLSX

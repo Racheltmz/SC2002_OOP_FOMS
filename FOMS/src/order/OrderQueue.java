@@ -163,12 +163,13 @@ public class OrderQueue {
         if (!getOrderBranch(branch).isEmpty()) {
             OrderXlsxHelper orderXlsxHelper = OrderXlsxHelper.getInstance();
             // Get order
+            displayNewOrders(branch);
             Order order = getOrderById(branch);
             if (order != null) {
                 // Set timer
                 Timer timer = new Timer();
                 OrderTimerTask orderTask = new OrderTimerTask(timer, order);
-                int seconds = 5;
+                int seconds = 15;
                 order.setStatus(OrderStatus.READY);
                 timer.schedule(orderTask, seconds * 1000);
                 orderXlsxHelper.updateXlsx(order);

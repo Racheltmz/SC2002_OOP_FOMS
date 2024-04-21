@@ -29,7 +29,8 @@ public class OrderView {
             System.out.println("| Pickup option: Dine-in               |");
         }
         System.out.println("|                                      |");
-        System.out.println("| Thank you for shopping at " + order.getBranch() + "!       |");
+        String branchString = "| Thank you for shopping at " + order.getBranch() + "!";
+        System.out.println(formatString(branchString, 39) + "|");
         System.out.println("|                                      |");
         System.out.println("========================================\n");
     }
