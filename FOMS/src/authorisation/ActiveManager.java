@@ -6,6 +6,7 @@ import utils.InputScanner;
 import management.Manager;
 
 import static authorisation.ActiveView.displayMenu;
+import static utils.ValidateHelper.validateInt;
 
 /**
  * Authorised operations for active user with a manager role.
@@ -64,8 +65,7 @@ public class ActiveManager implements IActiveUser {
         Branch branch = this.getActiveStaff().getBranch();
 
         displayMenu("1. Display Staff\n2. Menu Management\n3. Order Management\n4. My Account", staffID, role);
-        int categoryChoice = sc.nextInt();
-        sc.nextLine();
+        int categoryChoice = validateInt();
 
         switch (categoryChoice) {
             case 1:
@@ -117,8 +117,7 @@ public class ActiveManager implements IActiveUser {
                 break;
             case 4: // Account
                 displayMenu("1. Change Password\n2. Logout", staffID, role);
-                int accChoice = sc.nextInt();
-                sc.nextLine();
+                int accChoice = validateInt();
                 switch (accChoice) {
                     case 1:
                         // change password

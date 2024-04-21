@@ -16,7 +16,6 @@ import static utils.LetterCaseHelper.toProperCase;
 import static utils.ValidateHelper.*;
 
 public class AdminStaffActions implements IAdminStaffActions {
-    InputScanner sc = InputScanner.getInstance();
     BranchDirectory branchDirectory = BranchDirectory.getInstance();
     IStaffFilterActions filterActions = new StaffFilterActions();
 
@@ -121,7 +120,7 @@ public class AdminStaffActions implements IAdminStaffActions {
                 filterActions.applyGenderFilter(gender);
                 break;
             case AGE:
-                int age = validateIntRange("Enter age: ", 16, 80);
+                int age = validateIntRange("Enter lower bound for age: ", 16, 80);
                 filterActions.applyAgeFilter(age);
                 break;
         }

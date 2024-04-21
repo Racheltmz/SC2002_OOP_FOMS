@@ -5,6 +5,7 @@ import utils.InputScanner;
 import management.Staff;
 
 import static authorisation.ActiveView.displayMenu;
+import static utils.ValidateHelper.validateInt;
 
 /**
  * Authorised operations for active user with a staff role.
@@ -54,14 +55,12 @@ public class ActiveStaff implements IActiveUser {
      * Displays the permissions the staff is authorised to do.
      */
     public void showOptions() {
-        InputScanner sc = InputScanner.getInstance();
 
         String staffID = getActiveStaff().getStaffID();
         StaffRoles role = getActiveStaff().getRole();
 
         displayMenu("1. Display new orders\n2. View details of an order\n3. Set Order as Ready\n4. Change Password\n5. Logout", staffID, role);
-        int staffChoice = sc.nextInt();
-        sc.nextLine();
+        int staffChoice = validateInt();
 
         switch (staffChoice) {
             case 1:

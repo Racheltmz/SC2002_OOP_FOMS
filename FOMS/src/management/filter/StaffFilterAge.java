@@ -14,15 +14,17 @@ public class StaffFilterAge implements IFilter {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         ArrayList<Staff> filteredList = new ArrayList<>();
 
+        int lowerBoundOfAge = Integer.parseInt(age);
+
         for (Staff staff : staffDirectory.getStaffDirectory()) {
-            if(staff.getAge() == Integer.parseInt(age)){
+            if(staff.getAge() >= lowerBoundOfAge){
                 filteredList.add(staff);
             }
         }
 
         if (!filteredList.isEmpty()) {
             // Print details
-            System.out.printf("Staff Details of staff age %s\n", age);
+            System.out.printf("Staff Details of staff whose age is equals to %s and above\n", age);
             displayStaffDetails(filteredList);
         }
         else {

@@ -5,6 +5,8 @@ import utils.InputScanner;
 
 import java.util.ArrayList;
 
+import static utils.ValidateHelper.validateIntRange;
+
 public class StaffView {
     public static void displayStaffDetails(ArrayList<Staff> staffDirectory) {
         System.out.printf("| %-15s | %-20s | %-10s | %-10s | %-8s | %-5s |\n", "StaffID", "Name", "Branch", "Role", "Gender", "Age");
@@ -18,13 +20,11 @@ public class StaffView {
     }
 
     public static StaffFilterOptions getFieldToFilter() {
-        InputScanner sc = InputScanner.getInstance();
-        System.out.println("Enter the number for the field you want to filter the staff list by: ");
         System.out.println("1. Branch");
         System.out.println("2. Role");
         System.out.println("3. Gender");
         System.out.println("4. Age");
-        int adminChoice = sc.nextInt();
+        int adminChoice = validateIntRange("Enter the number for the field you want to filter the staff list by: ", 1, 4);
         return StaffFilterOptions.of(adminChoice);
     }
 }
