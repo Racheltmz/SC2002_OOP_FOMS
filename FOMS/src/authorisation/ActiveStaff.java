@@ -1,7 +1,6 @@
 package authorisation;
 
 import management.StaffRoles;
-import utils.InputScanner;
 import management.Staff;
 
 import static authorisation.ActiveView.displayMenu;
