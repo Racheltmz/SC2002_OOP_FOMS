@@ -5,6 +5,7 @@ import management.Staff;
 
 import static authorisation.ActiveView.displayMenu;
 import static utils.ValidateHelper.validateInt;
+import static utils.ValidateHelper.validateIntRange;
 
 /**
  * Authorised operations for active user with a staff role.
@@ -59,7 +60,7 @@ public class ActiveStaff implements IActiveUser {
         StaffRoles role = getActiveStaff().getRole();
 
         displayMenu("1. Display new orders\n2. View details of an order\n3. Set Order as Ready\n4. Change Password\n5. Logout", staffID, role);
-        int staffChoice = validateInt();
+        int staffChoice = validateIntRange(1, 5);
 
         switch (staffChoice) {
             case 1:
@@ -76,9 +77,6 @@ public class ActiveStaff implements IActiveUser {
                 break;
             case 5:
                 this.logout();
-                break;
-            default:
-                System.out.println("Invalid choice, please re-enter: ");
                 break;
         }
     }

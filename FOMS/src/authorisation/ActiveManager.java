@@ -7,6 +7,7 @@ import management.Manager;
 
 import static authorisation.ActiveView.displayMenu;
 import static utils.ValidateHelper.validateInt;
+import static utils.ValidateHelper.validateIntRange;
 
 /**
  * Authorised operations for active user with a manager role.
@@ -73,8 +74,7 @@ public class ActiveManager implements IActiveUser {
                 break;
             case 2: // menu item details
                 displayMenu("1. Add Menu Item\n2. Update Menu Item\n3. Remove Menu Item", staffID, role);
-                int menuChoice = sc.nextInt();
-                sc.nextLine();
+                int menuChoice = validateIntRange(1, 3);
                 switch (menuChoice) {
                     case 1:
                         // add item
@@ -88,15 +88,11 @@ public class ActiveManager implements IActiveUser {
                         // remove item
                         this.getActiveStaff().removeMenuItem(role, branch);
                         break;
-                    default:
-                        System.out.println("Invalid choice, please re-enter: ");
-                        break;
                 }
                 break;
             case 3: // customer order
                 displayMenu("1. Get New Orders\n2. Get Details of an Order\n3. Set Order as Ready", staffID, role);
-                int orderChoice = sc.nextInt();
-                sc.nextLine();
+                int orderChoice = validateIntRange(1, 3);
                 switch (orderChoice) {
                     case 1:
                         // get new orders
@@ -110,14 +106,11 @@ public class ActiveManager implements IActiveUser {
                         // set order as ready
                         this.getActiveStaff().setOrderReady(branch);
                         break;
-                    default:
-                        System.out.println("Invalid choice, please re-enter: ");
-                        break;
                 }
                 break;
             case 4: // Account
                 displayMenu("1. Change Password\n2. Logout", staffID, role);
-                int accChoice = validateInt();
+                int accChoice = validateIntRange(1,2);
                 switch (accChoice) {
                     case 1:
                         // change password
