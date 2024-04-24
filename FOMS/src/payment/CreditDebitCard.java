@@ -55,7 +55,7 @@ public class CreditDebitCard extends Payment {
         String cardCVV;
         // Validate inputs
         while (true) {
-            System.out.print("Enter the card number: ");
+            System.out.print("Enter the card number (16 consecutive digits with no spaces): ");
             cardNum = sc.next();
             if (cardNum.length() == 16) {
                 break;
