@@ -31,7 +31,7 @@ public class Admin extends Staff {
         super(staffID, name, role, gender, age, null);
     }
     /**
-     * Constructor for admin
+     * Constructor for Admin.
      *
      * @param id Record ID
      * @param staffID Admin staffID
