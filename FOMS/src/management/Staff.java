@@ -12,13 +12,16 @@ import static utils.ValidateHelper.validateString;
 import java.util.Objects;
 import java.util.UUID;
 
-// Staff Details
+/**
+ * Staff class represents a Staff member and provides methods for administrative actions
+ * to manage Orders within their own Branch.
+ */
 public class Staff implements IXlsxSerializable {
     private UUID id = UUID.randomUUID();
     private String staffID;
     private String name;
     private StaffRoles role;
-    private char gender;
+    private final char gender;
     private int age;
     private Branch branch;
     private String password;

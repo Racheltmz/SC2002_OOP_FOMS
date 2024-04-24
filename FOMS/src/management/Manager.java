@@ -13,7 +13,7 @@ import static authorisation.Authorisation.authoriseManager;
 /**
  * Manager class represents an administrative user with more exclusive privileges than Staff.
  * This class extends the Staff class and provides methods for administrative actions to manage
- * Menus and Orders within their own Branch.
+ * Menus within their own Branch.
  */
 public class Manager extends Staff {
     // Attributes
