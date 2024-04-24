@@ -12,6 +12,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+
+/**
+ * MenuItemXlsxHelper is a utility class for reading from and writing to an
+ * Excel (XLSX) file storing information about the available MenuItems.
+ * It extends the BaseXlsxHelper class and provides methods for reading MenuItem records from the XLSX file,
+ * writing MenuItem records to the XLSX file, updating existing MenuItem records in the XLSX file, and
+ * deleting MenuItem records from the XLSX file.
+ */
 public class MenuItemXlsxHelper extends BaseXlsxHelper {
     /**
      * Path to Menu Items XLSX File in the data folder.

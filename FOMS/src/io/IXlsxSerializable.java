@@ -1,5 +1,8 @@
 package io;
 
+/**
+ * IXlsxSerializable interface for all XlsxHelpers.
+ */
 public interface IXlsxSerializable {
     /**
      * Method to get the data to be written to XLSX file.

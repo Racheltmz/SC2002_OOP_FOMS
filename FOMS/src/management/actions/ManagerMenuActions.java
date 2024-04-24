@@ -2,7 +2,6 @@ package management.actions;
 
 import branch.Branch;
 import menu.MenuDirectory;
-import utils.InputScanner;
 import menu.MenuItem;
 import menu.Menu;
 import java.util.InputMismatchException;
@@ -12,11 +11,20 @@ import static utils.LetterCaseHelper.capitalizeFirstLetter;
 import static utils.LetterCaseHelper.toProperCase;
 import static utils.ValidateHelper.*;
 
-// Manager's permissions
+/**
+ * Provides Manager-specific actions related to managing the Menu.
+ */
 public class ManagerMenuActions implements IManagerMenuActions {
+    /**
+     * The menuDirectory containing Menu information.
+     */
     MenuDirectory menuDirectory = MenuDirectory.getInstance();
 
-    // Add menu item
+    /**
+     * Adds a new MenuItem to the Menu of a specific Branch.
+     *
+     * @param branch The Branch in which the new MenuItem will be added.
+     */
     public void addMenuItem(Branch branch) {
         try {
             String branchName = branch.getName();
@@ -40,7 +48,11 @@ public class ManagerMenuActions implements IManagerMenuActions {
         }
     }
 
-    // Update menu item
+    /**
+     * Updates an existing MenuItem in the Menu of a specific Branch.
+     *
+     * @param branch The Branch in which the MenuItem exists.
+     */
     public void updateMenuItem(Branch branch) {
         // Get menu by branch
         String branchName = branch.getName();
@@ -89,7 +101,11 @@ public class ManagerMenuActions implements IManagerMenuActions {
         }
     }
 
-    // Remove menu item
+    /**
+     * Removes an existing MenuItem from the Menu of a specific Branch.
+     *
+     * @param branch The Branch in which the MenuItem exists.
+     */
     public void removeMenuItem(Branch branch) {
         // Get menu by branch
         String branchName = branch.getName();

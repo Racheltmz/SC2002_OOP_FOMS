@@ -12,7 +12,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-// Helper class for staff
+/**
+ * StaffXlsxHelper is a utility class for reading from and writing
+ * to anExcel (XLSX) file storing information about all staff members.
+ * It extends the BaseXlsxHelper class and provides methods for reading Staff records from the XLSX file,
+ * writing Staff records to the XLSX file, updating existing Staff records in the XLSX file, and
+ * deleting Staff records from the XLSX file.
+ */
 public class StaffXlsxHelper extends BaseXlsxHelper {
     /**
      * Path to Staff XLSX File in the data folder. Defaults to staff_list.xlsx

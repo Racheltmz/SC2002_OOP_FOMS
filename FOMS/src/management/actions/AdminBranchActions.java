@@ -8,12 +8,19 @@ import java.util.InputMismatchException;
 
 import branch.Branch;
 import branch.BranchDirectory;
-import utils.InputScanner;
 
+/**
+ * AdminBranchActions class provides methods for performing administrative actions related to branches,
+ * such as adding a new branch and closing an existing branch.
+ */
 public class AdminBranchActions implements IAdminBranchActions {
-    InputScanner sc = InputScanner.getInstance();
     BranchDirectory branchDirectory = BranchDirectory.getInstance();
 
+    /**
+     * Adds a new branch to the system.
+     * Prompts the user to input the branch name, location, and staff quota.
+     * Validates the inputs and adds a new branch to the branchDirectory.
+     */
     public void addBranch() {
         try {
             // Get branch name
@@ -30,6 +37,12 @@ public class AdminBranchActions implements IAdminBranchActions {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
+    /**
+     * Closes an existing branch in the system.
+     * Prompts the user to select the branch to be closed, and
+     * removes the selected branch from the branch directory.
+     */
     public void closeBranch() {
         // Get branch by name
         Branch branchToRmv = branchDirectory.getBranchByUserInput();

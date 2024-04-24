@@ -14,7 +14,7 @@ public class Authentication {
      * Staff login into their account.
      *
      * @param staffDirectory List of staff records.
-     * @return Nothing is returned.
+     * @return Staff that is currently logged in.
      */
     public static Staff login(StaffDirectory staffDirectory) {
         InputScanner sc = InputScanner.getInstance();

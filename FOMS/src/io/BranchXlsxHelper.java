@@ -1,12 +1,17 @@
 package io;
 
 import branch.Branch;
-import menu.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * BranchXlsxHelper is a utility class for reading from and writing to an Excel (XLSX) file holding information about the branch.
+ * It extends the BaseXlsxHelper class and provides methods for reading Branch records from the XLSX file,
+ * writing Branch records to the XLSX file, deleting Branch records from the XLSX file, and updating
+ * existing Branch records in the XLSX file.
+ */
 public class BranchXlsxHelper extends BaseXlsxHelper {
     /**
      * Path to Branch XLSX File in the data folder. Defaults to branch_list.xlsx.
@@ -81,9 +86,5 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
      */
     public void removeXlsx(UUID id) {
         deleteRecord(this.branchXlsx, id);
-    }
-
-    public void updateXlsx(Branch branch) {
-        serializeUpdate(this.branchXlsx, branch.toXlsx(), branch.getId());
     }
 }
