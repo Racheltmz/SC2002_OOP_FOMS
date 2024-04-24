@@ -30,6 +30,13 @@ public class Admin extends Staff {
         super(id, staffID, name, role, gender, age, null, password);
     }
 
+    @Override
+    public String[] toXlsx() {
+        return new String[] {
+                String.valueOf(super.getId()), super.getName(), super.getStaffID(), super.getRole().getAcronym(), String.valueOf(super.getGender()),
+                String.valueOf(super.getAge()), "NULL", super.getPassword() };
+    }
+
     // Add menu item
     public void addStaff(StaffRoles auth) {
         if (authoriseAdmin(auth)){

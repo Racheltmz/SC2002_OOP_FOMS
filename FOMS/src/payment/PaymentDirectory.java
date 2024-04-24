@@ -39,7 +39,7 @@ public class PaymentDirectory {
         int numExistingRecords = this.getPaymentMethods().size();
 
         // Add a new method
-        int paymentCategory = validateIntRange("Please select payment type to add:\n1. Credit/Debit Card\n2. Online\nSelect option: ", 1, 2);
+        int paymentCategory = validateIntRange("Please select payment type to add from below:\n1. Credit/Debit Card\n2. Online\nSelect option: ", 1, 2);
         String newPaymentMethod = validateString("Please enter name of new payment method: ");
 
         Payment payment = null;
