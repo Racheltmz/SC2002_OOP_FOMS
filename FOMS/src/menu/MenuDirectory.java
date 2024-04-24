@@ -126,7 +126,6 @@ public class MenuDirectory {
     }
 
     // get categories from menu items
-    // TODO: fixed list
     public static ArrayList<String> getCategories(){
         return categories;
     }

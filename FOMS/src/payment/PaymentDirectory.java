@@ -1,25 +1,24 @@
 package payment;
 
-import io.PaymentTxtHelper;
-import utils.InputScanner;
+import io.PaymentXlsxHelper;
 
 import java.util.ArrayList;
 
 import static payment.PaymentView.displayPaymentMethods;
-import static utils.LetterCaseHelper.toProperCase;
 import static utils.ValidateHelper.validateIntRange;
 import static utils.ValidateHelper.validateString;
 
-// TODO: check payment implementation
-// Records of payment methods
+/**
+ * Records of payment methods. Created as a singleton.
+ */
 public class PaymentDirectory {
     // Attributes
-    private final ArrayList<String> paymentDirectory;
+    private final ArrayList<Payment> paymentDirectory;
     private static PaymentDirectory paymentSingleton = null;
 
     private PaymentDirectory() {
-        PaymentTxtHelper paymentTxtHelper = new PaymentTxtHelper();
-        this.paymentDirectory = paymentTxtHelper.readPaymentMethods();
+        PaymentXlsxHelper paymentTxtHelper = new PaymentXlsxHelper();
+        this.paymentDirectory = paymentTxtHelper.readFromXlsx();
     }
 
     public static PaymentDirectory getInstance() {
@@ -29,22 +28,35 @@ public class PaymentDirectory {
         return paymentSingleton;
     }
 
-    public ArrayList<String> getPaymentMtds() {
+    public ArrayList<Payment> getPaymentMethods() {
         return this.paymentDirectory;
     }
 
     // Add payment method
     public void addPaymentMtd() {
-        PaymentTxtHelper paymentTxtHelper = new PaymentTxtHelper();
+        PaymentXlsxHelper paymentXlsxHelper = new PaymentXlsxHelper();
         displayPaymentMethods(this.paymentDirectory);
+        int numExistingRecords = this.getPaymentMethods().size();
 
         // Add a new method
+        int paymentCategory = validateIntRange("Please select payment type to add:\n1. Credit/Debit Card\n2. Online\nSelect option: ", 1, 2);
         String newPaymentMethod = validateString("Please enter name of new payment method: ");
-        newPaymentMethod = toProperCase(newPaymentMethod);
-        this.paymentDirectory.add(newPaymentMethod);
+
+        Payment payment = null;
+        switch (paymentCategory) {
+            case 1:
+                payment = new CreditDebitFactory().createPayment(newPaymentMethod);
+                break;
+            case 2:
+                payment = new OnlineFactory().createPayment(newPaymentMethod);
+                break;
+        }
+        this.paymentDirectory.add(payment);
 
         // Save data
-        paymentTxtHelper.writePaymentMethod(this.paymentDirectory);
+        assert payment != null;
+        System.out.println(this.getPaymentMethods().size());
+        paymentXlsxHelper.writeToXlsx(payment, numExistingRecords);
 
         // Display updated payment method data
         System.out.println("Updated list of payment methods are: ");
@@ -52,17 +64,17 @@ public class PaymentDirectory {
     }
 
     public void removePaymentMtd() {
-        PaymentTxtHelper paymentTxtHelper = new PaymentTxtHelper();
+        PaymentXlsxHelper paymentXlsxHelper = new PaymentXlsxHelper();
         // Request for which to remove if payment methods exist
         if (!this.paymentDirectory.isEmpty()) {
             displayPaymentMethods(this.paymentDirectory);
             // Remove method via integer user input
             int index = validateIntRange("Please enter option of which payment method to remove: ", 1, this.paymentDirectory.size());
-            String paymentMethodToRemove = this.paymentDirectory.get(index - 1);
-            this.paymentDirectory.remove(paymentMethodToRemove);
+            Payment mtdToRmv = this.paymentDirectory.get(index - 1);
+            this.paymentDirectory.remove(mtdToRmv);
 
             // Save new payment method data
-            paymentTxtHelper.writePaymentMethod(this.paymentDirectory);
+            paymentXlsxHelper.removeXlsx(mtdToRmv);
 
             // Display updated payment method data
             System.out.println("Payment method removed successfully.\nUpdated list of payment methods:");

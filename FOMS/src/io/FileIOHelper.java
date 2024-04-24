@@ -8,7 +8,6 @@ import java.io.*;
  * The data folder is where we will be storing the application data
 
  */
-// TODO: review implementation of io
 public class FileIOHelper {
 
     /**

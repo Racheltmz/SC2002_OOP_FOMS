@@ -4,6 +4,7 @@ import exceptions.ItemNotFoundException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import payment.Payment;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -114,6 +115,28 @@ public class BaseXlsxHelper {
         return -1;
     }
 
+    /**
+     * Get the row index from the Excel spreadsheet based on the record's id
+     *
+     * @param sheet Excel spreadsheet to search
+     * @param payment payment to match
+     * @return Row index of the record
+     */
+    private static int getIndexByPayment(XSSFSheet sheet, Payment payment) {
+        try {
+            for (int row = 1; row <= sheet.getLastRowNum(); row++){
+                if(sheet.getRow(row).getCell(0).toString().equalsIgnoreCase(payment.getCategory()) &&
+                        sheet.getRow(row).getCell(1).toString().equalsIgnoreCase(payment.getPaymentMethod())){
+                    return row;
+                }
+            }
+            throw new ItemNotFoundException("Record cannot be found in storage.");
+        } catch (ItemNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        return -1;
+    }
+
     protected void serializeHeader(String sheetName, String[] header) {
         try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(getFileInputStream(sheetName)))) {
             XSSFSheet sheet = workbook.getSheetAt(0);
@@ -180,10 +203,10 @@ public class BaseXlsxHelper {
     }
 
     /**
-     * Deletes a record based on the ID
+     * Deletes a record based on the ID.
      *
-     * @param sheetName Sheet to delete
-     * @param id ID of record to delete
+     * @param sheetName Sheet to delete from.
+     * @param id ID of record to delete.
      */
     protected void deleteRecord(String sheetName, UUID id) {
         try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(getFileInputStream(sheetName)))) {
@@ -192,7 +215,9 @@ public class BaseXlsxHelper {
             int rowIdx = getIndexById(sheet, id);
             if (rowIdx != -1) {
                 sheet.removeRow(sheet.getRow(rowIdx));
-                sheet.shiftRows(rowIdx + 1, sheet.getLastRowNum(), -1);
+                if (rowIdx < sheet.getLastRowNum()) {
+                    sheet.shiftRows(rowIdx + 1, sheet.getLastRowNum(), -1);
+                }
                 FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName);
                 // Write to file
                 workbook.write(fileOut);
@@ -200,7 +225,31 @@ public class BaseXlsxHelper {
         } catch (IOException e) {
             System.out.println("Unable to delete record. Please check the file storage.");
         }
+    }
 
+    /**
+     * Deletes a record based on the Payment object.
+     *
+     * @param sheetName Sheet to delete from.
+     * @param payment Payment record to delete.
+     */
+    protected void deleteRecord(String sheetName, Payment payment) {
+        try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(getFileInputStream(sheetName)))) {
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            // Remove row by id
+            int rowIdx = getIndexByPayment(sheet, payment);
+            if (rowIdx != -1) {
+                sheet.removeRow(sheet.getRow(rowIdx));
+                if (rowIdx < sheet.getLastRowNum()) {
+                    sheet.shiftRows(rowIdx + 1, sheet.getLastRowNum(), -1);
+                }
+                FileOutputStream fileOut = FileIOHelper.getFileOutputStream(sheetName);
+                // Write to file
+                workbook.write(fileOut);
+            }
+        } catch (IOException e) {
+            System.out.println("Unable to delete record. Please check the file storage.");
+        }
     }
 
     /**

@@ -3,18 +3,15 @@ package order;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Timer;
-import exceptions.EmptyListException;
 import exceptions.ItemNotFoundException;
-import utils.InputScanner;
 import io.OrderXlsxHelper;
 
 import static order.OrderView.printOrderDetails;
 import static utils.ValidateHelper.validateString;
 
 /**
- * Records of all orders made by customers
+ * Records of all orders made by customers. Created as a singleton.
  */
-// TODO: refactor design
 public class OrderQueue {
     // Attributes
     private final ArrayList<Order> orders;

@@ -1,13 +1,25 @@
 # Fastfood Ordering Management System (FOMS)
 
-Tutorial Group: FDAB<br/>
-Group No.: Group 3
-
-## INTRODUCTION
+## Introduction
 
 FOMS is a Java application designed to manage orders and staff interactions within a fast food restaurant environment. It provides interfaces for both customers and staff members to interact with the system.
 
-## FEATURES
+## Project Directory
+
+[TO ADD]
+
+## Authors
+
+Tutorial Group: FDAB<br/>
+Group No.: Group 3
+
+- Gwendalene Ionna
+- Priya Rekah
+- Rachel Tan
+- Rafiabdul Subuhan Afreen
+- Sanjana Shanmugasundaram
+
+## Features
 
 1. User Interfaces: The system provides separate interfaces for customers and staff, allowing for efficient navigation and interaction.
 2. User Management: Utilizes ActiveFactory interface for user instance management, along with hashing passwords for enhanced security.
@@ -22,36 +34,27 @@ FOMS is a Java application designed to manage orders and staff interactions with
 11. User Interaction: Utilizes ManagerActionsMenu class for accessing branch and menu information, with user input handled by the InputScanner class.
 12. Exception Handling: Implements exception handling throughout the system to ensure effective error management.
 
-## USAGE
+## Usage
 
 Upon running the application, users will be presented with a menu to choose between the customer interface, staff interface, or quitting the application. Follow the prompts to navigate through the system and interact with its features.
 
-## INSTALLATION
+## Installation
 
 To run the FOMS application locally, follow these steps:
 
 1. Clone the repository to your local machine.
+
+        https://github.com/Racheltmz/SC2002_OOP_FOMS.git
+
 2. Ensure you have Java installed on your system.
 3. Open the project in your preferred Java IDE.
 4. Compile and run the FOMSApp.java file.
 
-## DEPENDENCIES
+## Dependencies
 
 - Java Development Kit (JDK)
 - Apache POI for Excel file handling
 
-## CONTRIBUTING
-
-Contributions to the FOMS project are welcome! If you'd like to contribute, please fork the repository, make your changes, and submit a pull request.
-
-## AUTHORS
-
-- Afreen
-- Gwen
-- Priya
-- Rachel
-- Sanjana
-
-## LICENSE
+## License
 
 This project is licensed under the [MIT License](LICENSE).

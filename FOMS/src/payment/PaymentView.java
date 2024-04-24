@@ -2,13 +2,20 @@ package payment;
 
 import java.util.ArrayList;
 
+/**
+ * View for Payment purposes.
+ */
 public class PaymentView {
-    public static void displayPaymentMethods(ArrayList<String> paymentList) {
+    /**
+     * Display all payment methods.
+     * @param paymentList Array list of all payment methods.
+     */
+    public static void displayPaymentMethods(ArrayList<Payment> paymentList) {
         if (!paymentList.isEmpty()) {
             int counter = 1;
             System.out.println("Available payment methods: ");
-            for (String item : paymentList) {
-                System.out.println(counter + ". " + item + " payment");
+            for (Payment item : paymentList) {
+                System.out.println(counter + ". " + item.getPaymentMethod());
                 counter++;
             }
         } else {

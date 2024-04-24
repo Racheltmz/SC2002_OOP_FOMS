@@ -7,7 +7,6 @@ import management.Staff;
 import management.StaffDirectory;
 import management.StaffRoles;
 import management.filter.StaffFilterOptions;
-import utils.InputScanner;
 
 import java.util.InputMismatchException;
 

@@ -5,7 +5,6 @@ import io.OrderXlsxHelper;
 import menu.MenuDirectory;
 import menu.MenuItem;
 import payment.Payment;
-import utils.InputScanner;
 
 import java.util.ArrayList;
 
@@ -85,18 +84,16 @@ public class CustomerActions {
                     System.out.println();
 
                     // Payment Information
-                    Payment paymentMethod = Order.pay();
+                    Payment payment = Order.pay();
 
-                    // Order Processing and Bill
-                    Order order = new Order(branch, selectedItems, customisations, takeaway, paymentMethod);
-                    orderQueue.addOrder(order);
-
-                    if (paymentMethod != null) {
+                    if (payment != null) {
+                        // Order Processing and Bill
+                        Order order = new Order(branch, selectedItems, customisations, takeaway, payment.getPaymentMethod());
+                        orderQueue.addOrder(order);
                         // Verify Order and Payment
                         order.placeOrder();
                         order.printReceipt();
                     }
-
                     break;
 
                 case 2:
