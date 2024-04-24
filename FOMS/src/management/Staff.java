@@ -70,7 +70,10 @@ public class Staff implements IXlsxSerializable {
         this.password = password;
     }
 
-    // Serialization to XLSX
+    /**
+     * Serialization to XLSX for Staff and Manager.
+     * @return String array of the Staff record.
+     */
     public String[] toXlsx() {
         String branchName = null;
         if (!Objects.equals(role.getAcronym(), "A"))

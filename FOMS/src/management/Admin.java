@@ -44,6 +44,10 @@ public class Admin extends Staff {
         super(id, staffID, name, role, gender, age, null, password);
     }
 
+    /**
+     * Serialization to XLSX for Admin, overrides the Staff's toXlsx method.
+     * @return String array of the Admin record.
+     */
     @Override
     public String[] toXlsx() {
         return new String[] {
