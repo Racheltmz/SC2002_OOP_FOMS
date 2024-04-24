@@ -12,18 +12,31 @@ import static utils.ValidateHelper.validateString;
 import java.util.Objects;
 import java.util.UUID;
 
-// Staff Details
+/**
+ * Staff class represents a Staff member and provides methods for administrative actions
+ * to manage Orders within their own Branch.
+ */
 public class Staff implements IXlsxSerializable {
     private UUID id = UUID.randomUUID();
     private String staffID;
     private String name;
     private StaffRoles role;
-    private char gender;
+    private final char gender;
     private int age;
     private Branch branch;
     private String password;
     private final IStaffOrderActions staffActionsOrder = new StaffOrderActions();
 
+    /**
+     * Constructs a Staff
+     *
+     * @param staffID Staff staffID
+     * @param name Name of the Staff
+     * @param role StaffRole of the Staff
+     * @param gender Gender of the Staff
+     * @param age Age of the Staff
+     * @param branch Branch of the Staff
+     */
     public Staff(String staffID, String name, StaffRoles role, char gender, int age, Branch branch) {
         this.staffID = staffID;
         this.name = name;
@@ -34,6 +47,18 @@ public class Staff implements IXlsxSerializable {
         this.password = genHash("password");
     }
 
+    /**
+     * Constructs a Staff
+     *
+     * @param id Record ID
+     * @param staffID Staff staffID
+     * @param name Name of the Staff
+     * @param role StaffRole of the Staff
+     * @param gender Gender of the Staff
+     * @param age Age of the Staff
+     * @param branch Branch of the Staff
+     * @param password Password of the Staff
+     */
     public Staff(UUID id, String staffID, String name, StaffRoles role, char gender, int age, Branch branch, String password) {
         this.id = id;
         this.staffID = staffID;

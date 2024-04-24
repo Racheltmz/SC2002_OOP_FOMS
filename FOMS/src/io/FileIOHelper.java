@@ -3,10 +3,8 @@ package io;
 import java.io.*;
 
 /**
- * Helper class for File IO to the XLSX files in the data folder
- * <p>
- * The data folder is where we will be storing the application data
-
+ * Helper class for File IO to the XLSX files in the data folder.
+ * The data folder is where the application data will be stored.
  */
 public class FileIOHelper {
 

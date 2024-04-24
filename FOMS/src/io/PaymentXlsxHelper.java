@@ -1,12 +1,18 @@
 package io;
 
-import order.Order;
 import payment.CreditDebitFactory;
 import payment.OnlineFactory;
 import payment.Payment;
 
 import java.util.*;
 
+/**
+ * PaymentXlsxHelper is a utility class for reading from and writing to an
+ * Excel (XLSX) file storing information about the available payment methods.
+ * It extends the BaseXlsxHelper class and provides methods for reading Payment records from the XLSX file,
+ * writing Payment records to the XLSX file, updating existing Payment records in the XLSX file, and
+ * deleting Payment records from the XLSX file.
+ */
 public class PaymentXlsxHelper extends BaseXlsxHelper {
     /**
      * Path to Order XLSX File in the data folder. Defaults to order_list.xlsx.

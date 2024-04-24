@@ -157,6 +157,8 @@ public class StaffDirectory {
 
     /**
      * Get number of staff.
+     *
+     * @return The number of staff in this staffDirectory.
      */
     public int getNumStaff() {
         return this.staffDirectory.size();

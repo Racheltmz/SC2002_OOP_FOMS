@@ -14,10 +14,19 @@ import static management.StaffView.displayStaffDetails;
 import static utils.LetterCaseHelper.toProperCase;
 import static utils.ValidateHelper.*;
 
+/**
+ * The AdminStaffActions class provides methods for Admins to perform administrative actions related to staff members,
+ * such as adding, updating, removing, filtering, promoting, and transferring staff members.
+ */
 public class AdminStaffActions implements IAdminStaffActions {
     BranchDirectory branchDirectory = BranchDirectory.getInstance();
     IStaffFilterActions filterActions = new StaffFilterActions();
 
+    /**
+     * Adds a new staff member to the system.
+     * Prompts the user to input details of the new staff member.
+     * Validates the inputted details and adds the new staff member to the staffDirectory.
+     */
     public void addStaff() {
         try {
             StaffDirectory staffDirectory = StaffDirectory.getInstance();
@@ -59,7 +68,11 @@ public class AdminStaffActions implements IAdminStaffActions {
         }
     }
 
-    // Update staff
+    /**
+     * Updates an existing staff member in the system.
+     * Allows the user to choose which attribute of the staff member to update, out of name/staff/age.
+     * Validates the inputted details and updates the staff member in the staffDirectory.
+     */
     public void updateStaff() {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         displayStaffDetails(staffDirectory.getStaffDirectory());
@@ -95,7 +108,11 @@ public class AdminStaffActions implements IAdminStaffActions {
         }
     }
 
-    // Remove staff
+    /**
+     * Removes an existing staff member from the staffDirectory.
+     * Allows the user to select which staff member has to be removed, and
+     * removes the selected staff member from the staffDirectory.
+     */
     public void removeStaff() {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         displayStaffDetails(staffDirectory.getStaffDirectory());
@@ -104,6 +121,12 @@ public class AdminStaffActions implements IAdminStaffActions {
         System.out.println("Successfully removed staff: " + staffToRmv.getStaffID());
     }
 
+    /**
+     * Filters staff members based on the specified filtering option.
+     * Available options to filter by are branch, role, gender and age.
+     *
+     * @param option The filtering option to apply.
+     */
     public void filterStaff(StaffFilterOptions option) {
         switch (option) {
             case BRANCH:
@@ -125,6 +148,12 @@ public class AdminStaffActions implements IAdminStaffActions {
         }
     }
 
+    /**
+     * Checks if the staffQuota for the given Branch has been exceeded.
+     *
+     * @param branch The Branch to check the staffQuota for.
+     * @return true if the staffQuota has not been exceeded, false otherwise.
+     */
     private boolean checkStaffQuota(Branch branch) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         // Get number of staff
@@ -139,6 +168,12 @@ public class AdminStaffActions implements IAdminStaffActions {
         }
     }
 
+    /**
+     * Checks if the managerQuota for the given branch has been exceeded.
+     *
+     * @param branch The Branch to check the managerQuota for.
+     * @return true if the managerQuota has not been exceeded, false otherwise.
+     */
     public boolean assignManager(Branch branch) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         // Get number of managers
@@ -153,6 +188,10 @@ public class AdminStaffActions implements IAdminStaffActions {
         }
     }
 
+    /**
+     * Promotes a Staff member to a Manager.
+     * Verifies if the staff being promoted is a Staff member, and promotes them to Manager if so.
+     */
     public void promoteStaff(){
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         filterActions.applyRoleFilter(StaffRoles.STAFF.getAcronym());
@@ -174,6 +213,11 @@ public class AdminStaffActions implements IAdminStaffActions {
         }
     }
 
+    /**
+     * Transfers a staff member to a different branch.
+     * Allows the user to select the staff member and the destination branch.
+     * Validates the transfer and updates the staff member's branch in the staffDirectory.
+     */
     public void transferStaff(){
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         displayStaffDetails(staffDirectory.getStaffDirectory());

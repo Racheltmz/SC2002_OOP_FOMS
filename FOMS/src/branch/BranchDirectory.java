@@ -9,8 +9,6 @@ import io.BranchXlsxHelper;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
-import static utils.ValidateHelper.validateInt;
 import static utils.ValidateHelper.validateIntRange;
 
 /**
@@ -67,6 +65,9 @@ public class BranchDirectory {
         return null;
     }
 
+    /**
+     * Prints out the available branches in this BranchDirectory in an indexed manner.
+     */
     public void displayBranches() {
         System.out.println("Branches: ");
         for (int i = 0; i < this.branchDirectory.size(); i++) {
@@ -74,7 +75,12 @@ public class BranchDirectory {
         }
     }
 
-    // Get branch name by user selection
+    /**
+     * Gets the branch selected by the user.
+     * Displays a list of branches and prompts the user to select one.
+     *
+     * @return The selected branch.
+     */
     public Branch getBranchByUserInput() {
         // Display branches
         displayBranches();
@@ -88,7 +94,12 @@ public class BranchDirectory {
         return branch;
     }
 
-    // Add branch
+    /**
+     * Adds a new branch to this BranchDirectory.
+     * Writes the updated BranchDirectory information into branch_list.xlsx.
+     *
+     * @param branch The branch to add.
+     */
     public void addBranch(Branch branch) {
         int numExistingBranches = this.branchDirectory.size();
         this.branchDirectory.add(branch);
@@ -97,14 +108,13 @@ public class BranchDirectory {
         System.out.println("Branch successfully created!");
     }
 
-//    public void updateBranch(Branch updatedBranch){
-//        Branch branch = getBranchByName(updatedBranch.getName());
-//        branch.setName(updatedBranch.getName());
-//        branch.setLocation(updatedBranch.getLocation());
-//        branch.setStaffQuota(updatedBranch.getStaffQuota());
-//    }
-
-    // Remove branch
+    /**
+     * Removes a branch from the branch directory.
+     * Removes all staff and menu items associated with the branch.
+     * Writes the updated information to the relevant spreadsheets.
+     *
+     * @param branchToRmv The branch to remove.
+     */
     public void rmvBranch(Branch branchToRmv) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
         MenuDirectory menuDirectory = MenuDirectory.getInstance();
@@ -128,9 +138,5 @@ public class BranchDirectory {
         BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
         branchXlsxHelper.removeXlsx(branchToRmv.getId());
         System.out.println("Branch successfully closed and staff records for this branch have been deleted.");
-    }
-
-    public int getNumBranches() {
-        return branchDirectory.size();
     }
 }

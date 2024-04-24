@@ -16,9 +16,20 @@ import java.util.UUID;
 
 import static io.FileIOHelper.getFileInputStream;
 
+/**
+ * BaseXlsxHelper is a utility class for reading from and writing to Excel (XLSX) files.
+ * It provides methods for deserializing records from Excel sheets, serializing records
+ * to Excel sheets, updating existing records, and deleting records from Excel sheets.
+ */
 @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
 public class BaseXlsxHelper {
-    // Get Excel spreadsheet by filename
+    /**
+     * Utility method to retrieve an Excel (XLSX) spreadsheet by filename.
+     * Reads the spreadsheet and returns the first sheet.
+     *
+     * @param filePath The path of the Excel file.
+     * @return The first sheet of the Excel workbook, or null if unable to load the file.
+     */
     private static XSSFSheet getSheet(String filePath) {
         XSSFSheet sheet = null;
         try {
@@ -99,7 +110,7 @@ public class BaseXlsxHelper {
      * Get the row index from the Excel spreadsheet based on the record's id
      *
      * @param sheet Excel spreadsheet to search
-     * @param id id to match
+     * @param id The ID to match with
      * @return Row index of the record
      */
     private static int getIndexById(XSSFSheet sheet, String id) {
@@ -138,6 +149,12 @@ public class BaseXlsxHelper {
         return -1;
     }
 
+    /**
+     * Serializes and writes the header data to the first row of the Excel spreadsheet.
+     *
+     * @param sheetName The name of the Excel spreadsheet.
+     * @param header The array of header strings to be written into the spreadsheet.
+     */
     protected void serializeHeader(String sheetName, String[] header) {
         try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(getFileInputStream(sheetName)))) {
             XSSFSheet sheet = workbook.getSheetAt(0);
@@ -173,9 +190,9 @@ public class BaseXlsxHelper {
     /**
      * Updates a data record based on the ID
      *
-     * @param sheetName Sheet to update
-     * @param record Record to update
-     * @param id ID of the record to be updated
+     * @param sheetName The name of the Excel spreadsheet to update
+     * @param record The record to update
+     * @param id The ID of the record to be updated
      */
     protected void serializeUpdate(String sheetName, String[] record, UUID id) {
         try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(getFileInputStream(sheetName)))) {
@@ -190,6 +207,14 @@ public class BaseXlsxHelper {
         }
     }
 
+    /**
+     * Serialize an updated record to the Excel spreadsheet.
+     * Updates the row with the specified ID in the specified sheet with the new record data.
+     *
+     * @param sheetName The name of the Excel spreadsheet.
+     * @param record The array of strings representing the updated record data.
+     * @param id The ID of the record to be updated.
+     */
     protected void serializeUpdate(String sheetName, String[] record, String id) {
         try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(getFileInputStream(sheetName)))) {
             XSSFSheet sheet = workbook.getSheetAt(0);
@@ -206,8 +231,8 @@ public class BaseXlsxHelper {
     /**
      * Deletes a record based on the ID.
      *
-     * @param sheetName Sheet to delete from.
-     * @param id ID of record to delete.
+     * @param sheetName Name of the Excel spreadsheet to delete from.
+     * @param id The ID of record to delete.
      */
     protected void deleteRecord(String sheetName, UUID id) {
         try (XSSFWorkbook workbook = new XSSFWorkbook(Objects.requireNonNull(getFileInputStream(sheetName)))) {

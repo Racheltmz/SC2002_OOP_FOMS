@@ -65,7 +65,10 @@ public class Order implements IXlsxSerializable {
         return false;
     }
 
-    // Serialization to XLSX
+    /**
+     * Convert Order details to String for serialisation.
+     * @return String array of Order object.
+     */
     public String[] toXlsx() {
         ArrayList<String> itemNames = new ArrayList<>();
         for (MenuItem item : items) {
@@ -81,33 +84,69 @@ public class Order implements IXlsxSerializable {
                 String.valueOf(takeaway), String.valueOf(totalAmount), payment, String.valueOf(status) };
     }
 
-    // Getters and Setters
+    /**
+     * Get orderID of this Order.
+     *
+     * @return This Order's orderID.
+     */
     public String getOrderID() {
         return this.orderID;
     }
 
+    /**
+     * Get Branch in which this Order exists.
+     *
+     * @return The name of the Branch.
+     */
     public String getBranch() {
         return this.branch;
     }
 
+    /**
+     * Get customisations of this Order.
+     *
+     * @return A String ArrayList of the customisations of this Order.
+     */
     public ArrayList<String> getCustomisation() { return this.customisation; }
 
+    /**
+     * Get the pickup option of this Order.
+     *
+     * @return true if the option is Takeaway, and false otherwise.
+     */
     public boolean isTakeaway() {
         return this.takeaway;
     }
 
+    /**
+     * Get the MenuItems in this Order.
+     *
+     * @return ArrayList of MenuItems in this Order.
+     */
     public ArrayList<MenuItem> getItems() {
         return this.items;
     }
 
+    /**
+     * Get the OrderStatus of this Order.
+     *
+     * @return Status of this Order.
+     */
     public OrderStatus getStatus() { return this.status; }
 
+    /**
+     * Set the OrderStatus of this Order.
+     *
+     * @param status Status of this Order.
+     */
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
-    // Functionalities
-    // Place order
+    /**
+     * Verifies that payment method has been selected, and processes this Order if so.
+     * OrderStatus of this Order is initialised to NEW.
+     */
     public void placeOrder() {
         if (payment != null) {
             System.out.println("Order placed successfully.\n");
@@ -117,7 +156,11 @@ public class Order implements IXlsxSerializable {
         }
     }
 
-    // Calculate total price
+    /**
+     * Calculates the total amount of the MenuItems in this Order.
+     *
+     * @return Total amount of this Order in 2 decimal point form.
+     */
     public double calculateTotal() {
         double total = 0.00;
         for (MenuItem item : items) {
@@ -127,7 +170,11 @@ public class Order implements IXlsxSerializable {
         return Double.parseDouble(df.format(total));
     }
 
-    // Display payment methods and customer makes payment
+    /**
+     * Prompts customer to select which payment method to use after displaying available payment methods.
+     *
+     * @return Customer's selected Payment method.
+     */
     public static Payment pay() {
         // Initialise directory
         PaymentDirectory paymentDirectory = PaymentDirectory.getInstance();
@@ -151,21 +198,18 @@ public class Order implements IXlsxSerializable {
         return null;
     }
 
-    // Process the order
-    public void processOrder() {
-        if (items == null) {
-            System.out.println("Error: Cannot process order without selecting any items.");
-            return;
-        }
-        setStatus(OrderStatus.READY);
-        System.out.println("Order processed successfully.");
-    }
-
-    // Receipt information
+    /**
+     * Prints receipt entailing the details of this Order.
+     */
     public void printReceipt() {
         OrderView.printReceipt(this);
     }
 
+    /**
+     * Converts an ArrayList of Strings into a comma-separated value in String form.
+     *
+     * @return String of comma-separated values.
+     */
     private String convertArrayListToString(ArrayList<?> arrayList) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < arrayList.size(); i++) {

@@ -4,12 +4,17 @@ import menu.MenuDirectory;
 import menu.MenuItem;
 import order.Order;
 import order.OrderStatus;
-import payment.Payment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * OrderXlsxHelper is a utility class for reading from and writing
+ * to an Excel (XLSX) file storing information about received orders.
+ * It extends the BaseXlsxHelper class and provides methods for reading Order records from the XLSX file,
+ * writing Order records to the XLSX file, and updating existing Order records in the XLSX file.
+ */
 public class OrderXlsxHelper extends BaseXlsxHelper {
     /**
      * Path to Order XLSX File in the data folder. Defaults to order_list.xlsx.
