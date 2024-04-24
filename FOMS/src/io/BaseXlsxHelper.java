@@ -59,7 +59,8 @@ public class BaseXlsxHelper {
                     for (int j = 0; j < row.getLastCellNum(); j++) {
                         Cell cell = row.getCell(j);
                         if (cell != null) {
-                            rowData.add(cell.toString());
+                            if (!Objects.equals(cell.toString(), ""))
+                                rowData.add(cell.toString());
                         } else {
                             rowData.add(""); // Empty cell
                         }

@@ -73,7 +73,6 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
             // Construct MenuItem objects from itemStrings
             ArrayList<MenuItem> items = new ArrayList<>();
             for (String itemString : itemStrings) {
-                // Construct MenuItem object using itemString (you need to implement this logic)
                 MenuItem item = new MenuItem(itemString, menuDirectory.getPriceByNameAndBranch(itemString, branch), branch, menuDirectory.getCategoryByNameAndBranch(itemString, branch), menuDirectory.getDescriptionByNameAndBranch(itemString, branch));
                 items.add(item);
             }
