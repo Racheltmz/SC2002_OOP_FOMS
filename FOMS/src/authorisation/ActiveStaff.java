@@ -52,7 +52,7 @@ public class ActiveStaff implements IActiveUser {
     }
 
     /**
-     * Displays the permissions the staff is authorised to do.
+     * Carries out the functions the staff is authorised to do.
      */
     public void showOptions() {
 
