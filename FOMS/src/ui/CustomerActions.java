@@ -1,9 +1,12 @@
-package order;
+package ui;
 
 import branch.BranchDirectory;
 import io.OrderXlsxHelper;
 import menu.MenuDirectory;
 import menu.MenuItem;
+import order.Order;
+import order.OrderQueue;
+import order.OrderStatus;
 import payment.Payment;
 
 import java.util.ArrayList;
@@ -22,17 +25,17 @@ public class CustomerActions {
         System.out.println("|        Welcome Customer!       |");
         System.out.println("==================================");
 
+        // Ask customer to select branch
+        String branch = branchDirectory.getBranchByUserInput().getName();
+        System.out.println();
+
         boolean exit = false;
         do {
-            int customerChoice = validateIntRange("1. Browse Menu\n2. Check Order Status\n3. Collect Order\n4. Return back\nPlease select option: ", 1, 4);
+            int customerChoice = validateIntRange("Please select option:\n1. Browse Menu\n2. Check Order Status\n3. Collect Order\n4. Return back\nYour choice: ", 1, 4);
             System.out.println();
 
             switch (customerChoice) {
                 case 1:
-                    // Ask customer to select branch
-                    String branch = branchDirectory.getBranchByUserInput().getName();
-                    System.out.println();
-
                     // Menu Browsing
                     menuDirectory.displayMenuByBranch(branch);
                     ArrayList<MenuItem> selectedItems = new ArrayList<>();
@@ -77,7 +80,7 @@ public class CustomerActions {
                     // Dining Options
                     boolean takeaway = false;
                     System.out.println();
-                    int input = validateIntRange("1. Takeaway\n2. Dine-In\nPlease select pickup option: ", 1, 2);
+                    int input = validateIntRange("Pickup Options:\n1. Takeaway\n2. Dine-In\nPlease select pickup option: ", 1, 2);
                     if (input == 1) {
                         takeaway = true;
                     }
@@ -97,10 +100,6 @@ public class CustomerActions {
                     break;
 
                 case 2:
-                    // Ask customer to select branch
-                    branch = branchDirectory.getBranchByUserInput().getName();
-                    System.out.println();
-
                     // Check Order Status
                     orderQueue.getStatusById(branch);
                     System.out.println();
@@ -108,10 +107,6 @@ public class CustomerActions {
 
                 case 3:
                     OrderXlsxHelper orderXlsxHelper = OrderXlsxHelper.getInstance();
-
-                    // Ask customer to select branch
-                    branch = branchDirectory.getBranchByUserInput().getName();
-                    System.out.println();
 
                     // Display ready orders
                     ArrayList<Order> readyOrders = orderQueue.displayReadyOrders(branch);

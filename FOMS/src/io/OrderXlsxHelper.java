@@ -19,7 +19,7 @@ public class OrderXlsxHelper extends BaseXlsxHelper {
     /**
      * Headers for order.
      */
-    private final String[] header = {"id", "branch", "items", "customisations", "takeaway", "status", "payment"};
+    private final String[] header = {"id", "branch", "items", "customisations", "takeaway", "amount", "status", "payment"};
 
     /**
      * Default Constructor.

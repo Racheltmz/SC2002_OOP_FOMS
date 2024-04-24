@@ -139,7 +139,7 @@ public class Order implements IXlsxSerializable {
             displayPaymentMethods(paymentList);
 
             // Get customer's choice
-            int choice = validateIntRange("How would you like to pay?", 1, paymentList.size());
+            int choice = validateIntRange("How would you like to pay?: ", 1, paymentList.size());
             Payment payment = paymentList.get(choice - 1);
             payment.getDetails();
             System.out.println("Payment by " + payment.getPaymentMethod() + " is successful.");

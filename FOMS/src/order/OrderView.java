@@ -2,6 +2,9 @@ package order;
 
 import menu.MenuItem;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class OrderView {
     // Receipt information for customer
     public static void printReceipt(Order order) {
@@ -37,15 +40,27 @@ public class OrderView {
 
     // Print order details for OrderQueue
     public static void printOrderDetails(Order order) {
+        HashMap<String, String> orderDetails = new HashMap<>();
         System.out.println("-".repeat(100));
         System.out.println();
         System.out.println("Order ID: " + order.getOrderID());
         System.out.println("Items:");
-        for (MenuItem item : order.getItems()) {
-            String customisation = String.join(", ", order.getCustomisation());
-            if (customisation.isBlank())
-                customisation = "none";
-            System.out.println("- " + item.getName() + ", customisations: " + customisation);
+
+        ArrayList<String> customisations = order.getCustomisation();
+        for (int i=0; i<order.getCustomisation().size(); i++) {
+            String customisation = customisations.get(i);
+            String menuItem = customisation.split(" : ")[0];
+            String details = customisation.split(" : ")[1];
+            orderDetails.put(menuItem, details);
+        }
+
+        ArrayList<MenuItem> items = order.getItems();
+        for (int i=0; i<order.getItems().size(); i++) {
+            String addDetails = "";
+            String customDetails = orderDetails.get(items.get(i).getName());
+            if (customDetails != null)
+                addDetails = ", customisations: " + customDetails;
+            System.out.println("- " + items.get(i).getName() + addDetails);
         }
         System.out.print("Pickup option: ");
         if (order.isTakeaway()) {

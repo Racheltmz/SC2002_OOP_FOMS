@@ -9,6 +9,7 @@ import management.Staff;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 // Helper class for staff
@@ -66,7 +67,9 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
             char role = data[3].charAt(0);
             char gender = data[4].charAt(0);
             int age = (int) Double.parseDouble(data[5]);
-            Branch branch = branchDirectory.getBranchByName(data[6]);
+            Branch branch = null;
+            if (!Objects.equals(data[6], "-"))
+                branch = branchDirectory.getBranchByName(data[6]);
             String password = data[7];
 
             switch (role) {

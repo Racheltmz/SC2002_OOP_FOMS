@@ -15,6 +15,8 @@ import static utils.ValidateHelper.validateString;
 public class OrderQueue {
     // Attributes
     private final ArrayList<Order> orders;
+    private ArrayList<Timer> orderTimers = new ArrayList<>();
+    private final int ORDEREXPIRE = 300;
     private static OrderQueue ordersSingleton = null;
 
     // Constructor
@@ -166,12 +168,18 @@ public class OrderQueue {
                 // Set timer
                 Timer timer = new Timer();
                 OrderTimerTask orderTask = new OrderTimerTask(timer, order);
-                int seconds = 15;
                 order.setStatus(OrderStatus.READY);
-                timer.schedule(orderTask, seconds * 1000);
+                timer.schedule(orderTask, ORDEREXPIRE * 1000);
                 orderXlsxHelper.updateXlsx(order);
+                this.orderTimers.add(timer);
                 System.out.println("Order status updated from NEW to READY for order ID: " + order.getOrderID());
             }
+        }
+    }
+
+    public void terminateTimers() {
+        for (Timer timer : this.orderTimers) {
+            timer.cancel();
         }
     }
 }
