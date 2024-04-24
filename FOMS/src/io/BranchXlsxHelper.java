@@ -1,6 +1,9 @@
 package io;
 
 import branch.Branch;
+import branch.BranchDirectory;
+import exceptions.DuplicateEntryException;
+import menu.MenuDirectory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,8 +78,13 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
      * @param branch Branch record to add
      * @param numExistingRecords Number of existing branch records
      */
-    public void writeToXlsx(Branch branch, int numExistingRecords) {
-        serializeRecord(this.branchXlsx, branch.toXlsx(), numExistingRecords);
+    public void writeToXlsx(Branch branch, int numExistingRecords) throws DuplicateEntryException {
+        BranchDirectory branchDirectory = BranchDirectory.getInstance();
+        if (branchDirectory.getBranchByName(branch.getName()) == null) {
+            serializeRecord(this.branchXlsx, branch.toXlsx(), numExistingRecords);
+        } else {
+            throw new DuplicateEntryException("Branch not inserted, there is a duplicate branch.");
+        }
     }
 
     /**
