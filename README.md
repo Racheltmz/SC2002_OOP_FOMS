@@ -1,21 +1,22 @@
-# Fastfood Ordering Management System (app)
+# Fastfood Ordering Management System (FOMS Application)
 
 ## Introduction
 
-This project was done as part of our SC2002 Object-oriented Programming module at NTU. app is a Java application designed to manage orders and staff interactions within a fast food restaurant environment. It is an intuitive interface to streamline the ordering process for customers and the management of business operations and transactions. With error handling and input validation, it enhances system reliability and the user's experience.
+This project was done as part of our SC2002 Object-oriented Programming module. FOMS is a Java application designed to manage orders and staff interactions within a fast food restaurant environment. It is an intuitive interface to streamline the ordering process for customers and the management of business operations and transactions. With error handling and input validation, it enhances system reliability and the user's experience.
 
 ## Contributors
 
 Tutorial Group: FDAB  
-Group No.: Group 3
+Group No: Group 3
 
-| Name                        | GitHub Profile                                     |
-|-----------------------------|----------------------------------------------------|
-| Gwendalene Ionna            |   <a href="https://github.com/gwenionna" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(3).gif" width="250" alt="" style="border-radius:50%; border: 2px solid #555;"/></a> |
-| Priya Rekah                 |   <a href="https://github.com/Priyarekah" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(1).gif" width="250" alt="" style="border-radius:50%; border: 2px solid #555;"/></a>|
-| Rachel Tan                  |   <a href="https://github.com/lousyway" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(2).gif" width="250" alt="" style="border-radius:50%; border: 2px solid #555;"/></a>|
-| Rafiabdul Subuhan Afreen    |   <a href="https://github.com/afreenrafi" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(5).gif" width="250" alt="" style="border-radius:50%; border: 2px solid #555;"/></a>|
-| Sanjana Shanmugasundaram    |  <a href="https://github.com/snnjana" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(4).gif" width="250" alt="" style="border-radius:50%; border: 2px solid #555;"/></a> |
+| Name                        | GitHub Username   |
+|-----------------------------|-------------------|
+| Gwendalene Ionna            | [gwenionna](https://github.com/gwenionna) |
+| Priya Rekah                 | [Priyarekah](https://github.com/Priyarekah) |
+| Rachel Tan                  | [Racheltmz](https://github.com/Racheltmz) |
+| Rafiabdul Subuhan Afreen    | [afreenrafi](https://github.com/afreenrafi) |
+| Sanjana Shanmugasundaram    | [snnjana](https://github.com/snnjana) |
+
 
 ## Project Directory
 
