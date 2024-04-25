@@ -10,21 +10,22 @@ Tutorial Group: FDAB<br/>
 Group No.: Group 3
 
 <div align="center">
-  <a href="https://github.com/gwenionna" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(3).gif" width="100px;" alt="" style="border-radius:50%;"/></a>
-  <a href="https://github.com/Priyarekah" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(1).gif" width="100px;" alt="" style="border-radius:50%;"/></a>
-  <a href="https://github.com/lousyway" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(2).gif" width="100px;" alt="" style="border-radius:50%;"/></a>
-  <a href="https://github.com/afreenrafi" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(5).gif" width="100px;" alt="" style="border-radius:50%;"/></a>
-  <a href="https://github.com/snnjana" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(4).gif" width="100px;" alt="" style="border-radius:50%;"/></a>
+  <div style="display:inline-block; margin: 15px;">
+    <a href="https://github.com/gwenionna" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(3).gif" width="100px;" alt="" style="border-radius:50%;"/><br /><sub><b>Gwen</b></sub></a>
+  </div>
+  <div style="display:inline-block; margin: 15px;">
+    <a href="https://github.com/Priyarekah" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(1).gif" width="100px;" alt="" style="border-radius:50%;"/><br /><sub><b>Priya</b></sub></a>
+  </div>
+  <div style="display:inline-block; margin: 15px;">
+    <a href="https://github.com/lousyway" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(2).gif" width="100px;" alt="" style="border-radius:50%;"/><br /><sub><b>Rachel</b></sub></a>
+  </div>
+  <div style="display:inline-block; margin: 15px;">
+    <a href="https://github.com/afreenrafi" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(5).gif" width="100px;" alt="" style="border-radius:50%;"/><br /><sub><b>Afreen</b></sub></a>
+  </div>
+  <div style="display:inline-block; margin: 15px;">
+    <a href="https://github.com/snnjana" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(4).gif" width="100px;" alt="" style="border-radius:50%;"/><br /><sub><b>Sanjana</b></sub></a>
+  </div>
 </div>
-
-<div align="center">
-  <sub><b>Gwen</b></sub>
-  <sub><b>Priya</b></sub>
-  <sub><b>Rachel</b></sub>
-  <sub><b>Afreen</b></sub>
-  <sub><b>Sanjana</b></sub>
-</div>
-
 
 
 ## Project Directory
