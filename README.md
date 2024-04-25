@@ -33,7 +33,7 @@ Group No.: Group 3
 | -------- | ------- |
 | app| Contains application's source code and libraries|
 | UML | Contains class diagrams of our application |
-| Docs | Contains java docs | 
+| docs/javadocs | Contains java docs | 
 
 ## Features
 
