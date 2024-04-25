@@ -1,4 +1,4 @@
-package FOMS;
+package app;
 
 import java.util.InputMismatchException;
 

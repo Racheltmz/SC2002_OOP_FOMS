@@ -1,8 +1,8 @@
-# Fastfood Ordering Management System (FOMS)
+# Fastfood Ordering Management System (app)
 
 ## Introduction
 
-This project was done as part of our SC2002 Object-oriented Programming module at NTU. FOMS is a Java application designed to manage orders and staff interactions within a fast food restaurant environment. It is an intuitive interface to streamline the ordering process for customers and the management of business operations and transactions. With error handling and input validation, it enhances system reliability and the user's experience.
+This project was done as part of our SC2002 Object-oriented Programming module at NTU. app is a Java application designed to manage orders and staff interactions within a fast food restaurant environment. It is an intuitive interface to streamline the ordering process for customers and the management of business operations and transactions. With error handling and input validation, it enhances system reliability and the user's experience.
 
 ## Contributors
 
@@ -25,7 +25,7 @@ Group No.: Group 3
 
 | Folder name  | Purpose |
 | -------- | ------- |
-| FOMS| Contains application's source code and libraries|
+| app| Contains application's source code and libraries|
 | UML | Contains class diagrams of our application |
 | Docs | Contains java docs | 
 
@@ -48,15 +48,15 @@ Group No.: Group 3
 
 ## Set Up
 
-To run the FOMS application locally, follow these steps:
+To run the app application locally, follow these steps:
 
 1. Clone the repository to your local machine.
 
        https://github.com/Racheltmz/SC2002_OOP_FOMS.git
 
 2. Ensure you have Java installed on your system.
-3. Open the FOMS folder in your preferred Java IDE.
-4. Compile and run the FOMS.FOMSApp.java file.
+3. Open the app folder in your preferred Java IDE.
+4. Compile and run the app.FOMSApp.java file.
 5. Upon running the application, users will be presented with a menu to choose between the customer interface, staff interface, or quitting the application. Follow the prompts to navigate through the system and interact with its features.
 
 ## Dependencies
