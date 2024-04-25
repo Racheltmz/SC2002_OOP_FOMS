@@ -1,3 +1,5 @@
+package FOMS;
+
 import java.util.InputMismatchException;
 
 import ui.CustomerActions;
