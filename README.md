@@ -22,9 +22,9 @@ Group No: Group 3
 
 | Folder name  | Purpose |
 | -------- | ------- |
-| FOMS | Contains application's source code and libraries|
-| UML | Contains class diagrams of our application |
-| docs/javadocs | Contains java docs |
+| FOMS | The application's source code, data files, and libraries |
+| UML | The class diagram of our application |
+| docs/javadocs | javadocs for our application |
 
 ## Features
 
