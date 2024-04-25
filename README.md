@@ -19,6 +19,17 @@ Group No.: Group 3
 
 <div align="center">
 
+| Name                        | GitHub Profile                                     |
+|-----------------------------|----------------------------------------------------|
+| Gwendalene Ionna            | [![gwenionna](https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(3).gif)](https://github.com/gwenionna) |
+| Priya Rekah                 | [![priyarekah](https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(1).gif)](https://github.com/Priyarekah) |
+| Rachel Tan                  | [![racheltanx](https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(2).gif)](https://github.com/racheltanx) |
+| Rafiabdul Subuhan Afreen    | [![rafiabdul11](https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(5).gif)](https://github.com/rafiabdul11) |
+| Sanjana Shanmugasundaram    | [![sanjanashanmugasundaram](https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(4).gif)](https://github.com/sanjanashanmugasundaram) |
+
+</div>
+
+
 | Name                        | GitHub Username   |
 |-----------------------------|-------------------|
 | Gwendalene Ionna            | [gwenionna](https://github.com/gwenionna) |
