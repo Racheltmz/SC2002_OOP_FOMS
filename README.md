@@ -11,7 +11,7 @@ Group No.: Group 3
 
 | Name                        | GitHub Profile                                     |
 |-----------------------------|----------------------------------------------------|
-| Gwendalene Ionna            |   <a href="https://github.com/gwenionna" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(3).gif" width="100" alt="" style="border-radius:50%; border: 2px solid #555;"/></a> |
+| Gwendalene Ionna            |   <a href="https://github.com/gwenionna" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(3).gif" width="200" alt="" style="border-radius:50%; border: 2px solid #555;"/></a> |
 | Priya Rekah                 |   <a href="https://github.com/Priyarekah" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(1).gif" width="100" alt="" style="border-radius:50%; border: 2px solid #555;"/></a>|
 | Rachel Tan                  | 
   <a href="https://github.com/lousyway" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(2).gif" width="100" alt="" style="border-radius:50%; border: 2px solid #555;"/></a>|
