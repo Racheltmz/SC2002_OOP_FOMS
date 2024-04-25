@@ -20,7 +20,7 @@ public class OrderQueue {
 
     private ArrayList<Timer> orderTimers = new ArrayList<>();
 
-    private final int ORDEREXPIRE = 300;
+    private final int ORDEREXPIRE = 500;
 
     // Constructor
     public OrderQueue() {
