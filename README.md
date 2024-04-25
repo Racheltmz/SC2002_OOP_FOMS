@@ -11,14 +11,13 @@ Group No.: Group 3
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/gwenionna" target="_blank"><img src="https://image.flaticon.com/icons/png/512/833/833350.png" width="150px;" alt=""/></a><br /><sub><b>Gwendalene Ionna</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/Priyarekah" target="_blank"><img src="https://image.flaticon.com/icons/png/512/1046/1046784.png" width="150px;" alt=""/></a><br /><sub><b>Priya Rekah</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/Racheltmz" target="_blank"><img src="https://image.flaticon.com/icons/png/512/2646/2646938.png" width="150px;" alt=""/></a><br /><sub><b>Rachel Tan</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/afreenrafi" target="_blank"><img src="https://image.flaticon.com/icons/png/512/1381/1381845.png" width="150px;" alt=""/></a><br /><sub><b>Rafiabdul Subuhan Afreen</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/snnjana" target="_blank"><img src="https://image.flaticon.com/icons/png/512/643/643350.png" width="150px;" alt=""/></a><br /><sub><b>Sanjana Shanmugasundaram</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/gwenionna" target="_blank"><img src="https://cdn.pixabay.com/photo/2014/12/21/23/28/hamburger-575607_960_720.png" width="150px;" alt=""/></a><br /><sub><b>Gwendalene Ionna</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/Priyarekah" target="_blank"><img src="https://cdn.pixabay.com/photo/2014/04/02/10/53/pizza-303459_960_720.png" width="150px;" alt=""/></a><br /><sub><b>Priya Rekah</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/Racheltmz" target="_blank"><img src="https://cdn.pixabay.com/photo/2017/01/11/11/33/salad-1976194_960_720.png" width="150px;" alt=""/></a><br /><sub><b>Rachel Tan</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/afreenrafi" target="_blank"><img src="https://cdn.pixabay.com/photo/2016/03/05/19/02/sushi-1239059_960_720.jpg" width="150px;" alt=""/></a><br /><sub><b>Rafiabdul Subuhan Afreen</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/snnjana" target="_blank"><img src="https://cdn.pixabay.com/photo/2016/11/22/23/08/appetite-1853330_960_720.jpg" width="150px;" alt=""/></a><br /><sub><b>Sanjana Shanmugasundaram</b></sub><br /></td>
   </tr>
 </table>
-
 
 
 ## Project Directory
