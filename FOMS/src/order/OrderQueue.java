@@ -216,12 +216,12 @@ public class OrderQueue {
      * @param branch The Branch to retrieve the Order from.
      */
     public void updateStatusToReady(String branch) {
-        if (!getOrderBranch(branch).isEmpty()) {
+        if (!getNewOrdersBranch(branch).isEmpty()) {
             OrderXlsxHelper orderXlsxHelper = OrderXlsxHelper.getInstance();
             // Get order
             displayNewOrders(branch);
             Order order = getOrderById(branch);
-            if (order != null) {
+            if (order != null && order.getStatus() == OrderStatus.NEW) {
                 // Set timer
                 Timer timer = new Timer();
                 OrderTimerTask orderTask = new OrderTimerTask(timer, order);
@@ -231,6 +231,18 @@ public class OrderQueue {
                 this.orderTimers.add(timer);
                 System.out.println("Order status updated from NEW to READY for order ID: " + order.getOrderID());
             }
+            else if (order != null && order.getStatus() == OrderStatus.READY) {
+                System.out.println("Order status has already been set to READY for order ID: " + order.getOrderID());
+            }
+            else if (order != null && order.getStatus() == OrderStatus.CANCELLED) {
+                System.out.println("Order has been cancelled for order ID: " + order.getOrderID());
+            }
+            else if (order != null && order.getStatus() == OrderStatus.COMPLETED) {
+                System.out.println("Order has been completed for order ID: " + order.getOrderID());
+            }
+        }
+        else {
+            System.out.println("No new orders exist.");
         }
     }
 
