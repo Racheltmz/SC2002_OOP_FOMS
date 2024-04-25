@@ -52,8 +52,8 @@ To run the app application locally, follow these steps:
        https://github.com/Racheltmz/SC2002_OOP_FOMS.git
 
 2. Ensure you have Java installed on your system.
-3. Open the app folder in your preferred Java IDE.
-4. Compile and run the app.FOMSApp.java file.
+3. Open the FOMS folder in your preferred Java IDE.
+4. Compile and run the src/app/FOMSApp.java file.
 5. Upon running the application, users will be presented with a menu to choose between the customer interface, staff interface, or quitting the application. Follow the prompts to navigate through the system and interact with its features.
 
 ## Dependencies
