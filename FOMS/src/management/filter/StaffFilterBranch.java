@@ -9,7 +9,15 @@ import java.util.ArrayList;
 
 import static management.StaffView.displayStaffDetails;
 
+/**
+ * StaffFilterBranch class implementing the method to filter staff by their Branch.
+ */
 public class StaffFilterBranch implements IFilter {
+    /**
+     * The implemented filter method for filtering staff by their Branch.
+     *
+     * @param branch The branch to filter the staff by.
+     */
     @Override
     public void filter(String branch) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();

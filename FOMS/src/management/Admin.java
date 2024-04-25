@@ -39,6 +39,7 @@ public class Admin extends Staff {
      * @param role Role
      * @param gender Gender of admin
      * @param age Age of admin
+     * @param password Password of admin
      */
     public Admin(UUID id, String staffID, String name, StaffRoles role, char gender, int age, String password){
         super(id, staffID, name, role, gender, age, null, password);

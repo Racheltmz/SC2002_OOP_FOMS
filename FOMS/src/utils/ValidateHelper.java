@@ -64,6 +64,8 @@ public class ValidateHelper {
      * Check if integer inputted is valid and within a valid range.
      *
      * @param msg Message to be printed out for user input.
+     * @param start the lower range for the inputted integer.
+     * @param end the upper range for the inputted integer.
      * @return Integer from user input if valid.
      */
     public static int validateIntRange(String msg, int start, int end) {
@@ -89,6 +91,8 @@ public class ValidateHelper {
     /**
      * Check if integer inputted is valid and within a valid range.
      *
+     * @param start the lower range for the inputted integer.
+     * @param end the upper range for the inputted integer.
      * @return Integer from user input if valid.
      */
     public static int validateIntRange(int start, int end) {
@@ -140,6 +144,7 @@ public class ValidateHelper {
     /**
      * Validate the string to ensure it does not consist of invalid characters such as symbols.
      *
+     * @param msg The message to be printed when asking for input.
      * @return String if it is valid.
      */
     public static String validateString(String msg) {

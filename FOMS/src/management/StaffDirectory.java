@@ -163,9 +163,11 @@ public class StaffDirectory {
     }
 
     /**
-     * Get the number of managers currently in the branch to check quota.
+     * Get the number of a specific type of staff currently in the branch to check quota.
      *
      * @param branch Branch to check the manager quota from.
+     * @param role Role to check for.
+     * @return The number of staffs with the specified role in the specified branch.
      */
     public int getNumStaffBranchRole(Branch branch, StaffRoles role) {
         int count = 0;

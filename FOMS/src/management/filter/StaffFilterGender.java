@@ -9,7 +9,15 @@ import java.util.Objects;
 
 import static management.StaffView.displayStaffDetails;
 
+/**
+ * StaffFilterGender class implementing the method to filter staff by their gender.
+ */
 public class StaffFilterGender implements IFilter {
+    /**
+     * The implemented filter method for filtering staff by their gender.
+     *
+     * @param gender The gender to filter the staff by.
+     */
     @Override
     public void filter(String gender) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();

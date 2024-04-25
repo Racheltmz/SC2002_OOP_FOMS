@@ -9,7 +9,15 @@ import java.util.Objects;
 
 import static management.StaffView.displayStaffDetails;
 
+/**
+ * StaffFilterRole Class to filter staff by role.
+ */
 public class StaffFilterRole implements IFilter {
+    /**
+     * Filters staff by role.
+     *
+     * @param role The role to filter by.
+     */
     @Override
     public void filter(String role) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();

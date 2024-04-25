@@ -48,13 +48,9 @@ To run the FOMS application locally, follow these steps:
 
 2. Ensure you have Java installed on your system.
 3. Open the project in your preferred Java IDE.
-4. Compile and run the FOMSApp.java file.
+4. Compile and run the FOMS.FOMSApp.java file.
 
 ## Dependencies
 
 - Java Development Kit (JDK)
 - Apache POI for Excel file handling
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).

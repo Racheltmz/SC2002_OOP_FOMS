@@ -57,6 +57,7 @@ public class BaseXlsxHelper {
      *
      * @param sheetName The Sheet object representing the Excel sheet to read from.
      * @param skip  How many rows in the file to skip (set 1 for header)
+     * @param numCols Number of columns in the file
      * @return A list of string arrays containing all the Excel values
      */
     protected List<String[]> deserializeRecords(String sheetName, int numCols, int skip) {

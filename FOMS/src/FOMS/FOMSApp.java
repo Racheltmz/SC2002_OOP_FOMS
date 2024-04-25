@@ -1,3 +1,5 @@
+package FOMS;
+
 import java.util.InputMismatchException;
 
 import ui.CustomerActions;
@@ -12,6 +14,9 @@ import static utils.ValidateHelper.validateIntRange;
  * @author Afreen, Gwen, Priya, Rachel, Sanjana
  */
 public class FOMSApp {
+    /**
+     * FOMS interface.
+     */
     public static void main(String[] args) {
         // Initialise scanner
         InputScanner sc = InputScanner.getInstance();

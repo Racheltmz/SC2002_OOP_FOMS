@@ -205,6 +205,7 @@ public class MenuDirectory {
      * Get a MenuItem by displaying available MenuItems and prompting user to select one.
      *
      * @return The selected MenuItem.
+     * @param branchName The Branch to select the MenuItem from.
      */
     public MenuItem selectItem(String branchName) {
         // Get branches
