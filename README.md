@@ -6,10 +6,6 @@ This project was done as part of our SC2002 Object-oriented Programming module a
 
 ## Contributors
 
-Tutorial Group: FDAB<br/>
-Group No.: Group 3
-## Contributors
-
 Tutorial Group: FDAB  
 Group No.: Group 3
 
@@ -21,6 +17,8 @@ Group No.: Group 3
   <a href="https://github.com/snnjana" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(4).gif" width="100" alt="" style="border-radius:50%; border: 2px solid #555;"/></a>
 </div>
 
+<div align="center">
+
 | Name                        | GitHub Username   |
 |-----------------------------|-------------------|
 | Gwendalene Ionna            | [gwenionna](https://github.com/gwenionna) |
@@ -28,6 +26,9 @@ Group No.: Group 3
 | Rachel Tan                  | [Racheltmz](https://github.com/Racheltmz) |
 | Rafiabdul Subuhan Afreen    | [afreenrafi](https://github.com/afreenrafi) |
 | Sanjana Shanmugasundaram    | [snnjana](https://github.com/snnjana) |
+
+</div>
+
 
 
 ## Project Directory
