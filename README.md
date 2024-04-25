@@ -11,11 +11,11 @@ Group No.: Group 3
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/gwenionna" target="_blank"><img src="https://via.placeholder.com/150?text=🍔" width="150px;" alt=""/></a><br /><sub><b>Gwendalene Ionna</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/Priyarekah" target="_blank"><img src="https://via.placeholder.com/150?text=🍕" width="150px;" alt=""/></a><br /><sub><b>Priya Rekah</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/Racheltmz" target="_blank"><img src="https://via.placeholder.com/150?text=🥗" width="150px;" alt=""/></a><br /><sub><b>Rachel Tan</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/afreenrafi" target="_blank"><img src="https://via.placeholder.com/150?text=🍣" width="150px;" alt=""/></a><br /><sub><b>Rafiabdul Subuhan Afreen</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/snnjana" target="_blank"><img src="https://via.placeholder.com/150?text=🍰" width="150px;" alt=""/></a><br /><sub><b>Sanjana Shanmugasundaram</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/gwenionna" target="_blank"><img src="https://www.pngitem.com/pimgs/m/164-1641101_large-hamburger-png-transparent-png.png" width="150px;" alt=""/></a><br /><sub><b>Gwendalene Ionna</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/Priyarekah" target="_blank"><img src="https://www.pngfind.com/pngs/m/92-922964_pizza-clipart-png-download-transparent-png.png" width="150px;" alt=""/></a><br /><sub><b>Priya Rekah</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/Racheltmz" target="_blank"><img src="https://www.pngfind.com/pngs/m/12-121095_salad-clipart-transparent-background-hd-png-download.png" width="150px;" alt=""/></a><br /><sub><b>Rachel Tan</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/afreenrafi" target="_blank"><img src="https://www.pngfind.com/pngs/m/159-1595826_sushi-png-picture-sushi-hd-png-download.png" width="150px;" alt=""/></a><br /><sub><b>Rafiabdul Subuhan Afreen</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/snnjana" target="_blank"><img src="https://www.pngfind.com/pngs/m/82-823462_download-free-png-cake-png-images-background-png.png" width="150px;" alt=""/></a><br /><sub><b>Sanjana Shanmugasundaram</b></sub><br /></td>
   </tr>
 </table>
 
