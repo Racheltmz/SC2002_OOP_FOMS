@@ -13,7 +13,9 @@ import java.util.Objects;
 import static payment.PaymentView.displayPaymentMethods;
 import static utils.ValidateHelper.validateIntRange;
 
-// Order details
+/**
+ * Order class represents an Order placed by a customer.
+ */
 public class Order implements IXlsxSerializable {
     // Attributes
     private String orderID;
@@ -25,7 +27,17 @@ public class Order implements IXlsxSerializable {
     private String payment;
     private OrderStatus status;
 
-    // Constructor
+    /**
+     * Constructs an Order.
+     *
+     * @param orderID This Order's orderID.
+     * @param branch The Branch of this Order.
+     * @param customisation This Order's customisations.
+     * @param items The existing MenuItems in this Order.
+     * @param payment The payment method used for this Order.
+     * @param takeaway The pickup option of this Order.
+     * @param totalAmount The total amount of the MenuItems in this Order.
+     */
     public Order(String orderID, String branch, ArrayList<MenuItem> items, ArrayList <String> customisation, boolean takeaway,
                  double totalAmount, String payment) {
         this.orderID = orderID;
@@ -37,6 +49,16 @@ public class Order implements IXlsxSerializable {
         this.payment = payment;
         this.status = OrderStatus.NEW;
     }
+
+    /**
+     * Constructs an Order.
+     *
+     * @param branch The Branch of this Order.
+     * @param customisation This Order's customisations.
+     * @param items The existing MenuItems in this Order.
+     * @param payment The payment method used for this Order.
+     * @param takeaway The pickup option of this Order.
+     */
     public Order(String branch, ArrayList<MenuItem> items, ArrayList <String> customisation, boolean takeaway, String payment) {
         this.orderID = UniqueIdGenerator.generateUniqueID(takeaway);
         String newOrderID;
@@ -53,6 +75,11 @@ public class Order implements IXlsxSerializable {
         this.status = OrderStatus.NEW;
     }
 
+    /**
+     * Checks if the generated ID already exists in the Excel sheet to prevent duplicate orderIDs.
+     *
+     * @return true if it is a duplicate ID, false if not.
+     */
     private boolean isDuplicateOrderID(String orderID) {
         OrderXlsxHelper orderXlsxHelper = OrderXlsxHelper.getInstance();
         // Retrieve existing order IDs from the Excel file
