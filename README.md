@@ -7,7 +7,7 @@ This project was done as part of our SC2002 Object-oriented Programming module a
 ## Contributors
 
 Tutorial Group: FDAB  
-Group No.: Group 3
+Group No: Group 3
 
 | Name                        | GitHub Profile                                     |
 |-----------------------------|----------------------------------------------------|
