@@ -5,8 +5,16 @@ import menu.MenuItem;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Displays an Order's details.
+ */
 public class OrderView {
-    // Receipt information for customer
+
+    /**
+     * Displays an Order's details in a receipt format for the customer interface.
+     *
+     * @param order The Order to print the receipt for.
+     */
     public static void printReceipt(Order order) {
         System.out.println("========================================");
         System.out.println("|            Order Receipt             |");
@@ -38,7 +46,11 @@ public class OrderView {
         System.out.println("========================================\n");
     }
 
-    // Print order details for OrderQueue
+    /**
+     * Displays an Order's details for staff members.
+     *
+     * @param order The Order to print the details for.
+     */
     public static void printOrderDetails(Order order) {
         HashMap<String, String> orderDetails = new HashMap<>();
         System.out.println("-".repeat(100));
@@ -72,6 +84,13 @@ public class OrderView {
         System.out.println();
     }
 
+    /**
+     * Formats a String by appending spaces, given the maximum possible length and the original String to format.
+     *
+     * @param str The original String.
+     * @param maxLength The maximum possible length of the formatted String.
+     * @return The formatted String.
+     */
     private static String formatString(String str, int maxLength) {
         if (str.length() > maxLength) {
             return str.substring(0, maxLength);

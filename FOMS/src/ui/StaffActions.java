@@ -11,7 +11,13 @@ import java.util.InputMismatchException;
 import static authentication.Authentication.login;
 import static utils.ValidateHelper.validateIntRange;
 
+/**
+ * Provides staff member-specific actions.
+ */
 public class StaffActions {
+    /**
+     * Staff interface. Members are prompted to select which action to perform depending on their authorisation.
+     */
     public static void showOptions() {
         // Initialise scanner and staff directory
         InputScanner sc = InputScanner.getInstance();

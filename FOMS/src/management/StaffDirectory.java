@@ -4,13 +4,12 @@ import java.util.ArrayList;
 
 import branch.Branch;
 import exceptions.ItemNotFoundException;
-import utils.InputScanner;
 import io.StaffXlsxHelper;
 
 import static utils.ValidateHelper.validateString;
 
 /**
- * Handles operations on staff records.
+ * Handles operations on Staff records and stores existing Staff records.
  */
 public class StaffDirectory {
 
@@ -68,7 +67,6 @@ public class StaffDirectory {
      * @return Staff record that the user is looking for.
      */
     public Staff getStaff() {
-        InputScanner sc = InputScanner.getInstance();
         while (true) {
             // Get staff id
             String staffId = validateString("Enter staff ID: ");

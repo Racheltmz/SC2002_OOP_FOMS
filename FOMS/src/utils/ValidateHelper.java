@@ -86,6 +86,11 @@ public class ValidateHelper {
         return input;
     }
 
+    /**
+     * Check if integer inputted is valid and within a valid range.
+     *
+     * @return Integer from user input if valid.
+     */
     public static int validateIntRange(int start, int end) {
         InputScanner sc = InputScanner.getInstance();
         boolean success = false;

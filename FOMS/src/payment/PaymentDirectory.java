@@ -16,11 +16,19 @@ public class PaymentDirectory {
     private final ArrayList<Payment> paymentDirectory;
     private static PaymentDirectory paymentSingleton = null;
 
+    /**
+     * Singleton constructor that reads all Payment method records from the storage file on initialisation.
+     */
     private PaymentDirectory() {
         PaymentXlsxHelper paymentTxtHelper = new PaymentXlsxHelper();
         this.paymentDirectory = paymentTxtHelper.readFromXlsx();
     }
 
+    /**
+     * Gets the instance for the PaymentDirectory records.
+     *
+     * @return PaymentDirectory instance.
+     */
     public static PaymentDirectory getInstance() {
         if (paymentSingleton == null) {
             paymentSingleton = new PaymentDirectory();
@@ -28,11 +36,18 @@ public class PaymentDirectory {
         return paymentSingleton;
     }
 
+    /**
+     * Gets all the existing Payment methods stored in this PaymentDirectory.
+     *
+     * @return An ArrayList of the existing Payment methods.
+     */
     public ArrayList<Payment> getPaymentMethods() {
         return this.paymentDirectory;
     }
 
-    // Add payment method
+    /**
+     * Adds a new Payment method to this PaymentDirectory.
+     */
     public void addPaymentMtd() {
         PaymentXlsxHelper paymentXlsxHelper = new PaymentXlsxHelper();
         displayPaymentMethods(this.paymentDirectory);
@@ -63,6 +78,9 @@ public class PaymentDirectory {
         displayPaymentMethods(this.paymentDirectory);
     }
 
+    /**
+     * Removes an existing Payment method from this PaymentDirectory.
+     */
     public void removePaymentMtd() {
         PaymentXlsxHelper paymentXlsxHelper = new PaymentXlsxHelper();
         // Request for which to remove if payment methods exist

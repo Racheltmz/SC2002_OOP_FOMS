@@ -94,7 +94,7 @@ public class Order implements IXlsxSerializable {
 
     /**
      * Convert Order details to String for serialisation.
-     * @return String array of Order object.
+     * @return String array of this Order's details.
      */
     public String[] toXlsx() {
         ArrayList<String> itemNames = new ArrayList<>();

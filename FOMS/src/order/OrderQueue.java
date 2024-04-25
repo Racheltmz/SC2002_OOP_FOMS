@@ -22,12 +22,19 @@ public class OrderQueue {
 
     private final int ORDEREXPIRE = 300;
 
-    // Constructor
+    /**
+     * Singleton constructor that reads all Order records from the storage file on initialisation.
+     */
     public OrderQueue() {
         OrderXlsxHelper orderXlsxHelper = OrderXlsxHelper.getInstance();
         this.orders = orderXlsxHelper.readFromXlsx();
     }
 
+    /**
+     * Gets the instance for the OrderQueue records.
+     *
+     * @return OrderQueue instance.
+     */
     public static OrderQueue getInstance() {
         if (ordersSingleton == null) {
             ordersSingleton = new OrderQueue();
@@ -50,7 +57,12 @@ public class OrderQueue {
         return filteredOrders;
     }
 
-    // Get new orders in the branch
+    /**
+     * Get all the new orders in a Branch.
+     *
+     * @param branch The Branch to retrieve the new Orders from.
+     * @return An ArrayList of all the new Orders in the specified Branch.
+     */
     public ArrayList<Order> getNewOrdersBranch(String branch) {
         ArrayList<Order> branchOrders = getOrderBranch(branch);
         ArrayList<Order> newOrders = new ArrayList<>();
@@ -64,6 +76,12 @@ public class OrderQueue {
         return newOrders;
     }
 
+    /**
+     * Get all the ready orders in a Branch.
+     *
+     * @param branch The Branch to retrieve the ready Orders from.
+     * @return An ArrayList of all the ready Orders in the specified Branch.
+     */
     public ArrayList<Order> getReadyOrders(String branch) {
         ArrayList<Order> branchOrders = getOrderBranch(branch);
         ArrayList<Order> readyOrders = new ArrayList<>();
@@ -77,7 +95,12 @@ public class OrderQueue {
         return readyOrders;
     }
 
-    // Get order by ID
+    /**
+     * Gets an Order by its UUID (inputted by user) and Branch.
+     *
+     * @param branch The Branch to retrieve the Order from.
+     * @return The Order if it is found, null otherwise.
+     */
     public Order getOrderById(String branch) {
         if (!getOrderBranch(branch).isEmpty()) {
             // Iterate until user enters a valid id
@@ -102,7 +125,11 @@ public class OrderQueue {
         return null;
     }
 
-    // Display a specific order
+    /**
+     * Displays a specific Order's details.
+     *
+     * @param branch The Branch from which to retrieve the Order's details.
+     */
     public void displayOrder(String branch) {
         if (!getOrderBranch(branch).isEmpty()) {
             Order order = getOrderById(branch);
@@ -112,7 +139,11 @@ public class OrderQueue {
         }
     }
 
-    // Display new orders
+    /**
+     * Displays all the new orders in a Branch.
+     *
+     * @param branch The Branch to retrieve the new Orders from.
+     */
     public void displayNewOrders(String branch) {
         ArrayList<Order> newOrders = this.getNewOrdersBranch(branch);
         if (newOrders.isEmpty()) {
@@ -125,6 +156,11 @@ public class OrderQueue {
         }
     }
 
+    /**
+     * Displays all the ready orders in a Branch.
+     *
+     * @param branch The Branch to retrieve the ready Orders from.
+     */
     public ArrayList<Order> displayReadyOrders(String branch) {
         ArrayList<Order> readyOrders = this.getReadyOrders(branch);
         if (readyOrders.isEmpty()) {
@@ -141,7 +177,11 @@ public class OrderQueue {
         }
     }
 
-    // Get order status by order ID
+    /**
+     * Displays an Order's OrderStatus by its UUID (inputted by user) and Branch.
+     *
+     * @param branch The Branch to retrieve the Order from.
+     */
     public void getStatusById(String branch) {
         if (!getOrderBranch(branch).isEmpty()) {
             Order order = getOrderById(branch);
@@ -152,7 +192,11 @@ public class OrderQueue {
         }
     }
 
-    // Add order
+    /**
+     * Adds an Order to this OrderQueue.
+     *
+     * @param order The order to add.
+     */
     public void addOrder(Order order) {
         int numExistingOrders = this.orders.size();
         this.orders.add(order);
@@ -160,7 +204,12 @@ public class OrderQueue {
         orderXlsxHelper.writeToXlsx(order, numExistingOrders);
     }
 
-    // Update order status to ready when food is ready or when customer collects order
+    /**
+     * Updates an Order's OrderStatus to READY by its UUID and Branch.
+     * A Timer is activated to keep track of when to cancel the Order after it is set to READY.
+     *
+     * @param branch The Branch to retrieve the Order from.
+     */
     public void updateStatusToReady(String branch) {
         if (!getOrderBranch(branch).isEmpty()) {
             OrderXlsxHelper orderXlsxHelper = OrderXlsxHelper.getInstance();
@@ -180,6 +229,9 @@ public class OrderQueue {
         }
     }
 
+    /**
+     * Terminates any existing timers at the end of runtime.
+     */
     public void terminateTimers() {
         for (Timer timer : this.orderTimers) {
             timer.cancel();

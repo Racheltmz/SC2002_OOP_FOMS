@@ -35,6 +35,12 @@ public class LetterCaseHelper {
         return converted.toString();
     }
 
+    /**
+     * Convert the first character in a String to capitals.
+     *
+     * @param text Text to format.
+     * @return Text that has been formatted.
+     */
     public static String capitalizeFirstLetter(String text) {
         if (text == null || text.isEmpty()) {
             return text; // Return unchanged if string is null or empty

@@ -14,7 +14,14 @@ import java.util.ArrayList;
 import static utils.ValidateHelper.validateIntRange;
 import static utils.ValidateHelper.validateString;
 
+/**
+ * Provides Customer-specific actions.
+ */
 public class CustomerActions {
+    /**
+     * Customer interface. The customer is prompted to either browse the menu, check their
+     * Order's OrderStatus, or collect their Order.
+     */
     public static void showOptions() {
         MenuDirectory menuDirectory = MenuDirectory.getInstance();
         OrderQueue orderQueue = OrderQueue.getInstance();
