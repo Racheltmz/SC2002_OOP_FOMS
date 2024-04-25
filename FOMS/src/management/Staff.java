@@ -84,61 +84,129 @@ public class Staff implements IXlsxSerializable {
     }
 
     /**
-     * Get record ID
-     * @return ID
+     * Get record ID of this Staff.
+     *
+     * @return Record ID.
      */
     public UUID getId() {
         return id;
     }
 
+    /**
+     * Get staffID of this Staff.
+     *
+     * @return The staffID.
+     */
     public String getStaffID() {
         return this.staffID;
     }
 
+    /**
+     * Sets the staffID of this Staff.
+     *
+     * @param staffID The staffID to be set.
+     */
     public void setStaffID(String staffID) { this.staffID = staffID; }
 
+    /**
+     * Get the name of this Staff.
+     *
+     * @return This Staff's name.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Get StaffRole role of this Staff.
+     *
+     * @return This Staff's role.
+     */
     public StaffRoles getRole() {
         return this.role;
     }
 
+    /**
+     * Sets the StaffRoles role of this Staff.
+     *
+     * @param role The role to be set.
+     */
     public void setRole(StaffRoles role) {
         this.role = role;
     }
 
+    /**
+     * Get the gender of this Staff.
+     *
+     * @return This Staff's gender.
+     */
     public char getGender() {
         return gender;
     }
 
+    /**
+     * Get age of this Staff.
+     *
+     * @return This Staff's age.
+     */
     public int getAge() {
         return age;
     }
 
+    /**
+     * Set age of this Staff.
+     *
+     * @param age The age to be set.
+     */
     public void setAge(int age) {
         this.age = age;
     }
 
+    /**
+     * Get the Branch of this Staff.
+     *
+     * @return This Staff's Branch.
+     */
     public Branch getBranch() {
         return this.branch;
     }
 
+    /**
+     * Set Branch of this Staff.
+     *
+     * @param branch The branch to be set.
+     */
     public void setBranch(Branch branch) {
         this.branch = branch;
     }
 
+    /**
+     * Get the password of this Staff.
+     *
+     * @return This Staff's password.
+     */
     public String getPassword() {
         return password;
     }
+
+    /**
+     * Set the name of this Staff.
+     *
+     * @param name The name to be set.
+     */
     public void setName(String name) { this.name = name; }
 
+    /**
+     * Sets the password of this Staff.
+     *
+     * @param password The password to be set.
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
     /* MANAGING PERSONAL DETAILS PURPOSES */
+
     /**
      * Verify if the user entered the right password for the account
      *
@@ -152,7 +220,7 @@ public class Staff implements IXlsxSerializable {
     /* MANAGING STAFF PURPOSES */
 
     /**
-     * Change password
+     * Changes password after verifying it is not a duplicate or null.
      */
     public void changePassword() {
         InputScanner sc = InputScanner.getInstance();
@@ -170,17 +238,30 @@ public class Staff implements IXlsxSerializable {
     }
 
     /* MANAGING ORDER PURPOSES */
-    // New orders for Test Case 9 and 11
+
+    /**
+     * Gets the new Orders in the Branch this Staff is in.
+     *
+     * @param branch This Staff's branch.
+     */
     public void getNewOrders(Branch branch) {
         staffOrderActions.getNewOrders(branch);
     }
 
-    // Specific order
+    /**
+     * Prints the details of the Orders in the Branch this Staff is in.
+     *
+     * @param branch This Staff's branch.
+     */
     public void getOrderDetails(Branch branch) {
         staffOrderActions.getOrderDetails(branch);
     }
 
-    // Update order status to ready to pickup for Test Case 10 and 12
+    /**
+     * Sets the OrderStatus of an Order in this Staff's Branch to ready.
+     *
+     * @param branch This Staff's branch.
+     */
     public void setOrderReady(Branch branch) {
         staffOrderActions.setOrderReady(branch);
     }
