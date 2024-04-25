@@ -20,7 +20,7 @@ public class OrderQueue {
 
     private ArrayList<Timer> orderTimers = new ArrayList<>();
 
-    private final int ORDEREXPIRE = 300;
+    private final int ORDEREXPIRE = 500;
 
     /**
      * Singleton constructor that reads all Order records from the storage file on initialisation.

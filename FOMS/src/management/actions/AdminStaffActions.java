@@ -226,7 +226,7 @@ public class AdminStaffActions implements IAdminStaffActions {
 
         // Repeatedly ask for a valid branch until one is chosen
         do {
-            System.out.print("Select a branch to transfer to" );
+            System.out.println("Select a branch to transfer to" );
             branchToTransfer = branchDirectory.getBranchByUserInput();
             if(staff.getBranch().equals(branchToTransfer)){
                 System.out.print("Staff member was already in this branch. Choose a different branch.");
