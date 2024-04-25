@@ -192,7 +192,9 @@ public class OrderQueue {
             }
             System.out.printf("Status of Order ID: %s is %s\n", order.getOrderID(), order.getStatus());
         }
-        System.out.println("No orders exist in the queue.");
+        else {
+            System.out.println("No orders exist in the queue.");
+        }
     }
 
     /**
