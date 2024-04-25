@@ -28,8 +28,6 @@ Group No: Group 3
 
 ## Features
 
-[TO ADD: cover it based on our packages, and do so in an order that makes sense, not alphabetical order]
-
 1. App Interface: The main app interface to conduct the implemented actions in respective interfaces.
 2. User Interfaces: The system provides separate interfaces for customers and staff, allowing for efficient navigation and interaction.
 3. User Management: Utilizes ActiveFactory interface for user instance management, along with hashing passwords for enhanced security.
