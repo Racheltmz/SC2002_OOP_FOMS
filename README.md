@@ -2,11 +2,7 @@
 
 ## Introduction
 
-FOMS is a Java application designed to manage orders and staff interactions within a fast food restaurant environment. It is an intuitive interface to streamline the ordering process for customers and the management of business operations and transactions. With error handling and input validation, it enhances system reliability and the user's experience.
-
-## Project Directory
-
-[TO ADD]
+This project was done as part of our SC2002 Object-oriented Programming module at NTU. FOMS is a Java application designed to manage orders and staff interactions within a fast food restaurant environment. It is an intuitive interface to streamline the ordering process for customers and the management of business operations and transactions. With error handling and input validation, it enhances system reliability and the user's experience.
 
 ## Contributors
 
@@ -20,6 +16,10 @@ Group No.: Group 3
 - Rachel Tan
 - Rafiabdul Subuhan Afreen
 - Sanjana Shanmugasundaram
+
+## Project Directory
+
+[TO ADD]
 
 ## Features
 
