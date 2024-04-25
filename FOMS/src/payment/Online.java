@@ -19,6 +19,8 @@ public class Online extends Payment implements IXlsxSerializable {
 
     /**
      * Constructor for Online card payment methods.
+     *
+     * @param method The name of the method.
      */
     public Online(String method) {
         this.paymentMethod = method;

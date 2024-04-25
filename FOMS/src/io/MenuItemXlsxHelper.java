@@ -97,6 +97,7 @@ public class MenuItemXlsxHelper extends BaseXlsxHelper {
      *
      * @param item MenuItem record to add
      * @param numExistingRecords Number of existing menuItem records
+     * @throws DuplicateEntryException If the MenuItem already exists
      */
     public void writeToXlsx(MenuItem item, int numExistingRecords) throws DuplicateEntryException {
         MenuDirectory menuDirectory = MenuDirectory.getInstance();

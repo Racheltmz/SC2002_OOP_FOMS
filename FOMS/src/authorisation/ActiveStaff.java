@@ -22,6 +22,8 @@ public class ActiveStaff implements IActiveUser {
 
     /**
      * Constructor for ActiveStaff, updates the active staff if they log in.
+     *
+     *  @param activeStaff The type of activeStaff (Staff).
      */
     public ActiveStaff(Staff activeStaff) {
         this.activeStaff = activeStaff;
@@ -38,6 +40,8 @@ public class ActiveStaff implements IActiveUser {
 
     /**
      * Sets the active staff record.
+     *
+     * @param activeStaff The type of activeStaff (Staff).
      */
     public void setActiveStaff(Staff activeStaff) {
         this.activeStaff = activeStaff;

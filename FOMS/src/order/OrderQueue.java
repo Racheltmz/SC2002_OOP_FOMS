@@ -45,6 +45,7 @@ public class OrderQueue {
     /**
      * Check if the queue has any orders
      *
+     * @param branch The Branch to retrieve the OrderQueue from.
      * @return boolean
      */
     public ArrayList<Order> getOrderBranch(String branch) {
@@ -160,6 +161,7 @@ public class OrderQueue {
      * Displays all the ready orders in a Branch.
      *
      * @param branch The Branch to retrieve the ready Orders from.
+     * @return The ArrayList of ready Orders in the specified Branch.
      */
     public ArrayList<Order> displayReadyOrders(String branch) {
         ArrayList<Order> readyOrders = this.getReadyOrders(branch);

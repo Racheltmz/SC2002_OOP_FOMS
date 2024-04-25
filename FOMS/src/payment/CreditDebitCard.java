@@ -18,6 +18,8 @@ public class CreditDebitCard extends Payment {
 
     /**
      * Constructor for Credit/Debit card payment methods.
+     *
+     * @param method The name of the method.
      */
     public CreditDebitCard(String method) {
         this.paymentMethod = method;

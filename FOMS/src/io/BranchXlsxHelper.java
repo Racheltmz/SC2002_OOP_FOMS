@@ -76,6 +76,7 @@ public class BranchXlsxHelper extends BaseXlsxHelper {
      *
      * @param branch Branch record to add
      * @param numExistingRecords Number of existing branch records
+     * @throws DuplicateEntryException If the Branch already exists.
      */
     public void writeToXlsx(Branch branch, int numExistingRecords) throws DuplicateEntryException {
         BranchDirectory branchDirectory = BranchDirectory.getInstance();

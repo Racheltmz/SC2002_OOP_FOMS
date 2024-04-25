@@ -27,6 +27,8 @@ public class ActiveManager implements IActiveUser {
 
     /**
      * Constructor for ActiveManager, updates the active manager if they log in.
+     *
+     *  @param activeStaff The type of activeStaff (Manager).
      */
     public ActiveManager(Manager activeStaff) {
         this.activeStaff = activeStaff;
@@ -43,6 +45,8 @@ public class ActiveManager implements IActiveUser {
 
     /**
      * Sets the active manager staff record.
+     *
+     *  @param activeStaff The type of activeStaff (Manager).
      */
     public void setActiveStaff(Manager activeStaff) {
         this.activeStaff = activeStaff;

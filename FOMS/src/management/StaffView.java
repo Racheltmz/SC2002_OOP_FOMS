@@ -29,7 +29,9 @@ public class StaffView {
 
     /**
      * User is prompted to select the staff filter, then the staff details are
-     * printed a tabled manner depending on the chosen filter.
+     * printed in a tabled manner depending on the chosen filter.
+     *
+     * @return The selected staff filter option.
      */
     public static StaffFilterOptions getFieldToFilter() {
         System.out.println("1. Branch");

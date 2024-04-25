@@ -22,6 +22,8 @@ public class ActiveAdmin implements IActiveUser {
 
     /**
      * Constructor for ActiveAdmin, updates the active admin if they log in.
+     *
+     * @param activeStaff The type of activeStaff (Admin).
      */
     public ActiveAdmin(Admin activeStaff) {
         this.activeStaff = activeStaff;
@@ -38,6 +40,8 @@ public class ActiveAdmin implements IActiveUser {
 
     /**
      * Sets the active admin staff record.
+     *
+     * @param activeStaff The type of activeStaff (Admin).
      */
     public void setActiveStaff(Admin activeStaff) {
         this.activeStaff = activeStaff;

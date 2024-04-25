@@ -8,7 +8,15 @@ import java.util.ArrayList;
 
 import static management.StaffView.displayStaffDetails;
 
+/**
+ * StaffFilterAge class implementing the method to filter staff by Age.
+ */
 public class StaffFilterAge implements IFilter {
+    /**
+     * The implemented abstract filter method for the age parameter.
+     *
+     * @param age The lower age bound of Staff to filter by. All Staff of that age and above will be displayed.
+     */
     @Override
     public void filter(String age) {
         StaffDirectory staffDirectory = StaffDirectory.getInstance();
