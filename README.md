@@ -32,7 +32,7 @@ Group No.: Group 3
 
 | Folder name  | Purpose |
 | -------- | ------- |
-| app| Contains application's source code and libraries|
+| FOMS | Contains application's source code and libraries|
 | UML | Contains class diagrams of our application |
 | docs/javadocs | Contains java docs | 
 
