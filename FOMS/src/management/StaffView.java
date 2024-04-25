@@ -6,7 +6,16 @@ import java.util.ArrayList;
 
 import static utils.ValidateHelper.validateIntRange;
 
+/**
+ * Handles operations for displaying staff records.
+ */
 public class StaffView {
+
+    /**
+     * Prints the current staff details in a tabled manner.
+     *
+     * @param staffDirectory The staffDirectory from which to print the details.
+     */
     public static void displayStaffDetails(ArrayList<Staff> staffDirectory) {
         System.out.printf("| %-15s | %-20s | %-10s | %-10s | %-8s | %-5s |\n", "StaffID", "Name", "Branch", "Role", "Gender", "Age");
         System.out.println("=".repeat(85));
@@ -18,6 +27,10 @@ public class StaffView {
         }
     }
 
+    /**
+     * User is prompted to select the staff filter, then the staff details are
+     * printed a tabled manner depending on the chosen filter.
+     */
     public static StaffFilterOptions getFieldToFilter() {
         System.out.println("1. Branch");
         System.out.println("2. Role");
