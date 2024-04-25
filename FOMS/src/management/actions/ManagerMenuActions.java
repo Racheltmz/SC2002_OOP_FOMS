@@ -74,15 +74,18 @@ public class ManagerMenuActions implements IManagerMenuActions {
                     String name = validateString("Enter new name of item: ");
                     name = toProperCase(name);
                     itemToUpdate.setName(name);
+                    branchMenu.updateItem(itemToUpdate);
                     break;
                 case 2:
                     double price = validateDouble("Enter price ($): ");
                     itemToUpdate.setPrice(price);
+                    branchMenu.updateItem(itemToUpdate);
                     break;
                 case 3:
                     String category = getCategoryByUserInput();
                     if (category != null) {
                         itemToUpdate.setCategory(category);
+                        branchMenu.updateItem(itemToUpdate);
                     }
                     else {
                         System.out.println("Unable to update category.");
@@ -92,12 +95,12 @@ public class ManagerMenuActions implements IManagerMenuActions {
                     String description = validateString("Enter new description: ");
                     description = capitalizeFirstLetter(description);
                     itemToUpdate.setDescription(description);
+                    branchMenu.updateItem(itemToUpdate);
                     break;
                 case 5:
                     success = true;
                     break;
             }
-            branchMenu.updateItem(itemToUpdate);
         }
     }
 
