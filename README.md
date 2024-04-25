@@ -13,14 +13,21 @@ Group No.: Group 3
 Tutorial Group: FDAB  
 Group No.: Group 3
 
-| Name                        | GitHub Username   
-|-----------------------------|-------------------
-| Gwendalene Ionna            | [gwendaleneionna](https://github.com/gwendaleneionna) | <img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(3).gif" width="100" alt="" style="border-radius:50%; border: 2px solid #555;"/> |
-| Priya Rekah                 | [priyarekah](https://github.com/priyarekah) | <img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(1).gif" width="100" alt="" style="border-radius:50%; border: 2px solid #555;"/> |
-| Rachel Tan                  | [racheltanx](https://github.com/racheltanx) | <img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(2).gif" width="100" alt="" style="border-radius:50%; border: 2px solid #555;"/> |
-| Rafiabdul Subuhan Afreen    | [rafiabdul11](https://github.com/rafiabdul11) | <img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(5).gif" width="100" alt="" style="border-radius:50%; border: 2px solid #555;"/> |
-| Sanjana Shanmugasundaram    | [sanjanashanmugasundaram](https://github.com/sanjanashanmugasundaram) | <img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(4).gif" width="100" alt="" style="border-radius:50%; border: 2px solid #555;"/> |
+<div align="center">
+  <a href="https://github.com/gwenionna" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(3).gif" width="100" alt="" style="border-radius:50%; border: 2px solid #555;"/></a>
+  <a href="https://github.com/Priyarekah" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(1).gif" width="100" alt="" style="border-radius:50%; border: 2px solid #555;"/></a>
+  <a href="https://github.com/lousyway" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(2).gif" width="100" alt="" style="border-radius:50%; border: 2px solid #555;"/></a>
+  <a href="https://github.com/afreenrafi" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(5).gif" width="100" alt="" style="border-radius:50%; border: 2px solid #555;"/></a>
+  <a href="https://github.com/snnjana" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(4).gif" width="100" alt="" style="border-radius:50%; border: 2px solid #555;"/></a>
+</div>
 
+| Name                        | GitHub Username   |
+|-----------------------------|-------------------|
+| Gwendalene Ionna            | [gwenionna](https://github.com/gwenionna) |
+| Priya Rekah                 | [Priyarekah](https://github.com/Priyarekah) |
+| Rachel Tan                  | [Racheltmz](https://github.com/Racheltmz) |
+| Rafiabdul Subuhan Afreen    | [afreenrafi](https://github.com/afreenrafi) |
+| Sanjana Shanmugasundaram    | [snnjana](https://github.com/snnjana) |
 
 
 ## Project Directory
