@@ -23,23 +23,9 @@ Group No.: Group 3
 |-----------------------------|----------------------------------------------------|
 | Gwendalene Ionna            | [![gwenionna](https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(3).gif)](https://github.com/gwenionna) |
 | Priya Rekah                 | [![priyarekah](https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(1).gif)](https://github.com/Priyarekah) |
-| Rachel Tan                  | [![racheltanx](https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(2).gif)](https://github.com/racheltmz) |
-| Rafiabdul Subuhan Afreen    | [![rafiabdul11](https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(5).gif)](https://github.com/afreenrafi) |
-| Sanjana Shanmugasundaram    | [![sanjanashanmugasundaram](https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(4).gif)](https://github.com/snnjana) |
-
-</div>
-
-
-| Name                        | GitHub Username   |
-|-----------------------------|-------------------|
-| Gwendalene Ionna            | [gwenionna](https://github.com/gwenionna) |
-| Priya Rekah                 | [Priyarekah](https://github.com/Priyarekah) |
-| Rachel Tan                  | [Racheltmz](https://github.com/Racheltmz) |
-| Rafiabdul Subuhan Afreen    | [afreenrafi](https://github.com/afreenrafi) |
-| Sanjana Shanmugasundaram    | [snnjana](https://github.com/snnjana) |
-
-</div>
-
+| Rachel Tan                  | [![racheltmx](https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(2).gif)](https://github.com/racheltmz) |
+| Rafiabdul Subuhan Afreen    | [![afreenrafi](https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(5).gif)](https://github.com/afreenrafi) |
+| Sanjana Shanmugasundaram    | [![snnjana](https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(4).gif)](https://github.com/snnjana) |
 
 
 ## Project Directory
