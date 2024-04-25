@@ -10,27 +10,18 @@ Tutorial Group: FDAB<br/>
 Group No.: Group 3
 
 <div align="center">
-  <a href="https://github.com/gwenionna" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(3).gif" width="100px;" alt="" style="border-radius:50%;"/></a><br />
+  <a href="https://github.com/gwenionna" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(3).gif" width="100px;" alt="" style="border-radius:50%;"/></a>
+  <a href="https://github.com/Priyarekah" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(1).gif" width="100px;" alt="" style="border-radius:50%;"/></a>
+  <a href="https://github.com/lousyway" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(2).gif" width="100px;" alt="" style="border-radius:50%;"/></a>
+  <a href="https://github.com/afreenrafi" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(5).gif" width="100px;" alt="" style="border-radius:50%;"/></a>
+  <a href="https://github.com/snnjana" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(4).gif" width="100px;" alt="" style="border-radius:50%;"/></a>
+</div>
+
+<div align="center">
   <sub><b>Gwen</b></sub>
-</div>
-
-<div align="center">
-  <a href="https://github.com/Priyarekah" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(1).gif" width="100px;" alt="" style="border-radius:50%;"/></a><br />
   <sub><b>Priya</b></sub>
-</div>
-
-<div align="center">
-  <a href="https://github.com/lousyway" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(2).gif" width="100px;" alt="" style="border-radius:50%;"/></a><br />
   <sub><b>Rachel</b></sub>
-</div>
-
-<div align="center">
-  <a href="https://github.com/afreenrafi" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(5).gif" width="100px;" alt="" style="border-radius:50%;"/></a><br />
   <sub><b>Afreen</b></sub>
-</div>
-
-<div align="center">
-  <a href="https://github.com/snnjana" target="_blank"><img src="https://github.com/Racheltmz/SC2002_OOP_FOMS/raw/main/your_cool_intro%20(4).gif" width="100px;" alt="" style="border-radius:50%;"/></a><br />
   <sub><b>Sanjana</b></sub>
 </div>
 
