@@ -39,18 +39,20 @@ Group No.: Group 3
 
 [TO ADD: cover it based on our packages, and do so in an order that makes sense, not alphabetical order]
 
-1. User Interfaces: The system provides separate interfaces for customers and staff, allowing for efficient navigation and interaction.
-2. User Management: Utilizes ActiveFactory interface for user instance management, along with hashing passwords for enhanced security.
-3. File Operations: Utilizes FileIOHelper class for file input/output operations related to XLSX files, ensuring data integrity and accessibility.
-4. Serialization: Implements IXlsxSerializable interface for converting objects to an array of strings representing data to be written to an XLSX file.
-5. Excel Handling: Utilizes BaseXlsxHelper class and its extensions (StaffXlsxHelper, BranchXlsxHelper, OrderXlsxHelper, MenuItemXlsxHelper) for reading from and writing to Excel (XLSX) files, with specific methods for each data type.
-6. Data Management: Includes classes such as Branch, Menu, MenuItem, Staff, Manager, Admin, and related directories (BranchDirectory, MenuDirectory, StaffDirectory) for managing branch, menu, and staff records.
-7. Authentication and Authorization: Implements Authentication and Authorization classes for verifying login credentials and authorizing access based on staff roles.
-8. Filtering: Provides filtering functionalities for staff members based on age, branch, and role using StaffFilterAge, StaffFilterBranch, and StaffFilterRole classes.
-9. Order Management: Manages orders through the Order class, OrderQueue class, and OrderTimerTask class for processing orders and updating order status.
-10. Payment Handling: Includes Payment and PaymentDirectory classes for managing payment methods, with authorization based on staff roles.
-11. User Interaction: Utilizes ManagerActionsMenu class for accessing branch and menu information, with user input handled by the InputScanner class.
-12. Exception Handling: Implements exception handling throughout the system to ensure effective error management.
+1. App Interface: The main app interface to conduct the implemented actions in respective interfaces.
+2. User Interfaces: The system provides separate interfaces for customers and staff, allowing for efficient navigation and interaction.
+3. User Management: Utilizes ActiveFactory interface for user instance management, along with hashing passwords for enhanced security.
+4. File Operations: Utilizes FileIOHelper class for file input/output operations related to XLSX files, ensuring data integrity, accessibility and persistence.
+5. Utilities: Includes Helper classes to verify valid inputs, to format Strings and to initialise an instance of InputScanner; also includes the IFilter interface for implementation in Filtering.
+6. Serialization: Implements IXlsxSerializable interface for converting objects to an array of strings representing comma-separated data to be written to an XLSX file.
+7. Excel Handling: Utilizes BaseXlsxHelper class and its extensions (StaffXlsxHelper, BranchXlsxHelper, OrderXlsxHelper, MenuItemXlsxHelper) for reading from and writing to Excel (XLSX) files, with specific methods for each data type.
+8. Data Management: Includes classes such as Branch, Menu, MenuItem, Staff, Manager, Admin, and related directories (BranchDirectory, MenuDirectory, StaffDirectory) for managing branch, menu, and staff records. Authorises access to specific management actions based on staff roles.
+9. Authentication and Authorization: Implements Authentication and Authorization classes for verifying login credentials and authorizing access based on staff roles.
+10. Filtering: Provides filtering functionalities for staff members based on age, branch, gender and role using StaffFilterAge, StaffFilterBranch, StaffFilterGender and StaffFilterRole classes respectively.
+11. Order Management: Manages orders through the Order class, OrderQueue class, and OrderTimerTask class for processing orders and updating order status.
+12. Payment Handling: Includes Payment and PaymentDirectory classes for managing payment methods, with authorization based on staff roles.
+13. User Interaction: Utilizes ManagerActionsMenu class for accessing branch and menu information.
+14. Exception Handling: Implements exception handling throughout the system to ensure effective error management.
 
 ## Set Up
 
