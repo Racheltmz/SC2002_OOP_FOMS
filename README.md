@@ -9,23 +9,16 @@ This project was done as part of our SC2002 Object-oriented Programming module a
 Tutorial Group: FDAB<br/>
 Group No.: Group 3
 
-| Name                        | GitHub Username   |
-|-----------------------------|-------------------|
-| Gwendalene Ionna            | [gwenionna](https://github.com/gwenionna) |
-| Priya Rekah                 | [Priyarekah](https://github.com/Priyarekah) |
-| Rachel Tan                  | [Racheltmz](https://github.com/Racheltmz) |
-| Rafiabdul Subuhan Afreen    | [afreenrafi](https://github.com/afreenrafi) |
-| Sanjana Shanmugasundaram    | [snnjana](https://github.com/snnjana) |
-
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/gwenionna" target="_blank"><img src="https://avatars.githubusercontent.com/u/28054629?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Gwendalene Ionna</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/Priyarekah" target="_blank"><img src="https://avatars.githubusercontent.com/u/26087840?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Priya Rekah</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/lousyway" target="_blank"><img src="https://avatars.githubusercontent.com/u/92497783?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Rachel Tan</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/afreenrafi" target="_blank"><img src="https://avatars.githubusercontent.com/u/96100546?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Rafiabdul Subuhan Afreen</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/snnjana" target="_blank"><img src="https://avatars.githubusercontent.com/u/96646828?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Sanjana Shanmugasundaram</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/gwenionna" target="_blank"><img src="https://avatars.githubusercontent.com/u/96646828?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Gwendalene Ionna</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/Priyarekah" target="_blank"><img src="https://avatars.githubusercontent.com/u/92497783?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Priya Rekah</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/Racheltmz" target="_blank"><img src="https://avatars.githubusercontent.com/u/96100546?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Rachel Tan</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/afreenrafi" target="_blank"><img src="https://avatars.githubusercontent.com/u/28054629?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Rafiabdul Subuhan Afreen</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/snnjana" target="_blank"><img src="https://avatars.githubusercontent.com/u/26087840?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Sanjana Shanmugasundaram</b></sub><br /></td>
   </tr>
 </table>
+
 
 ## Project Directory
 
