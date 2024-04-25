@@ -11,13 +11,14 @@ Group No.: Group 3
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/gwenionna" target="_blank"><img src="https://avatars.githubusercontent.com/u/96646828?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Gwendalene Ionna</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/Priyarekah" target="_blank"><img src="https://avatars.githubusercontent.com/u/92497783?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Priya Rekah</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/Racheltmz" target="_blank"><img src="https://avatars.githubusercontent.com/u/96100546?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Rachel Tan</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/afreenrafi" target="_blank"><img src="https://avatars.githubusercontent.com/u/28054629?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Rafiabdul Subuhan Afreen</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/snnjana" target="_blank"><img src="https://avatars.githubusercontent.com/u/26087840?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Sanjana Shanmugasundaram</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/gwenionna" target="_blank"><img src="https://via.placeholder.com/150?text=🍔" width="150px;" alt=""/></a><br /><sub><b>Gwendalene Ionna</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/Priyarekah" target="_blank"><img src="https://via.placeholder.com/150?text=🍕" width="150px;" alt=""/></a><br /><sub><b>Priya Rekah</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/Racheltmz" target="_blank"><img src="https://via.placeholder.com/150?text=🥗" width="150px;" alt=""/></a><br /><sub><b>Rachel Tan</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/afreenrafi" target="_blank"><img src="https://via.placeholder.com/150?text=🍣" width="150px;" alt=""/></a><br /><sub><b>Rafiabdul Subuhan Afreen</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/snnjana" target="_blank"><img src="https://via.placeholder.com/150?text=🍰" width="150px;" alt=""/></a><br /><sub><b>Sanjana Shanmugasundaram</b></sub><br /></td>
   </tr>
 </table>
+
 
 
 ## Project Directory
