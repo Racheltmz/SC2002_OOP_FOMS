@@ -74,7 +74,7 @@ public class StaffXlsxHelper extends BaseXlsxHelper {
             char gender = data[4].charAt(0);
             int age = (int) Double.parseDouble(data[5]);
             Branch branch = null;
-            if (!Objects.equals(data[6], "-"))
+            if (!Objects.equals(data[6], "NULL"))
                 branch = branchDirectory.getBranchByName(data[6]);
             String password = data[7];
 

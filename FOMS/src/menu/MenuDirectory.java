@@ -1,13 +1,11 @@
 package menu;
 
-import branch.BranchDirectory;
 import exceptions.EmptyListException;
 import exceptions.ItemNotFoundException;
 import io.MenuItemXlsxHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 import static utils.ValidateHelper.validateIntRange;
@@ -16,7 +14,7 @@ public class MenuDirectory {
     private final ArrayList<Menu> menuDirectory;
     private static MenuDirectory menuSingleton = null;
 
-    private static final ArrayList<String> categories = new ArrayList<>(Arrays.asList("Side", "Burger", "Set meal", "Drink"));
+    private static final ArrayList<String> CATEGORIES = new ArrayList<>(Arrays.asList("Side", "Burger", "Set meal", "Drink"));
 
     private MenuDirectory() {
         MenuItemXlsxHelper menuItemXlsxHelper = MenuItemXlsxHelper.getInstance();
@@ -127,7 +125,7 @@ public class MenuDirectory {
 
     // get categories from menu items
     public static ArrayList<String> getCategories(){
-        return categories;
+        return CATEGORIES;
     }
 
     public static void displayCategories(){
@@ -149,8 +147,7 @@ public class MenuDirectory {
 
         // Get user's selection
         int categoryIndex = validateIntRange("Select Category: ", 1, size);
-        String selectedCategory = categories.get(categoryIndex - 1);
-        return selectedCategory;
+        return categories.get(categoryIndex - 1);
     }
 
     public MenuItem selectItem(String branchName) {

@@ -4,7 +4,6 @@ import management.StaffRoles;
 import management.Staff;
 
 import static authorisation.ActiveView.displayMenu;
-import static utils.ValidateHelper.validateInt;
 import static utils.ValidateHelper.validateIntRange;
 
 /**
@@ -55,7 +54,6 @@ public class ActiveStaff implements IActiveUser {
      * Carries out the functions the staff is authorised to do.
      */
     public void showOptions() {
-
         String staffID = getActiveStaff().getStaffID();
         StaffRoles role = getActiveStaff().getRole();
 

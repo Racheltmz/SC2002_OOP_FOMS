@@ -15,9 +15,12 @@ import static utils.ValidateHelper.validateString;
 public class OrderQueue {
     // Attributes
     private final ArrayList<Order> orders;
-    private ArrayList<Timer> orderTimers = new ArrayList<>();
-    private final int ORDEREXPIRE = 300;
+
     private static OrderQueue ordersSingleton = null;
+
+    private ArrayList<Timer> orderTimers = new ArrayList<>();
+
+    private final int ORDEREXPIRE = 300;
 
     // Constructor
     public OrderQueue() {

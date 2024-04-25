@@ -1,5 +1,6 @@
 package branch;
 
+import exceptions.DuplicateEntryException;
 import menu.MenuDirectory;
 import menu.MenuItem;
 import management.Staff;
@@ -85,7 +86,7 @@ public class BranchDirectory {
         // Display branches
         displayBranches();
         // Handle invalid branch names by checking if index out of bounds
-        Branch branch = null;
+        Branch branch;
         int size = this.branchDirectory.size();
 
         // Get user's selection
@@ -101,11 +102,15 @@ public class BranchDirectory {
      * @param branch The branch to add.
      */
     public void addBranch(Branch branch) {
-        int numExistingBranches = this.branchDirectory.size();
-        this.branchDirectory.add(branch);
-        BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
-        branchXlsxHelper.writeToXlsx(branch, numExistingBranches);
-        System.out.println("Branch successfully created!");
+        try {
+            int numExistingBranches = this.branchDirectory.size();
+            BranchXlsxHelper branchXlsxHelper = BranchXlsxHelper.getInstance();
+            branchXlsxHelper.writeToXlsx(branch, numExistingBranches);
+            this.branchDirectory.add(branch);
+            System.out.println("Branch successfully created!");
+        } catch (DuplicateEntryException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

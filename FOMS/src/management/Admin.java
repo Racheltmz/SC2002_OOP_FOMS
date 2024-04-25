@@ -45,6 +45,17 @@ public class Admin extends Staff {
     }
 
     /**
+     * Serialization to XLSX for Admin, overrides the Staff's toXlsx method.
+     * @return String array of the Admin record.
+     */
+    @Override
+    public String[] toXlsx() {
+        return new String[] {
+                String.valueOf(super.getId()), super.getName(), super.getStaffID(), super.getRole().getAcronym(), String.valueOf(super.getGender()),
+                String.valueOf(super.getAge()), "NULL", super.getPassword() };
+    }
+
+    /**
      * Adds a new staff member.
      *
      * @param auth the authorization role required (Admin).

@@ -1,7 +1,6 @@
 package management;
 
 import management.filter.StaffFilterOptions;
-import utils.InputScanner;
 
 import java.util.ArrayList;
 
