@@ -11,10 +11,10 @@ Group No.: Group 3
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/gwenionna" target="_blank"><img src="https://avatars.githubusercontent.com/u/28054629?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Gwendalene Ionna</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/Priyarekah" target="_blank"><img src="[https://avatars.githubusercontent.com/u/26087840?v=4?s=150](https://github.com/Racheltmz/SC2002_OOP_FOMS/blob/main/your_cool_intro%20(1).gif)" width="150px;" alt=""/></a><br /><sub><b>Priya Rekah</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/lousyway" target="_blank"><img src="https://avatars.githubusercontent.com/u/92497783?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Rachel Tan</b></sub><br /></td>
-    <td align="center"><a href="https://github.com/afreenrafi" target="_blank"><img src="https://avatars.githubusercontent.com/u/96100546?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Rafiabdul Subuhan Afreen</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/gwenionna" target="_blank"><img src="https://avatars.githubusercontent.com/u/96646828?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Gwendalene Ionna</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/Priyarekah" target="_blank"><img src="https://avatars.githubusercontent.com/u/96646828?v=4?s=150"  width="150px;" alt=""/></a><br /><sub><b>Priya Rekah</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/lousyway" target="_blank"><img src="https://avatars.githubusercontent.com/u/96646828?v=4?s=150"  width="150px;" alt=""/></a><br /><sub><b>Rachel Tan</b></sub><br /></td>
+    <td align="center"><a href="https://github.com/afreenrafi" target="_blank"><img src="https://avatars.githubusercontent.com/u/96646828?v=4?s=150"  width="150px;" alt=""/></a><br /><sub><b>Rafiabdul Subuhan Afreen</b></sub><br /></td>
     <td align="center"><a href="https://github.com/snnjana" target="_blank"><img src="https://avatars.githubusercontent.com/u/96646828?v=4?s=150" width="150px;" alt=""/></a><br /><sub><b>Sanjana Shanmugasundaram</b></sub><br /></td>
   </tr>
 </table>
