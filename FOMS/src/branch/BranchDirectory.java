@@ -86,7 +86,7 @@ public class BranchDirectory {
         // Display branches
         displayBranches();
         // Handle invalid branch names by checking if index out of bounds
-        Branch branch = null;
+        Branch branch;
         int size = this.branchDirectory.size();
 
         // Get user's selection

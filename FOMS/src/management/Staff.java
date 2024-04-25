@@ -25,7 +25,7 @@ public class Staff implements IXlsxSerializable {
     private int age;
     private Branch branch;
     private String password;
-    private final IStaffOrderActions staffActionsOrder = new StaffOrderActions();
+    private final IStaffOrderActions staffOrderActions = new StaffOrderActions();
 
     /**
      * Constructs a Staff
@@ -172,17 +172,17 @@ public class Staff implements IXlsxSerializable {
     /* MANAGING ORDER PURPOSES */
     // New orders for Test Case 9 and 11
     public void getNewOrders(Branch branch) {
-        staffActionsOrder.getNewOrders(branch);
+        staffOrderActions.getNewOrders(branch);
     }
 
     // Specific order
     public void getOrderDetails(Branch branch) {
-        staffActionsOrder.getOrderDetails(branch);
+        staffOrderActions.getOrderDetails(branch);
     }
 
     // Update order status to ready to pickup for Test Case 10 and 12
     public void setOrderReady(Branch branch) {
-        staffActionsOrder.setOrderReady(branch);
+        staffOrderActions.setOrderReady(branch);
     }
 
 }

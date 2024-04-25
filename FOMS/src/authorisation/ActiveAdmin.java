@@ -1,11 +1,9 @@
 package authorisation;
 
 import management.StaffRoles;
-import utils.InputScanner;
 import management.Admin;
 
 import static authorisation.ActiveView.displayMenu;
-import static utils.ValidateHelper.validateInt;
 import static utils.ValidateHelper.validateIntRange;
 
 /**
@@ -56,8 +54,6 @@ public class ActiveAdmin implements IActiveUser {
      * Displays the permissions the admin is authorised to do.
      */
     public void showOptions() {
-        InputScanner sc = InputScanner.getInstance();
-
         String staffID = this.getActiveStaff().getStaffID();
         StaffRoles role = this.getActiveStaff().getRole();
 

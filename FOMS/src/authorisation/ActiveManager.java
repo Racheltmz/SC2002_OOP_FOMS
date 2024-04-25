@@ -59,8 +59,6 @@ public class ActiveManager implements IActiveUser {
      * Displays the permissions the manager is authorised to do.
      */
     public void showOptions() {
-        InputScanner sc = InputScanner.getInstance();
-
         String staffID = this.getActiveStaff().getStaffID();
         StaffRoles role = this.getActiveStaff().getRole();
         Branch branch = this.getActiveStaff().getBranch();

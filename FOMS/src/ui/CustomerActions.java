@@ -69,7 +69,6 @@ public class CustomerActions {
                                 size + 1);
                         if (customisationOption == size + 1) {
                             customise = false;
-                            break;
                         }
                         MenuItem itemToCustomise = selectedItems.get(customisationOption - 1);
                         String customisationInput = validateString("What customisation would you like? ");
