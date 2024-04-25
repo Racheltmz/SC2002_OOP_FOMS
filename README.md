@@ -1,8 +1,8 @@
-# Fastfood Ordering Management System (app)
+# Fastfood Ordering Management System (FOMS Application)
 
 ## Introduction
 
-This project was done as part of our SC2002 Object-oriented Programming module at NTU. app is a Java application designed to manage orders and staff interactions within a fast food restaurant environment. It is an intuitive interface to streamline the ordering process for customers and the management of business operations and transactions. With error handling and input validation, it enhances system reliability and the user's experience.
+This project was done as part of our SC2002 Object-oriented Programming module. FOMS is a Java application designed to manage orders and staff interactions within a fast food restaurant environment. It is an intuitive interface to streamline the ordering process for customers and the management of business operations and transactions. With error handling and input validation, it enhances system reliability and the user's experience.
 
 ## Contributors
 
@@ -22,13 +22,11 @@ Group No: Group 3
 
 | Folder name  | Purpose |
 | -------- | ------- |
-| FOMS | Contains application's source code and libraries|
-| UML | Contains class diagrams of our application |
-| docs/javadocs | Contains java docs | 
+| FOMS | The application's source code, data files, and libraries |
+| UML | The class diagram of our application |
+| docs/javadocs | javadocs for our application |
 
 ## Features
-
-[TO ADD: cover it based on our packages, and do so in an order that makes sense, not alphabetical order]
 
 1. App Interface: The main app interface to conduct the implemented actions in respective interfaces.
 2. User Interfaces: The system provides separate interfaces for customers and staff, allowing for efficient navigation and interaction.
@@ -54,8 +52,8 @@ To run the app application locally, follow these steps:
        https://github.com/Racheltmz/SC2002_OOP_FOMS.git
 
 2. Ensure you have Java installed on your system.
-3. Open the app folder in your preferred Java IDE.
-4. Compile and run the app.FOMSApp.java file.
+3. Open the FOMS folder in your preferred Java IDE.
+4. Compile and run the src/app/FOMSApp.java file.
 5. Upon running the application, users will be presented with a menu to choose between the customer interface, staff interface, or quitting the application. Follow the prompts to navigate through the system and interact with its features.
 
 ## Dependencies
