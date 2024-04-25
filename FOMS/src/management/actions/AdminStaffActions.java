@@ -163,7 +163,7 @@ public class AdminStaffActions implements IAdminStaffActions {
             System.out.println("The staff quota for " + branch.getLocation() + " is already met.");
             return false;
         } else {
-            System.out.print("The staff quota for " + branch.getLocation() + " has not been met.");
+            System.out.println("The staff quota for " + branch.getLocation() + " has not been met.");
             return true;
         }
     }
