@@ -24,7 +24,7 @@ Group No: Group 3
 | -------- | ------- |
 | FOMS | The application's source code, data files, and libraries |
 | UML | The class diagram of our application |
-| docs/javadocs | javadocs for our application |
+| docs | The report and javadocs for our application |
 
 ## Features
 
