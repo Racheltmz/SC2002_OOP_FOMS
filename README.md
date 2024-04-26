@@ -17,7 +17,6 @@ Group No: Group 3
 | Rafiabdul Subuhan Afreen    | [afreenrafi](https://github.com/afreenrafi) |
 | Sanjana Shanmugasundaram    | [snnjana](https://github.com/snnjana) |
 
-
 ## Project Directory
 
 | Folder name  | Purpose |
