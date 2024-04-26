@@ -61,6 +61,6 @@ To run the app application locally, follow these steps:
 | Library  | Version | Purpose                             |
 | -------- | ------- | ----------------------------------- |
 | poi, poi-ooxml, poi-ooxml-schemas | 4.1.2 | Apache POI for Excel file handling. |
-| commons-collections | 4.3 | Apache Commons to create and maintain reusable Java Components, |
+| commons-collections | 4.3 | Apache Commons to create and maintain reusable Java Components. |
 | commons-compress | 1.18 | Apache Commons Compress to utilise widely used compression and archiving formats. |
-| xmlbeans | 3.1.0 | To access XML by binding it to Java types |
+| xmlbeans | 3.1.0 | To access XML by binding it to Java types. |
