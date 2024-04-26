@@ -1,5 +1,5 @@
 # Backup files for UML
-foms.vpp.bak_*
+*.vpp.bak_*
 
 # Java files
 **/.idea/workspace.xml **/.idea/tasks.xml
