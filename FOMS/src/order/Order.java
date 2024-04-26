@@ -106,7 +106,8 @@ public class Order implements IXlsxSerializable {
 
         // Convert customisations ArrayList to a comma-separated string
         String customisationsString = convertArrayListToString(customisation);
-
+        if (customisationsString.isEmpty())
+            customisationsString = "NULL";
         return new String[] { orderID, branch, itemsString, customisationsString,
                 String.valueOf(takeaway), String.valueOf(totalAmount), payment, String.valueOf(status) };
     }

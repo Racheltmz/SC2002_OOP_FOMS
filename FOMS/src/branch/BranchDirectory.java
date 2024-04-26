@@ -1,6 +1,7 @@
 package branch;
 
 import exceptions.DuplicateEntryException;
+import menu.Menu;
 import menu.MenuDirectory;
 import menu.MenuItem;
 import management.Staff;
@@ -135,8 +136,11 @@ public class BranchDirectory {
 
         // Remove menu items under the branch
         String branchName = branchToRmv.getName();
-        ArrayList <MenuItem> menuItems = menuDirectory.getMenu(branchName).getMenuItems();
-        menuDirectory.rmvMenuByBranch(menuItems, branchName);
+        Menu branchMenu = menuDirectory.getMenu(branchName);
+        if (branchMenu != null) {
+            ArrayList<MenuItem> menuItems = branchMenu.getMenuItems();
+            menuDirectory.rmvMenuByBranch(menuItems, branchName);
+        }
 
         // Remove branch
         this.branchDirectory.removeIf(branch -> branch.getName().equals(branchToRmv.getName()));

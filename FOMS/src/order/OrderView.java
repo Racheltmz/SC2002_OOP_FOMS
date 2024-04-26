@@ -4,6 +4,7 @@ import menu.MenuItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Displays an Order's details.
@@ -61,9 +62,11 @@ public class OrderView {
         ArrayList<String> customisations = order.getCustomisation();
         for (int i=0; i<order.getCustomisation().size(); i++) {
             String customisation = customisations.get(i);
-            String menuItem = customisation.split(" : ")[0];
-            String details = customisation.split(" : ")[1];
-            orderDetails.put(menuItem, details);
+            if (!Objects.equals(customisation, "NULL")) {
+                String menuItem = customisation.split(" : ")[0];
+                String details = customisation.split(" : ")[1];
+                orderDetails.put(menuItem, details);
+            }
         }
 
         ArrayList<MenuItem> items = order.getItems();

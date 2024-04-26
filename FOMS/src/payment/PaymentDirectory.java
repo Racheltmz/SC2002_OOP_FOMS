@@ -70,7 +70,6 @@ public class PaymentDirectory {
 
         // Save data
         assert payment != null;
-        System.out.println(this.getPaymentMethods().size());
         paymentXlsxHelper.writeToXlsx(payment, numExistingRecords);
 
         // Display updated payment method data
